@@ -1,0 +1,7 @@
+This testcase demonstrates a problem that occurred while compiling AHEAD/Mixin
+SPL.
+
+Error: Syntactic Error: unexpected token "program"
+
+"program" is a keyword for a new FOP-Modifier, but is used in AHEAD/Mixin as a
+class name.

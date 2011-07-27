@@ -1,0 +1,11 @@
+Comment comment = 
+    COMMENT                                    {: return new Comment(COMMENT); :}
+  ;
+BodyDecl class_member_declaration =
+    comment.c                                  {: return c; :}
+  | field_declaration.f                        {: return f; :}
+  | method_declaration.m                       {: return m; :}
+  | class_declaration.c                        {: return new MemberClassDecl(c); :}
+  | interface_declaration.i                    {: return new MemberInterfaceDecl(i); :}
+  | SEMICOLON                                  {: return new InstanceInitializer(new Block()); :}
+  ;

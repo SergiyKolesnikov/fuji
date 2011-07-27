@@ -1,0 +1,12 @@
+Some scatches to how to implement comments as AST nodes.  
+
+The files in this dir contain changes made to corresponding files in 
+JastAddJ/Java1.4Frontend that implement comments as AST nodes on BodyDecl 
+level.  Comments on other levels can be implemented the same way.  
+
+There must be a way not to change the original JastAddJ files, but make 
+all the changes in Fuji/src like it was done with FOP modifiers 
+(scanner/parser specs are composed by ant and jrags are refined).
+
+CommentsInASTTest is a test case for a complete implementation of comments
+as nodes.

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd GPL
+java -jar ../../FujiCompiler/build/fuji.jar -fopRefs GPLAll.features

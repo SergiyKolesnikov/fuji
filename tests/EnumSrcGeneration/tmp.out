@@ -1,0 +1,7 @@
+public enum A {
+  ENUM1("foo", 42),
+
+;
+  private String string;
+  private int integer;
+}

@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+# Extract all import declaration from .java files in the $DIR and display them
+# without duplicates.
+DIR=$1
+
+grep --no-filename --regexp 'import.*;' `find $DIR -type f -iname '*.java'` \
+    | sort --unique

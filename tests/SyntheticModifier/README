@@ -1,0 +1,17 @@
+Project structure:
+------------------
+.
+`-- F1
+    `-- A.java
+
+What is tested:
+---------------
+
+If transformations (CompilationUnit.transformation()) to AST is done before the
+source code is generated, the generated source code will contain some JastAddJ
+specific code (synthetic elements), which will make the generated code invalid.
+
+Correct output:
+---------------
+
+See *.ok files.

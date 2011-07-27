@@ -1,0 +1,10 @@
+#!/bin/bash
+# $1 - dir to search for classes in. It is also used as the classpath.
+
+CLS=`find $1 -iname '*.class'`
+
+for I in $CLS; do
+    CL=`echo $I | sed s/\.class$//`
+    echo === $CL ===
+    javap -classpath $1 $CL
+done

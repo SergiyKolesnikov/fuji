@@ -1,0 +1,42 @@
+#!/bin/bash
+
+PWD=`pwd`
+if [ "${PWD:0:1}"=="/" ]; then
+    THISPATH=`dirname "$0"`
+else
+    THISPATH=`dirname "$PWD/$0"`
+fi
+
+FUJI="$THISPATH/../FujiCompiler"
+EXAMPLESCL=`find "$THISPATH/../examples/" -maxdepth 2 \
+    -name classes -type d -or -name sources -type d`
+TESTSCL=`find "$THISPATH/../tests/" -maxdepth 2 \
+    -name classes -type d -or -name sources -type d`
+IFS=$'\n'
+
+if [ "$EXAMPLESCL" != "" ]; then
+    echo "$EXAMPLESCL"
+    read -p "Remove? [y/n]: "
+    if [ "$REPLY" == "y" ]; then
+	for I in $EXAMPLESCL; do
+	    /bin/rm -rf "$I"
+	done
+    fi
+fi
+
+if [ "$TESTSCL" != "" ]; then
+    echo "$TESTSCL"
+    read -p "Remove? [y/n]: "
+    if [ "$REPLY" == "y" ]; then
+	for I in $TESTSCL; do
+	    /bin/rm -rf "$I"
+	done
+    fi
+fi
+
+read -p "Run Fuji's clean ant task? [y/n]: "
+if [ "$REPLY" == "y" ]; then
+    cd "$FUJI"
+    ant clean
+    cd ~-
+fi

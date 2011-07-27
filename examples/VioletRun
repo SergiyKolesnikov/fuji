@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -cp Violet/classes/ com.horstmann.violet.UMLEditor

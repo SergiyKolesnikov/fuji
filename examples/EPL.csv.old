@@ -1,0 +1,10 @@
+Name;Original OOP Modifier;Minimal OOP+FOP Modifier;package feature;package program;package subsequent;private feature;private program;private subsequent;protected feature;protected program;protected subsequent;public feature;public program;public subsequent;
+2:tmp.Plus.y;package;private feature;0;0;0;1;0;0;0;0;0;0;0;0;
+0:.Num.value;package;private feature;0;0;0;3;0;0;0;0;0;0;0;0;
+0:.Neg.x;package;private feature;0;0;0;3;0;0;0;0;0;0;0;0;
+0:.Exp.eval();public;package feature;3;0;0;0;0;0;0;0;0;0;0;0;
+2:tmp.Plus.x;package;private feature;0;0;0;1;0;0;0;0;0;0;0;0;
+3:tmp.Num.value;package;private feature;0;0;0;1;0;0;0;0;0;0;0;0;
+0:.Plus.x;package;private feature;0;0;0;3;0;0;0;0;0;0;0;0;
+4:tmp.Neg.x;package;private feature;0;0;0;2;0;0;0;0;0;0;0;0;
+0:.Plus.y;package;private feature;0;0;0;3;0;0;0;0;0;0;0;0;

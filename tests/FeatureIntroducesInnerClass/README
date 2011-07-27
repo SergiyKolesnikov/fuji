@@ -1,0 +1,16 @@
+Project structure:
+------------------
+FeatureIntroducesInnerClass
+`-- F1
+    `-- A.java
+
+What is tested:
+---------------
+
+This test proves correct generation of introduces relations for
+inner/nested/anonymous/local classes, fields, methods and constructors.
+
+Correct Output:
+---------------
+
+See *.ok files.

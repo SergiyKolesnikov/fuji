@@ -1,0 +1,1016 @@
+aspect VisitorAcceptMethods {
+    syn boolean CompilationUnit.accept(ComposingVisitor visitor, CompilationUnit node) = visitor.visit(this, node);
+    syn boolean TypeDecl.accept(ComposingVisitor visitor, TypeDecl node) = visitor.visit(this, node);
+    syn boolean ClassDecl.accept(ComposingVisitor visitor, ClassDecl node) = visitor.visit(this, node);
+    syn boolean InterfaceDecl.accept(ComposingVisitor visitor, InterfaceDecl node) = visitor.visit(this, node);
+    //    syn boolean FieldDecl.accept(ComposeVisitor visitor, FieldDecl node) = visitor.visit(this, node);
+    syn boolean MethodDecl.accept(ComposingVisitor visitor, MethodDecl node) = visitor.visit(this, node);
+}
+
+aspect ComposingVisitorInterface {
+    public interface ComposingVisitor {
+        String ORIGINAL_OPERATOR = "original";
+        String ORIGINAL_DELIM = "_$_";
+        boolean visit(CompilationUnit baseCU, CompilationUnit featCU);
+        boolean visit(TypeDecl baseTD, TypeDecl featTD);
+        boolean visit(InterfaceDecl baseND, InterfaceDecl featND);
+        boolean visit(ClassDecl baseCD, ClassDecl featCD);
+        boolean visit(MethodDecl baseMD, MethodDecl featMD);
+    }
+}
+
+aspect ComposingVisitorNormal {
+
+    public class ComposingVisitorNormal implements ComposingVisitor {
+        public boolean visit(CompilationUnit baseCU, CompilationUnit featCU) {
+            /*
+             * Package declarations will not be checked for match. It is done by
+             * JavaComposer.  getPackageDecl()
+             */
+
+            /* Import derlarations. */
+            List<ImportDecl> baseIDs = baseCU.getImportDeclList();
+            for (ImportDecl featID : featCU.getImportDeclList()) {
+                baseIDs.add(featID);
+            }
+
+            /*
+             * Add accumulated imports to the refinement CU to prevent possible
+             * failed external type resolutions.
+             */
+            try {
+                featCU.setImportDeclList(baseIDs.clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+
+            /* Type declarations */
+            for (TypeDecl featTD : featCU.getTypeDeclList()) {
+                for (TypeDecl baseTD : baseCU.getTypeDeclList()) {
+                    baseTD.accept(this, featTD);
+                }
+            }
+
+            /* Setting formSource to false exclude this refinement CU from compilation. */
+            featCU.setFromSource(false);
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(TypeDecl baseTD, TypeDecl featTD) {
+            if (baseTD instanceof ClassDecl && featTD instanceof ClassDecl) {
+                return ((ClassDecl) baseTD).accept(this, (ClassDecl) featTD);
+            } else if (baseTD instanceof InterfaceDecl && featTD instanceof InterfaceDecl) {
+                return ((InterfaceDecl) baseTD).accept(this, (InterfaceDecl) featTD);
+            }
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(InterfaceDecl baseND, InterfaceDecl featND) {
+
+            /* Check interface names */
+            if (! baseND.getID().equals(featND.getID())) {
+                return false; //TODO Unchecked exception here.
+            }
+
+            /* Modifiers. Feature Modifiers override thoes of the base. */
+            if (featND.getModifiers().getModifierList()
+                .getNumChildNoTransform() != 0) {
+                Modifiers mods = featND.getModifiersNoTransform();
+                mods.setOldParent(mods.getParent());
+                baseND.setModifiers(mods);
+            }
+
+            /*
+             * 'extends' in the interface declaration. Preserving Accesses of
+             * the base type.
+             */
+            if (featND.getSuperInterfaceIdListNoTransform()
+                .getNumChild() != 0) { // getNumChild with trasform OK
+                List<Access> featSup =
+                    featND.getSuperInterfaceIdListNoTransform();
+                List<Access> baseSup =
+                    baseND.getSuperInterfaceIdListNoTransform();
+                for (int i = 0; i < featSup.getNumChild(); ++i) { // getNumChild with trasform OK
+                    Access ac = featSup.getChild(i); // getChild with trasform OK
+
+                    /* Determine duplicates, that will be ommited. */
+                    boolean duplicate = false;
+                    for (int j = 0; j < baseSup.getNumChild(); ++j) { // getNumChild with trasform OK
+                        Access baseAc = baseSup.getChild(j); // getChild with trasform OK
+                        if (baseAc.type().erasure().typeName()
+                            .equals(ac.type().erasure().typeName())) {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+                    if (! duplicate) {
+                        ac.setOldParent(ac.getParent());
+                        baseSup.add(ac);
+                    }
+                }
+            }
+
+            // BodyDecl
+            /*
+             * Sort base and refinement BodyDecl by their types.
+             */
+            ArrayList<FieldDecl> baseFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> baseFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> baseMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> baseCons = new ArrayList<ConstructorDecl>();
+
+            ArrayList<FieldDecl> featFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> featFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> featMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> featCons = new ArrayList<ConstructorDecl>();
+
+            for (BodyDecl featBD : featND.getBodyDeclList()) {
+                if (featBD instanceof FieldDecl) {
+                    featFDs.add((FieldDecl) featBD);
+                } else if (featBD instanceof FieldDeclaration) {
+                    featFDEs.add((FieldDeclaration) featBD);
+                } else if (featBD instanceof MethodDecl) {
+                    featMDs.add((MethodDecl) featBD);
+                } else if (featBD instanceof ConstructorDecl) {
+                    featCons.add((ConstructorDecl) featBD);
+                } else {
+                    notImplemented(featBD);
+                }
+            }
+            for (BodyDecl baseBD : baseND.getBodyDeclList()) {
+                if (baseBD instanceof FieldDecl) {
+                    baseFDs.add((FieldDecl) baseBD);
+                } else if (baseBD instanceof FieldDeclaration) {
+                    baseFDEs.add((FieldDeclaration) baseBD);
+                } else if (baseBD instanceof MethodDecl) {
+                    baseMDs.add((MethodDecl) baseBD);
+                } else if (baseBD instanceof ConstructorDecl) {
+                    baseCons.add((ConstructorDecl) baseBD);
+                } else {
+                    notImplemented(baseBD);
+                }
+            }
+
+            /* Process FieldDecls */
+            // TODO
+            for (FieldDecl featFD : featFDs) {
+                notImplemented(featFD);
+                // TODO not forget to set old parent
+            }
+
+            /* Process FieldDeclarations */
+            for (FieldDeclaration featFDE : featFDEs) {
+                boolean isComposed = false;
+                for (int i = 0; !isComposed && !baseFDEs.isEmpty()
+                         && (i < baseFDEs.size()); ++i) {
+                    FieldDeclaration baseFDE = baseFDEs.get(i);
+
+                    /*
+                     * Compose two fields, if their types and names match
+                     * togather.
+                     */
+                    String featType = featFDE.getTypeAccess().type().typeName();
+                    String baseType = baseFDE.getTypeAccess().type().typeName();
+                    if (baseFDE.getID().equals(featFDE.getID())
+                        && baseType.equals(featType)) {
+
+                        List<BodyDecl> bdList
+                            = baseND.getBodyDeclListNoTransform();
+                        bdList.removeChild(bdList.getIndexOfChild(baseFDE));
+                        featFDE.setOldParent(featFDE.getParent());
+
+                        baseND.addBodyDecl(featFDE);
+                        isComposed = true;
+                    }
+                }
+
+                /* If the field was not composed, just add it. */
+                if (! isComposed) {
+                    featFDE.setOldParent(featFDE.getParent());
+                    baseND.addBodyDecl(featFDE);
+                }
+
+            }
+
+            /* Process MethodDecl */
+            for (MethodDecl featMD : featMDs) {
+                featMD.setOldParent(featMD.getParent());
+                baseND.addBodyDecl(featMD);
+            }
+
+            /*
+             * Flushing the caches is needed because the structure of the class
+             * might have been changed due to composition of refinements.  So
+             * the old data in the caches must be flushed for new data to be
+             * generated.
+             */
+            //baseND.flushCaches();
+            baseND.flushCachesNoTransform();
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(ClassDecl baseCD, ClassDecl featCD) {
+
+            /* Check class names. */
+            if (! baseCD.getID().equals(featCD.getID())) {
+                return false; //TODO Unchecked exception here.
+            }
+
+            /* Modifiers. Feature Modifiers override thoes of the base. */
+            if (featCD.getModifiers().getModifierList()
+                .getNumChildNoTransform() != 0) {
+                Modifiers mods = featCD.getModifiersNoTransform();
+                mods.setOldParent(mods.getParent());
+                baseCD.setModifiers(mods);
+            }
+
+            /* SuperClassAccess. 'extends' in the class declaration. */
+            if (featCD.hasSuperClassAccess()) {
+
+                /* Feature SuperClassAccess overrides that of the base. */
+                Opt<Access> sup = featCD.getSuperClassAccessOptNoTransform();
+                sup.setOldParent(sup.getParent());
+                baseCD.setSuperClassAccessOpt(sup);
+            }
+
+            /* Implements */
+            if (featCD.getImplementsList().getNumChild() != 0) { // getNumChild with transform is OK.
+                List<Access> featImp
+                    = featCD.getImplementsListNoTransform();
+                List<Access> baseImp
+                    = baseCD.getImplementsListNoTransform();
+
+                /* Preserving Accesses of the base type. */
+                for (int i = 0; i < featImp.getNumChild(); ++i) { // getNumChild with transform is OK.
+                    Access ac = featImp.getChild(i); // getChild with transform is OK.
+
+                    /* Determine duplicates, that will be ommited. */
+                    boolean duplicate = false;
+                    for (int j = 0; j < baseImp.getNumChild(); ++j) { // getNumChild with transform is OK.
+                        Access baseAc = baseImp.getChild(j); // getNumChild with transform is OK.
+                        if (baseAc.type().erasure().typeName()
+                            .equals(ac.type().erasure().typeName())) {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+                    if (! duplicate) {
+                        ac.setOldParent(ac.getParent());
+                        baseImp.add(ac);
+                    }
+                }
+            }
+
+            // BodyDecl
+            /*
+             * Sort base and refinement BodyDecl by their types.
+             */
+
+            /* Containers for BodyDecls of the base CU. */
+            ArrayList<FieldDecl> baseFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> baseFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> baseMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> baseCons = new ArrayList<ConstructorDecl>();
+            ArrayList<InstanceInitializer> baseInstInits = new ArrayList<InstanceInitializer>();
+            ArrayList<StaticInitializer> baseStatInits = new ArrayList<StaticInitializer>();
+            ArrayList<MemberClassDecl> baseMemberCDs = new ArrayList<MemberClassDecl>();
+            ArrayList<MemberInterfaceDecl> baseMemberIDs = new ArrayList<MemberInterfaceDecl>();
+
+            /* Containers for BodyDecls of the refinement CU. */
+            ArrayList<FieldDecl> featFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> featFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> featMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> featCons = new ArrayList<ConstructorDecl>();
+            ArrayList<InstanceInitializer> featInstInits = new ArrayList<InstanceInitializer>();
+            ArrayList<StaticInitializer> featStatInits = new ArrayList<StaticInitializer>();
+            ArrayList<MemberClassDecl> featMemberCDs = new ArrayList<MemberClassDecl>();
+            ArrayList<MemberInterfaceDecl> featMemberIDs = new ArrayList<MemberInterfaceDecl>();
+
+            /* Sort out refinement BodyDecls into corresponding containers. */
+            for (BodyDecl featBD : featCD.getBodyDeclList()) {
+                if (featBD instanceof FieldDecl) {
+                    featFDs.add((FieldDecl) featBD);
+                } else if (featBD instanceof FieldDeclaration) {
+                    featFDEs.add((FieldDeclaration) featBD);
+                } else if (featBD instanceof MethodDecl) {
+                    featMDs.add((MethodDecl) featBD);
+                } else if (featBD instanceof ConstructorDecl) {
+                    featCons.add((ConstructorDecl) featBD);
+                } else if (featBD instanceof InstanceInitializer) {
+                    featInstInits.add((InstanceInitializer) featBD);
+                } else if (featBD instanceof StaticInitializer) {
+                    featStatInits.add((StaticInitializer) featBD);
+                } else if (featBD instanceof MemberClassDecl) {
+                        featMemberCDs.add((MemberClassDecl) featBD);
+                } else if (featBD instanceof MemberInterfaceDecl) {
+                        featMemberIDs.add((MemberInterfaceDecl) featBD);
+                } else {
+                    notImplemented(featBD);
+                }
+            }
+
+            /* Sort out base BodyDecls into corresponding containers. */
+            for (BodyDecl baseBD : baseCD.getBodyDeclList()) {
+                if (baseBD instanceof FieldDecl) {
+                    baseFDs.add((FieldDecl) baseBD);
+                } else if (baseBD instanceof FieldDeclaration) {
+                    baseFDEs.add((FieldDeclaration) baseBD);
+                } else if (baseBD instanceof MethodDecl) {
+                    baseMDs.add((MethodDecl) baseBD);
+                } else if (baseBD instanceof ConstructorDecl) {
+                    baseCons.add((ConstructorDecl) baseBD);
+                } else if (baseBD instanceof InstanceInitializer) {
+                    baseInstInits.add((InstanceInitializer) baseBD);
+                } else if (baseBD instanceof StaticInitializer) {
+                    baseStatInits.add((StaticInitializer) baseBD);
+                } else if (baseBD instanceof MemberClassDecl) {
+                        baseMemberCDs.add((MemberClassDecl) baseBD);
+                } else if (baseBD instanceof MemberInterfaceDecl) {
+                        baseMemberIDs.add((MemberInterfaceDecl) baseBD);
+                } else {
+                    notImplemented(baseBD);
+                }
+            }
+
+            /*
+             * Add clones of all the netsted class and interface declarations
+             * from the base class declaration to the refinement class
+             * declaration.  Otherwise name resolution will fail, if the
+             * refinement uses these nested types.
+             */
+            for (MemberClassDecl bCD : baseMemberCDs) {
+                try {
+                    featCD.addBodyDeclNoTransform(bCD.clone());
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            for (MemberInterfaceDecl bID : baseMemberIDs) {
+                try {
+                    featCD.addBodyDeclNoTransform(bID.clone());
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            /* Process FieldDecls */
+            // TODO
+            for (FieldDecl featFD : featFDs) {
+                notImplemented(featFD);
+                // TODO not forget to set old parent
+            }
+
+            /* Process FieldDeclarations */
+            for (FieldDeclaration featFDE : featFDEs) {
+                boolean isComposed = false;
+                for (int i = 0; !isComposed && !baseFDEs.isEmpty() && (i < baseFDEs.size()); ++i) {
+                    FieldDeclaration baseFDE = baseFDEs.get(i);
+
+                    /*
+                     * Compose two fields, if their types and names match
+                     * togather.
+                     */
+                    String featType = featFDE.getTypeAccess().type().typeName();
+                    String baseType = baseFDE.getTypeAccess().type().typeName();
+                    if (baseFDE.getID().equals(featFDE.getID())
+                        && baseType.equals(featType)) {
+
+                        List<BodyDecl> bdList
+                            = baseCD.getBodyDeclListNoTransform();
+                        bdList.removeChild(bdList.getIndexOfChild(baseFDE));
+                        featFDE.setOldParent(featFDE.getParent());
+                        baseCD.addBodyDecl(featFDE);
+                        isComposed = true;
+                    }
+                }
+
+                /* If the field was not composed, just add it. */
+                if (! isComposed) {
+                        FieldDeclaration copyFDE = featFDE.fullCopy();
+                        copyFDE.setOldParent(featFDE.getParent());
+                        baseCD.addBodyDecl(featFDE);
+                }
+
+            }
+
+            /* Process MethodDecl */
+            for (MethodDecl featMD : featMDs) {
+                boolean isComposed = false;
+                for (int i = 0; !isComposed && !baseMDs.isEmpty() && (i < baseMDs.size()); ++i) {
+                    MethodDecl baseMD = baseMDs.get(i);
+
+                    /*
+                     * Compose two methods, if their return types and signatures
+                     * match togather.
+                     */
+                    String featReturnType = featMD.getTypeAccess().type()
+                        .typeName();
+                    String baseReturnType = baseMD.getTypeAccess().type()
+                        .typeName();
+                    if (baseMD.signature().equals(featMD.signature())
+                        && baseReturnType.equals(featReturnType)) {
+                        // TODO find a way to ensure uniqueness of the
+                        // generated newBaseMDName. (e.g. extra table, to save
+                        // the references to the composed method and it's
+                        // invocations. If some names coinside - change the
+                        // name of the composed method and its invocations.)
+                        StringBuilder newBaseMDName = new StringBuilder()
+                            .append(ORIGINAL_DELIM)
+                            .append(baseMD.name())
+                            .append(ORIGINAL_DELIM)
+                            .append(baseMD.featureID())
+                            .append(ORIGINAL_DELIM);
+                        featMD.setOldParent(featMD.getParent());
+                        baseMD.setID(newBaseMDName.toString());
+
+                        /*
+                         * A name of MethodDecl has been changed in previous
+                         * line.  We have to flush previously stored name as
+                         * it is not uptodate any more and this will lead to
+                         * semantic errors.
+                         */
+                        baseCD.addBodyDecl(featMD);
+                        boolean hasOriginalKeyword =
+                            baseMD.accept(this, featMD);
+                        if (!hasOriginalKeyword) {
+
+                            /* No original keyword found. */
+
+                            /* Remove the base method declaration. */
+                            List<BodyDecl> bdList = baseCD
+                                .getBodyDeclListNoTransform();
+                            bdList.removeChild(bdList.getIndexOfChild(baseMD));
+                            baseMDs.remove(baseMD);
+                        } else {
+                            // TODO check newBaseMDName for uniqueness.
+                        }
+                        isComposed = true;
+                    }
+                }
+
+                /* If the method was not composed, just add it. */
+                if (!isComposed) {
+                                MethodDecl copyMD = featMD.fullCopy();
+                                copyMD.setOldParent(featMD.getParent());
+                                baseCD.addBodyDecl(copyMD);
+                }
+            }
+
+            /* Process ConstructorDecls */
+            for (ConstructorDecl featCon : featCons) {
+
+                /*
+                 * Omit default constructor added by JastAddJ.
+                 *
+                 * Assumption: IDstart field is set
+                 * by parser and corresponds to the positions of the construct in
+                 * the token stream. It can't be 0 if the construct was added to AST
+                 * by the parser.  If it is 0 then it is added by JastAddJ
+                 */
+                if (featCon.IDstart == 0) {
+                    continue;
+                }
+
+                boolean isComposed = false;
+                for (int i = 0; !isComposed && !baseCons.isEmpty() && (i < baseCons.size()); ++i) {
+                    ConstructorDecl baseCon = baseCons.get(i);
+
+                    /*
+                     * Compose two constructors, if their signatures match
+                     * togather.
+                     */
+                    if (baseCon.signature().equals(featCon.signature())) {
+                        List<Stmt> featStmtList = featCon.getBlock().getStmtListNoTransform();
+                        List<Stmt> baseStmtList = baseCon.getBlock().getStmtListNoTransform();
+                        int fs = featStmtList.getNumChildNoTransform();
+                        int bs = baseStmtList.getNumChildNoTransform();
+                        Block fbk = featCon.getBlockNoTransform();
+                        Block bbk = baseCon.getBlockNoTransform();
+                        for (int j = 0; j < bs; ++j) {
+                            Stmt st = bbk.getStmt(j);
+                            bbk.setStmt(st, j);
+                        }
+                        for (int j = 0; j < fs; ++j) {
+                            Stmt st = fbk.getStmt(j);
+                            st.setOldParent(st.getParent());
+                            bbk.setStmt(st, j + bs);
+                        }
+                        isComposed = true;
+                    }
+                }
+
+                /* If the constructor was not composed, just add it. */
+                if (! isComposed) {
+                    featCon.setOldParent(featCon.getParent());
+                    baseCD.addBodyDecl(featCon);
+                    //XXX DEBUG
+                    if (System.getProperty("debug") != null) {
+                        System.out.println("Constr. added:" + featCon.getID());
+                    }
+                }
+            }
+
+            /* Process StaticInitializers */
+            for (StaticInitializer featStatInit : featStatInits) {
+                featStatInit.setOldParent(featStatInit.getParent());
+                baseCD.addBodyDecl(featStatInit);
+            }
+
+            /* Process InstanceInitializers */
+            for (InstanceInitializer featInstInit : featInstInits) {
+                featInstInit.setOldParent(featInstInit.getParent());
+                baseCD.addBodyDecl(featInstInit);
+            }
+
+            /* Process MemberClassDecls */
+            for (MemberClassDecl featMemberCD : featMemberCDs) {
+                ClassDecl fCD = featMemberCD.getClassDeclNoTransform();
+                boolean composed = false;
+                for (MemberClassDecl baseMemberCD : baseMemberCDs) {
+                        ClassDecl bCD = baseMemberCD.getClassDeclNoTransform();
+                        if (bCD.getID().equals(fCD.getID())) {
+                                fCD.setOldParent(fCD.getParent());
+                                bCD.accept(this, fCD);
+                                composed = true;
+                        }
+                }
+                if (!composed) {
+                                featMemberCD.setOldParent(featMemberCD.getParent());
+                        baseCD.addBodyDecl(featMemberCD);
+                }
+            }
+
+            /* Process MemberInterfaceDecls */
+            // TODO
+            for (MemberInterfaceDecl featMemberID : featMemberIDs) {
+                notImplemented(featMemberID);
+                // TODO not forget to set old parent
+            }
+
+
+            /*
+             * Flushing the caches is needed because the structure of the class
+             * might have been changed due to composition of refinements.  So
+             * the old data in the caches must be flushed for new data to be
+             * generated.
+             */
+            baseCD.flushCachesNoTransform(); // no transform is important!
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(MethodDecl baseMD, MethodDecl featMD) {
+            boolean hasOriginal = false;
+            if (featMD.hasBlock()) {  /* not an abstract method */
+                if (renameOriginal(featMD.getBlock(), baseMD.getID()))
+                    hasOriginal = true;
+            }
+            return hasOriginal;
+        }
+
+        private boolean renameOriginal(ASTNode node, String name) {
+            boolean hasOriginal = false;
+            if (node instanceof MethodAccess) {
+                MethodAccess ma = (MethodAccess) node;
+                if (ma.getID().equals(ORIGINAL_OPERATOR)) {
+                    hasOriginal = true;
+                    ma.setID(name);
+                    if (System.getProperty("debug") != null) {
+                        System.out.println("original() processed");
+                    }
+                }
+            } else {
+                for(int i = 0; i < node.getNumChildNoTransform(); i++) {
+                    if (renameOriginal(node.getChildNoTransform(i), name))
+                        hasOriginal = true;
+                }
+            }
+            return hasOriginal;
+        }
+
+        private void notImplemented(ASTNode<? extends ASTNode> node) {
+            System.err.println("E: " + node.getClass().getName()
+                               + " composition is not implemented!");
+        }
+    }
+}
+
+aspect ComposingVisitorRSF {
+    // TODO incorporate changes from the ComposeVisiorNormal
+    public class ComposingVisitorRSF implements ComposingVisitor {
+        public boolean visit(CompilationUnit baseCU, CompilationUnit featCU) {
+            /*
+             * Package declarations will not be checked for match. It is done by
+             * JavaComposer.  getPackageDecl()
+             */
+
+            /* Import derlarations. */
+            List<ImportDecl> baseIDs = baseCU.getImportDeclList();
+            for (ImportDecl featID : featCU.getImportDeclList()) {
+                baseIDs.add(featID);
+            }
+
+            /*
+             * Add accumulated imports to the refinement CU to prevent possible
+             * failed external type resolutions.
+             */
+            try {
+                featCU.setImportDeclList(baseIDs.clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+            //featCU.flushCaches();
+
+            /* Type declarations */
+            for (TypeDecl featTD : featCU.getTypeDeclList()) {
+                for (TypeDecl baseTD : baseCU.getTypeDeclList()) {
+                    baseTD.accept(this, featTD);
+                }
+            }
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(TypeDecl baseTD, TypeDecl featTD) {
+            if (baseTD instanceof ClassDecl && featTD instanceof ClassDecl) {
+
+                /* Preserve refining role. Used while generating introduces. */
+                baseTD.compilationUnit().addRefiningType((ClassDecl) featTD);
+                return ((ClassDecl) baseTD).accept(this, (ClassDecl) featTD);
+            } else if (baseTD instanceof InterfaceDecl
+                       && featTD instanceof InterfaceDecl) {
+
+                /* Preserve refining role. Used while generating introduces. */
+                baseTD.compilationUnit().addRefiningType((InterfaceDecl) featTD);
+                return ((InterfaceDecl) baseTD).accept(this, (InterfaceDecl) featTD);
+            }
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(InterfaceDecl baseND, InterfaceDecl featND) {
+
+            /* Check interface names */
+            if (! baseND.getID().equals(featND.getID())) {
+                return false; //TODO Unchecked exception here.
+            }
+
+            /* Modifiers. Feature Modifiers override thoes of the base. */
+            if (featND.getModifiers().getModifierList()
+                .getNumChildNoTransform() != 0) {
+                Modifiers mods = featND.getModifiersNoTransform();
+                mods.setOldParent(mods.getParent());
+                baseND.setModifiers(mods);
+            }
+
+            /*
+             *'extends' in the interface declaration. Preserving Accesses of
+             * the base type.
+             */
+            if (featND.getSuperInterfaceIdListNoTransform()
+                .getNumChild() != 0) { // getNumChild with trasform OK
+                List<Access> featSup =
+                    featND.getSuperInterfaceIdListNoTransform();
+                List<Access> baseSup =
+                    baseND.getSuperInterfaceIdListNoTransform();
+
+                for (int i = 0; i < featSup.getNumChild(); ++i) { // getNumChild with trasform OK
+                    Access ac = featSup.getChild(i); // getChild with trasform OK
+                    ac.setOldParent(ac.getParent());
+                    baseSup.add(ac);
+                }
+            }
+
+            // BodyDecl
+            /*
+             * Sort base and refinement BodyDecl by their types.
+             */
+            ArrayList<FieldDecl> baseFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> baseFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> baseMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> baseCons = new ArrayList<ConstructorDecl>();
+
+            ArrayList<FieldDecl> featFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> featFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> featMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> featCons = new ArrayList<ConstructorDecl>();
+
+            for (BodyDecl featBD : featND.getBodyDeclList()) {
+                if (featBD instanceof FieldDecl) {
+                    featFDs.add((FieldDecl) featBD);
+                } else if (featBD instanceof FieldDeclaration) {
+                    featFDEs.add((FieldDeclaration) featBD);
+                } else if (featBD instanceof MethodDecl) {
+                    featMDs.add((MethodDecl) featBD);
+                } else if (featBD instanceof ConstructorDecl) {
+                    featCons.add((ConstructorDecl) featBD);
+                } else {
+                    notImplemented(featBD);
+                }
+            }
+            for (BodyDecl baseBD : baseND.getBodyDeclList()) {
+                if (baseBD instanceof FieldDecl) {
+                    baseFDs.add((FieldDecl) baseBD);
+                } else if (baseBD instanceof FieldDeclaration) {
+                    baseFDEs.add((FieldDeclaration) baseBD);
+                } else if (baseBD instanceof MethodDecl) {
+                    baseMDs.add((MethodDecl) baseBD);
+                } else if (baseBD instanceof ConstructorDecl) {
+                    baseCons.add((ConstructorDecl) baseBD);
+                } else {
+                    notImplemented(baseBD);
+                }
+            }
+
+            /* Process FieldDecls */
+            // TODO
+            for (FieldDecl featFD : featFDs) {
+                notImplemented(featFD);
+                // TODO not forget to set old parent
+            }
+
+            /* Process FieldDeclarations */
+            for (FieldDeclaration featFDE : featFDEs) {
+                featFDE.setOldParent(featFDE.getParent());
+                baseND.addBodyDecl(featFDE);
+            }
+
+            /* Process MethodDecl */
+            for (MethodDecl featMD : featMDs) {
+                featMD.setOldParent(featMD.getParent());
+                baseND.addBodyDecl(featMD);
+            }
+
+            /*
+             * Flushing the caches is needed because the structure of the class
+             * might have been changed due to composition of refinements.  So
+             * the old data in the caches must be flushed for new data to be
+             * generated.
+             */
+            //baseND.flushCaches();
+            baseND.flushCachesNoTransform();
+
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(ClassDecl baseCD, ClassDecl featCD) {
+
+            /* Check class names */
+            if (! baseCD.getID().equals(featCD.getID())) {
+                return false; //TODO Unchecked exception here.
+            }
+
+            /* Modifiers. Feature Modifiers override thoes of the base. */
+            if (featCD.getModifiers().getModifierList()
+                .getNumChildNoTransform() != 0) {
+                Modifiers mods = featCD.getModifiersNoTransform();
+                mods.setOldParent(mods.getParent());
+                baseCD.setModifiers(mods);
+            }
+
+            /* SuperClassAccess. 'extends' in the class declaration. */
+            if (featCD.hasSuperClassAccess()) {
+                if (baseCD.hasSuperClassAccess()) {
+
+                    /*
+                     * Preserving Accesses of the base type for refs generation.
+                     * TODO It is a hack: The Access to the super class is added
+                     * to the list of implemented interfaces, but the super
+                     * class is not an interface.
+                     */
+                    Access baseSup = baseCD.getSuperClassAccess();
+                    baseCD.getImplementsListNoTransform().add(baseSup);
+                }
+                Access featSup = featCD.getSuperClassAccess();
+                featSup.setOldParent(featSup.getParent());
+                baseCD.setSuperClassAccess(featSup);
+            }
+
+            /* Implements */
+            if (featCD.getImplementsList().getNumChild() != 0) { // getNumChild with transform is OK.
+                List<Access> featImp
+                    = featCD.getImplementsListNoTransform();
+                List<Access> baseImp
+                    = baseCD.getImplementsListNoTransform();
+
+                /* Preserving Accesses of the base type. */
+                for (int i = 0; i < featImp.getNumChild(); ++i) { // getNumChild with transform is OK.
+                    Access ac = featImp.getChild(i); // getChild with transform is OK.
+                    ac.setOldParent(ac.getParent());
+                    baseImp.add(ac);
+                }
+            }
+
+            // BodyDecl
+            /*
+             * Sort base and refinement BodyDecl by their types.
+             */
+            ArrayList<FieldDecl> baseFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> baseFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> baseMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> baseCons = new ArrayList<ConstructorDecl>();
+            ArrayList<InstanceInitializer> baseInstInits = new ArrayList<InstanceInitializer>();
+            ArrayList<StaticInitializer> baseStatInits = new ArrayList<StaticInitializer>();
+
+            ArrayList<FieldDecl> featFDs = new ArrayList<FieldDecl>();
+            ArrayList<FieldDeclaration> featFDEs =
+                new ArrayList<FieldDeclaration>();
+            ArrayList<MethodDecl> featMDs = new ArrayList<MethodDecl>();
+            ArrayList<ConstructorDecl> featCons = new ArrayList<ConstructorDecl>();
+            ArrayList<InstanceInitializer> featInstInits = new ArrayList<InstanceInitializer>();
+            ArrayList<StaticInitializer> featStatInits = new ArrayList<StaticInitializer>();
+            for (BodyDecl featBD : featCD.getBodyDeclList()) {
+                if (featBD instanceof FieldDecl) {
+                    featFDs.add((FieldDecl) featBD);
+                } else if (featBD instanceof FieldDeclaration) {
+                    featFDEs.add((FieldDeclaration) featBD);
+                } else if (featBD instanceof MethodDecl) {
+                    featMDs.add((MethodDecl) featBD);
+                } else if (featBD instanceof ConstructorDecl) {
+                    featCons.add((ConstructorDecl) featBD);
+                } else if (featBD instanceof InstanceInitializer) {
+                    featInstInits.add((InstanceInitializer) featBD);
+                } else if (featBD instanceof StaticInitializer) {
+                    featStatInits.add((StaticInitializer) featBD);
+                } else {
+                    notImplemented(featBD);
+                }
+            }
+            for (BodyDecl baseBD : baseCD.getBodyDeclList()) {
+                if (baseBD instanceof FieldDecl) {
+                    baseFDs.add((FieldDecl) baseBD);
+                } else if (baseBD instanceof FieldDeclaration) {
+                    baseFDEs.add((FieldDeclaration) baseBD);
+                } else if (baseBD instanceof MethodDecl) {
+                    baseMDs.add((MethodDecl) baseBD);
+                } else if (baseBD instanceof ConstructorDecl) {
+                    baseCons.add((ConstructorDecl) baseBD);
+                } else if (baseBD instanceof InstanceInitializer) {
+                    baseInstInits.add((InstanceInitializer) baseBD);
+                } else if (baseBD instanceof StaticInitializer) {
+                    baseStatInits.add((StaticInitializer) baseBD);
+                } else {
+                    notImplemented(baseBD);
+                }
+            }
+
+            /* Process FieldDecls */
+            // TODO
+            for (FieldDecl featFD : featFDs) {
+                notImplemented(featFD);
+                // TODO not forget to set old parent
+            }
+
+            /* Process FieldDeclarations */
+            for (FieldDeclaration featFDE : featFDEs) {
+                featFDE.setOldParent(featFDE.getParent());
+                baseCD.addBodyDecl(featFDE);
+            }
+
+            /* Process MethodDecl */
+            for (MethodDecl featMD : featMDs) {
+                featMD.setOldParent(featMD.getParent());
+                baseCD.addBodyDecl(featMD);
+            }
+
+            /* Process ConstructorDecls
+             * TODO every refinement constructor
+             * contains an impicit original() as the very first instruction.
+             */
+            for (ConstructorDecl featCon : featCons) {
+                featCon.setOldParent(featCon.getParent());
+                baseCD.addBodyDecl(featCon);
+            }
+
+            /* Process StaticInitializers */
+            for (StaticInitializer featStatInit : featStatInits) {
+                featStatInit.setOldParent(featStatInit.getParent());
+                baseCD.addBodyDecl(featStatInit);
+            }
+
+            /* Process InstanceInitializers */
+            for (InstanceInitializer featInstInit : featInstInits) {
+                featInstInit.setOldParent(featInstInit.getParent());
+                baseCD.addBodyDecl(featInstInit);
+            }
+
+            /*
+             * Flushing the caches is needed because the structure of the class
+             * might have been changed due to composition of refinements.  So
+             * the old data in the caches must be flushed for new data to be
+             * generated.
+             */
+            //baseCD.flushCaches();
+            baseCD.flushCachesNoTransform();
+            // TODO return value should depend on success of the composition.
+            return true;
+        }
+
+        public boolean visit(MethodDecl baseMD, MethodDecl featMD){
+            throw new UnsupportedOperationException();
+        }
+
+        private void notImplemented(ASTNode<? extends ASTNode> node) {
+            System.err.println("E: " + node.getClass().getName()
+                               + " composition is not implemented!");
+        }
+    }
+}
+
+/*
+ * Utility methods and fields for composition process.
+ */
+aspect ComposeUtil {
+
+    /*
+     * Like original flushCaches() but uses NoTransform methods.
+     */
+    public void ASTNode.flushCachesNoTransform() {
+        flushCache();
+        for(int i = 0; i < getNumChildNoTransform(); i++)
+            getChildNoTransform(i).flushCachesNoTransform();
+    }
+
+    /*
+     * Adds the source file to the Program's sources only if the Program has no
+     * a CU for the source file already.
+     */
+    public boolean Program.addSourceFileIfNew(String name) {
+        for (CompilationUnit cu : getCompilationUnitListNoTransform()) {
+            if (cu.fromSource() && cu.relativeName().equals(name))
+                return false;
+        }
+        addSourceFile(name);
+        return true;
+    }
+
+    /*
+     * Calculate the fully qaulified name of a type the CompilationUnit
+     * contains.
+     * TODO  used by AccessCounter extension but can be avoided!
+     */
+    public String CompilationUnit.classQName() {
+        if (relativeName == null)
+            return null;
+        String qName = getPackageDecl();
+        int idx = relativeName.lastIndexOf(File.separatorChar);
+        String id = relativeName.substring(idx+1);
+        idx = id.indexOf(".");
+        id = id.substring(0, idx);
+        return qName.isEmpty() ? id : qName + "." + id;
+    }
+
+    /*
+     * Adds attribute denotign the fully qualified name of a type represented
+     * by the AST.
+     * TODO used by AccessCounter extension but can be avoided!
+     */
+    private java.util.Set<String> Program.classQNames;
+    public void Program.setClassQNames(java.util.Set<String> qNames) {
+        classQNames = qNames;
+    }
+
+    /*
+     * Contains all the refining roles of the base role the compilation unit
+     * belongs to. Information in this roles is used while generating introduces
+     * relations.
+     */
+    private java.util.Collection<ReferenceType> CompilationUnit.refiningTypes
+        = null;
+
+    /*
+     * Used while generating introduces relation.
+     */
+    public java.util.Collection<ReferenceType> CompilationUnit.getRefiningTypes() {
+        if (refiningTypes == null)
+            return null;
+        return Collections.unmodifiableCollection(refiningTypes);
+    }
+
+    /*
+     * Used in rsf composing visitor.
+     */
+    public void
+        CompilationUnit.addRefiningType(ReferenceType type) {
+        if (refiningTypes == null)
+            refiningTypes = new java.util.ArrayList<ReferenceType>();
+        refiningTypes.add(type);
+    }
+}

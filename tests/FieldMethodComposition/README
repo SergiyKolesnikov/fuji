@@ -1,0 +1,23 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- p1
+|       `-- A.java
+|-- F2
+|   `-- p1
+|       `-- A.java
+`-- F3
+    `-- p1
+       `-- A.java
+
+
+What is tested:
+---------------
+
+- Method composition and original().
+
+Correct output:
+---------------
+
+See *.ok files.

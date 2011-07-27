@@ -1,0 +1,81 @@
+aspect FOPModifeirs {
+
+    /*
+     * Refine Java1_4Frontend/Modifiers.jrag
+     */
+
+    syn lazy boolean Modifiers.isFeature() = numModifier("feature") != 0;
+    syn lazy boolean Modifiers.isSubsequent() = numModifier("subsequent") != 0;
+    syn lazy boolean Modifiers.isProgram() = numModifier("program") != 0
+        || (!isFeature() && !isSubsequent());
+
+    syn int Modifiers.numFOPModifiers() =
+        numModifier("feature") + numModifier("subsequent") + numModifier("program");
+
+    // TODO:
+    // Check if the modifier can be set in the current context.
+    // inh boolean Modifiers.mayBeFeature();
+    // inh boolean Modifiers.mayBeSubsequent();
+    // inh boolean Modifiers.mayBeProgram();
+
+    refine Modifiers void Modifiers.checkModifiers() {
+        refined();
+        if(numFOPModifiers() > 1)
+            error("only one feature, subsequent or program modifier can be specified");
+
+        // TODO: see above inh boolean Modifiers.mayBeFeature();
+        //if(isFeature() && !mayBeFeature())
+        //    error("modifier feature not allowed in this context");
+    }
+}
+
+aspect FOPAccessControl {
+    /* TODO extend AccessControl.FieldDeclaration.accessibleFrom(..) wiht FOP
+       modifiers checks. */
+    /* TODO make this checks like the
+       public-private-... checks. i.e. lookupVariable for a given node should
+       return emptyset, if the source has not the access rights.
+       See LookupVariable.jrag *.qualifiedLookupVariable(String name) and
+       unqualifiedScope().lookupVariable(name); (unqualifiedScope() is declared
+       in LookupMethod.jrag)
+    */
+    public void Access.accessControl() {
+        ASTNode node = null; // access target member.
+        Modifiers mods = null; // targest's modifiers.
+        String targetName = null;
+
+        SimpleSet decls = null;
+        if (this instanceof VarAccess) {
+            decls = ((VarAccess) this).decls();
+        } else if (this instanceof MethodAccess) {
+            decls = ((MethodAccess) this).decls();
+        } else {
+            return;
+        }
+
+        if(decls.size() == 1) {
+            node = (ASTNode) decls.iterator().next();
+        } else {
+            return;
+        }
+
+        if (node instanceof FieldDeclaration) {
+            mods = ((FieldDeclaration) node).getModifiersNoTransform();
+            targetName = ((FieldDeclaration) node).name();
+        } else if (node instanceof MethodDecl) {
+            mods = ((MethodDecl) node).getModifiersNoTransform();
+            targetName = ((MethodDecl) node).signature();
+        } else {
+            return;
+        }
+
+        super.accessControl();
+        if (mods.isSubsequent()
+            && node.featureID() > this.featureID()) {
+            error("Member "+ targetName +" is declared subsequent. Can not access it from a preceding feature.");
+        } else if (mods.isFeature()
+                   && node.featureID() != this.featureID()) {
+            error("Member "+ targetName +" is declared feature. Can not access it from another feature.");
+        }
+    }
+}

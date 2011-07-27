@@ -1,0 +1,5 @@
+Modifier modifier =
+    FEATURE                         {: return new Modifier("feature"); :}
+  | SUBSEQUENT                      {: return new Modifier("subsequent"); :}
+  | PROGRAM                         {: return new Modifier("program"); :}
+  ;

@@ -1,0 +1,5 @@
+* Create a test case that demonstrates the JastAddJ bug
+http://bugs.jastadd.org/cgi-bin/bugzilla/show_bug.cgi?id=41
+
+* FieldMethodCompostion: create a testcase for refinement of methods and 
+fields with changing modifiers.

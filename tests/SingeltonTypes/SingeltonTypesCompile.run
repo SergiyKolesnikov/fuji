@@ -1,0 +1,2 @@
+#!/bin/sh
+java -classpath classes A >tmp.out

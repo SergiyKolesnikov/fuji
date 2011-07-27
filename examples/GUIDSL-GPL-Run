@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -cp "GUIDSL/classes/:lib/jakarta.jar:lib/jdom.jar:lib/sat4j.jar" Main GPL/GPL.model

@@ -1,0 +1,17 @@
+Project structure:
+------------------
+.
+`-- F1
+    `-- A.java
+
+What is tested:
+---------------
+
+Source-to-source translation of Enums is tested.  Due to a bug in JastAddJ
+(http://bugs.jastadd.org/cgi-bin/bugzilla/show_bug.cgi?id=42) Enum constructors
+present in the input source code are not present in the output source code.
+
+Correct output:
+---------------
+
+See *.ok files.

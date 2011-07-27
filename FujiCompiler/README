@@ -1,0 +1,18 @@
+src - Fuji compiler source code.  
+
+lib - third-party code used by Fuji.
+
+lib/JastAddJ-SVNRevXXXX - JastAddJ source code. SVN rev. XXXX.
+   run 'svn log . | head -10' in the lib/JastAddJ-SVNRevXXXX 
+   to see the revision of the last commit.
+   How to checkout the latest version:
+   $ svn checkout --username anonymous --password anonymous http://svn.cs.lth.se/svn/jastadd-oxford/projects/trunk/JastAddJ/
+
+build - directory for class files and jar files.
+
+ant targets:
+  build-nomod - build fuji without FOP access modifiers
+  build       - build fuji
+  clean       - remove all generated files and class files
+  jar-nomod   - build a runnable jar file (fuji without FOP access modifiers)
+  jar         - build a runnable jar file

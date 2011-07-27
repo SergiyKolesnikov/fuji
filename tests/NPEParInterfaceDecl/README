@@ -1,0 +1,51 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- GPL
+|       `-- VertexIter.java
+`-- F2
+    `-- GPL
+        `-- Vertex.java
+
+What is tested:
+---------------
+Following error:
+
+Exception in thread "main" java.lang.NullPointerException
+	at AST.ParInterfaceDecl.supertypeRawInterfaceDecl_compute(ParInterfaceDecl.java:660)
+	at AST.ParInterfaceDecl.supertypeRawInterfaceDecl(ParInterfaceDecl.java:656)
+	at AST.RawInterfaceDecl.subtype_compute(RawInterfaceDecl.java:406)
+	at AST.RawInterfaceDecl.subtype(RawInterfaceDecl.java:370)
+	at AST.RawInterfaceDecl.instanceOf_compute(RawInterfaceDecl.java:446)
+	at AST.RawInterfaceDecl.instanceOf(RawInterfaceDecl.java:440)
+	at AST.ReferenceType.wideningConversionTo_compute(ReferenceType.java:289)
+	at AST.ReferenceType.wideningConversionTo(ReferenceType.java:285)
+	at AST.TypeDecl.refined_TypeAnalysis_assignConversionTo_TypeDecl_Expr(TypeDecl.java:1449)
+	at AST.TypeDecl.assignConversionTo_compute(TypeDecl.java:2555)
+	at AST.TypeDecl.assignConversionTo(TypeDecl.java:2550)
+	at AST.FieldDeclaration.typeCheck(FieldDeclaration.java:226)
+	at AST.ASTNode.collectErrors(ASTNode.java:198)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.ASTNode.collectErrors(ASTNode.java:205)
+	at AST.CompilationUnit.errorCheck(CompilationUnit.java:112)
+	at JavaComposer.checkAndCompile(JavaComposer.java:291)
+	at JavaComposer.process(JavaComposer.java:186)
+	at JavaComposer.<init>(JavaComposer.java:110)
+	at JavaComposer.main(JavaComposer.java:97)
+
+Correct output:
+---------------
+
+See *.ok files.

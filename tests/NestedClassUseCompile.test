@@ -1,0 +1,6 @@
+#!/bin/sh
+CL=classes
+
+cd NestedClassUse
+/bin/rm -rf "$CL"
+java -jar ../../FujiCompiler/build/fuji.jar -d "$CL" Test.features

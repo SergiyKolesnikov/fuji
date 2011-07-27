@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd MultipleTopTypes
+/bin/rm -rf classes 2>&1 >/dev/null
+java -jar ../../FujiCompiler/build/fuji.jar -d classes Test.features >tmp.out

@@ -1,0 +1,21 @@
+Project structure:
+------------------
+ReportParseError2
+|-- F1
+|   `-- some
+|       `-- A.java
+|-- F2
+|   `-- some
+|       `-- A.java
+`-- Test.features
+
+
+What is tested:
+---------------
+
+Parse errors in a refinement class must be reported.
+
+Correct output:
+---------------
+
+See *.ok files.

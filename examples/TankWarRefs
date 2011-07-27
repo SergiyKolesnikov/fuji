@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd TankWar
+java -jar ../../FujiCompiler/build/fuji.jar -fopRefs TankWarAll.features

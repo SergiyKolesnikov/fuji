@@ -1,0 +1,19 @@
+Project structure:
+------------------
+Initializers
+|-- F1
+|   `-- A.java
+`-- F2
+    `-- A.java
+
+
+
+What is tested:
+---------------
+
+Composition of static and instance initializers.  A class can contain multiple initializers, so refinments' initializers are just added to the base class.
+
+Correct output:
+---------------
+
+See *.ok files.

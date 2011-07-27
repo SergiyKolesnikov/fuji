@@ -1,0 +1,4 @@
+#!/bin/sh
+java -cp classes Asub >tmp.out
+java -cp classes Nsub >>tmp.out
+java -cp classes Rsub >>tmp.out

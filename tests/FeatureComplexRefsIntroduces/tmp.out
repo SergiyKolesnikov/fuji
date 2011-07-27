@@ -1,0 +1,17 @@
+introduces F1 ::A
+introduces F1 ::A.A()
+introduces F1 ::A.main(java.lang.String[])
+introduces F2 ::A
+introduces F2 ::A.A()
+introduces F2 ::A.get()
+introduces F2 ::A.z
+introduces F3 ::A
+introduces F3 ::A.A()
+introduces F3 ::A.get()
+introduces F3 ::A.z
+introduces F4-black ::B
+introduces F4-black ::B.B()
+introduces F4-black ::B.print()
+introduces F4-white ::B
+introduces F4-white ::B.B()
+introduces F4-white ::B.print()

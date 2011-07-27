@@ -1,0 +1,15 @@
+Project structure:
+------------------
+`-- F1
+    |-- Main.java
+    `-- Maler.java
+
+What is tested:
+---------------
+
+Maler extends java.awt.Canvas and overrides its method paint(Graphics).  The overriden method should not appear twice in the resultin class.
+
+Correct output:
+---------------
+
+See *.ok files.

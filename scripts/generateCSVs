@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Runs *Count scripts and generates .csv, .err files.
+
+SCRIPT_SUFFIX="Count"
+
+# Find and execute *Count scripts generating .CSVs.
+COUNT_SCRIPTS=`find -maxdepth 1 -type f -iname "*$SCRIPT_SUFFIX"`
+for I in $COUNT_SCRIPTS; do
+    echo "$I"
+    CSVNAME="${I%$SCRIPT_SUFFIX}"
+    "$I" 2>"$CSVNAME".err >"$CSVNAME".csv
+done
+
+# Find empty .CSVs (indicates generation errors)
+CSV_FILES=`find -maxdepth 1 -type f -iname "*.csv"`
+echo
+echo "Empty .csv:"
+for I in $CSV_FILES; do
+    if [ ! -s "$I" ]; then
+	echo "$I"
+    fi
+done

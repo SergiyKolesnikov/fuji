@@ -1,0 +1,30 @@
+/*
+ * This aspect implements generation of the source code for a
+ * compilation unit.
+ */
+
+aspect SourceCodeGeneration {
+    public void CompilationUnit.generateSourcefile(String destination) throws
+    IOException {
+        
+        /* Build a filepath for the source file. */
+        String relativePath = getPackageDecl().replaceAll("[.]", File.separator) 
+            + File.separator;
+        int idx = relativeName.lastIndexOf(File.separatorChar);
+        String name = relativeName.substring(idx+1);
+        String destinationPathName = destination + File.separator + relativePath + name;
+        
+        if(options().verbose()) System.out.println("Writing source file to"
+                + destinationPathName);
+        
+        /* Write the source file. */
+        File dest = new File(destinationPathName);
+        File parentFile = dest.getParentFile();
+        if(parentFile != null)
+            parentFile.mkdirs();
+        FileWriter fw = new FileWriter(dest);
+        fw.write(this.toString());
+        fw.write('\n');
+        fw.close();
+    }
+}

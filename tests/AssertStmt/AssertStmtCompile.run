@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -cp classes AIterator 2>tmp.out

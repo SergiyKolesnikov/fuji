@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -cp classes Graph.Graph >tmp.out

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Creates fuji.jar in FujiCompiler/build
+
+THISPATH=`readlink -f "$0"`
+THISPATH=`dirname "$THISPATH"`
+cd "$THISPATH"/../FujiCompiler
+ant jar

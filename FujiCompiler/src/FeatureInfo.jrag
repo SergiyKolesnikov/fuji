@@ -1,0 +1,50 @@
+aspect FeatureInfo {
+    
+    /* 
+     * featureID is used to identify a feature the construct belongs to and to 
+     * determine its position in the total order of the features.
+     */
+    protected int ASTNode.featureID = -1;
+    public int ASTNode.featureID() {
+        if (featureID == -1) {
+            ASTNode parent = getOldParent(); // returns parent if no oldparent
+            if (parent == null){
+                featureID = -1;
+            } else {
+                featureID = parent.featureID();
+            }
+        }
+        return featureID;
+    }
+    public void CompilationUnit.setFeatureID(int id) {
+        featureID = id;
+    }
+
+    /* Saves the old parent of a composed node. */
+    private ASTNode ASTNode.oldParent = null;
+    public ASTNode ASTNode.getOldParent() {
+        if (oldParent == null)
+            oldParent = getParent();
+        return oldParent;
+    }
+    public void ASTNode.setOldParent(ASTNode parent) {
+        oldParent = parent;
+    }
+    
+    /* 
+     * Indicates a compilation unit composed from roles.  In contrast to units 
+     * generated from source files not in a feature module (comming from jars 
+     * or included by a user trough classpath).
+     */
+    private boolean CompilationUnit.isFromRole = false;
+    public void CompilationUnit.setFromRole(boolean b) {
+        isFromRole = b;
+    }
+    public boolean CompilationUnit.fromRole() {
+        return isFromRole;
+    }
+    
+    /* Allows every node to access the program node. */
+    syn Program ASTNode.getProgram() = getParent().getProgram();
+    eq Program.getProgram() = this;
+}

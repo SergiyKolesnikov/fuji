@@ -1,0 +1,26 @@
+Project structure:
+------------------
+
+DoubleCompilation
+|-- F1
+|   `-- some
+|       |-- A.java
+|       `-- I.java
+`-- F2
+    `-- some
+        `-- A.java
+
+What is tested:
+---------------
+
+Class A is independent of I and is compiled without compiling I.  I references
+A and A must be compiled together with I.  The test has to prove that A is
+compiled only once, irrespectively of how many classes reference it.
+
+Introduces statistics is used in this test because the output idirectly shows
+which classes may be compiled how many times.
+
+Correct output:
+---------------
+
+See *.ok files.

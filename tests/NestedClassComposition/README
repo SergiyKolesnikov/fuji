@@ -1,0 +1,15 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- A.java
+`-- F2
+    `-- A.java
+
+What is tested:
+---------------
+Composition of ntested (static) and inner (non-static) classes.
+
+Correct output:
+---------------
+See *.ok files.

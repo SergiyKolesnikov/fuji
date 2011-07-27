@@ -1,0 +1,6 @@
+introduces F1 some::A
+introduces F1 some::A.A()
+introduces F1 some::I
+introduces F1 some::I.f()
+introduces F2 some::A
+introduces F2 some::A.A()

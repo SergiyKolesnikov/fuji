@@ -1,0 +1,3 @@
+Modifier modifier =
+    REFINES                         {: return new Modifier("refines"); :}
+  ;

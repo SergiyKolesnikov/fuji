@@ -1,0 +1,14 @@
+introduces F1 some::A
+introduces F1 some::A.A()
+introduces F1 some::A.j
+introduces F1 some::A.methodI()
+introduces F1 some::A.methodInF1(java.lang.Long, int)
+introduces F1 some::A.refinedInF2()
+introduces F1 some::A.stringArray
+introduces F1 some::I
+introduces F1 some::I.k
+introduces F1 some::I.methodI()
+introduces F2 some::A
+introduces F2 some::A.A()
+introduces F2 some::A.methodInF2()
+introduces F2 some::A.refinedInF2()

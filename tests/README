@@ -1,0 +1,4 @@
+This directory contains regression tests. In particular, CompleteModifierTest
+tests the novel feature-oriented access control mechanism of Fuji. For more
+details on the access control mechanism, we refer the reader to the
+Fuji website: www.fosd.de/fuji

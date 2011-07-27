@@ -1,0 +1,16 @@
+Project structure:
+------------------
+.
+`-- F1
+    `-- A.java
+
+
+What is tested:
+---------------
+
+Parse errors in a base class must be reported.
+
+Correct output:
+---------------
+
+See *.ok files.

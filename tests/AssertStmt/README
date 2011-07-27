@@ -1,0 +1,18 @@
+Project structure:
+------------------
+.
+`-- F1
+    `-- AIterator.java
+
+What is tested:
+---------------
+
+JastAddJ bug (TODO report it): 'assert' statement in the overriding next() 
+method of a class implementing Iterator interface causes the 
+"java.lang.ClassFormatError: Duplicate method name&signature in class file 
+AIterator" runtime exception
+
+Correct output:
+---------------
+
+See *.ok files.

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ReportParseError2
+/bin/rm -rf classes 2>&1 >/dev/null
+java -jar ../../FujiCompiler/build/fuji.jar -d classes Test.features 2>tmp.out

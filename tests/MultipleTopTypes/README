@@ -1,0 +1,15 @@
+Project structure:
+------------------
+
+
+
+What is tested:
+---------------
+
+It's possible to put multiple top classes in one file.  Fuji must cope with such
+files.
+
+Correct output:
+---------------
+
+See *.ok files.

@@ -1,0 +1,25 @@
+Project structure:
+------------------
+ConstructorNotFound
+|-- F1
+|   |-- p
+|   |   `-- A.java
+|   `-- q
+|       `-- B.java
+`-- F2
+    |-- p
+    |   `-- A.java
+    `-- q
+        `-- B.java
+
+What is tested:
+---------------
+
+A constractor of B (in F2/q.B) with package access is accessed from another
+package (F2/p.A).  An access error must be reported by the compiler.
+
+
+Correct output:
+---------------
+
+See *.ok files.

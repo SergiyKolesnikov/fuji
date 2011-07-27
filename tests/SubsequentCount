@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd Subsequent
+/bin/rm -rf classes 2>&1 >/dev/null
+java -Ddebug -jar ../../FujiCompiler/build/fuji.jar -fopStatistic -d classes Subsequent.features

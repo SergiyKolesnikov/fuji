@@ -1,0 +1,44 @@
+Project structure:
+------------------
+
+FeatureRefsIntroduces
+|-- F1
+|   `-- some
+|       |-- A.java
+|       |-- A.java~
+|       |-- I.java
+|       `-- I.java~
+|-- F2
+|   `-- some
+|       |-- A.java
+|       `-- A.java~
+`-- Test.features
+
+What is tested:
+---------------
+
+1) FeatureRefsTestIntroduces.test
+
+Generating introduces relatinos (-fopIntroduces switch) is tested on a simple
+example.
+
+Note: interface methods (method prototypes) are not liste in the
+introduces.  Interfaces and interface constants are listed.
+
+2) FeatureRefsTestRefs.test 
+
+Generating ref relations (-fopRefs switch) is tested.
+
+The test covers:
+
+- Tyep reference with 'extends' and 'implements' keywords, in variable
+  definitions, in array instantiations, in method parameter declarations, in
+  method return types, in object instantiantions, in casts.
+- Spercial reference type produced by original() calls (ORI references).
+- Method call references.
+- Field access references.
+
+Correct output:
+---------------
+
+See *.ok files.

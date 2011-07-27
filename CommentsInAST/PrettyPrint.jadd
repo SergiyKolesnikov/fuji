@@ -1,0 +1,5 @@
+aspect PrettyPrint {
+	public void Comment.toString(StringBuffer s) {
+	       s.append(getID());
+	}
+}

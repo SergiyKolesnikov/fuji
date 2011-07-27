@@ -1,0 +1,10 @@
+REF F1::::A.string java.lang::String
+ORI F1::::A.method() ::A.method()
+REF F2::::A.string java.lang::String
+REF F2::::A.method() ::A.string
+REF F2::::A.method() java.lang::String
+REF F2::::A.method() ::A.string
+REF F2::::A.method() java.lang::String.CASE_INSENSITIVE_ORDER
+REF F2::::A.method() ::A.string
+REF F2::::A.method() java.lang::String.isEmpty()
+ORI F2::::A.method() ::A.method()

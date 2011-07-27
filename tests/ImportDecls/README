@@ -1,0 +1,21 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- A.java
+`-- F2
+    `-- A.java
+
+What is tested:
+---------------
+
+Import declarations from the base type and all the preceding refinememts must be
+accessible to a refinement that is currently beeing composed.  Otherwise an
+external type resolution might potentially fail.  In this test case the
+resolution of Vector in the refinement fails and leads to that method m(Vector)
+is not composed.
+
+Correct output:
+---------------
+
+See *.ok files.

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd Subsequent
+/bin/rm -rf classes >/dev/null 2>&1
+java -jar ../../FujiCompiler/build/fuji.jar -classpath "." -d classes Test.features

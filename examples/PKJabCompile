@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd PKJab
+/bin/rm -rf classes
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d classes PKJabComp.features \
+	&& /bin/cp -rf Resources/* classes/

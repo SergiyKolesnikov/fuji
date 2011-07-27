@@ -1,0 +1,17 @@
+Project structure:
+------------------
+|-- F1
+|   `-- A.java
+`-- F2
+    `-- A.java
+
+
+What is tested:
+---------------
+
+BUG: fuji in -forRefs mode outputs REFs with "@primitive::Unknown.string".
+
+Correct output: 
+--------------- 
+
+See *.ok files.

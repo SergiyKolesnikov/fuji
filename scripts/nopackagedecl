@@ -1,0 +1,13 @@
+#!/bin/bash
+# Search the dir $1 for Java source files not containing package declaration.
+
+DIR="$1"
+if [ "$DIR" == "" ]; then
+    DIR="."
+fi
+
+FILES=`find "$DIR" -iname '*.java' -type f`
+IFS=$'\n'
+for I in $FILES; do
+    grep --regexp='[[:space:]]*package.*' --files-without-match "$I"
+done

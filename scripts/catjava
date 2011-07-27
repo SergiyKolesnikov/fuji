@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Find all *.class files in the directory and all subdirs.
+
+cat `find "$1" -type f -iname '*.java'`

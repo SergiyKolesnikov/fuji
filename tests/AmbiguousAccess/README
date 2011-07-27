@@ -1,0 +1,28 @@
+Project structure:
+------------------
+AmbiguousAccess
+|-- F1
+|   `-- Source.java
+|-- F2
+|   |-- Source.java
+|   `-- Target.java
+`-- F3
+    |-- Source.java
+    `-- Target.java
+
+
+What is tested: 
+--------------- 
+
+When JastAdd-parser creates an AST and meets an expression like
+target.field.toString(), it can not deside, if target is a package, a field or a
+type.  In this case it creates an AmbiguousAccess node.  This node will be
+resolved later, when parser has enough info.  Correct resolution of an
+AmbiguousAccess node in a refined type is generally possible only after all the
+refinements are composed.  The test case checks correct resolution of
+AmbiguousAccess nodes.
+
+Correct output:
+---------------
+
+See *.ok files.

@@ -1,0 +1,3 @@
+#!/bin/sh
+java -classpath classes p1.Accessor >tmp.out
+java -classpath classes p1.StandAlone >>tmp.out

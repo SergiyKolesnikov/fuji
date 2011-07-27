@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ImportDecls
+/bin/rm -rf classes 2>/dev/null
+java -jar ../../FujiCompiler/build/fuji.jar -fopRefs -d classes Test.features

@@ -1,0 +1,7 @@
+#!/bin/sh
+CL=classes
+SRC=sources
+
+cd EnumSrcGeneration
+/bin/rm -rf "$CL" "$SRC"
+java -jar ../../FujiCompiler/build/fuji.jar -d "$CL" -src "$SRC" Test.features

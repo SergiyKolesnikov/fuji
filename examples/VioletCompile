@@ -1,0 +1,9 @@
+#!/bin/sh
+
+CL=classes
+
+cd Violet
+rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar \
+    -d "$CL" VioletComp.features \
+    && /bin/cp -rf violet_resources/* "$CL"

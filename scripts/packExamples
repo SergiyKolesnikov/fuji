@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Creates fuji-examples-*.zip in the working directory, by exporting the BASE of
+# the working svn copy.
+
+set -e
+
+echo -e "The script takes the BASE revisions of the working copy files.\nCommit changes if you want them in the archive."
+
+PWD=`pwd`
+if [ "${PWD:0:1}"=="/" ]; then
+    THISPATH=`dirname "$0"`
+else
+    THISPATH=`dirname "$PWD/$0"`
+fi
+
+TMPD=`mktemp -d`
+NAME="fuji-examples-"`"$THISPATH"/version`
+PACKDIR="$TMPD/$NAME"
+mkdir "$PACKDIR"
+svn export -r BASE "$THISPATH/../examples"  "$PACKDIR/examples"
+svn export -r BASE "$THISPATH/../tests"  "$PACKDIR/tests"
+pushd . >/dev/null
+cd "$TMPD"
+zip -r -q "$NAME".zip "$NAME"
+popd >/dev/null
+/bin/cp -f "$TMPD/$NAME.zip" .
+/bin/rm -rf "$TMPD"

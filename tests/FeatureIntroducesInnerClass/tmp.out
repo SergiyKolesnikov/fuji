@@ -1,0 +1,15 @@
+introduces F1 ::A
+introduces F1 ::A.A(java.lang.Object)
+introduces F1 ::A.aMethod(java.util.List<java.lang.String>, java.lang.Object)
+introduces F1 ::A.Inner
+introduces F1 ::A.Inner.anonymousField
+introduces F1 ::A.Inner.anonymousMethod()
+introduces F1 ::A.Inner.Inner()
+introduces F1 ::A.Inner.innerField
+introduces F1 ::A.Inner.innerMethod()
+introduces F1 ::A.Nested
+introduces F1 ::A.Nested.localField
+introduces F1 ::A.Nested.localMethod()
+introduces F1 ::A.Nested.Nested()
+introduces F1 ::A.Nested.nestedField
+introduces F1 ::A.Nested.nestedMethod()

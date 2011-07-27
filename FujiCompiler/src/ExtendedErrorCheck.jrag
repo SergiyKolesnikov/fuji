@@ -1,0 +1,34 @@
+/*
+ * This aspect extends JastAddJ's error output so that error 
+ * position in the original role and not in the composed code
+ * is reported.
+ */
+aspect ExtendedErrorCheck {
+
+/* TODO remove this
+    refine ErrorCheck void ASTNode.error(String s) {
+        ASTNode node = this;
+        while(node != null && !(node instanceof CompilationUnit))
+            node = node.getParent();
+        CompilationUnit cu = (CompilationUnit)node;
+        if(getNumChild() == 0 && getStart() != 0 && getEnd() != 0) {
+            int line = getLine(getStart());
+            int column = getColumn(getStart());
+            int endLine = getLine(getEnd());
+            int endColumn = getColumn(getEnd());
+            cu.errors.add(new Problem(sourceFile(), s, line, column, endLine, endColumn, Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
+        }
+        else
+            cu.errors.add(new Problem(sourceFile(), s, lineNumber(), Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
+    } */
+
+    refine ErrorCheck String ASTNode.sourceFile() {
+        ASTNode node = this;
+        while(node != null && !(node instanceof CompilationUnit))
+            node = node.getOldParent();
+        if(node == null)
+            return "Unknown file";
+        CompilationUnit u = (CompilationUnit)node;
+        return u.relativeName();
+    }
+}

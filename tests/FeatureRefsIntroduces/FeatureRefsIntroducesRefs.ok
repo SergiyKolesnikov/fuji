@@ -1,0 +1,25 @@
+ORI F2::some::A.refinedInF2() some::A.refinedInF2()
+REF F1::some::A java.lang::Object
+REF F1::some::A.methodInF1(java.lang.Long, int) java.lang::Long
+REF F1::some::A.methodInF1(java.lang.Long, int) some::A.j
+REF F1::some::A.methodI() some::A
+REF F1::some::A.methodI() some::A
+REF F1::some::A some::I
+REF F1::some::A.stringArray java.lang::String
+REF F1::some::A.stringArray java.lang::String
+REF F1::some::I.methodI() some::A
+REF F2::some::A java.util::Vector
+REF F2::some::A.methodInF2() java.lang::Long
+REF F2::some::A.methodInF2() java.lang::String
+REF F2::some::A.methodInF2() some::A
+REF F2::some::A.methodInF2() some::A
+REF F2::some::A.methodInF2() some::A
+REF F2::some::A.methodInF2() some::A.methodI()
+REF F2::some::A.methodInF2() some::A.methodI()
+REF F2::some::A.methodInF2() some::A.methodI()
+REF F2::some::A.methodInF2() some::A.methodInF1(java.lang.Long, int)
+REF F2::some::A.methodInF2() some::A.stringArray
+REF F2::some::A.refinedInF2() java.lang::Boolean
+REF F2::some::A.refinedInF2() java.lang::Object
+REF F2::some::A.refinedInF2() java.lang::Object
+REF F2::some::A some::I

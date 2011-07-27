@@ -1,0 +1,17 @@
+introduces F1 ::Class
+introduces F1 ::Class.Class()
+introduces F1 ::Class.f
+introduces F1 ::Class.m2(java.lang.String)
+introduces F1 ::Class.m(int)
+introduces F1 ::Class.staticArrayF1
+introduces F1 ::I1
+introduces F1 ::Interface
+introduces F2 ::Class
+introduces F2 ::Class.Class()
+introduces F2 ::Class.f
+introduces F2 ::Class.i
+introduces F2 ::Class.m2(java.lang.String)
+introduces F2 ::Class.m(int)
+introduces F2 ::Class.staticArrayF2
+introduces F2 ::I2
+introduces F2 ::Interface

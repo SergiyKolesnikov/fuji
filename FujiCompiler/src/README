@@ -1,0 +1,20 @@
+Created and changed files compared to the original Java1_5Backend:
+
+build.xml
+CompilationUnit.mm
+Compose.jrag
+FOPCounter.jrag
+FOPModifiers.flex
+FOPModifiers.jrag
+FOPModifiers.parser
+JavaComposer.java
+MyREADME
+TODO
+FOPrsf.jrag - code to output of 'introduses' and 'uses' relations.
+
+Not important files:
+
+DumpAST.java
+MyTest.java
+*.launch
+svnignore.txt

@@ -1,0 +1,49 @@
+========= BasicGraph ========
+top: color changed to: 4711
+edge (color changed to: 815
+1, color changed to: 815
+2)  [0] , color changed to: 4711
+edge (color changed to: 815
+3, color changed to: 815
+4)  [0] 
+========= SubGraph ========
+top: color changed to: 4711
+edge (color changed to: 815
+1 ++ sub: color changed to: 4711
+edge (color changed to: 815
+11, color changed to: 815
+12)  [0]  -- , color changed to: 815
+2 ++ sub: color changed to: 4711
+edge (color changed to: 815
+21, color changed to: 815
+22)  [0]  -- )  [0] , color changed to: 4711
+edge (color changed to: 815
+3 ++ sub: color changed to: 4711
+edge (color changed to: 815
+31, color changed to: 815
+32)  [0]  -- , color changed to: 815
+4 ++ sub: color changed to: 4711
+edge (color changed to: 815
+41 ++ sub: color changed to: 4711
+edge (color changed to: 815
+51, color changed to: 815
+52)  [0]  -- , color changed to: 815
+42)  [0]  -- )  [0] 
+========= WeightedGraph ========
+top: color changed to: 4711
+edge (color changed to: 815
+5, color changed to: 815
+6)  [1000] , color changed to: 4711
+edge (color changed to: 815
+7, color changed to: 815
+8)  [1001] 
+========= ColorGraph ========
+top: color changed to: 4711
+edge (color changed to: 815
+5, color changed to: 815
+6)  [0] , color changed to: 4711
+edge (color changed to: 815
+7, color changed to: 815
+8)  [0] 
+========= PrintHeader ========
+nothing to do here

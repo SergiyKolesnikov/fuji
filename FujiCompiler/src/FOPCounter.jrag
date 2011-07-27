@@ -1,0 +1,319 @@
+/*
+ * Calculates the actual usage context of a class member and on this base
+ * calculates the necessary orthogonal access modifiers for FOP, which satisfy
+ * this context.
+ */
+
+aspect FOPAccessCount {
+
+    /*
+     * Holds access statistics for a CompilationUnit and offers corresponding
+     * utility methods.
+     */
+    class FOPAccessCount {
+
+        // Order of the OOP modifiers.
+        private static java.util.ArrayList<String> oopModOrder
+            = new ArrayList<String>();
+
+        // Order of the FOP modifiers.
+        private static java.util.ArrayList<String> fopModOrder
+            = new ArrayList<String>();
+
+        static {
+            oopModOrder.add(0,"private");
+            oopModOrder.add(1,"package");
+            oopModOrder.add(2,"protected");
+            oopModOrder.add(3,"public");
+            fopModOrder.add(0,"feature");
+            fopModOrder.add(1,"subsequent");
+            fopModOrder.add(2,"program");
+        }
+
+        private boolean isMethod = true;
+        private String memberQName = null;
+        private String origModifier = null;
+        private String minOOPMod = "private";
+        private String minFOPMod = "feature";
+        private java.util.HashMap<String,Integer> accessCounter = new java.util.HashMap<String, Integer>();
+
+        public FOPAccessCount(String memberQName, String origModifier) {
+            this(true, memberQName, origModifier);
+        }
+
+        public FOPAccessCount(boolean isMethod, String memberQName,
+                              String origModifier) {
+
+            this.isMethod = isMethod;
+            this.memberQName = memberQName;
+            this.origModifier = origModifier;
+            for (String oop : FOPAccessCount.oopModOrder) {
+                for (String fop : FOPAccessCount.fopModOrder) {
+                    accessCounter.put(oop+" "+fop, 0);
+                }
+            }
+        }
+
+        public boolean isMethod() {
+            return isMethod;
+        }
+
+        public String getMemberQName() {
+            return memberQName;
+        }
+
+        public String getMemberOrigModifier() {
+            return origModifier;
+        }
+
+        public void addAccess(String oopModifier, String fopModifier) {
+            String oopfop = (oopModifier + " " +fopModifier);
+            int n = accessCounter.get(oopfop);
+            accessCounter.put(oopfop, ++n);
+
+            minOOPMod = calcMinOOPMod(oopModifier, minOOPMod);
+            minFOPMod = calcMinFOPMod(fopModifier, minFOPMod);
+        }
+
+        public void addAllAccess(FOPAccessCount fopAC) {
+            Map<String, Integer> aCounter = fopAC.getAccessCount();
+            for (String key : aCounter.keySet()) {
+                Integer n = accessCounter.get(key) + aCounter.get(key);
+                accessCounter.put(key, n);
+            }
+            minOOPMod = calcMinOOPMod(minOOPMod, fopAC.getMinOOPModifier());
+            minFOPMod = calcMinFOPMod(minFOPMod, fopAC.getMinFOPModifier());
+        }
+
+        private String calcMinOOPMod(String oop1, String oop2) {
+            if (FOPAccessCount.oopModOrder.indexOf(oop1)
+                < FOPAccessCount.oopModOrder.indexOf(oop2)) {
+                return oop2;
+            }
+            return oop1;
+        }
+
+        private String calcMinFOPMod(String fop1, String fop2) {
+            if (FOPAccessCount.fopModOrder.indexOf(fop1)
+                < FOPAccessCount.fopModOrder.indexOf(fop2)) {
+                return fop2;
+            }
+            return fop1;
+        }
+
+        public String getMinFOPModifier() {
+            return minFOPMod;
+        }
+
+        public String getMinOOPModifier() {
+            return minOOPMod;
+        }
+
+        /**
+         * Get the count of all the accesses to this field aggregated by the
+         * required OOP-FOP modifier combination.
+         * e.g. public program - 10 access, ...
+         */
+        public java.util.Map<String,Integer> getAccessCount() {
+            return new java.util.TreeMap<String,Integer>(accessCounter);
+        }
+
+        public String toString() {
+            return accessCounter.toString();
+        }
+    }
+}
+
+aspect FOPCounterAttr {
+
+    /*
+     * Holds the OOP-FOP modifier and access information for each field and
+     * method of the program.
+     */
+    private java.util.HashMap<String,FOPAccessCount> CompilationUnit.fopAccs = null;
+    syn java.util.Map CompilationUnit.getFOPAccs() {
+        if (fopAccs == null) {
+            fopAccs = new HashMap<String,FOPAccessCount>();
+        }
+        return fopAccs;
+    }
+    inh java.util.Map BodyDecl.getFOPAccs();
+    eq CompilationUnit.getChild().getFOPAccs() = getFOPAccs();
+}
+
+aspect FOPCounter {
+    // Count field access.
+    refine VariableScopePropagation eq VarAccess.decls() {
+        //SimpleSet set = LookupVariable.VarAccess.decls();
+        SimpleSet set = refined();
+        // TODO this change is due to JastAdd upgrade
+        // start inefficient
+        ASTNode node = this;
+        while(!(node instanceof Program)) {
+            node = node.getParent();
+        }
+        Program program = (Program) node;
+        // end inefficient
+        if (set.size() == 1 && program.options().hasOption(AccessAnalyzer.MODSTAT_OPT)) {
+            Object o = set.iterator().next();
+            if (o instanceof FieldDeclaration) {
+                AccessAnalyzer.instance().analyze((FieldDeclaration) o, this);
+            }
+        }
+        return set;
+    }
+
+    // Count method access. (MethodSignature refines MethodAccess.decls())
+    refine LookupMethod eq MethodAccess.decls() {
+        SimpleSet set = refined();
+        // TODO this change is due to JastAdd upgrade
+        // start inefficient
+        ASTNode node = this;
+        while(!(node instanceof Program)) {
+            node = node.getParent();
+        }
+        Program program = (Program) node;
+        // end inefficient
+        if (set.size() == 1 && program.options().hasOption(AccessAnalyzer.MODSTAT_OPT)) {
+            Object o = set.iterator().next();
+            if (o instanceof MethodDecl) {
+                AccessAnalyzer.instance().analyze((MethodDecl) o, this);
+            }
+        }
+        return set;
+    }
+}
+
+aspect AccessAnalyzer {
+
+    /*
+     * Utility singelton.  Analyzes given access.
+     */
+    class AccessAnalyzer {
+        public static final String MODSTAT_OPT = "-fopStatistic";
+
+        private static AccessAnalyzer instance = null;
+
+        /* Keeps the last 3 accesse allows to filter out duplicate accesses. */
+        private LinkedList<AccessPair> lastAccesses
+            = new LinkedList<AccessPair>();
+
+        static AccessAnalyzer instance() {
+            if (instance == null)
+                instance = new AccessAnalyzer();
+            return instance;
+        }
+
+        public void analyze(BodyDecl target, Expr source) {
+
+            // Duplicates avoidance
+            AccessPair ap = new AccessPair(source, target);
+            if (lastAccesses.contains(ap))
+                return;
+            if (lastAccesses.size() == 3)
+                lastAccesses.remove();
+            lastAccesses.add(ap);
+
+            FieldDeclaration fd = target instanceof FieldDeclaration
+                ? (FieldDeclaration) target : null;
+            MethodDecl ma = target instanceof MethodDecl
+                ? (MethodDecl) target : null;
+
+            String targetID;
+            if (fd != null) {
+                targetID = fd.getID();
+            } else if (ma != null) {
+                targetID = ma.signature();
+            } else {
+                //TODO exception error
+                return;
+            }
+
+            String accessModifier = null;
+            if (fd != null && fd.isPrivate()
+                || ma != null && ma.isPrivate()) {
+                accessModifier = "private";
+            } else if (fd != null && fd.isPublic()
+                       || ma != null && ma.isPublic()) {
+                accessModifier = "public";
+            } else if (fd != null && fd.isProtected()
+                       || ma != null && ma.isProtected()) {
+                accessModifier = "protected";
+            } else {
+                accessModifier = "package";
+            }
+
+            String tQName = target.featureID()
+                + ":" + target.hostPackage()
+                + "." + target.hostType().getID()
+                + "." + targetID;
+            String sQName = source.featureID()
+                + ":" + source.hostPackage()
+                + "." + source.hostType().getID();
+
+
+            String minOOPModifier = null;
+            // The Logic is from Java1_4Frontend/LookupVariable.jrag
+            if (target.hostType().topLevelType() ==
+                source.hostType().topLevelType()) {
+                minOOPModifier = "private";
+            } else if (target.hostPackage()
+                       .equals(source.hostType().hostPackage())) {
+                minOOPModifier = "package";
+            }
+            if (minOOPModifier == null &&
+                source.hostType().subclassWithinBody(target.hostType())
+                != null) {
+                minOOPModifier = "protected";
+            } else if (minOOPModifier == null) {
+                minOOPModifier = "public";
+            }
+
+            String minFOPModifier = null;
+            if (source.featureID() != -1 && target.featureID() != -1) {
+
+                if (source.featureID() == target.featureID()) {
+                    minFOPModifier = "feature";
+                } else if (source.featureID() >= target.featureID()) {
+                    minFOPModifier = "subsequent";
+                } else {
+                    minFOPModifier = "program";
+                }
+
+                FOPAccessCount fopAC =
+                    (FOPAccessCount) target.getFOPAccs().get(tQName);
+                boolean isMethod = ma != null;
+                if (fopAC == null) {
+                    fopAC = new FOPAccessCount(isMethod,
+                                               tQName, accessModifier);
+                    target.getFOPAccs().put(tQName, fopAC);
+                }
+                fopAC.addAccess(minOOPModifier, minFOPModifier);
+
+                if (System.getProperty("debug") != null) {
+                    System.out.println("* " + sQName
+                                       //+ "(" + source.enclosingStmt() + ")"
+                                       + " -> " + tQName
+                                       + "; " + accessModifier
+                                       + "; " + minOOPModifier
+                                       + " " + minFOPModifier + ";");
+                }
+            }
+        }
+
+        private class AccessPair {
+            Object source = null;
+            Object target = null;
+            public AccessPair(Object source, Object target) {
+                this.source = source;
+                this.target = target;
+            }
+            public boolean equals(Object obj) {
+                if ( ! (obj instanceof AccessPair))
+                    return false;
+                AccessPair ap = (AccessPair) obj;
+                return (ap.source == source && ap.target == target);
+            }
+        }
+    }
+}

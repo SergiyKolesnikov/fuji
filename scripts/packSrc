@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Creates fuji-sources-*.zip in the working directory, by exporting the BASE
+# working svn copy.
+
+set -e
+
+echo -e "The script takes the BASE revisions of the working copy files.\nCommit changes if you want them in the archive."
+
+THISPATH=`readlink -f "$0"`
+THISPATH=`dirname "$THISPATH"`
+TMPD=`mktemp -d`
+NAME="fuji-sources-"`"$THISPATH"/version`
+PACKDIR="$TMPD/$NAME"
+
+svn export -r BASE "$THISPATH/.."  "$PACKDIR"
+pushd . >/dev/null
+cd "$TMPD"
+zip -r -q "$NAME".zip "$NAME"
+popd >/dev/null
+/bin/cp -f "$TMPD/$NAME.zip" .
+/bin/rm -rf "$TMPD"

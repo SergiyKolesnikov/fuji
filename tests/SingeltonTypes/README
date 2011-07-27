@@ -1,0 +1,36 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- A.java
+`-- F2
+    `-- A.java
+
+
+What is tested:
+---------------
+The following explanation is now obsolete as Fuji has a base role and its 
+refinement roles in one AST now.
+
+A base class and its refinements are represented in Fuji by separate ASTs.
+JastAddJ represent the same type in different ASTs by different objects.  This
+can lead to failures, when JastAddJ tests equality of two types by testing the
+equality of references this types are represented by.  If two types are equal
+but come from different ASTs and thus represented by different objects, JastAddJ
+will wrongly decide that the types are different.  This is solved by introducing
+a type pool common for all ASTs.  This test case tests the solution.
+
+Example error messages:
+  Semantic Error: return value must be an instance of java.lang.String[] 
+                                                which java.lang.String[] is not
+  
+  Semantic Error: no method named println(java.lang.String) in 
+  java.io.PrintStream matches. However, there is a method println(long)
+
+The test fails on a unsuccessful method composition too.
+
+Correct output:
+---------------
+
+See *.ok files.
+

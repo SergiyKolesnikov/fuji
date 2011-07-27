@@ -1,0 +1,24 @@
+#!/bin/sh
+
+echo ===ZipMe===
+time ./ZipMeCompile
+echo ===Violet===
+time ./VioletCompile
+echo ===TankWar===
+time ./TankWarCompile
+echo ===Prevayler===
+#./PrevaylerSrc
+#./PrevaylerCompileJavac
+time ./PrevaylerCompile
+echo ===PKJab===
+time ./PKJabCompile
+echo ===Notepad===
+time ./NotepadCompile
+echo ===GUIDSL===
+time ./GUIDSLCompile
+echo ===GPL===
+time ./GPLCompile
+echo ===EPL===
+time ./EPLCompile
+echo ===AJStats===
+time ./AJStatsCompile

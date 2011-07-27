@@ -1,0 +1,25 @@
+.
+|-- F1
+|   `-- A.java
+|-- F2
+|   `-- A.java
+|-- F3
+|   `-- A.java
+|-- F4-black
+|   `-- B.java
+`-- F4-white
+    `-- B.java
+
+F2.A, F3.A refine F1.A and introduce incompatible code (z field of different
+types: String and int respectively).  Thus F2 and F3 exclude each other because 
+of a code conflict.  As a consequence any access to z from F2 should be 
+referencing the String z and any access to z from F3 should be referencing 
+int z.  This must be seen in the REFS-relation.
+
+Another point is that the designer of F2.A.get() assumes that he uses 
+F4-black.B.print() and designer of F3.A.get() assumes that he uses 
+F4-white.B.print().  So F2 and F3 exclude each other because of this semantic 
+conflict too.
+
+F4-black and F4-white exclude each other by designer decision, they introduce
+mutually excluding functionality.

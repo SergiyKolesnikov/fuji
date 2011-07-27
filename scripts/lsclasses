@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Find all *.class files in the directory and all subdirs.
+if [ "$1" == "" ]; then
+   DIR="."
+else
+   DIR="$1"
+fi
+
+find "$DIR" -type f -iname '*.class' 

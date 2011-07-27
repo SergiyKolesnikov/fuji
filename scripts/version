@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Print the current version of fuji.
+
+PWD=`pwd`
+if [ "${PWD:0:1}"=="/" ]; then
+    THISPATH=`dirname "$0"`
+else
+    THISPATH=`dirname "$PWD/$0"`
+fi
+
+sed -n '
+/private static String version() {/,/return/ {
+  s/[^"]*"\([^"]*\)\(.*\)/\1/p
+}
+' "$THISPATH"/../FujiCompiler/src/fuji/Main.java

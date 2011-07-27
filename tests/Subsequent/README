@@ -1,0 +1,44 @@
+Project structure:
+------------------
+.
+|-- F1
+|   `-- p1
+|       `-- Accessor.java
+|-- F2
+|   `-- p1
+|       |-- Accessor.java
+|       `-- Later.java
+|-- F3
+|   `-- p1
+|       |-- Later.java
+|       `-- StandAlone.java
+|-- Test.features
+`-- lib
+    `-- External.java
+
+
+What is tested:
+---------------
+
+- Method composition and original(): method p1.F1.F1_p1_Accessor() is refined in
+  F2
+
+- Classes that are first introduced in later features and not in the base
+  feature must be correctly composed with their refinements: F2.p1.Later - base
+  class, F3.p1.Later - refinement.
+
+- Access to a member of a class that is first introduced in a later feature must
+  be possible: F1.p1.Accesser -> F3.p1.Later.F3_p1_Later(), F1.p1.Accesser ->
+  F2.p1.Later.F2_p1_Later().  The same accesses test accessing a class
+  introduced in a later feature: class Later is not presetn in F1
+
+- Compilation of a class introduced in a later feature and not referenced by any
+  other class must be possible: StandAlone.java
+
+- Compilation of classes not belonging to the FOP project but used in it must go
+  well: F3.p1.Later -> lib.External
+
+Correct output:
+---------------
+
+See *.ok files.

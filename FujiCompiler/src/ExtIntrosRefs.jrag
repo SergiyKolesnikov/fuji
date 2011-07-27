@@ -1,0 +1,282 @@
+/*
+ * This aspects implement a Fuji extention that generats introduces and references
+ * relation for an SPL.  It is used in combination with ComposingVisitorIntrosRefs.
+ */
+import java.io.File;
+
+/*
+ * Prints the introduces relation for a node.
+ */
+aspect Intros {
+    public void ASTNode.printIntros(java.util.List<String> featureModulePathnames) {
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printIntros(featureModulePathnames);
+        }
+    }
+    
+    public void CompilationUnit.printIntros(java.util.List<String> featureModulePathnames) {
+        java.util.Collection<ReferenceType> refiningTypes = getRefiningTypes();
+        if (refiningTypes != null) {
+            for (ReferenceType rt : refiningTypes) {
+                System.out.print(IntrosRefsUtil.introPrefix(rt, featureModulePathnames));
+                System.out.println(IntrosRefsUtil.typeDeclQName(rt));
+            }
+        }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printIntros(featureModulePathnames);
+        }
+    }
+    
+    public void ReferenceType.printIntros(java.util.List<String> featureModulePathnames) {
+        
+        /* Classes and Interfaces are of ReferenceType */
+        if (!(isAnonymous() || isLocalClass() || isArrayDecl())) {
+            System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+            System.out.println(IntrosRefsUtil.typeDeclQName(this));
+        }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printIntros(featureModulePathnames);
+        }  
+    }
+    
+    public void MethodDecl.printIntros(java.util.List<String> featureModulePathnames) {
+        TypeDecl host = IntrosRefsUtil.visibleHostType(this);
+        System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+        System.out.print(IntrosRefsUtil.typeDeclQName(host));
+        System.out.println(IntrosRefsUtil.MEMBERDELIM + IntrosRefsUtil.signature(this));
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printIntros(featureModulePathnames);
+        }
+    }
+
+    public void FieldDeclaration.printIntros(java.util.List<String> featureModulePathnames) {
+        TypeDecl host = IntrosRefsUtil.visibleHostType(this);
+        System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+        System.out.print(IntrosRefsUtil.typeDeclQName(host));
+        System.out.println(IntrosRefsUtil.MEMBERDELIM + getID());
+    }
+    
+    public void ConstructorDecl.printIntros(java.util.List<String> featureModulePathnames) {
+        TypeDecl host = hostType();
+        if (!(host.isAnonymous() || host.isLocalClass())) {
+            System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+            System.out.print(IntrosRefsUtil.typeDeclQName(host));
+            System.out.println(IntrosRefsUtil.MEMBERDELIM + IntrosRefsUtil.signature(this));
+        }
+    }
+}    
+ 
+/*
+ * Prints the ref relation for the node and its subtree.
+ */
+aspect Refs {
+    public void ASTNode.printRefs(java.util.List<String> featureModulePathnames) {
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
+    }
+    
+    public void TypeAccess.printRefs(java.util.List<String> featureModulePathnames) {
+        if (!(this.hostType() == null) // exclude ImportDecls
+                && !(this instanceof PrimitiveTypeAccess)
+                && !(this instanceof ArrayTypeAccess)) {
+            String featureName = new File(featureModulePathnames.get(featureID())).getName();
+            StringBuilder ref = new StringBuilder(IntrosRefsUtil.REF)
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(type()));
+            System.out.println(ref);
+        }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
+    }
+    
+    public void MethodAccess.printRefs(java.util.List<String> featureModulePathnames) {
+        String featureName = new File(featureModulePathnames.get(featureID())).getName();
+        StringBuilder ref;
+        boolean isOriginal = getID().equals(ComposingVisitor.ORIGINAL_OPERATOR);
+        if (isOriginal) {
+            ref = new StringBuilder(IntrosRefsUtil.ORIGREF);
+        } else {
+            ref = new StringBuilder(IntrosRefsUtil.REF);
+        }
+        ref.append(IntrosRefsUtil.DELIM)
+            .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+            .append(IntrosRefsUtil.DELIM);
+        if (isOriginal) {
+            ref.append(IntrosRefsUtil.formatRefSource("", (Expr) this));
+        } else {
+            ref.append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
+                .append(IntrosRefsUtil.MEMBERDELIM)
+                .append(IntrosRefsUtil.signature(decl()));        
+        }
+        System.out.println(ref);
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
+    }
+    
+    public void VarAccess.printRefs(java.util.List<String> featureModulePathnames) {
+        if (isFieldAccess()) {
+            String featureName = new File(featureModulePathnames.get(featureID())).getName();
+            StringBuilder ref = new StringBuilder(IntrosRefsUtil.REF)
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
+                .append(IntrosRefsUtil.MEMBERDELIM)
+                .append(getID());
+            System.out.println(ref);
+        }
+    }
+    
+    /*
+     * In the refs printing mode return a declaration of the 
+     * accessed variable, that comes frome the same feature as the access.  If 
+     * there is no a declaration in the same feature, return the last 
+     * declaration of all the found declaration.  If there is no declaration 
+     * at all, return unknownField
+     * 
+     * If not in the refs printing mod, act normal.
+     */
+    refine VariableScopePropagation eq VarAccess.decl() {
+        
+        boolean allowMultVarDecls = getProgram().options()
+            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_VAR_DECLARATIONS);
+        
+        SimpleSet decls = decls();
+        if (allowMultVarDecls && decls.size() >= 1) {
+            Variable var = null;
+            for (Iterator iter = decls.iterator(); iter.hasNext(); ) {
+                var = (Variable) iter.next();
+                if((var instanceof BodyDecl) 
+                        && ((BodyDecl) var).featureID() == featureID()) {
+                    break; 
+                }
+            }
+            return var;
+        } else if(decls.size() == 1) {
+            return (Variable)decls.iterator().next();
+        }
+        return unknownField();
+    }
+}
+
+aspect IntrosRefsUtil {
+    
+    /*
+     * Utility class.
+     */
+    public class IntrosRefsUtil {
+        
+        public static final String ALLOW_MULTIPLE_VAR_DECLARATIONS = "-allowMultipleVarDeclarations";
+        public static final String DELIM = " ";
+        public static final String PACKAGEDELIM = "::";
+        public static final String MEMBERDELIM = ".";
+        public static final String INTRO = "introduces";
+        public static final String REF = "REF";
+        public static final String ORIGREF = "ORI";
+
+        /*
+         * Calculates a prefix for introduces relation containing a feature
+         * name.
+         */
+        public static String introPrefix(ASTNode node, java.util.List<String> featureModulePathnames) {
+            String featureModuleName = 
+                    new File(featureModulePathnames.get(node.featureID())).getName();
+            return INTRO + DELIM + featureModuleName + DELIM;
+        }
+
+        /*
+         * Calculates a fully qualified name of a type.  For inner (i.e. nested 
+         * non-static) or nested (i.e. nested static) classes the name includes 
+         * all the enclosing types.
+         */
+        public static String typeDeclQName(TypeDecl td) {
+            String id = td.getID();
+            if (td.isInnerType() || td.isNestedType()) {
+                return typeDeclQName(td.enclosingType()) + MEMBERDELIM + id;
+            } else {
+                return td.packageName() + PACKAGEDELIM + id;
+            }
+        }
+
+        /*
+         * Calculates a signature for the constructor declaration.
+         */
+        public static String signature(ConstructorDecl cond) {
+            return sigHelper(cond.name(), cond.getParameterListNoTransform());
+        }
+
+        /*
+         * Calculates a signature for the method declaration.
+         */
+        public static String signature(MethodDecl md) {
+            return sigHelper(md.name(), md.getParameterListNoTransform());
+        }
+        
+        private static String sigHelper(String name,
+                                        AST.List<ParameterDeclaration> params) {
+            StringBuffer s = new StringBuffer();
+            s.append(name + "(");
+            for(int i = 0; i < params.getNumChildNoTransform(); i++) {
+                if(i != 0) s.append(", ");
+                // add erasure() after type() to remove generic parameter type.
+                s.append(params.getChildNoTransform(i).type().typeName());
+            }
+            s.append(")");
+            return s.toString();
+        }
+
+        /*
+         * Calculates a visible enclosing type for the give body declaration.
+         * The enclosing types are processed recursively untill the first
+         * non-anonymous and not-nested type (i.e. visible type) is found.
+         */
+        public static TypeDecl visibleHostType(BodyDecl bd) {
+            TypeDecl host = bd.hostType();
+            return visibleHostType(host);
+        }
+
+        /*
+         * Calculates a visible enclosing type for the given type declaration.
+         * The enclosing types are processed recursively untill the first
+         * non-anonymous and not-nested type (i.e. visible type) is found.
+         */
+        public static TypeDecl visibleHostType(TypeDecl td) {
+            while (td.isAnonymous() || td.isLocalClass())
+                td=td.enclosingType();
+            return td;
+        }
+
+        /*
+         * Returns a string representation of a source in a REF relation.
+         */
+        public static String formatRefSource(String featureName, Expr expr) {
+            StringBuilder source = new StringBuilder();
+            TypeDecl host = visibleHostType(expr.hostType());
+            if (! featureName.isEmpty())
+                source.append(featureName).append(PACKAGEDELIM);
+            source.append(typeDeclQName(host));
+            BodyDecl enclosing = expr.enclosingBodyDecl();
+            if (enclosing != null) {
+                // TODO else if branch for FieldDecl
+                if (enclosing instanceof MethodDecl) {
+                    source.append(MEMBERDELIM);
+                    source.append(signature((MethodDecl) enclosing));
+                } else if (enclosing instanceof ConstructorDecl) {
+                    source.append(MEMBERDELIM);
+                    source.append(signature((ConstructorDecl) enclosing));
+                } else if (enclosing instanceof FieldDeclaration) {
+                    source.append(MEMBERDELIM);
+                    source.append(((FieldDeclaration) enclosing).getID());
+                } else {
+                    // static or dynamic initialitzers, do nothing.
+                }
+            }
+            return source.toString();
+        }
+    }
+}
