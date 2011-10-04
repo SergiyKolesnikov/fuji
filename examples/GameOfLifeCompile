@@ -1,0 +1,7 @@
+#!/bin/sh
+CL=classes
+
+cd GameOfLife
+/bin/rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" -cp ../lib/junit.jar GameOfLifeComp.features
+cp -rf GuiBase/ressources "$CL"
