@@ -51,13 +51,16 @@ public class SPLStructure {
      *            absolute pathname of the SPL's root directory
      * @param featuresFilePathname
      *            absolute pathname of the features file.
+     * @param singleDependencyGraph
+     *            put all the role groups in one dependency graph regardless
+     *            their actual interrelations.
      * @throws IOException
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
      */
-    public SPLStructure(String basedirPathname, String featuresFilePathname)
-            throws IOException, FeatureDirNotFoundException,
-            SyntacticErrorException {
+    public SPLStructure(String basedirPathname, String featuresFilePathname,
+            boolean singleDependencyGraph) throws IOException,
+            FeatureDirNotFoundException, SyntacticErrorException {
 
         this.basedirPathname = new File(basedirPathname).getCanonicalPath();
         featureModulePathnames = parseFeautresFile(new File(basedirPathname)
@@ -66,7 +69,16 @@ public class SPLStructure {
         classpathArg = constructClasspathArg(basedirPathname,
                 featureModulePathnames);
         roleGroups = createRoleGroups(featureModulePathnames);
-        dependecyGraphs = createDependecyGraphs(roleGroups);
+        if (singleDependencyGraph) {
+            ArrayList<RoleGroup> graph = new ArrayList<RoleGroup>();
+            for (RoleGroup rg : roleGroups.values()) {
+                graph.add(rg);
+            }
+            dependecyGraphs = new ArrayList<Collection<RoleGroup>>();
+            dependecyGraphs.add(graph);
+        } else {
+            dependecyGraphs = createDependecyGraphs(roleGroups);
+        }
     }
 
     /**
@@ -101,23 +113,39 @@ public class SPLStructure {
     }
 
     /**
-     * Determine feature ID for the absolute or relative path of a role.
+     * Determine feature ID for the absolute or relative path of a role
+     * represented by the compilation unit.
      * 
-     * @param pathname
-     *            absolute or relative pathname of a role.
+     * @param cu
+     *            compilation unit representing a role.
      * 
      * @return the feature ID of the role. -1 if there is no a corresponding
-     *         feature module for the given pathname.
+     *         feature module for the given compilation unit.
      * 
      * @throws IOException
      *             If an I/O error occurs, which is possible because the
      *             construction of the canonical pathname for the argument
      *             pathname may require filesystem queries.
      */
-    public int determineFeatureID(String pathname) throws IOException {
-        pathname = new File(pathname).getCanonicalPath();
+    public int determineFeatureID(CompilationUnit cu) throws IOException {
+
+        /* Determine the pathname of the cu's feature module. */
+        File cuFile = new File(cu.pathName());
+        String cuPackageAndFile = cu.packageName();
+        if (!cuPackageAndFile.isEmpty()) {
+            cuPackageAndFile += File.separator;
+        }
+        cuPackageAndFile += cuFile.getName();
+        String cuCanPathName = cuFile.getCanonicalPath();
+        String cuFeatureModulePathname = cuCanPathName.substring(0,
+                cuCanPathName.length() - (cuPackageAndFile.length() + 1));
+
+        /*
+         * Determine the index of the cu's feature module, which is the feature
+         * ID of the cu.
+         */
         for (int i = 0; i < featureModulePathnames.size(); ++i) {
-            if (pathname.startsWith(featureModulePathnames.get(i))) {
+            if (cuFeatureModulePathname.equals(featureModulePathnames.get(i))) {
                 return i;
             }
         }

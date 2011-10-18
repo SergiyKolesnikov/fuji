@@ -2,5 +2,5 @@
 
 for I in `ls -1 *Compile`; do
   echo ===$I===
-  time ./$I
+  time --format 'user: %U, system: %S, wall: %E, CPU: %P, memory: %M' ./$I
 done

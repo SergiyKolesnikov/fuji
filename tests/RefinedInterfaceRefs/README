@@ -1,0 +1,22 @@
+Project structure:
+------------------
+ExtendingRefinedClass/
+|-- F1
+|   |-- Main.java
+|   `-- UnInterface.java
+`-- F2
+    `-- UnInterface.java
+
+
+What is tested:
+--------------- 
+
+F1/Main extends F1/UnInterface class and overrides its eval() method.  The
+eval() method is itroduced in F2/UnInterface, so F1/UnInterface and
+F2/UnInterface must be composed appropriately for F1/Main to find the method.
+
+
+Correct output:
+---------------
+
+See *.ok files.

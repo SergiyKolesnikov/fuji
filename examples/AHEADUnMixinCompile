@@ -1,0 +1,6 @@
+#!/bin/sh
+CL=classes
+
+cd AHEAD
+/bin/rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar:../lib/ant.jar -d "$CL" UnMixinComp.features

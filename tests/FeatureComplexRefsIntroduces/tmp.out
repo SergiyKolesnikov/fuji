@@ -1,17 +1,21 @@
-introduces F1 ::A
-introduces F1 ::A.A()
-introduces F1 ::A.main(java.lang.String[])
-introduces F2 ::A
-introduces F2 ::A.A()
-introduces F2 ::A.get()
-introduces F2 ::A.z
-introduces F3 ::A
-introduces F3 ::A.A()
-introduces F3 ::A.get()
-introduces F3 ::A.z
-introduces F4-black ::B
-introduces F4-black ::B.B()
-introduces F4-black ::B.print()
-introduces F4-white ::B
-introduces F4-white ::B.B()
-introduces F4-white ::B.print()
+REF {feature}F1{package}{type}A{method}main(java.lang.String[] args) {package}java.lang{type}String
+REF {feature}F1{package}{type}A{method}main(java.lang.String[] args) {static}{package}{type}A{method}get(){type}void
+REF {feature}F2{package}{type}A{field}z {package}java.lang{type}String
+REF {feature}F2{package}{type}A{method}get() {package}java.io{type}PrintStream{method}print(java.lang.String p0){type}void
+REF {feature}F2{package}{type}A{method}get() {package}java.lang{type}System
+REF {feature}F2{package}{type}A{method}get() {package}{type}B
+REF {feature}F2{package}{type}A{method}get() {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}F2{package}{type}A{method}get() {static}{package}{type}A{field}z{type}java.lang.String
+REF {feature}F2{package}{type}A{method}get() {static}{package}{type}B{method}print(){type}void
+REF {feature}F3{package}{type}A{method}get() {package}java.io{type}PrintStream{method}print(int p0){type}void
+REF {feature}F3{package}{type}A{method}get() {package}java.lang{type}System
+REF {feature}F3{package}{type}A{method}get() {package}{type}B
+REF {feature}F3{package}{type}A{method}get() {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}F3{package}{type}A{method}get() {static}{package}{type}A{field}z{type}int
+REF {feature}F3{package}{type}A{method}get() {static}{package}{type}B{method}print(){type}void
+REF {feature}F4-black{package}{type}B{method}print() {package}java.io{type}PrintStream{method}println(java.lang.String p0){type}void
+REF {feature}F4-black{package}{type}B{method}print() {package}java.lang{type}System
+REF {feature}F4-black{package}{type}B{method}print() {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}F4-white{package}{type}B{method}print() {package}java.io{type}PrintStream{method}println(java.lang.String p0){type}void
+REF {feature}F4-white{package}{type}B{method}print() {package}java.lang{type}System
+REF {feature}F4-white{package}{type}B{method}print() {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream

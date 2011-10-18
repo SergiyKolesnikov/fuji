@@ -41,9 +41,13 @@ aspect Intros {
     
     public void MethodDecl.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
-        System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
-        System.out.print(IntrosRefsUtil.typeDeclQName(host));
-        System.out.println(IntrosRefsUtil.MEMBERDELIM + IntrosRefsUtil.signature(this));
+        StringBuilder intro = new StringBuilder();
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
+        .append(IntrosRefsUtil.typeDeclQName(host))
+        .append(IntrosRefsUtil.DELIM_METHOD + IntrosRefsUtil.signature(this))
+        .append(IntrosRefsUtil.DELIM_TYPE)
+        .append(type().typeName());
+        System.out.println(intro);
         for(int i = 0; i < getNumChild(); i++) {
             getChild(i).printIntros(featureModulePathnames);
         }
@@ -51,9 +55,13 @@ aspect Intros {
 
     public void FieldDeclaration.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
-        System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
-        System.out.print(IntrosRefsUtil.typeDeclQName(host));
-        System.out.println(IntrosRefsUtil.MEMBERDELIM + getID());
+        StringBuilder intro = new StringBuilder();
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
+        .append(IntrosRefsUtil.typeDeclQName(host))
+        .append(IntrosRefsUtil.DELIM_FIELD+ getID())
+        .append(IntrosRefsUtil.DELIM_TYPE)
+        .append(type().typeName());
+        System.out.println(intro);
     }
     
     public void ConstructorDecl.printIntros(java.util.List<String> featureModulePathnames) {
@@ -61,7 +69,7 @@ aspect Intros {
         if (!(host.isAnonymous() || host.isLocalClass())) {
             System.out.print(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
             System.out.print(IntrosRefsUtil.typeDeclQName(host));
-            System.out.println(IntrosRefsUtil.MEMBERDELIM + IntrosRefsUtil.signature(this));
+            System.out.println(IntrosRefsUtil.DELIM_CONS + IntrosRefsUtil.signature(this));
         }
     }
 }    
@@ -76,10 +84,92 @@ aspect Refs {
         }
     }
     
+    public void InterfaceDecl.printRefs(java.util.List<String> featureModulePathnames) {
+        if (getSuperInterfaceIdList().getNumChild() != 0) {
+            List<Access> ext = getSuperInterfaceIdList();
+            for (int i = 0; i < ext.getNumChild(); ++i) { // getNumChild with trasform OK
+                Access ac = ext.getChild(i); // getChild with trasform OK
+                String featureName = new File(featureModulePathnames.get(featureID())).getName();
+                StringBuilder ref = new StringBuilder();
+                if (isAnonymous()) {
+                    ref.append(IntrosRefsUtil.REF);
+                } else {
+                    ref.append(IntrosRefsUtil.EXTREF);
+                }
+                ref.append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) ac))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(ac.type()));
+                System.out.println(ref);
+            }
+        }
+    }
+    
+    private java.util.Collection<Access> ClassDecl.preservedSuperClassAccesses = new java.util.ArrayList<Access>();
+    public void ClassDecl.addPreservedSuperClassAccess(Access ac) {
+        preservedSuperClassAccesses.add(ac);
+    }
+    public void ClassDecl.printRefs(java.util.List<String> featureModulePathnames) {
+        if (hasSuperClassAccess()) {
+            Opt<Access> ext = getSuperClassAccessOpt();
+            for (int i = 0; i < ext.getNumChild(); ++i) { // getNumChild with transform is OK.
+                Access ac = ext.getChild(i); // getChild with transform is OK.
+                String featureName = new File(featureModulePathnames.get(featureID())).getName();
+                StringBuilder ref = new StringBuilder();
+                if (isAnonymous()) {
+                    ref.append(IntrosRefsUtil.REF);
+                } else {
+                    ref.append(IntrosRefsUtil.EXTREF);
+                }
+                ref.append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) ac))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(ac.type()));
+                System.out.println(ref);
+            }
+        }
+        for (Access ac : preservedSuperClassAccesses) {
+                String featureName = new File(featureModulePathnames.get(featureID())).getName();
+                StringBuilder ref = new StringBuilder();
+                if (isAnonymous()) {
+                    ref.append(IntrosRefsUtil.REF);
+                } else {
+                    ref.append(IntrosRefsUtil.EXTREF);
+                }
+                ref.append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) ac))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(ac.type()));
+                System.out.println(ref);
+        }
+        if (getImplementsList().getNumChild() != 0) {
+            List<Access> imp  = getImplementsList();
+            for (int i = 0; i < imp.getNumChild(); ++i) { // getNumChild with trasform OK
+                Access ac = imp.getChild(i); // getChild with transform is OK.
+                String featureName = new File(featureModulePathnames.get(featureID())).getName();
+                StringBuilder ref = new StringBuilder();
+                if (isAnonymous()) {
+                    ref.append(IntrosRefsUtil.REF);
+                } else {
+                    ref.append(IntrosRefsUtil.IMPREF);
+                }
+                ref.append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) ac))
+                .append(IntrosRefsUtil.DELIM)
+                .append(IntrosRefsUtil.typeDeclQName(ac.type()));
+                System.out.println(ref);
+            }
+        }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
+    }
+    
     public void TypeAccess.printRefs(java.util.List<String> featureModulePathnames) {
         if (!(this.hostType() == null) // exclude ImportDecls
                 && !(this instanceof PrimitiveTypeAccess)
                 && !(this instanceof ArrayTypeAccess)) {
+            
             String featureName = new File(featureModulePathnames.get(featureID())).getName();
             StringBuilder ref = new StringBuilder(IntrosRefsUtil.REF)
                 .append(IntrosRefsUtil.DELIM)
@@ -87,6 +177,20 @@ aspect Refs {
                 .append(IntrosRefsUtil.DELIM)
                 .append(IntrosRefsUtil.typeDeclQName(type()));
             System.out.println(ref);
+            
+            ASTNode parent = getParent();
+            if (parent instanceof ParameterDeclaration && parent.getParent() instanceof CatchClause 
+                    || parent instanceof List && parent.getParent() instanceof MethodDecl
+                    || parent.getParent() != null && parent.getParent() instanceof ThrowStmt) {
+                CompilationUnit tcu = type().compilationUnit();
+                if (tcu.featureID() != -1) {
+                    StringBuilder impRef = new StringBuilder(IntrosRefsUtil.THRREF)
+                    .append(IntrosRefsUtil.DELIM)
+                    .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+                    .append(IntrosRefsUtil.DELIM)
+                    .append(IntrosRefsUtil.typeDeclQName(type()));
+                }
+            }
         }
         for(int i = 0; i < getNumChild(); i++) {
             getChild(i).printRefs(featureModulePathnames);
@@ -103,16 +207,53 @@ aspect Refs {
             ref = new StringBuilder(IntrosRefsUtil.REF);
         }
         ref.append(IntrosRefsUtil.DELIM)
-            .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
-            .append(IntrosRefsUtil.DELIM);
+        .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+        .append(IntrosRefsUtil.DELIM);
         if (isOriginal) {
-            ref.append(IntrosRefsUtil.formatRefSource("", (Expr) this));
+            MethodDecl enclosing = (MethodDecl) ((Expr) this).enclosingBodyDecl();
+            String signature = IntrosRefsUtil.signature(enclosing);
+            signature = ComposingVisitor.ORIGINAL_OPERATOR + signature.substring(signature.indexOf("("));
+            if (enclosing.isStatic()) {
+                ref.append(IntrosRefsUtil.DELIM_STATIC);
+            }
+            ref.append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType(enclosing)))
+            .append(IntrosRefsUtil.DELIM_METHOD)
+            .append(signature)
+            .append(IntrosRefsUtil.DELIM_TYPE)
+            .append(enclosing.getTypeAccess().type().typeName());   
         } else {
+            if (decl().isStatic()) {
+                ref.append(IntrosRefsUtil.DELIM_STATIC);
+            }
             ref.append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
-                .append(IntrosRefsUtil.MEMBERDELIM)
-                .append(IntrosRefsUtil.signature(decl()));        
+            .append(IntrosRefsUtil.DELIM_METHOD)
+            .append(IntrosRefsUtil.signature(decl()))
+            .append(IntrosRefsUtil.DELIM_TYPE)
+            .append(decl().getTypeAccess().type().typeName());        
         }
         System.out.println(ref);
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
+    }
+
+    public void ClassInstanceExpr.printRefs(java.util.List<String> featureModulePathnames) {
+        if (! (hasTypeDecl() && getTypeDecl().isAnonymous())) {
+            String featureName = new File(featureModulePathnames.get(featureID())).getName();
+            StringBuilder ref;
+            ref = new StringBuilder(IntrosRefsUtil.REF);
+            ref.append(IntrosRefsUtil.DELIM)
+            .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
+            .append(IntrosRefsUtil.DELIM)
+            .append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
+            .append(IntrosRefsUtil.DELIM_CONS);
+            String signature = IntrosRefsUtil.signature(decl());
+            if (signature.startsWith("<init>")) {
+                signature = signature.replaceFirst("<", "/").replaceFirst(">", "/");
+            }
+            ref.append(signature);
+            System.out.println(ref);
+        }
         for(int i = 0; i < getNumChild(); i++) {
             getChild(i).printRefs(featureModulePathnames);
         }
@@ -124,10 +265,15 @@ aspect Refs {
             StringBuilder ref = new StringBuilder(IntrosRefsUtil.REF)
                 .append(IntrosRefsUtil.DELIM)
                 .append(IntrosRefsUtil.formatRefSource(featureName, (Expr) this))
-                .append(IntrosRefsUtil.DELIM)
-                .append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
-                .append(IntrosRefsUtil.MEMBERDELIM)
-                .append(getID());
+                .append(IntrosRefsUtil.DELIM);
+                if (decl().isStatic()) {
+                    ref.append(IntrosRefsUtil.DELIM_STATIC);
+                }
+                ref.append(IntrosRefsUtil.typeDeclQName(IntrosRefsUtil.visibleHostType((BodyDecl) decl())))
+                .append(IntrosRefsUtil.DELIM_FIELD)
+                .append(getID())
+                .append(IntrosRefsUtil.DELIM_TYPE)
+                .append(decl().type().typeName());
             System.out.println(ref);
         }
     }
@@ -136,18 +282,16 @@ aspect Refs {
      * In the refs printing mode return a declaration of the 
      * accessed variable, that comes frome the same feature as the access.  If 
      * there is no a declaration in the same feature, return the last 
-     * declaration of all the found declaration.  If there is no declaration 
+     * declaration of all found declarations.  If there is no declaration 
      * at all, return unknownField
      * 
      * If not in the refs printing mod, act normal.
      */
     refine VariableScopePropagation eq VarAccess.decl() {
-        
-        boolean allowMultVarDecls = getProgram().options()
-            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_VAR_DECLARATIONS);
-        
+        boolean allowMultDecls = getProgram().options()
+            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
         SimpleSet decls = decls();
-        if (allowMultVarDecls && decls.size() >= 1) {
+        if (allowMultDecls && decls.size() >= 1) {
             Variable var = null;
             for (Iterator iter = decls.iterator(); iter.hasNext(); ) {
                 var = (Variable) iter.next();
@@ -162,6 +306,39 @@ aspect Refs {
         }
         return unknownField();
     }
+    
+    /*
+     * In the refs printing mode return a declaration of the 
+     * accessed type, that comes frome the same feature as the access.  If 
+     * there is no a declaration in the same feature, return the last 
+     * declaration of all found declarations.  If there is no declaration 
+     * at all, return unknownField
+     * 
+     * If not in the refs printing mod, act normal.
+     */
+    refine GenericsTypeAnalysis eq TypeAccess.decl() {
+        boolean allowMultDecls = getProgram().options()
+            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        SimpleSet decls = decls();
+        TypeDecl decl = null;
+        if(allowMultDecls && decls.size() >= 1) {
+            Iterator iter = decls.iterator();
+            while (iter.hasNext()) {
+                decl = (TypeDecl) iter.next();
+                if(decl.featureID() == featureID()) {
+                    break; 
+                }
+            }
+        } else if (decls.size() == 1) {
+            decl = (TypeDecl) decls.iterator().next();
+        } else {
+            decl = unknownType();            
+        }
+        if(decl instanceof GenericTypeDecl && isRaw()) {
+            decl = ((GenericTypeDecl)decl).lookupParTypeDecl(new ArrayList());
+        }
+        return decl;
+    }
 }
 
 aspect IntrosRefsUtil {
@@ -171,13 +348,23 @@ aspect IntrosRefsUtil {
      */
     public class IntrosRefsUtil {
         
-        public static final String ALLOW_MULTIPLE_VAR_DECLARATIONS = "-allowMultipleVarDeclarations";
+        public static final String ALLOW_MULTIPLE_DECLARATIONS = "-allowMultipleDeclarations";
         public static final String DELIM = " ";
-        public static final String PACKAGEDELIM = "::";
-        public static final String MEMBERDELIM = ".";
         public static final String INTRO = "introduces";
         public static final String REF = "REF";
         public static final String ORIGREF = "ORI";
+        public static final String EXTREF = "EXT";
+        public static final String IMPREF = "IMP";
+        public static final String THRREF = "THR";
+
+        
+        public static final String DELIM_FEATURE = "{feature}";
+        public static final String DELIM_STATIC = "{static}";
+        public static final String DELIM_TYPE = "{type}";
+        public static final String DELIM_PKG = "{package}";
+        public static final String DELIM_FIELD = "{field}";
+        public static final String DELIM_METHOD = "{method}";
+        public static final String DELIM_CONS = "{constructor}";
 
         /*
          * Calculates a prefix for introduces relation containing a feature
@@ -197,9 +384,9 @@ aspect IntrosRefsUtil {
         public static String typeDeclQName(TypeDecl td) {
             String id = td.getID();
             if (td.isInnerType() || td.isNestedType()) {
-                return typeDeclQName(td.enclosingType()) + MEMBERDELIM + id;
+                return typeDeclQName(td.enclosingType()) + DELIM_TYPE + id;
             } else {
-                return td.packageName() + PACKAGEDELIM + id;
+                return DELIM_PKG + td.packageName() + DELIM_TYPE + id;
             }
         }
 
@@ -207,31 +394,33 @@ aspect IntrosRefsUtil {
          * Calculates a signature for the constructor declaration.
          */
         public static String signature(ConstructorDecl cond) {
-            return sigHelper(cond.name(), cond.getParameterListNoTransform());
+            return sigHelper(cond.name(), cond.getParameterList()); 
         }
 
         /*
          * Calculates a signature for the method declaration.
          */
         public static String signature(MethodDecl md) {
-            return sigHelper(md.name(), md.getParameterListNoTransform());
+            return sigHelper(md.name(), md.getParameterList());
         }
         
         private static String sigHelper(String name,
                                         AST.List<ParameterDeclaration> params) {
             StringBuffer s = new StringBuffer();
             s.append(name + "(");
-            for(int i = 0; i < params.getNumChildNoTransform(); i++) {
+            for(int i = 0; i < params.getNumChild(); i++) {
                 if(i != 0) s.append(", ");
                 // add erasure() after type() to remove generic parameter type.
-                s.append(params.getChildNoTransform(i).type().typeName());
+                s.append(params.getChild(i).type().typeName())
+                .append(" ")
+                .append(params.getChild(i).getID());
             }
             s.append(")");
             return s.toString();
         }
 
         /*
-         * Calculates a visible enclosing type for the give body declaration.
+         * Calculates a visible enclosing type for the given body declaration.
          * The enclosing types are processed recursively untill the first
          * non-anonymous and not-nested type (i.e. visible type) is found.
          */
@@ -258,19 +447,19 @@ aspect IntrosRefsUtil {
             StringBuilder source = new StringBuilder();
             TypeDecl host = visibleHostType(expr.hostType());
             if (! featureName.isEmpty())
-                source.append(featureName).append(PACKAGEDELIM);
+                source.append(DELIM_FEATURE + featureName);
             source.append(typeDeclQName(host));
             BodyDecl enclosing = expr.enclosingBodyDecl();
             if (enclosing != null) {
                 // TODO else if branch for FieldDecl
                 if (enclosing instanceof MethodDecl) {
-                    source.append(MEMBERDELIM);
+                    source.append(DELIM_METHOD);
                     source.append(signature((MethodDecl) enclosing));
                 } else if (enclosing instanceof ConstructorDecl) {
-                    source.append(MEMBERDELIM);
+                    source.append(DELIM_CONS);
                     source.append(signature((ConstructorDecl) enclosing));
                 } else if (enclosing instanceof FieldDeclaration) {
-                    source.append(MEMBERDELIM);
+                    source.append(DELIM_FIELD);
                     source.append(((FieldDeclaration) enclosing).getID());
                 } else {
                     // static or dynamic initialitzers, do nothing.

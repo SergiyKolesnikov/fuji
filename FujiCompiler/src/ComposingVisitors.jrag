@@ -1,3 +1,6 @@
+import sun.awt.im.CompositionArea;
+import fuji.CompositionErrorException;
+
 aspect VisitorAcceptMethods {
     syn boolean CompilationUnit.accept(ComposingVisitor visitor, CompilationUnit node) = visitor.visit(this, node);
     syn boolean TypeDecl.accept(ComposingVisitor visitor, TypeDecl node) = visitor.visit(this, node);
@@ -20,13 +23,15 @@ aspect ComposingVisitorInterface {
 }
 
 aspect ComposingVisitorNormal {
-
     public class ComposingVisitorNormal implements ComposingVisitor {
         public boolean visit(CompilationUnit baseCU, CompilationUnit featCU) {
-            /*
-             * Package declarations will not be checked for match. It is done by
-             * JavaComposer.  getPackageDecl()
-             */
+
+            /* Check package declarations. */
+            if (!baseCU.getPackageDecl().equals(featCU.getPackageDecl())) {
+                throw new CompositionErrorException("Composition of '"
+                        + baseCU.relativeName() + "' and '"
+                        + featCU.relativeName() + " failed! Package names do not match!");
+            }
 
             /* Import derlarations. */
             List<ImportDecl> baseIDs = baseCU.getImportDeclList();
@@ -77,12 +82,12 @@ aspect ComposingVisitorNormal {
             }
 
             /* Modifiers. Feature Modifiers override thoes of the base. */
-            if (featND.getModifiers().getModifierList()
-                .getNumChildNoTransform() != 0) {
-                Modifiers mods = featND.getModifiersNoTransform();
-                mods.setOldParent(mods.getParent());
-                baseND.setModifiers(mods);
-            }
+//            if (featND.getModifiers().getModifierList()
+//                .getNumChildNoTransform() != 0) {
+//                Modifiers mods = featND.getModifiersNoTransform();
+//                mods.setOldParent(mods.getParent());
+//                baseND.setModifiers(mods);
+//            }
 
             /*
              * 'extends' in the interface declaration. Preserving Accesses of
@@ -200,8 +205,42 @@ aspect ComposingVisitorNormal {
 
             /* Process MethodDecl */
             for (MethodDecl featMD : featMDs) {
-                featMD.setOldParent(featMD.getParent());
-                baseND.addBodyDecl(featMD);
+                boolean isComposed = false;
+                for (int i = 0; !isComposed && !baseMDs.isEmpty() && (i < baseMDs.size()); ++i) {
+                    MethodDecl baseMD = baseMDs.get(i);
+
+                    /*
+                     * Compose two methods, if their return types and signatures
+                     * match togather.
+                     */
+                    String featReturnType = featMD.getTypeAccess().type()
+                        .typeName();
+                    String baseReturnType = baseMD.getTypeAccess().type()
+                        .typeName();
+                    if (baseMD.signature().equals(featMD.signature())
+                        && baseReturnType.equals(featReturnType)) {
+                        
+                        /* Add feature method declaration. */
+                        featMD.setOldParent(featMD.getParent());
+                        baseND.addBodyDecl(featMD);
+                        
+                        /* Remove the base method declaration. */
+                        List<BodyDecl> bdList = baseND.getBodyDeclListNoTransform();
+                        bdList.removeChild(bdList.getIndexOfChild(baseMD));
+                        baseMDs.remove(baseMD);
+                        
+                        isComposed = true;
+                    }
+                }
+
+                /* If the method was not composed, just add it. */
+                if (!isComposed) {
+                    MethodDecl copyMD = featMD.fullCopy();
+                    copyMD.setOldParent(featMD.getParent());
+                    baseND.addBodyDecl(copyMD);
+                }
+                //featMD.setOldParent(featMD.getParent());
+                //baseND.addBodyDecl(featMD);
             }
 
             /*
@@ -225,12 +264,12 @@ aspect ComposingVisitorNormal {
             }
 
             /* Modifiers. Feature Modifiers override thoes of the base. */
-            if (featCD.getModifiers().getModifierList()
-                .getNumChildNoTransform() != 0) {
-                Modifiers mods = featCD.getModifiersNoTransform();
-                mods.setOldParent(mods.getParent());
-                baseCD.setModifiers(mods);
-            }
+//            if (featCD.getModifiers().getModifierList()
+//                .getNumChildNoTransform() != 0) {
+//                Modifiers mods = featCD.getModifiersNoTransform();
+//                mods.setOldParent(mods.getParent());
+//                baseCD.setModifiers(mods);
+//            }
 
             /* SuperClassAccess. 'extends' in the class declaration. */
             if (featCD.hasSuperClassAccess()) {
@@ -311,9 +350,9 @@ aspect ComposingVisitorNormal {
                 } else if (featBD instanceof StaticInitializer) {
                     featStatInits.add((StaticInitializer) featBD);
                 } else if (featBD instanceof MemberClassDecl) {
-                        featMemberCDs.add((MemberClassDecl) featBD);
+                    featMemberCDs.add((MemberClassDecl) featBD);
                 } else if (featBD instanceof MemberInterfaceDecl) {
-                        featMemberIDs.add((MemberInterfaceDecl) featBD);
+                    featMemberIDs.add((MemberInterfaceDecl) featBD);
                 } else {
                     notImplemented(featBD);
                 }
@@ -334,9 +373,9 @@ aspect ComposingVisitorNormal {
                 } else if (baseBD instanceof StaticInitializer) {
                     baseStatInits.add((StaticInitializer) baseBD);
                 } else if (baseBD instanceof MemberClassDecl) {
-                        baseMemberCDs.add((MemberClassDecl) baseBD);
+                    baseMemberCDs.add((MemberClassDecl) baseBD);
                 } else if (baseBD instanceof MemberInterfaceDecl) {
-                        baseMemberIDs.add((MemberInterfaceDecl) baseBD);
+                    baseMemberIDs.add((MemberInterfaceDecl) baseBD);
                 } else {
                     notImplemented(baseBD);
                 }
@@ -460,9 +499,9 @@ aspect ComposingVisitorNormal {
 
                 /* If the method was not composed, just add it. */
                 if (!isComposed) {
-                                MethodDecl copyMD = featMD.fullCopy();
-                                copyMD.setOldParent(featMD.getParent());
-                                baseCD.addBodyDecl(copyMD);
+                    MethodDecl copyMD = featMD.fullCopy();
+                    copyMD.setOldParent(featMD.getParent());
+                    baseCD.addBodyDecl(copyMD);
                 }
             }
 
@@ -537,16 +576,16 @@ aspect ComposingVisitorNormal {
                 ClassDecl fCD = featMemberCD.getClassDeclNoTransform();
                 boolean composed = false;
                 for (MemberClassDecl baseMemberCD : baseMemberCDs) {
-                        ClassDecl bCD = baseMemberCD.getClassDeclNoTransform();
-                        if (bCD.getID().equals(fCD.getID())) {
-                                fCD.setOldParent(fCD.getParent());
-                                bCD.accept(this, fCD);
-                                composed = true;
-                        }
+                    ClassDecl bCD = baseMemberCD.getClassDeclNoTransform();
+                    if (bCD.getID().equals(fCD.getID())) {
+                        fCD.setOldParent(fCD.getParent());
+                        bCD.accept(this, fCD);
+                        composed = true;
+                    }
                 }
                 if (!composed) {
-                                featMemberCD.setOldParent(featMemberCD.getParent());
-                        baseCD.addBodyDecl(featMemberCD);
+                    featMemberCD.setOldParent(featMemberCD.getParent());
+                    baseCD.addBodyDecl(featMemberCD);
                 }
             }
 
@@ -556,7 +595,6 @@ aspect ComposingVisitorNormal {
                 notImplemented(featMemberID);
                 // TODO not forget to set old parent
             }
-
 
             /*
              * Flushing the caches is needed because the structure of the class
@@ -610,10 +648,13 @@ aspect ComposingVisitorRSF {
     // TODO incorporate changes from the ComposeVisiorNormal
     public class ComposingVisitorRSF implements ComposingVisitor {
         public boolean visit(CompilationUnit baseCU, CompilationUnit featCU) {
-            /*
-             * Package declarations will not be checked for match. It is done by
-             * JavaComposer.  getPackageDecl()
-             */
+
+            /* Check package declarations. */
+            if (!baseCU.getPackageDecl().equals(featCU.getPackageDecl())) {
+                throw new CompositionErrorException("Composition of '"
+                        + baseCU.relativeName() + "' and '"
+                        + featCU.relativeName() + " failed! Package names do not match!");
+            }
 
             /* Import derlarations. */
             List<ImportDecl> baseIDs = baseCU.getImportDeclList();
@@ -638,7 +679,10 @@ aspect ComposingVisitorRSF {
                     baseTD.accept(this, featTD);
                 }
             }
-
+            
+            /* Setting formSource to false exclude this refinement CU from compilation. */
+            featCU.setFromSource(false);
+            
             // TODO return value should depend on success of the composition.
             return true;
         }
@@ -669,12 +713,12 @@ aspect ComposingVisitorRSF {
             }
 
             /* Modifiers. Feature Modifiers override thoes of the base. */
-            if (featND.getModifiers().getModifierList()
-                .getNumChildNoTransform() != 0) {
-                Modifiers mods = featND.getModifiersNoTransform();
-                mods.setOldParent(mods.getParent());
-                baseND.setModifiers(mods);
-            }
+//            if (featND.getModifiers().getModifierList()
+//                .getNumChildNoTransform() != 0) {
+//                Modifiers mods = featND.getModifiersNoTransform();
+//                mods.setOldParent(mods.getParent());
+//                baseND.setModifiers(mods);
+//            }
 
             /*
              *'extends' in the interface declaration. Preserving Accesses of
@@ -777,12 +821,12 @@ aspect ComposingVisitorRSF {
             }
 
             /* Modifiers. Feature Modifiers override thoes of the base. */
-            if (featCD.getModifiers().getModifierList()
-                .getNumChildNoTransform() != 0) {
-                Modifiers mods = featCD.getModifiersNoTransform();
-                mods.setOldParent(mods.getParent());
-                baseCD.setModifiers(mods);
-            }
+//            if (featCD.getModifiers().getModifierList()
+//                .getNumChildNoTransform() != 0) {
+//                Modifiers mods = featCD.getModifiersNoTransform();
+//                mods.setOldParent(mods.getParent());
+//                baseCD.setModifiers(mods);
+//            }
 
             /* SuperClassAccess. 'extends' in the class declaration. */
             if (featCD.hasSuperClassAccess()) {
@@ -795,7 +839,8 @@ aspect ComposingVisitorRSF {
                      * class is not an interface.
                      */
                     Access baseSup = baseCD.getSuperClassAccess();
-                    baseCD.getImplementsListNoTransform().add(baseSup);
+                    baseCD.addPreservedSuperClassAccess(baseSup);
+                    //baseCD.getImplementsListNoTransform().add(baseSup);
                 }
                 Access featSup = featCD.getSuperClassAccess();
                 featSup.setOldParent(featSup.getParent());
@@ -828,6 +873,8 @@ aspect ComposingVisitorRSF {
             ArrayList<ConstructorDecl> baseCons = new ArrayList<ConstructorDecl>();
             ArrayList<InstanceInitializer> baseInstInits = new ArrayList<InstanceInitializer>();
             ArrayList<StaticInitializer> baseStatInits = new ArrayList<StaticInitializer>();
+            ArrayList<MemberClassDecl> baseMemberCDs = new ArrayList<MemberClassDecl>();
+            ArrayList<MemberInterfaceDecl> baseMemberIDs = new ArrayList<MemberInterfaceDecl>();
 
             ArrayList<FieldDecl> featFDs = new ArrayList<FieldDecl>();
             ArrayList<FieldDeclaration> featFDEs =
@@ -836,6 +883,9 @@ aspect ComposingVisitorRSF {
             ArrayList<ConstructorDecl> featCons = new ArrayList<ConstructorDecl>();
             ArrayList<InstanceInitializer> featInstInits = new ArrayList<InstanceInitializer>();
             ArrayList<StaticInitializer> featStatInits = new ArrayList<StaticInitializer>();
+            ArrayList<MemberClassDecl> featMemberCDs = new ArrayList<MemberClassDecl>();
+            ArrayList<MemberInterfaceDecl> featMemberIDs = new ArrayList<MemberInterfaceDecl>();
+
             for (BodyDecl featBD : featCD.getBodyDeclList()) {
                 if (featBD instanceof FieldDecl) {
                     featFDs.add((FieldDecl) featBD);
@@ -849,6 +899,10 @@ aspect ComposingVisitorRSF {
                     featInstInits.add((InstanceInitializer) featBD);
                 } else if (featBD instanceof StaticInitializer) {
                     featStatInits.add((StaticInitializer) featBD);
+                } else if (featBD instanceof MemberClassDecl) {
+                    featMemberCDs.add((MemberClassDecl) featBD);
+                } else if (featBD instanceof MemberInterfaceDecl) {
+                    featMemberIDs.add((MemberInterfaceDecl) featBD);
                 } else {
                     notImplemented(featBD);
                 }
@@ -866,6 +920,10 @@ aspect ComposingVisitorRSF {
                     baseInstInits.add((InstanceInitializer) baseBD);
                 } else if (baseBD instanceof StaticInitializer) {
                     baseStatInits.add((StaticInitializer) baseBD);
+                } else if (baseBD instanceof MemberClassDecl) {
+                    baseMemberCDs.add((MemberClassDecl) baseBD);
+                } else if (baseBD instanceof MemberInterfaceDecl) {
+                    baseMemberIDs.add((MemberInterfaceDecl) baseBD);
                 } else {
                     notImplemented(baseBD);
                 }
@@ -909,6 +967,31 @@ aspect ComposingVisitorRSF {
             for (InstanceInitializer featInstInit : featInstInits) {
                 featInstInit.setOldParent(featInstInit.getParent());
                 baseCD.addBodyDecl(featInstInit);
+            }
+
+            /* Process MemberClassDecls */
+            for (MemberClassDecl featMemberCD : featMemberCDs) {
+                ClassDecl fCD = featMemberCD.getClassDeclNoTransform();
+                boolean composed = false;
+                for (MemberClassDecl baseMemberCD : baseMemberCDs) {
+                    ClassDecl bCD = baseMemberCD.getClassDeclNoTransform();
+                    if (bCD.getID().equals(fCD.getID())) {
+                        fCD.setOldParent(fCD.getParent());
+                        bCD.accept(this, fCD);
+                        composed = true;
+                    }
+                }
+                if (!composed) {
+                    featMemberCD.setOldParent(featMemberCD.getParent());
+                    baseCD.addBodyDecl(featMemberCD);
+                }
+            }
+
+            /* Process MemberInterfaceDecls */
+            // TODO
+            for (MemberInterfaceDecl featMemberID : featMemberIDs) {
+                notImplemented(featMemberID);
+                // TODO not forget to set old parent
             }
 
             /*

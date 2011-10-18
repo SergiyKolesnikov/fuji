@@ -72,7 +72,8 @@ public class Composition {
         options.addKeyValueOption("-" + Main.OptionName.EXTDIRS);
         options.addKeyValueOption("-" + Main.OptionName.SOURCEPATH);
         options.addKeyValueOption("-" + Main.OptionName.D);
-        options.addKeyOption(AST.IntrosRefsUtil.ALLOW_MULTIPLE_VAR_DECLARATIONS);
+        options
+                .addKeyOption(AST.IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
     }
 
     /*
@@ -80,6 +81,7 @@ public class Composition {
      * part of the given AST.
      */
     private void composeRoleGroup(Program ast, RoleGroup rg) {
+        
         Collection<String> refinementPaths = rg
                 .calculateRefinementRelativePathnames();
 
@@ -102,7 +104,7 @@ public class Composition {
             if (cu.fromSource()) {
                 cu.setFromRole(true);
                 try {
-                    cu.setFeatureID(spl.determineFeatureID(cu.pathName()));
+                    cu.setFeatureID(spl.determineFeatureID(cu));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -119,7 +121,9 @@ public class Composition {
         /* Compose refinements. */
         for (CompilationUnit refCU : refCUs) {
             if (!baseCU.accept(client.getComposingVisitor(), refCU))
-                throw new RuntimeException("Composition failed!");
+                throw new RuntimeException("Composition of '"
+                        + baseCU.relativeName() + "' and '"
+                        + refCU.relativeName() + " failed!");
         }
     }
 

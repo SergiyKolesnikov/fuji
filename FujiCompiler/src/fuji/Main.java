@@ -34,7 +34,7 @@ public class Main {
     private List<String> compilerArgs; // JastAddJ arguments
     private ComposingVisitor composingVisitor;
     private SPLStructure spl;
-    private boolean generateClassfiles = true;
+    private boolean generateClassFiles = true;
     private Collection<String> processedCUs = new ArrayList<String>();
 
     /**
@@ -60,6 +60,8 @@ public class Main {
             printError(e.getMessage());
         } catch (CompilerWarningException e) {
             System.err.println(e.getMessage());
+        } catch (CompositionErrorException e) {
+            printError(e.getMessage() + "\n");
         }
     }
 
@@ -80,6 +82,15 @@ public class Main {
     public Main(String[] args) throws WrongArgumentException, ParseException,
             IOException, FeatureDirNotFoundException, SyntacticErrorException,
             SemanticErrorException, CompilerWarningException {
+
+        /*
+         * The flag controls the construction of the SPL structure
+         * representation. If true, only one dependency graph containing all the
+         * groups will be created. The interrelations between the role groups
+         * are disregarded.
+         */
+        boolean useSingleDependencyGraph = true; // DEBUG default should be
+        // 'false'
 
         /* Initialize options and parse the command line. */
         Options options = initOptions();
@@ -106,7 +117,8 @@ public class Main {
         /* Select composition strategy. */
         if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)) {
             composingVisitor = new AST.ComposingVisitorRSF();
-            generateClassfiles = false;
+            generateClassFiles = false;
+            useSingleDependencyGraph = true;
         } else {
             composingVisitor = new AST.ComposingVisitorNormal();
         }
@@ -114,7 +126,8 @@ public class Main {
         /* Process SPL structure, parse sources and build ASTs. */
         String basedir = cmd.getOptionValue(BASEDIR, System
                 .getProperty("user.dir"));
-        spl = new SPLStructure(basedir, cmd.getArgs()[0]);
+        spl = new SPLStructure(basedir, cmd.getArgs()[0],
+                useSingleDependencyGraph);
         constructCompilerArgs();
         Composition composition = new Composition(this, spl);
         Iterator<Program> astIter = composition.getASTIterator();
@@ -246,7 +259,7 @@ public class Main {
 
         /* Additional flags, that are not user definable options. */
         if (cmd.hasOption(EXT_REFS)) {
-            compilerArgs.add(AST.IntrosRefsUtil.ALLOW_MULTIPLE_VAR_DECLARATIONS);
+            compilerArgs.add(AST.IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
         }
     }
 
@@ -256,7 +269,8 @@ public class Main {
      */
     @SuppressWarnings("unchecked")
     private void processCU(CompilationUnit cu, Collection errors,
-            Collection warnings) throws IOException, WrongArgumentException {
+            Collection warnings) throws IOException, WrongArgumentException,
+            SyntacticErrorException {
 
         if (cmd.hasOption(EXT_INTROS)
                 && spl.isBaseRoleSourcefile(cu.pathName())
@@ -266,13 +280,31 @@ public class Main {
         }
         if (cmd.hasOption(EXT_REFS) && spl.isBaseRoleSourcefile(cu.pathName())
                 && !processedCUs.contains(cu.pathName())) {
+
             cu.printRefs(spl.getFeatureModulePathnames());
         }
-        if (generateClassfiles) {
+        if (generateClassFiles) {
 
             /*
-             * Check for static semantic errors. Syntactical errors have been
-             * already checked in SPLStructure.
+             * Check for syntactical errors. (They have been checked in
+             * SPLStructure before while creating dependency graphs.
+             * 
+             * TODO: collect syntactical errors for _all_ CUs first and then
+             * throw the SyntacticErrorException. See also bug revealed by
+             * ReportParseError2Compile.test
+             */
+            @SuppressWarnings("unchecked")
+            Collection parseErrors = cu.parseErrors();
+            if (!parseErrors.isEmpty()) {
+                StringBuilder message = new StringBuilder();
+                for (Object o : parseErrors) {
+                    message.append(o + "\n");
+                }
+                throw new SyntacticErrorException(message.toString());
+            }
+
+            /*
+             * Check for static semantic errors.
              */
             cu.errorCheck(errors, warnings);
             if (errors.isEmpty()) {
@@ -291,6 +323,7 @@ public class Main {
                 cu.generateClassfile();
             }
         }
+
         processedCUs.add(cu.pathName());
     }
 

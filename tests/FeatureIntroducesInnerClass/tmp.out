@@ -1,15 +1,15 @@
-introduces F1 ::A
-introduces F1 ::A.A(java.lang.Object)
-introduces F1 ::A.aMethod(java.util.List<java.lang.String>, java.lang.Object)
-introduces F1 ::A.Inner
-introduces F1 ::A.Inner.anonymousField
-introduces F1 ::A.Inner.anonymousMethod()
-introduces F1 ::A.Inner.Inner()
-introduces F1 ::A.Inner.innerField
-introduces F1 ::A.Inner.innerMethod()
-introduces F1 ::A.Nested
-introduces F1 ::A.Nested.localField
-introduces F1 ::A.Nested.localMethod()
-introduces F1 ::A.Nested.Nested()
-introduces F1 ::A.Nested.nestedField
-introduces F1 ::A.Nested.nestedMethod()
+introduces F1 {package}{type}A
+introduces F1 {package}{type}A{constructor}A(java.lang.Object o)
+introduces F1 {package}{type}A{method}aMethod(java.util.List<java.lang.String> l, java.lang.Object o){type}void
+introduces F1 {package}{type}A{type}Inner
+introduces F1 {package}{type}A{type}Inner{constructor}Inner()
+introduces F1 {package}{type}A{type}Inner{field}anonymousField{type}int[]
+introduces F1 {package}{type}A{type}Inner{field}innerField{type}int
+introduces F1 {package}{type}A{type}Inner{method}anonymousMethod(){type}void
+introduces F1 {package}{type}A{type}Inner{method}innerMethod(){type}java.lang.Object
+introduces F1 {package}{type}A{type}Nested
+introduces F1 {package}{type}A{type}Nested{constructor}Nested()
+introduces F1 {package}{type}A{type}Nested{field}localField{type}int
+introduces F1 {package}{type}A{type}Nested{field}nestedField{type}int
+introduces F1 {package}{type}A{type}Nested{method}localMethod(){type}void
+introduces F1 {package}{type}A{type}Nested{method}nestedMethod(){type}void

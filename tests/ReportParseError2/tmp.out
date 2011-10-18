@@ -1,3 +1,2 @@
 Errors:
-F2/some/A.java:5,1:
-  Syntactic Error: unexpected token "}"
+Composition of 'F1/some/A.java' and 'F2/some/A.java failed! Package names do not match!

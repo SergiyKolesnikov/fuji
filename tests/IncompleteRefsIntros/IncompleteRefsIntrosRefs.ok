@@ -1,22 +1,25 @@
-REF F1::::Class.f java.lang::Boolean
-REF F1::::Class ::I1
-REF F1::::Class java.util::Vector
-REF F1::::Class.m2(java.lang.String) java.lang::String
-REF F1::::Class.m(int) java.lang::Integer
-REF F1::::Interface ::I1
-REF F2::::Class ::Class.i
-REF F2::::Class ::Class.i
-REF F2::::Class ::Class.staticArrayF1
-REF F2::::Class ::Class.staticArrayF1
-REF F2::::Class ::Class.staticArrayF1
-REF F2::::Class ::Class.staticArrayF1
-REF F2::::Class ::Class.staticArrayF2
-REF F2::::Class ::Class.staticArrayF2
-REF F2::::Class.f java.lang::Boolean
-REF F2::::Class ::I2
-REF F2::::Class java.util::ArrayList
-REF F2::::Class.m2(java.lang.String) java.lang::String
-REF F2::::Class.m(int) java.lang::String
-REF F2::::Class @primitive::int[].length
-REF F2::::Class @primitive::int[].length
-REF F2::::Interface ::I2
+EXT {feature}F1{package}{type}Class {package}java.util{type}ArrayList
+EXT {feature}F1{package}{type}Class {package}java.util{type}Vector
+EXT {feature}F1{package}{type}Interface {package}{type}I1
+EXT {feature}F1{package}{type}Interface {package}{type}I2
+IMP {feature}F1{package}{type}Class {package}{type}I1
+IMP {feature}F1{package}{type}Class {package}{type}I2
+REF {feature}F1{package}{type}Class{field}f {package}java.lang{type}Boolean
+REF {feature}F1{package}{type}Class{method}m2(java.lang.String p) {package}java.lang{type}String
+REF {feature}F1{package}{type}Class{method}m(int p) {package}java.lang{type}Integer
+REF {feature}F1{package}{type}Class {package}{type}I1
+REF {feature}F2{package}{type}Class{field}f {package}java.lang{type}Boolean
+REF {feature}F2{package}{type}Class{method}m2(java.lang.String p) {package}java.lang{type}String
+REF {feature}F2{package}{type}Class{method}m(int p) {package}java.lang{type}String
+REF {feature}F2{package}{type}Class {package}java.util{type}ArrayList
+REF {feature}F2{package}{type}Class {package}@primitive{type}int[]{field}length{type}int
+REF {feature}F2{package}{type}Class {package}@primitive{type}int[]{field}length{type}int
+REF {feature}F2{package}{type}Class {package}{type}I2
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}i{type}int
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}i{type}int
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF1{type}int[]
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF1{type}int[]
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF1{type}int[]
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF1{type}int[]
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF2{type}int[]
+REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF2{type}int[]

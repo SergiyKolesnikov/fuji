@@ -1,0 +1,6 @@
+#!/bin/sh
+CL=classes
+
+cd Bali
+/bin/rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji-nomod.jar -cp ../lib/jakarta.jar -d "$CL" BaliComposerComp.features

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/FujiProject/FujiCompiler/src/fuji/Main.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="fuji.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-classpath /home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/cide.jar:/home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/midpapi21.jar:/home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/cldcapi11.jar:/home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/wma20.jar:/home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/mmapi.jar -d classes MobileMedia8Comp.features"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="FujiProject"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1024m"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/local/Fuji_new_testcases/MobileMedia8-fuji-compilable"/>
+</launchConfiguration>

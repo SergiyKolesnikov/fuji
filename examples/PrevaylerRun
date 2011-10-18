@@ -1,3 +1,4 @@
 #!/bin/sh
 
 java -cp lib/cide.jar:lib/skaringa.jar:lib/log4j.jar:lib/xstream.jar:lib/javamatch.jar:Prevayler/classes org.prevayler.demos.demo2.Main
+rm -rf demo2

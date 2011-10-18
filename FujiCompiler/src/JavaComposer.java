@@ -97,6 +97,11 @@ public class JavaComposer {
     }
 
     private JavaComposer(String[] args) {
+        
+//      new TypeAccess().t
+//        new Modifiers().
+        
+        new MethodAccess().inStaticContext();
         try {
             arguments = parseArgs(args);
             if (arguments != null)

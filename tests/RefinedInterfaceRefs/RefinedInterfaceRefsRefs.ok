@@ -1,0 +1,12 @@
+IMP {feature}F1{package}{type}Main {package}{type}UnInterface
+REF {feature}F1{package}{type}Main{constructor}Main() {package}{type}Main{field}x{type}UnInterface
+REF {feature}F1{package}{type}Main{field}x {package}{type}UnInterface
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}java.io{type}PrintStream{method}println(int p0){type}void
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}java.lang{type}String
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}java.lang{type}System
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}{type}Main
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}{type}Main{constructor}Main()
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}{type}Main{field}x{type}UnInterface
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {package}{type}UnInterface{method}eval(){type}int
+REF {feature}F1{package}{type}Main{method}main(java.lang.String[] args) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}F1{package}{type}Main {package}{type}UnInterface

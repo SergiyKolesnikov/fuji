@@ -1,6 +1,6 @@
-introduces F1 some::A
-introduces F1 some::A.A()
-introduces F1 some::I
-introduces F1 some::I.f()
-introduces F2 some::A
-introduces F2 some::A.A()
+introduces F1 {package}some{type}A
+introduces F1 {package}some{type}A{constructor}A()
+introduces F1 {package}some{type}I
+introduces F1 {package}some{type}I{method}f(){type}some.A
+introduces F2 {package}some{type}A
+introduces F2 {package}some{type}A{constructor}A()
