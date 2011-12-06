@@ -1,0 +1,8 @@
+Adler32Checksum - Adler32 checksum computation.
+ArchiveCheck - Checks the archive file signature.
+Base - Base.
+Compress - ZIP compression algorithm.
+CRC - CRC32 checksum computation.
+Extract - ZIP
+GZIP - GZIP compression algorithm.
+Derivative* - Derivative.
