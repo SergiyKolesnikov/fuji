@@ -63,10 +63,9 @@ public class SPLStructure {
             FeatureDirNotFoundException, SyntacticErrorException {
 
         this.basedirPathname = new File(basedirPathname).getCanonicalPath();
-        featureModulePathnames = parseFeautresFile(new File(basedirPathname)
-                .getCanonicalPath(), new File(featuresFilePathname)
-                .getCanonicalPath());
-        classpathArg = constructClasspathArg(basedirPathname,
+        featureModulePathnames = parseFeautresFile(this.basedirPathname,
+                new File(featuresFilePathname).getCanonicalPath());
+        classpathArg = constructClasspathArg(this.basedirPathname,
                 featureModulePathnames);
         roleGroups = createRoleGroups(featureModulePathnames);
         if (singleDependencyGraph) {
@@ -436,10 +435,10 @@ public class SPLStructure {
      * some utility methods.
      */
     public class RoleGroup {
-        /* Pathname of the feature module containing the base role. */
+        /* Canonical pathname of the feature module containing the base role. */
         private String baseFeatureModulePathname;
 
-        /* Pathname of the base role. */
+        /* Canonical pathname of the base role. */
         private String basePathname;
 
         /* Pathname of the base role relative to the working directory. */
@@ -475,8 +474,7 @@ public class SPLStructure {
         public RoleGroup(String baseFMPathname, String base) {
             baseFeatureModulePathname = baseFMPathname;
             basePathname = base;
-            baseRelativePathname = basePathname.substring(System.getProperty(
-                    "user.dir").length() + 1);
+            baseRelativePathname = basePathname.substring(basedirPathname.length() + 1);
         }
 
         /**
