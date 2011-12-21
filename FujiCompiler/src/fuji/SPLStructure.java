@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -341,7 +342,7 @@ public class SPLStructure {
         /* Compute transitive dependencies. */
         for (RoleGroup currentRG : rgs.values()) {
             Program program = initAST(); // TODO try to init once and reuse
-            program.addSourceFile(currentRG.baseRelativePathname);
+            program.addSourceFile(currentRG.basePathname);
             for (String path : currentRG.calculateRefinementRelativePathnames())
                 program.addSourceFile(path);
             @SuppressWarnings("unchecked")
@@ -382,7 +383,7 @@ public class SPLStructure {
                                     .equals(depRG.basePathname)
                             && !currentRG.dependencies
                                     .contains(depRG.basePathname)) {
-                        program.addSourceFileIfNew(depRG.baseRelativePathname);
+                        program.addSourceFileIfNew(depRG.basePathname);
                         for (String path : depRG
                                 .calculateRefinementRelativePathnames()) {
                             program.addSourceFileIfNew(path);
@@ -441,12 +442,9 @@ public class SPLStructure {
         /* Canonical pathname of the base role. */
         private String basePathname;
 
-        /* Pathname of the base role relative to the working directory. */
-        private String baseRelativePathname;
-
         /*
-         * Maps a feature ID to the pathname of the corresponding feature module
-         * containing a refinement role. TODO map needed?
+         * A list of the canonical pathnames of the feature modules containing
+         * refinement roles.
          */
         private List<String> refiningFeatureModules = new ArrayList<String>();
 
@@ -474,16 +472,15 @@ public class SPLStructure {
         public RoleGroup(String baseFMPathname, String base) {
             baseFeatureModulePathname = baseFMPathname;
             basePathname = base;
-            baseRelativePathname = basePathname.substring(basedirPathname.length() + 1);
         }
 
         /**
-         * Returns the base role pathname relative to its feature module dir.
+         * Returns the canonical pathname of the base role.
          * 
-         * @return the base role pathname relative to its feature module dir.
+         * @return the canonical pathname of the base role.
          */
-        public String getBaseRelativePathname() {
-            return baseRelativePathname;
+        public String getBasePathname() {
+            return basePathname;
         }
 
         /**
@@ -493,6 +490,7 @@ public class SPLStructure {
          * 
          * @return the list of relative refinement role pathnames.
          */
+        // TODO: is it used? Comment out, run tests and examples.
         public List<String> calculateRefinementRelativePathnames() {
             List<String> pathnames = new ArrayList<String>();
             String baseSuffix = basePathname
@@ -505,7 +503,25 @@ public class SPLStructure {
             return pathnames;
         }
 
-        // TODO needed ? Comment out, run tests and examples.
+        /**
+         * Creates a list of pathnames of the refinement roles relative to their
+         * feature module dirs. The list have the order of feature modules in
+         * the features file.
+         * 
+         * @return the list of relative refinement role pathnames.
+         */
+        public List<String> calculateRefinementPathnames() {
+            List<String> pathnames = new ArrayList<String>();
+            String baseSuffix = basePathname
+                    .substring(baseFeatureModulePathname.length() + 1);
+            for (String fmPathname : refiningFeatureModules) {
+                fmPathname = (fmPathname + File.separator + baseSuffix);
+                pathnames.add(fmPathname);
+            }
+            return pathnames;
+        }
+
+        // TODO is it used? Comment out, run tests and examples.
         @Override
         public boolean equals(Object o) {
             if (o instanceof RoleGroup || o instanceof String) {

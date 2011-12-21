@@ -293,7 +293,6 @@ public class Main {
              * throw the SyntacticErrorException. See also bug revealed by
              * ReportParseError2Compile.test
              */
-            @SuppressWarnings("unchecked")
             Collection parseErrors = cu.parseErrors();
             if (!parseErrors.isEmpty()) {
                 StringBuilder message = new StringBuilder();

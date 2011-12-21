@@ -82,13 +82,20 @@ public class Composition {
      */
     private void composeRoleGroup(Program ast, RoleGroup rg) {
         
-        Collection<String> refinementPaths = rg
-                .calculateRefinementRelativePathnames();
+//        Collection<String> refinementPaths = rg
+//                .calculateRefinementRelativePathnames();
+//
+//        /*
+//         * Even if there is no refinements the role must be processed for the
+//         * attributes featureID and fromRole to be set.
+//         */
+//        for (String path : refinementPaths) {
+//            ast.addSourceFile(path);
+//        }
 
-        /*
-         * Even if there is no refinements the role must be processed for the
-         * attributes featureID and fromRole to be set.
-         */
+        Collection<String> refinementPaths = rg
+                .calculateRefinementPathnames();
+
         for (String path : refinementPaths) {
             ast.addSourceFile(path);
         }
@@ -108,11 +115,18 @@ public class Composition {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if (cu.relativeName() != null
-                        && cu.relativeName().equals(
-                                rg.getBaseRelativePathname())) {
+//                if (cu.relativeName() != null
+//                        && cu.relativeName().equals(
+//                                rg.getBaseRelativePathname())) {
+//                    baseCU = cu;
+//                } else if (refinementPaths.contains(cu.relativeName())) {
+//                    refCUs.add(cu);
+//                }
+                if (cu.pathName() != null
+                        && cu.pathName().equals(
+                                rg.getBasePathname())) {
                     baseCU = cu;
-                } else if (refinementPaths.contains(cu.relativeName())) {
+                } else if (refinementPaths.contains(cu.pathName())) {
                     refCUs.add(cu);
                 }
             }
@@ -176,7 +190,8 @@ public class Composition {
                     continue;
                 }
                 rgsToCompose.add(rg);
-                ast.addSourceFile(rg.getBaseRelativePathname());
+                //ast.addSourceFile(rg.getBaseRelativePathname());
+                ast.addSourceFile(rg.getBasePathname());
             }
 
             /* Compose base roles with their refinements. */
