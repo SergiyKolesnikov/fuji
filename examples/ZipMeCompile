@@ -2,4 +2,4 @@
 CL=classes
 cd ZipMe
 /bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" ZipMeComp.features
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -basedir features -d "$CL" configs/ZipMeComp.features

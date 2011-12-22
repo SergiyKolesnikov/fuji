@@ -222,7 +222,7 @@
 		<antcall target="jar-builder"/>
 	</target>
 	<target name="jar-nomod" depends="build-nomod" description="build a runnable jar file (fuji without FOP access modifiers). Run 'ant clean' if you have build fuji with access modifiers before.">
-		<property name="jarName" value="fuji-nomod.jar"/>
+		<property name="jarName" value="fuji.jar"/>
 		<antcall target="jar-builder"/>
 	</target>
   <target name="jar-builder">
