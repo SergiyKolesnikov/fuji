@@ -11,4 +11,3 @@ DerivativeExtractCRC
 DerivativeCompressGZIP
 DerivativeCompressAdler32Checksum
 DerivativeCompressGZIPCRC
-ZipTest
