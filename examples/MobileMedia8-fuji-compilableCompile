@@ -3,7 +3,7 @@ CL="classes"
 
 cd MobileMedia8-fuji-compilable
 rm -rf "$CL"
-fuji-nomod -d classes -cp \
+java -jar ../../FujiCompiler/build/fuji.jar -d classes -cp \
   /home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/cide.jar:\
 /home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/midpapi21.jar:\
 /home/kolesnik/work/projects/fuji/FujiProject/trunk/examples/lib/cldcapi11.jar:\
