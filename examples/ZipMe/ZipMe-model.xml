@@ -80,7 +80,12 @@
     <constraints>
       <constraint type="alternative" />
       <constraint type="commulative" />
-      <constraint type="requires" />
+      <constraint type="requires">
+        <constraint_element>
+          <id>5</id>
+          <name>CRC</name>
+        </constraint_element>
+      </constraint>
       <constraint type="excludes" />
     </constraints>
     <childElements />
@@ -133,7 +138,7 @@
       </previous_element>
     </order>
   </element>
-  <element id="7" name="Adler32Chcksum" type="feature" optional="true" dynamic="true">
+  <element id="7" name="Adler32Checksum" type="feature" optional="true" dynamic="true">
     <path_absolut />
     <path_relativ />
     <parentElement />
@@ -223,7 +228,7 @@
     <childElements />
     <order />
   </element>
-  <element id="12" name="DerivCompressAdler32Chcksum" type="derivative" optional="true" dynamic="true">
+  <element id="12" name="DerivCompressAdler32Checksum" type="derivative" optional="true" dynamic="true">
     <path_absolut />
     <path_relativ />
     <parentElement>

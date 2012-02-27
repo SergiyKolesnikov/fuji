@@ -1,0 +1,11 @@
+Base
+CRC
+ArchiveCheck
+GZIP
+Adler32Checksum
+Compress
+DerivativeGZIPCRC
+DerivativeCompressCRC
+DerivativeCompressGZIP
+DerivativeCompressAdler32Checksum
+DerivativeCompressGZIPCRC
