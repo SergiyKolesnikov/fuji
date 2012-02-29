@@ -1,3 +1,18 @@
+/**
+ * TODO
+ * 
+ * - original()-Vorkommnisse mit falschen Parameter-Namen: Ich werde die Namen einfach auslassen.
+ *
+ * - public class E<X extends A> {}: "REF F1 {type}E {type}A" fehlt. 
+ *
+ * - produce constructor REFs für super() and this() 
+ * 
+ * - If the target is a constructor in a compilation unit reconstructed from 
+ * byte code, then the name of the cunstructor is <init>.  If the compilation
+ * unit comes from a source file, then normal constructor name is displayed.  TODO:
+ * make it consistent <init> or normal name.
+ */
+
 /*
  * This aspects implement a Fuji extention that generats introduces and references
  * relation for an SPL.  It is used in combination with ComposingVisitorIntrosRefs.
@@ -42,8 +57,11 @@ aspect Intros {
     public void MethodDecl.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
         StringBuilder intro = new StringBuilder();
-        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
-        .append(IntrosRefsUtil.typeDeclQName(host))
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+	if (isStatic()) {
+	    intro.append(IntrosRefsUtil.DELIM_STATIC);
+	}
+        intro.append(IntrosRefsUtil.typeDeclQName(host))
         .append(IntrosRefsUtil.DELIM_METHOD + IntrosRefsUtil.signature(this))
         .append(IntrosRefsUtil.DELIM_TYPE)
         .append(type().typeName());
@@ -56,8 +74,11 @@ aspect Intros {
     public void FieldDeclaration.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
         StringBuilder intro = new StringBuilder();
-        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
-        .append(IntrosRefsUtil.typeDeclQName(host))
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+        if (isStatic()) {
+            intro.append(IntrosRefsUtil.DELIM_STATIC);
+        }
+        intro.append(IntrosRefsUtil.typeDeclQName(host))
         .append(IntrosRefsUtil.DELIM_FIELD+ getID())
         .append(IntrosRefsUtil.DELIM_TYPE)
         .append(type().typeName());
@@ -411,9 +432,10 @@ aspect IntrosRefsUtil {
             for(int i = 0; i < params.getNumChild(); i++) {
                 if(i != 0) s.append(", ");
                 // add erasure() after type() to remove generic parameter type.
-                s.append(params.getChild(i).type().typeName())
-                .append(" ")
-                .append(params.getChild(i).getID());
+                s.append(params.getChild(i).type().typeName());
+                // add following lines to have parameter names in the signature.
+                //.append(" ")
+                //.append(params.getChild(i).getID());
             }
             s.append(")");
             return s.toString();
