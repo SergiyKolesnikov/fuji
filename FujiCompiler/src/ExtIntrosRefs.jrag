@@ -1,16 +1,5 @@
 /**
- * TODO
- * 
- * - original()-Vorkommnisse mit falschen Parameter-Namen: Ich werde die Namen einfach auslassen.
- *
- * - public class E<X extends A> {}: "REF F1 {type}E {type}A" fehlt. 
- *
- * - produce constructor REFs für super() and this() 
- * 
- * - If the target is a constructor in a compilation unit reconstructed from 
- * byte code, then the name of the cunstructor is <init>.  If the compilation
- * unit comes from a source file, then normal constructor name is displayed.  TODO:
- * make it consistent <init> or normal name.
+ * TODO see trunk/TODO
  */
 
 /*
@@ -124,6 +113,9 @@ aspect Refs {
                 System.out.println(ref);
             }
         }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
+        }
     }
     
     private java.util.Collection<Access> ClassDecl.preservedSuperClassAccesses = new java.util.ArrayList<Access>();
@@ -199,6 +191,9 @@ aspect Refs {
                 .append(IntrosRefsUtil.typeDeclQName(type()));
             System.out.println(ref);
             
+            /* 
+             * Generate extra ref for exception types in trhow, throws and catch.
+             */
             ASTNode parent = getParent();
             if (parent instanceof ParameterDeclaration && parent.getParent() instanceof CatchClause 
                     || parent instanceof List && parent.getParent() instanceof MethodDecl
@@ -463,7 +458,8 @@ aspect IntrosRefsUtil {
         }
 
         /*
-         * Returns a string representation of a source in a REF relation.
+         * Returns a string representation of a source in a REF relation for 
+         * the given expression.
          */
         public static String formatRefSource(String featureName, Expr expr) {
             StringBuilder source = new StringBuilder();

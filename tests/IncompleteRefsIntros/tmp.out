@@ -1,17 +1,17 @@
 introduces F1 {package}{type}Class
 introduces F1 {package}{type}Class{constructor}Class()
 introduces F1 {package}{type}Class{field}f{type}java.lang.Boolean
-introduces F1 {package}{type}Class{field}staticArrayF1{type}int[]
-introduces F1 {package}{type}Class{method}m2(java.lang.String p){type}void
-introduces F1 {package}{type}Class{method}m(int p){type}void
+introduces F1 {package}{type}Class{method}m2(java.lang.String){type}void
+introduces F1 {package}{type}Class{method}m(int){type}void
 introduces F1 {package}{type}I1
 introduces F1 {package}{type}Interface
+introduces F1 {static}{package}{type}Class{field}staticArrayF1{type}int[]
 introduces F2 {package}{type}Class
 introduces F2 {package}{type}Class{constructor}Class()
 introduces F2 {package}{type}Class{field}f{type}java.lang.Boolean
-introduces F2 {package}{type}Class{field}i{type}int
-introduces F2 {package}{type}Class{field}staticArrayF2{type}int[]
-introduces F2 {package}{type}Class{method}m2(java.lang.String p){type}void
-introduces F2 {package}{type}Class{method}m(int p){type}void
+introduces F2 {package}{type}Class{method}m2(java.lang.String){type}void
+introduces F2 {package}{type}Class{method}m(int){type}void
 introduces F2 {package}{type}I2
 introduces F2 {package}{type}Interface
+introduces F2 {static}{package}{type}Class{field}i{type}int
+introduces F2 {static}{package}{type}Class{field}staticArrayF2{type}int[]
