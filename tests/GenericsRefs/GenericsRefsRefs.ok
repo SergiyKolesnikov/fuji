@@ -1,0 +1,21 @@
+EXT {feature}F1{package}{type}B {package}{type}A
+EXT {feature}F1{package}{type}II {package}{type}I
+IMP {feature}F1{package}{type}B {package}{type}I
+REF {feature}F1{package}{type}A{method}f1(A<wildcards.? extends java.lang.Long>) {package}java.lang{type}Long
+REF {feature}F1{package}{type}A{method}f1(A<wildcards.? extends java.lang.Long>) {package}java.lang{type}String
+REF {feature}F1{package}{type}A{method}f1(A<wildcards.? extends java.lang.Long>) {package}{type}A
+REF {feature}F1{package}{type}A{method}f1(A<wildcards.? extends java.lang.Long>) {package}{type}A
+REF {feature}F1{package}{type}A {package}java.lang{type}Object
+REF {feature}F1{package}{type}B{method}f2(A<wildcards.? super java.lang.Float>) {package}java.lang{type}Float
+REF {feature}F1{package}{type}B{method}f2(A<wildcards.? super java.lang.Float>) {package}{type}A
+REF {feature}F1{package}{type}B{method}f2(A<wildcards.? super java.lang.Float>) {package}{type}A
+REF {feature}F1{package}{type}B {package}java.lang{type}Boolean
+REF {feature}F1{package}{type}B {package}java.lang{type}Character
+REF {feature}F1{package}{type}B {package}java.lang{type}Object
+REF {feature}F1{package}{type}B {package}{type}A
+REF {feature}F1{package}{type}B {package}{type}I
+REF {feature}F1{package}{type}II {package}java.lang{type}Byte
+REF {feature}F1{package}{type}II {package}java.lang{type}Short
+REF {feature}F1{package}{type}II {package}{type}I
+REF {feature}F1{package}{type}I {package}java.lang{type}Object
+REF {feature}F1{package}{type}Main {package}java.lang{type}Integer

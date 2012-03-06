@@ -26,6 +26,12 @@ import fuji.FeatureDirNotFoundException;
 import fuji.SyntacticErrorException;
 import fuji.WrongArgumentException;
 
+/**
+ * @deprecated
+ * 
+ * This class is deprecated!  Don't use it!  
+ */
+@Deprecated
 public class JavaComposer {
 
     // File extension of feature file.

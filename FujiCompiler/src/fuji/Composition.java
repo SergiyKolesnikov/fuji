@@ -12,28 +12,27 @@ import AST.Program;
 import fuji.SPLStructure.RoleGroup;
 
 /**
- * Composition is a strategy context for composing visitors. It manages the
- * composing process of the SPL. Composing algorithm is implemented in a
- * concrete visitor strategy.
+ * Composition is a strategy context for composing visitors that may implement
+ * different composition strategies. It manages the composing process of the
+ * SPL. Composing algorithm is implemented in a concrete visitor strategy.
  */
 public class Composition {
 
-    private Main client;
-    private SPLStructure spl;
+    private CompositionContext compositionContext;
 
     /**
      * Composition constructor.
      * 
-     * @param client
-     *            an instance of the main program that provides additional
-     *            context information (like program arguments) and a factory
-     *            method for concrete strategies.
+     * @param compContext
+     *            an instance of CompositionContext implementation that provides
+     *            all the data and methods needed by this strategy context
+     *            (e.g.: spl structure, factory method for
+     *            concrete strategies).
      * @param spl
      *            a representation of an SPL to be composed.
      */
-    public Composition(Main client, SPLStructure spl) {
-        this.client = client;
-        this.spl = spl;
+    public Composition(CompositionContext compContext) {
+        compositionContext = compContext;
     }
 
     /**
@@ -59,12 +58,13 @@ public class Composition {
                 return new parser.JavaParser().parse(is, fileName);
             }
         });
-        initOptions(program);
-        program.options().addOptions(client.getCompilerArgs());
+        initBackboneCompilerOptions(program);
+        program.options().addOptions(
+                compositionContext.getBackboneCompilerArgs());
         return program;
     }
 
-    private void initOptions(Program program) {
+    private void initBackboneCompilerOptions(Program program) {
         Options options = program.options();
         options.initOptions();
         options.addKeyValueOption("-" + Main.OptionName.CLASSPATH);
@@ -72,8 +72,7 @@ public class Composition {
         options.addKeyValueOption("-" + Main.OptionName.EXTDIRS);
         options.addKeyValueOption("-" + Main.OptionName.SOURCEPATH);
         options.addKeyValueOption("-" + Main.OptionName.D);
-        options
-                .addKeyOption(AST.IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        options.addKeyOption(AST.IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
     }
 
     /*
@@ -81,14 +80,9 @@ public class Composition {
      * part of the given AST.
      */
     private void composeRoleGroup(Program ast, RoleGroup rg) {
-        
-        Collection<String> refinementPaths = rg
-                .calculateRefinementRelativePathnames();
 
-        /*
-         * Even if there is no refinements the role must be processed for the
-         * attributes featureID and fromRole to be set.
-         */
+        Collection<String> refinementPaths = rg.calculateRefinementPathnames();
+
         for (String path : refinementPaths) {
             ast.addSourceFile(path);
         }
@@ -104,15 +98,15 @@ public class Composition {
             if (cu.fromSource()) {
                 cu.setFromRole(true);
                 try {
-                    cu.setFeatureID(spl.determineFeatureID(cu));
+                    cu.setFeatureID(compositionContext.getSPLStructure()
+                            .determineFeatureID(cu));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if (cu.relativeName() != null
-                        && cu.relativeName().equals(
-                                rg.getBaseRelativePathname())) {
+                if (cu.pathName() != null
+                        && cu.pathName().equals(rg.getBasePathname())) {
                     baseCU = cu;
-                } else if (refinementPaths.contains(cu.relativeName())) {
+                } else if (refinementPaths.contains(cu.pathName())) {
                     refCUs.add(cu);
                 }
             }
@@ -120,7 +114,7 @@ public class Composition {
 
         /* Compose refinements. */
         for (CompilationUnit refCU : refCUs) {
-            if (!baseCU.accept(client.getComposingVisitor(), refCU))
+            if (!baseCU.accept(compositionContext.getComposingVisitor(), refCU))
                 throw new RuntimeException("Composition of '"
                         + baseCU.relativeName() + "' and '"
                         + refCU.relativeName() + " failed!");
@@ -139,7 +133,8 @@ public class Composition {
          * Default constructor.
          */
         public ASTIterator() {
-            graphIterator = spl.getDependencyGraphs().iterator();
+            graphIterator = compositionContext.getSPLStructure()
+                    .getDependencyGraphs().iterator();
         }
 
         @Override
@@ -176,7 +171,8 @@ public class Composition {
                     continue;
                 }
                 rgsToCompose.add(rg);
-                ast.addSourceFile(rg.getBaseRelativePathname());
+                // ast.addSourceFile(rg.getBaseRelativePathname());
+                ast.addSourceFile(rg.getBasePathname());
             }
 
             /* Compose base roles with their refinements. */

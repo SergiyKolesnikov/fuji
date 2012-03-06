@@ -1,14 +1,16 @@
 #!/bin/sh
 
 gen() {
-    FUJI="../../FujiCompiler/build/fuji-nomod.jar"
+    FUJI="../../FujiCompiler/build/fuji.jar"
+    CONFIGDIR=${3:-"."}"/"
+    BASEDIR=${4:-"."}
     echo $1
     cd $1
-    for I in *All.features; do
-	java -Xmx4000m -jar "$FUJI" -cp ".:$2" -fopIntroduces "$I" \
-	>../"$I".intros
-	java -Xmx4000m -jar "$FUJI" -cp ".:$2" -fopRefs "$I" \
-	>../"$I".refs
+    for I in "$CONFIGDIR"*All.features; do
+	java -Xmx4000m -jar "$FUJI" -basedir "$BASEDIR" -cp ".:$2" \
+	    -fopIntroduces "$I" >../`basename "$I"`.intros
+	java -Xmx4000m -jar "$FUJI" -basedir "$BASEDIR" -cp ".:$2" \
+	    -fopRefs "$I" >../`basename "$I"`.refs
     done
     cd ..
 }
@@ -29,4 +31,4 @@ gen Raroscope
 gen Sudoku
 gen TankWar
 gen Violet
-gen ZipMe
+gen ZipMe "" configs features

@@ -47,7 +47,7 @@ public class SPLStructure {
     /**
      * SPLStructure constructor.
      * 
-     * @param basedirPathname
+     * @param bdPathname
      *            absolute pathname of the SPL's root directory
      * @param featuresFilePathname
      *            absolute pathname of the features file.
@@ -58,15 +58,46 @@ public class SPLStructure {
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
      */
-    public SPLStructure(String basedirPathname, String featuresFilePathname,
+    public SPLStructure(String bdPathname, String featuresFilePathname,
             boolean singleDependencyGraph) throws IOException,
             FeatureDirNotFoundException, SyntacticErrorException {
 
-        this.basedirPathname = new File(basedirPathname).getCanonicalPath();
-        featureModulePathnames = parseFeautresFile(new File(basedirPathname)
-                .getCanonicalPath(), new File(featuresFilePathname)
-                .getCanonicalPath());
-        classpathArg = constructClasspathArg(basedirPathname,
+        basedirPathname = new File(bdPathname).getCanonicalPath();
+        featureModulePathnames = parseFeautresFile(basedirPathname, new File(
+                featuresFilePathname).getCanonicalPath());
+        initSPLStructure(singleDependencyGraph);
+    }
+
+    /**
+     * SPLStructure constructor.
+     * 
+     * @param bdPathname
+     *            absolute pathname of the SPL's root directory.
+     * @param featuresList
+     *            a list of features to be composed.
+     * @param singleDependencyGraph
+     *            put all the role groups in one dependency graph regardless
+     *            their actual interrelations.
+     * @throws IOException
+     * @throws FeatureDirNotFoundException
+     * @throws SyntacticErrorException
+     */
+    public SPLStructure(String bdPathname, List<String> featuresList,
+            boolean singleDependencyGraph) throws IOException,
+            FeatureDirNotFoundException, SyntacticErrorException {
+
+        basedirPathname = new File(bdPathname).getCanonicalPath();
+        featureModulePathnames = parseFeatureList(basedirPathname, featuresList);
+        initSPLStructure(singleDependencyGraph);
+    }
+
+    /**
+     * Functionality common to all constructors.
+     */
+    private void initSPLStructure(boolean singleDependencyGraph)
+            throws IOException, FeatureDirNotFoundException,
+            SyntacticErrorException {
+        classpathArg = constructClasspathArg(this.basedirPathname,
                 featureModulePathnames);
         roleGroups = createRoleGroups(featureModulePathnames);
         if (singleDependencyGraph) {
@@ -165,20 +196,22 @@ public class SPLStructure {
         return roleGroups.keySet().contains(pathname);
     }
 
-    /*
+    /**
      * Parse the file containing the feature choice.
      * 
-     * @param bdPathname canonical pathname to the SPL's root dir.
+     * @param bdPathname
+     *            canonical pathname to the SPL's root dir.
      * 
-     * @param ffPathname absolute pathname to the .features file.
+     * @param ffPathname
+     *            absolute pathname to the .features file.
      * 
      * @return list of strings representing canonical pathnames of project's
-     * feature directories.
+     *         feature directories.
      */
     private List<String> parseFeautresFile(String bdPathname, String ffPathname)
             throws FeatureDirNotFoundException, IOException {
 
-        ArrayList<String> featureModulePathnames = new ArrayList<String>();
+        ArrayList<String> fmPathnames = new ArrayList<String>();
         ArrayList<String> notDirs = new ArrayList<String>();
         Pattern commentPattern = Pattern.compile(FEATUREFILE_COMMENT,
                 Pattern.CASE_INSENSITIVE);
@@ -192,7 +225,7 @@ public class SPLStructure {
             /* Check if the specified feature dir exists. */
             String featureModulePathname = bdPathname + File.separator + line;
             if (new File(featureModulePathname).isDirectory()) {
-                featureModulePathnames.add(featureModulePathname);
+                fmPathnames.add(featureModulePathname);
             } else {
                 notDirs.add(line);
             }
@@ -207,11 +240,58 @@ public class SPLStructure {
             }
             throw new FeatureDirNotFoundException(message);
         }
-        if (featureModulePathnames.size() == 0) {
+        if (fmPathnames.size() == 0) {
             throw new FeatureDirNotFoundException(
                     "Feature file does not specify feature direcotries.");
         }
-        return featureModulePathnames;
+        return fmPathnames;
+    }
+
+    /**
+     * Parse the file containing the feature choice.
+     * 
+     * @param bdPathname
+     *            canonical pathname to the SPL's root dir.
+     * 
+     * @param featuresList
+     *            a list of features selected in this configureation.
+     * 
+     * @return list of strings representing canonical pathnames of project's
+     *         feature directories.
+     * @throws FeatureDirNotFoundException
+     */
+    private List<String> parseFeatureList(String bdPathname,
+            List<String> featuresList) throws FeatureDirNotFoundException {
+        if (featuresList == null || featuresList.size() == 0) {
+            throw new FeatureDirNotFoundException(
+                    "Feature list is empty or null.");
+        }
+
+        /* Feature module canonical pathnames will be stored in this list. */
+        ArrayList<String> fmPathnames = new ArrayList<String>();
+
+        /* Feature module pathnames pointing to not existing directories. */
+        ArrayList<String> notDirs = new ArrayList<String>();
+
+        for (String fmName : featuresList) {
+
+            /* Check if the specified feature dir exists. */
+            String featureModulePathname = bdPathname + File.separator + fmName;
+            if (new File(featureModulePathname).isDirectory()) {
+                fmPathnames.add(featureModulePathname);
+            } else {
+                notDirs.add(fmName);
+            }
+        }
+        if (!notDirs.isEmpty()) {
+            String message = "The following directoies specified in the features list"
+                    + " do not exist in the project's base directory:\n";
+            for (String s : notDirs) {
+                message += s + "\n";
+            }
+            throw new FeatureDirNotFoundException(message);
+        }
+        return fmPathnames;
     }
 
     /*
@@ -342,7 +422,7 @@ public class SPLStructure {
         /* Compute transitive dependencies. */
         for (RoleGroup currentRG : rgs.values()) {
             Program program = initAST(); // TODO try to init once and reuse
-            program.addSourceFile(currentRG.baseRelativePathname);
+            program.addSourceFile(currentRG.basePathname);
             for (String path : currentRG.calculateRefinementRelativePathnames())
                 program.addSourceFile(path);
             @SuppressWarnings("unchecked")
@@ -383,7 +463,7 @@ public class SPLStructure {
                                     .equals(depRG.basePathname)
                             && !currentRG.dependencies
                                     .contains(depRG.basePathname)) {
-                        program.addSourceFileIfNew(depRG.baseRelativePathname);
+                        program.addSourceFileIfNew(depRG.basePathname);
                         for (String path : depRG
                                 .calculateRefinementRelativePathnames()) {
                             program.addSourceFileIfNew(path);
@@ -393,22 +473,6 @@ public class SPLStructure {
                 }
             }
         }
-
-        /* Compute transitive dependencies. */
-        // TODO remove this
-        // for (RoleGroup currentRG : rgs.values()) {
-        // currentRG.tDependencies.addAll(currentRG.dDependencies);
-        // int setSize;
-        // do {
-        // setSize = currentRG.tDependencies.size();
-        // // TODO iterates over the whole collection each time. Optimize!
-        // ArrayList<String> tmpCol = new ArrayList<String>();
-        // for (String path : currentRG.tDependencies) {
-        // tmpCol.addAll(rgs.get(path).dDependencies);
-        // }
-        // currentRG.tDependencies.addAll(tmpCol);
-        // } while (setSize != currentRG.tDependencies.size());
-        // }
     }
 
     /*
@@ -436,18 +500,15 @@ public class SPLStructure {
      * some utility methods.
      */
     public class RoleGroup {
-        /* Pathname of the feature module containing the base role. */
+        /* Canonical pathname of the feature module containing the base role. */
         private String baseFeatureModulePathname;
 
-        /* Pathname of the base role. */
+        /* Canonical pathname of the base role. */
         private String basePathname;
 
-        /* Pathname of the base role relative to the working directory. */
-        private String baseRelativePathname;
-
         /*
-         * Maps a feature ID to the pathname of the corresponding feature module
-         * containing a refinement role. TODO map needed?
+         * A list of the canonical pathnames of the feature modules containing
+         * refinement roles.
          */
         private List<String> refiningFeatureModules = new ArrayList<String>();
 
@@ -475,23 +536,21 @@ public class SPLStructure {
         public RoleGroup(String baseFMPathname, String base) {
             baseFeatureModulePathname = baseFMPathname;
             basePathname = base;
-            baseRelativePathname = basePathname.substring(System.getProperty(
-                    "user.dir").length() + 1);
         }
 
         /**
-         * Returns the base role pathname relative to its feature module dir.
+         * Returns the canonical pathname of the base role.
          * 
-         * @return the base role pathname relative to its feature module dir.
+         * @return the canonical pathname of the base role.
          */
-        public String getBaseRelativePathname() {
-            return baseRelativePathname;
+        public String getBasePathname() {
+            return basePathname;
         }
 
         /**
-         * Creates a list of pathnames of the refinement roles relative to their
-         * feature module dirs. The list have the order of feature modules in
-         * the features file.
+         * @deprecated Creates a list of pathnames of the refinement roles
+         *             relative to their feature module dirs. The list have the
+         *             order of feature modules in the features file.
          * 
          * @return the list of relative refinement role pathnames.
          */
@@ -507,7 +566,25 @@ public class SPLStructure {
             return pathnames;
         }
 
-        // TODO needed ? Comment out, run tests and examples.
+        /**
+         * Creates a list of pathnames of the refinement roles relative to their
+         * feature module dirs. The list have the order of feature modules in
+         * the features file.
+         * 
+         * @return the list of relative refinement role pathnames.
+         */
+        public List<String> calculateRefinementPathnames() {
+            List<String> pathnames = new ArrayList<String>();
+            String baseSuffix = basePathname
+                    .substring(baseFeatureModulePathname.length() + 1);
+            for (String fmPathname : refiningFeatureModules) {
+                fmPathname = (fmPathname + File.separator + baseSuffix);
+                pathnames.add(fmPathname);
+            }
+            return pathnames;
+        }
+
+        // TODO is it used? Comment out, run tests and examples.
         @Override
         public boolean equals(Object o) {
             if (o instanceof RoleGroup || o instanceof String) {

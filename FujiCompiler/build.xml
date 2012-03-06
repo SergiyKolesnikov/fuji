@@ -1,7 +1,7 @@
 <!--
     Targets for working from terminal window:
-    build-nomod - build fuji without FOP access modifiers
     build       - build fuji
+    build-mod   - build fuji with FOP access modifiers
     clean       - remove all build files
     jar-nomod   - build a runnable jar file (fuji without FOP access modifiers)
     jar         - build a runnable jar file
@@ -59,15 +59,15 @@
   <!-- TARGETS -->
 
   <!-- build fuji without FOP access modifiers -->
-  <target name="build-nomod" description="build fuji without FOP access modifiers (fuji without FOP access modifiers). Run 'ant clean' if you have build fuji with access modifiers before.">
+  <target name="build" description="build fuji (without FOP access modifiers). Run 'ant clean' first, if you have build fuji with access modifiers before.">
     <defaultexcludes add="FOPModifiers.flex"/>
     <defaultexcludes add="FOPModifiers.parser"/>
     <defaultexcludes add="FOPModifiers.jrag"/>
-    <antcall target="build"/> 
+    <antcall target="build-mod"/> 
   </target>
 
-  <!-- build fuji -->
-  <target name="build" depends="gen" description="build fuji (fuji with FOP access modifiers).  Run 'ant clean' if you have build fuji without access modifiers before.">
+  <!-- build fuji with FOP access modifiers-->
+  <target name="build-mod" depends="gen" description="build fuji with FOP access modifiers.  Run 'ant clean' if you have build fuji without access modifiers before.">
     <mkdir dir="${bin}"/>
     <javac debug="true" nowarn="true" classpath="${bin}:${lib}/commons-cli-1.2/commons-cli-1.2.jar"
 	   srcdir="${Fuji}" destdir="${bin}" includes="**/*.java"
@@ -216,15 +216,15 @@
     </delete>
   </target>
 	
-	<!-- build binaries -->
-	<target name="jar" depends="build" description="build a runnable jar file (fuji with FOP access modifiers).  Run 'ant clean' if you have build fuji without access modifiers before.">
-		<property name="jarName" value="fuji.jar"/>
-		<antcall target="jar-builder"/>
-	</target>
-	<target name="jar-nomod" depends="build-nomod" description="build a runnable jar file (fuji without FOP access modifiers). Run 'ant clean' if you have build fuji with access modifiers before.">
-		<property name="jarName" value="fuji-nomod.jar"/>
-		<antcall target="jar-builder"/>
-	</target>
+  <!-- build binaries -->
+  <target name="jar" depends="build" description="build a runnable jar file (fuji without FOP access modifiers).  Run 'ant clean' if you have build fuji without access modifiers before.">
+    <property name="jarName" value="fuji.jar"/>
+    <antcall target="jar-builder"/>
+  </target>
+  <target name="jar-mod" depends="build-mod" description="build a runnable jar file (fuji with FOP access modifiers). Run 'ant clean' if you have build fuji with access modifiers before.">
+    <property name="jarName" value="fuji-mod.jar"/>
+    <antcall target="jar-builder"/>
+  </target>
   <target name="jar-builder">
     <antcall target="copy-licences"/>
     <jar destfile="${build}/${jarName}" basedir="${bin}" includes="**/*.class" excludes="test/**" manifest="${Fuji}/Manifest">

@@ -1,3 +1,7 @@
+/**
+ * TODO see trunk/TODO
+ */
+
 /*
  * This aspects implement a Fuji extention that generats introduces and references
  * relation for an SPL.  It is used in combination with ComposingVisitorIntrosRefs.
@@ -42,8 +46,11 @@ aspect Intros {
     public void MethodDecl.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
         StringBuilder intro = new StringBuilder();
-        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
-        .append(IntrosRefsUtil.typeDeclQName(host))
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+	if (isStatic()) {
+	    intro.append(IntrosRefsUtil.DELIM_STATIC);
+	}
+        intro.append(IntrosRefsUtil.typeDeclQName(host))
         .append(IntrosRefsUtil.DELIM_METHOD + IntrosRefsUtil.signature(this))
         .append(IntrosRefsUtil.DELIM_TYPE)
         .append(type().typeName());
@@ -56,8 +63,11 @@ aspect Intros {
     public void FieldDeclaration.printIntros(java.util.List<String> featureModulePathnames) {
         TypeDecl host = IntrosRefsUtil.visibleHostType(this);
         StringBuilder intro = new StringBuilder();
-        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames))
-        .append(IntrosRefsUtil.typeDeclQName(host))
+        intro.append(IntrosRefsUtil.introPrefix(this, featureModulePathnames));
+        if (isStatic()) {
+            intro.append(IntrosRefsUtil.DELIM_STATIC);
+        }
+        intro.append(IntrosRefsUtil.typeDeclQName(host))
         .append(IntrosRefsUtil.DELIM_FIELD+ getID())
         .append(IntrosRefsUtil.DELIM_TYPE)
         .append(type().typeName());
@@ -102,6 +112,9 @@ aspect Refs {
                 .append(IntrosRefsUtil.typeDeclQName(ac.type()));
                 System.out.println(ref);
             }
+        }
+        for(int i = 0; i < getNumChild(); i++) {
+            getChild(i).printRefs(featureModulePathnames);
         }
     }
     
@@ -178,6 +191,9 @@ aspect Refs {
                 .append(IntrosRefsUtil.typeDeclQName(type()));
             System.out.println(ref);
             
+            /* 
+             * Generate extra ref for exception types in trhow, throws and catch.
+             */
             ASTNode parent = getParent();
             if (parent instanceof ParameterDeclaration && parent.getParent() instanceof CatchClause 
                     || parent instanceof List && parent.getParent() instanceof MethodDecl
@@ -411,9 +427,10 @@ aspect IntrosRefsUtil {
             for(int i = 0; i < params.getNumChild(); i++) {
                 if(i != 0) s.append(", ");
                 // add erasure() after type() to remove generic parameter type.
-                s.append(params.getChild(i).type().typeName())
-                .append(" ")
-                .append(params.getChild(i).getID());
+                s.append(params.getChild(i).type().typeName());
+                // add following lines to have parameter names in the signature.
+                //.append(" ")
+                //.append(params.getChild(i).getID());
             }
             s.append(")");
             return s.toString();
@@ -441,7 +458,8 @@ aspect IntrosRefsUtil {
         }
 
         /*
-         * Returns a string representation of a source in a REF relation.
+         * Returns a string representation of a source in a REF relation for 
+         * the given expression.
          */
         public static String formatRefSource(String featureName, Expr expr) {
             StringBuilder source = new StringBuilder();

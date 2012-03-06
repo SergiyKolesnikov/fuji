@@ -1,6 +1,6 @@
 introduces F1 {package}{type}A
-introduces F1 {package}{type}A{constructor}A(java.lang.Object o)
-introduces F1 {package}{type}A{method}aMethod(java.util.List<java.lang.String> l, java.lang.Object o){type}void
+introduces F1 {package}{type}A{constructor}A(java.lang.Object)
+introduces F1 {package}{type}A{method}aMethod(java.util.List<java.lang.String>, java.lang.Object){type}void
 introduces F1 {package}{type}A{type}Inner
 introduces F1 {package}{type}A{type}Inner{constructor}Inner()
 introduces F1 {package}{type}A{type}Inner{field}anonymousField{type}int[]

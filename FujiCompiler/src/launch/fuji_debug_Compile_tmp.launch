@@ -7,8 +7,8 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="fuji.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-fopRefs -d classes Test.features"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-d classes Test.features"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="FujiProject"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1024m"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/tmp/abc"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/tmp/TestSPL"/>
 </launchConfiguration>

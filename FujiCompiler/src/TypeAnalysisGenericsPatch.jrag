@@ -1,0 +1,14 @@
+/*
+ * In the following Java code:
+ *
+ * class Foo<T extends Number> {}
+ *
+ * "Number" is an expression (Expr node). Calling hostType() on it should return
+ * Foo as a host type, but it returns null.  The following code fixes the
+ * problem.  It relies on equations in NestedTypes aspect
+ * (Java1.4Frontend/TypeAnalysis.jrag).
+ */
+
+aspect NetstedTypes {
+    eq GenericTypeDecl.getTypeParameter().hostType() = hostType();
+}
