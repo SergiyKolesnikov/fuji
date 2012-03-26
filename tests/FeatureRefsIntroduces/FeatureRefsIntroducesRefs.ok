@@ -5,12 +5,13 @@ IMP {feature}F1{package}some{type}A {package}some{type}I
 ORI {feature}F2{package}some{type}A{method}refinedInF2() {package}some{type}A{method}original(){type}void
 REF {feature}F1{package}some{type}A{field}stringArray {package}java.lang{type}String
 REF {feature}F1{package}some{type}A{field}stringArray {package}java.lang{type}String
-REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long l, int i) {package}java.lang{type}Long
-REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long l, int i) {package}some{type}A{field}j{type}int
+REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long, int) {package}java.lang{type}Long
+REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long, int) {package}some{type}A{field}j{type}int
 REF {feature}F1{package}some{type}A{method}methodI() {package}some{type}A
 REF {feature}F1{package}some{type}A{method}methodI() {package}some{type}A
 REF {feature}F1{package}some{type}A{method}methodI() {package}some{type}A{constructor}A()
 REF {feature}F1{package}some{type}A {package}some{type}I
+REF {feature}F1{package}some{type}I{method}methodI() {package}some{type}A
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}java.lang{type}Long
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}java.lang{type}String
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}@primitive{type}Unknown{constructor}Unknown()
@@ -21,7 +22,7 @@ REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{con
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{constructor}A()
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{constructor}A()
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{field}stringArray{type}java.lang.String[]
-REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{method}methodInF1(java.lang.Long l, int i){type}void
+REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{method}methodInF1(java.lang.Long, int){type}void
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{method}methodI(){type}some.A
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{method}methodI(){type}some.A
 REF {feature}F2{package}some{type}A{method}methodInF2() {package}some{type}A{method}methodI(){type}some.A

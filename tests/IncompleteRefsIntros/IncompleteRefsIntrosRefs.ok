@@ -5,12 +5,13 @@ EXT {feature}F1{package}{type}Interface {package}{type}I2
 IMP {feature}F1{package}{type}Class {package}{type}I1
 IMP {feature}F1{package}{type}Class {package}{type}I2
 REF {feature}F1{package}{type}Class{field}f {package}java.lang{type}Boolean
-REF {feature}F1{package}{type}Class{method}m2(java.lang.String p) {package}java.lang{type}String
-REF {feature}F1{package}{type}Class{method}m(int p) {package}java.lang{type}Integer
+REF {feature}F1{package}{type}Class{method}m2(java.lang.String) {package}java.lang{type}String
+REF {feature}F1{package}{type}Class{method}m(int) {package}java.lang{type}Integer
 REF {feature}F1{package}{type}Class {package}{type}I1
+REF {feature}F1{package}{type}Interface {package}{type}I1
 REF {feature}F2{package}{type}Class{field}f {package}java.lang{type}Boolean
-REF {feature}F2{package}{type}Class{method}m2(java.lang.String p) {package}java.lang{type}String
-REF {feature}F2{package}{type}Class{method}m(int p) {package}java.lang{type}String
+REF {feature}F2{package}{type}Class{method}m2(java.lang.String) {package}java.lang{type}String
+REF {feature}F2{package}{type}Class{method}m(int) {package}java.lang{type}String
 REF {feature}F2{package}{type}Class {package}java.util{type}ArrayList
 REF {feature}F2{package}{type}Class {package}@primitive{type}int[]{field}length{type}int
 REF {feature}F2{package}{type}Class {package}@primitive{type}int[]{field}length{type}int
@@ -23,3 +24,4 @@ REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArr
 REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF1{type}int[]
 REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF2{type}int[]
 REF {feature}F2{package}{type}Class {static}{package}{type}Class{field}staticArrayF2{type}int[]
+REF {feature}F2{package}{type}Interface {package}{type}I2

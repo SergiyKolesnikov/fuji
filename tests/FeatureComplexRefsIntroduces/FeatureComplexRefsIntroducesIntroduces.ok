@@ -1,6 +1,6 @@
 introduces F1 {package}{type}A
 introduces F1 {package}{type}A{constructor}A()
-introduces F1 {static}{package}{type}A{method}main(java.lang.String[] args){type}void
+introduces F1 {static}{package}{type}A{method}main(java.lang.String[]){type}void
 introduces F2 {package}{type}A
 introduces F2 {package}{type}A{constructor}A()
 introduces F2 {static}{package}{type}A{field}z{type}java.lang.String
