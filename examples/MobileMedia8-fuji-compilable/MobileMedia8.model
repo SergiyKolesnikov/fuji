@@ -1,29 +1,43 @@
-NewCompound1 : Media+ [includeSorting] [includeFavourites] [includeCopyPhoto] Derivatives [includePrivacy] :: MobilMedia ;
+NewCompound1 : [Derivatives] Media+ [includeSorting] [includeFavourites] [includeCopyPhoto] [includePrivacy] base :: MobilMedia ;
+
+Derivatives : [includePhotoAlbum_x_CopyPhotoOrSMS] [includeVideo_x_notSimulatePlayVideo] [includeMMAPI_x_MusicAndVideo] [includeMMAPI_x_PhotoAlbumAndVideoOrMusic] [capturePhoto_x_CapturePhotoOrVideo] [includePhotoAlbum_x_SMSOrCapturePhoto] [x_misc] [includeVideo_x_MusicOrVideo] [includePhotoAlbum_x_PhotoAlbumAndMusicOrVideo] [capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto] [includeVideo_x_MusicAndVideo] [includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto] [includeCopyPhoto_includeMMAPI] [includeCopyPhoto_includeVideo] [includeMMAPI_includePhotoAlbum] [includePhotoAlbum_includeSmsFeature] [includeMMAPI_x_misc] [includePhotoAlbum_x_misc] [includeVideo_x_misc] [includeVideo_x_PhotoAlbumAndVideoOrMusic] [x_CapturePhotoOrVideo] [x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto] [x_CopyPhotoOrSMSOrCapturePhoto] [x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto] [x_MusicAndVideo] [x_MusicAndVideo_x_misc] [x_MusicOrVideo] [x_PhotoAlbumAndVideoOrMusic] [x_PhotoAlbumAndVideoOrMusic_x_misc] [x_PhotoAlbumOrMusicOrVideo] :: _Derivatives ;
 
 Media : includePhotoAlbum [includeSmsFeature] [capturePhoto] :: Photo
 	| Music
-	| includeVideo [captureVideo] [simulatePlayVideo] :: Video ;
+	| includeVideo [captureVideo] [includeVideo_simulatePlayVideo] :: Video ;
 
 Music : includeMMAPI ;
 
-Derivatives : [x_CopyPhotoOrSMS] [x_PhotoAlbumOrMusic] [x_NotPhotoAlbum] [x_notMisc] [x_MusicAndVideo] [x_NotMusic] [x_PhotoAlbumAndVideoOrMusic] [x_CapturePhotoOrVideo] [x_NotPrivacy] [x_SMSOrCapturePhoto] [x_misc] [x_MusicOrVideo] [x_SMSOrCapturePhotoOrCaptureVideo] [x_PhotoAlbumOrMusicOrVideo] [x_CopyPhotoOrSMSOrCapturePhoto] [x_notSimulatePlayVideo] :: _Derivatives ;
-
 %%
 
-x_CopyPhotoOrSMS iff includeCopyPhoto or includeSmsFeature ;
-x_PhotoAlbumOrMusic iff includePhotoAlbum or includeMMAPI ;
-x_NotPhotoAlbum iff not includePhotoAlbum ;
-x_NotMusic iff not includeMMAPI ;
+includePhotoAlbum_x_CopyPhotoOrSMS iff includeCopyPhoto or includeSmsFeature ;
 x_misc iff includeMMAPI and includePhotoAlbum or includeMMAPI and includeVideo or includeVideo and includePhotoAlbum ;
-x_notMisc iff not x_misc ;
-x_PhotoAlbumAndVideoOrMusic iff includeMMAPI and includePhotoAlbum or includePhotoAlbum and includeVideo ;
+includeMMAPI_x_PhotoAlbumAndVideoOrMusic iff includeMMAPI and includePhotoAlbum or includePhotoAlbum and includeVideo ;
+capturePhoto_x_CapturePhotoOrVideo iff capturePhoto or captureVideo ;
+includeVideo_x_MusicOrVideo iff includeMMAPI or includeVideo ;
+includePhotoAlbum_x_PhotoAlbumAndMusicOrVideo iff includePhotoAlbum and (includeMMAPI or includeVideo) ;
+capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto iff includeCopyPhoto or includeSmsFeature or capturePhoto ;
+includeVideo_x_notSimulatePlayVideo iff not includeVideo_simulatePlayVideo ;
+includeMMAPI_x_MusicAndVideo iff includeMMAPI and includeVideo ;
+includePhotoAlbum_x_SMSOrCapturePhoto iff includeSmsFeature or capturePhoto ;
+includeVideo_x_MusicAndVideo iff includeMMAPI and includeVideo ;
+includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto iff includeCopyPhoto or includeSmsFeature or capturePhoto ;
+includeCopyPhoto_includeMMAPI iff includeCopyPhoto and includeMMAPI ;
+includeCopyPhoto_includeVideo iff includeCopyPhoto and includeVideo ;
+includeMMAPI_includePhotoAlbum iff includeMMAPI and includePhotoAlbum ;
+includePhotoAlbum_includeSmsFeature iff includePhotoAlbum and includeSmsFeature ;
+includeMMAPI_x_misc iff includeMMAPI and x_misc ;
+includePhotoAlbum_x_misc iff includePhotoAlbum and x_misc ;
+includeVideo_x_misc iff includeVideo and x_misc ;
+includeVideo_x_PhotoAlbumAndVideoOrMusic iff includePhotoAlbum and includeVideo and Music ;
 x_CapturePhotoOrVideo iff capturePhoto or captureVideo ;
-x_NotPrivacy iff not includePrivacy ;
-x_MusicOrVideo iff includeMMAPI or includeVideo ;
-x_SMSOrCapturePhotoOrCaptureVideo iff includeSmsFeature or capturePhoto or captureVideo ;
-x_PhotoAlbumOrMusicOrVideo iff includePhotoAlbum or includeMMAPI or includeVideo ;
-x_CopyPhotoOrSMSOrCapturePhoto iff includeCopyPhoto or includeSmsFeature or capturePhoto ;
-x_notSimulatePlayVideo iff not simulatePlayVideo ;
-x_MusicAndVideo iff includeMMAPI and includeVideo ;
-x_SMSOrCapturePhoto iff includeSmsFeature or capturePhoto;
+x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto iff (capturePhoto or captureVideo) and (includeCopyPhoto or includeSmsFeature or capturePhoto) ;
+x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto iff includeCopyPhoto or includeSmsFeature or capturePhoto ;
+x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto iff (includeCopyPhoto or includeSmsFeature or capturePhoto) and (includeSmsFeature or capturePhoto) ;
+x_MusicAndVideo iff Music and Video ;
+x_MusicAndVideo_x_misc iff Music and Video and x_misc ;
+x_MusicOrVideo iff Music or Video ;
+x_PhotoAlbumAndVideoOrMusic iff includePhotoAlbum and (Video or Music) ;
+x_PhotoAlbumAndVideoOrMusic_x_misc iff includePhotoAlbum and (Video or Music) and x_misc ;
+x_PhotoAlbumOrMusicOrVideo iff includePhotoAlbum or Music or Video ;
 

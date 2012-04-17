@@ -1,1 +1,2 @@
-SPL: [Replication] [GZip] [Censor] [Monitor] [Snapshot]  ::PrevaylerSPL;
+SPL : [Censor] [GZip] [Monitor] [Replication] [Snapshot] base :: PrevaylerSPL ;
+
