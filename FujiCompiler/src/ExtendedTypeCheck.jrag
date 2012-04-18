@@ -1,0 +1,158 @@
+/* Extended Type Check
+ * 2012-04-14
+ * 
+ * IPORTANT: 
+ * add jar de.ovgu.featureide.fm.core... (FM-Test 01) and
+ * add jar org.eclipse.core.resources... (FM-Test 02)
+ * to Fuji's build-path
+ * 
+ * This aspect extends the JastAddJ's type check:
+ * (VarAccess.nameCheck())
+ * - checks, if one feature tries to access a field of a second feature 
+ *   that is optional -> error
+ *   
+ */
+
+import de.ovgu.featureide.fm.core.FeatureModel;
+import de.ovgu.featureide.fm.core.Feature;
+import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
+import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+
+aspect ExtendedTypeCheck {
+	
+	refine NameCheck public void VarAccess.nameCheck() {
+		
+		/* copy & paste */	
+	    if(decls().isEmpty() && (!isQualified() || !qualifier().type().isUnknown() || qualifier().isPackageAccess()))
+	      error("no field named " + name());
+	    if(decls().size() > 1) {
+	      StringBuffer s = new StringBuffer();
+	      s.append("several fields named " + name());
+	      for(Iterator iter = decls().iterator(); iter.hasNext(); ) {
+	        Variable v = (Variable)iter.next();
+	        s.append("\n    " + v.type().typeName() + "." + v.name() + " declared in " + v.hostType().typeName());
+	      }
+	      error(s.toString());
+	    }
+	      
+	    // 8.8.5.1
+	    if(inExplicitConstructorInvocation() && !isQualified() && decl().isInstanceVariable() && hostType() == decl().hostType())
+	      error("instance variable " + name() + " may not be accessed in an explicit constructor invocation");
+
+	    Variable v = decl();
+	    if(!v.isFinal() && !v.isClassVariable() && !v.isInstanceVariable() && v.hostType() != hostType())
+	      error("A parameter/variable used but not declared in an inner class must be declared final");
+
+	    // 8.3.2.3
+	    if((decl().isInstanceVariable() || decl().isClassVariable()) && !isQualified()) {
+	      if(hostType() != null && !hostType().declaredBeforeUse(decl(), this)) {
+	        if(inSameInitializer() && !simpleAssignment() && inDeclaringClass()) {
+	          BodyDecl b = closestBodyDecl(hostType());
+	          error("variable " + decl().name() + " is used in " + b + " before it is declared");
+	        }
+	      }
+	    }	    
+	    /* /copy & paste */
+	    
+	    /* new */	    
+	    /* TODO: file name from outside
+	     * read in Feature-Model */
+	    FeatureModel model = new FeatureModel();
+	    File guidsl_file = new File("neededButOptionalField.m");
+
+		GuidslReader reader = new GuidslReader(model);
+		try {
+			reader.readFromFile(guidsl_file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/* TODO: get all features, ACHTUNG: Reihenfolge */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		for(Feature child : model.getRoot().getChildren())
+		{
+			listFeatures.add(child);
+		}
+	    
+			/* Ist der Variablenzugriff ein Feldzugriff? */
+			if (isFieldAccess()) {
+				int fromFeatureID = featureID();
+				int toFeatureID = decl().hostType().featureID();
+				/* Wird auf ein anderes Feature zugegriffen? */
+				if (!(fromFeatureID == toFeatureID)) {
+					/* Ist anderes Feature optional? */
+					/* -> aus FM auslesen. */
+					/*
+					 * Wie erfolgt Zuordnung der Features aus dem FM zu den
+					 * Feature(-ID)s aus dem AST?
+					 */
+
+					/*
+					warning("Feature " + fromFeatureID
+							+ " greift auf das Feld\n" + decl()
+							+ "\ndes Features "
+							+ toFeatureID + " zu.\n"
+							+ "Achtung: zweites Feature mšglicherweise " 
+							+ "optional.");
+					*/
+					
+					// new SPLStructure(bdPathname, featuresList,
+					// singleDependencyGraph).getFeatureModulePathnames()
+
+					/*
+					Feature fromFeature = model.getFeature(new File(fuji
+							.getSPLStructure().getFeatureModulePathnames()
+							.get(fromFeatureID)).getName());
+					*/
+					
+					Feature fromFeature = listFeatures.get(fromFeatureID);
+					
+					/*
+					 * Feature fromFeature = model.getFeature(features
+					 * .get(fromFeatureID));
+					 */
+
+					/*
+					Feature toFeature = model.getFeature(new File(fuji
+							.getSPLStructure().getFeatureModulePathnames()
+							.get(toFeatureID)).getName());
+					*/
+					
+					Feature toFeature = listFeatures.get(toFeatureID);
+							
+					/*
+					 * Feature toFeature = model.getFeature(features
+					 * .get(toFeatureID));
+					 */
+
+					/* Ist Ziel-Feature optional? */			
+					if (!(toFeature.isMandatory())) {
+										
+						/* mit SAT-Solver testen, ob dieser Umstand 
+						 * (Zugriff auf Feld in optionalem Feature)
+						 * als zusŠtzliches Constraint im FM berŸcksichtigt 
+						 * wurde: fromFeature implies toFeature 
+						 * falls ja: okay
+						 * falls nein: Fehlermeldung
+						 *  (oder HinzufŸgen des Constraints zum FM)
+						 */
+						
+						/*
+						 * Zugriff auf ein Feld in einem optionalen Feature
+						 * gefunden -> Fehlermeldung
+						 */					
+						error("Feature " + fromFeature.getName()
+								+ " greift auf das Feld\n" + decl()
+								+ "\ndes optionalen Features "
+								+ toFeature.getName() + " zu.");																
+					}				
+				}
+			}	
+	    /* /new */
+	    
+	  }
+}
