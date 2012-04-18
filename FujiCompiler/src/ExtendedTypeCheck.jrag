@@ -4,6 +4,7 @@
  * IPORTANT: 
  * add jar de.ovgu.featureide.fm.core... (FM-Test 01) and
  * add jar org.eclipse.core.resources... (FM-Test 02)
+ * add jar org.sat4j.core
  * to Fuji's build-path
  * 
  * This aspect extends the JastAddJ's type check:
@@ -17,6 +18,8 @@ import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.Feature;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+
+import org.sat4j.specs.TimeoutException;
 
 aspect ExtendedTypeCheck {
 	
@@ -64,70 +67,33 @@ aspect ExtendedTypeCheck {
 		try {
 			reader.readFromFile(guidsl_file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedModelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		/* TODO: get all features, ACHTUNG: Reihenfolge */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-		for(Feature child : model.getRoot().getChildren())
-		{
-			listFeatures.add(child);
-		}
+		/* TODO: werden hierdurch alle benoetigten Features in der 
+		 * richtigen Reihenfolge eingelesen? */
+		listFeatures.addAll(model.getConcreteFeatures());
 	    
 			/* Ist der Variablenzugriff ein Feldzugriff? */
 			if (isFieldAccess()) {
 				int fromFeatureID = featureID();
 				int toFeatureID = decl().hostType().featureID();
+				
 				/* Wird auf ein anderes Feature zugegriffen? */
 				if (!(fromFeatureID == toFeatureID)) {
-					/* Ist anderes Feature optional? */
-					/* -> aus FM auslesen. */
 					/*
-					 * Wie erfolgt Zuordnung der Features aus dem FM zu den
-					 * Feature(-ID)s aus dem AST?
-					 */
-
-					/*
-					warning("Feature " + fromFeatureID
-							+ " greift auf das Feld\n" + decl()
-							+ "\ndes Features "
-							+ toFeatureID + " zu.\n"
-							+ "Achtung: zweites Feature mšglicherweise " 
-							+ "optional.");
-					*/
-					
-					// new SPLStructure(bdPathname, featuresList,
-					// singleDependencyGraph).getFeatureModulePathnames()
-
-					/*
-					Feature fromFeature = model.getFeature(new File(fuji
-							.getSPLStructure().getFeatureModulePathnames()
-							.get(fromFeatureID)).getName());
-					*/
-					
-					Feature fromFeature = listFeatures.get(fromFeatureID);
-					
-					/*
-					 * Feature fromFeature = model.getFeature(features
-					 * .get(fromFeatureID));
-					 */
-
-					/*
-					Feature toFeature = model.getFeature(new File(fuji
-							.getSPLStructure().getFeatureModulePathnames()
-							.get(toFeatureID)).getName());
-					*/
-					
-					Feature toFeature = listFeatures.get(toFeatureID);
-							
-					/*
-					 * Feature toFeature = model.getFeature(features
-					 * .get(toFeatureID));
-					 */
+					 * Auf Reihenfolge Features aus dem FM zu
+					 * Feature(-ID)s aus dem AST achten!
+					 */				
+					 Feature fromFeature = model.getFeature(listFeatures
+					     .get(fromFeatureID).getName());
+					 
+					 Feature toFeature = model.getFeature(listFeatures
+					     .get(toFeatureID).getName());					 
 
 					/* Ist Ziel-Feature optional? */			
 					if (!(toFeature.isMandatory())) {
@@ -141,14 +107,27 @@ aspect ExtendedTypeCheck {
 						 *  (oder HinzufŸgen des Constraints zum FM)
 						 */
 						
-						/*
-						 * Zugriff auf ein Feld in einem optionalen Feature
-						 * gefunden -> Fehlermeldung
-						 */					
-						error("Feature " + fromFeature.getName()
-								+ " greift auf das Feld\n" + decl()
-								+ "\ndes optionalen Features "
-								+ toFeature.getName() + " zu.");																
+						Set<Feature> toFeatures = new HashSet<Feature>();
+						toFeatures.add(toFeature);
+						
+						Set<Feature> fromFeatures = new HashSet<Feature>();
+						fromFeatures.add(fromFeature);
+						
+						try {
+							if(!(model.checkImplies(fromFeatures, toFeatures))) {
+						
+								/*
+						         * Zugriff auf ein Feld in einem optionalen Feature
+						         * gefunden -> Fehlermeldung
+						         */					
+						        error("Feature " + fromFeature.getName()
+								    + " greift auf das Feld\n" + decl()
+								    + "\ndes optionalen Features "
+								    + toFeature.getName() + " zu.");
+							}
+						} catch (TimeoutException e) {
+							e.printStackTrace();
+						}
 					}				
 				}
 			}	
