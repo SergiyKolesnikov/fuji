@@ -10,7 +10,11 @@
  * This aspect extends the JastAddJ's type check:
  * (VarAccess.nameCheck())
  * - checks, if one feature tries to access a field of a second feature 
- *   that is optional -> error
+ *   that is optional -> error, if not explicitly stated as a constraint
+ *   in the feature model
+ * 
+ * TODO:
+ * - implement always, sometimes, never  
  *   
  */
 
@@ -20,6 +24,9 @@ import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
 import org.sat4j.specs.TimeoutException;
+
+import org.prop4j.And;
+import org.prop4j.Not;
 
 aspect ExtendedTypeCheck {
 	
@@ -72,10 +79,10 @@ aspect ExtendedTypeCheck {
 			e.printStackTrace();
 		}
 		
-		/* TODO: get all features, ACHTUNG: Reihenfolge */
+		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-		/* TODO: werden hierdurch alle benoetigten Features in der 
-		 * richtigen Reihenfolge eingelesen? */
+		/* TODO: werden hierdurch ALLE benoetigten Features in der 
+		 * richtigen REIHENFOLGE eingelesen? */
 		listFeatures.addAll(model.getConcreteFeatures());
 	    
 			/* Ist der Variablenzugriff ein Feldzugriff? */
@@ -95,8 +102,9 @@ aspect ExtendedTypeCheck {
 					 Feature toFeature = model.getFeature(listFeatures
 					     .get(toFeatureID).getName());					 
 
+					/* TODO: kann weggelassen werden, loeschen */
 					/* Ist Ziel-Feature optional? */			
-					if (!(toFeature.isMandatory())) {
+					//if (!(toFeature.isMandatory())) {
 										
 						/* mit SAT-Solver testen, ob dieser Umstand 
 						 * (Zugriff auf Feld in optionalem Feature)
@@ -114,8 +122,7 @@ aspect ExtendedTypeCheck {
 						fromFeatures.add(fromFeature);
 						
 						try {
-							if(!(model.checkImplies(fromFeatures, toFeatures))) {
-						
+							if(!(always(model, fromFeatures, toFeatures))) {
 								/*
 						         * Zugriff auf ein Feld in einem optionalen Feature
 						         * gefunden -> Fehlermeldung
@@ -128,10 +135,44 @@ aspect ExtendedTypeCheck {
 						} catch (TimeoutException e) {
 							e.printStackTrace();
 						}
-					}				
+					//}				
 				}
 			}	
 	    /* /new */
 	    
 	  }
+	
+	  /* beide immer (wirklich: A und B ?) */
+	  protected boolean ASTNode.always(FeatureModel model, 
+			                           Set<Feature> fromFeatures, 
+			                           Set<Feature> toFeatures) 
+			                        		   throws TimeoutException {
+		  
+		  return model.checkImplies(fromFeatures, toFeatures); 
+		  // return model.checkCondition(new And(fromFeatures, toFeatures));
+	  }
+	  
+//	  /* gegenseitiger Ausschluss */
+//	  /* TODO: was ist hier mit context gemeint? ->
+//	   * model.areMutualExclusive(context, featureslist); */
+//	  protected boolean ASTNode.never(FeatureModel model,
+//			                          Set<Feature> fromFeatures,
+//			                          Set<Feature> toFeatures) {
+//		  
+//		  List<Set<Feature>> list = new List<Set<Feature>>();
+//		  list.add(fromFeatures);
+//		  list.add(toFeatures);
+//		  
+//		  // return model.checkCondition(new And(fromFeatures, new Not(toFeatures)));
+//		  return model.areMutualExclusive(fromFeatures, list);
+//	  }
+//	  
+//	  /* def. */
+//	  protected boolean ASTNode.sometimes(FeatureModel model,
+//			                              Set<Feature> fromFeatures,
+//			                              Set<Feature> toFeatures) 
+//			                                  throws TimeoutException {
+//		  return !(always(model, fromFeatures, toFeatures)) &&
+//				  !(never(model, fromFeatures, toFeatures));
+//	  }
 }
