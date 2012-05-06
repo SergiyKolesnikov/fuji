@@ -1,0 +1,169 @@
+/* Extended Type Check
+ * 2012-04-14
+ * 
+ * IPORTANT: 
+ * add jar de.ovgu.featureide.fm.core... (FM-Test 03)
+ * to Fuji's build-path
+ * 
+ * This aspect extends the JastAddJ's type check:
+ * (VarAccess.nameCheck())
+ * - checks, if one feature tries to access a field of a second feature 
+ *   that is optional -> error, if not explicitly stated as a constraint
+ *   in the feature model
+ *   
+ */
+
+import de.ovgu.featureide.fm.core.FeatureModel;
+import de.ovgu.featureide.fm.core.Feature;
+import de.ovgu.featureide.fm.core.FeatureDependencies;
+import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
+import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+
+aspect ExtendedTypeCheck {
+	
+	refine NameCheck public void VarAccess.nameCheck() {
+		
+		/* copy & paste */	
+	    if(decls().isEmpty() && (!isQualified() || !qualifier().type().isUnknown() || qualifier().isPackageAccess()))
+	      error("no field named " + name());
+	    if(decls().size() > 1) {
+	      StringBuffer s = new StringBuffer();
+	      s.append("several fields named " + name());
+	      for(Iterator iter = decls().iterator(); iter.hasNext(); ) {
+	        Variable v = (Variable)iter.next();
+	        s.append("\n    " + v.type().typeName() + "." + v.name() + " declared in " + v.hostType().typeName());
+	      }
+	      error(s.toString());
+	    }
+	      
+	    // 8.8.5.1
+	    if(inExplicitConstructorInvocation() && !isQualified() && decl().isInstanceVariable() && hostType() == decl().hostType())
+	      error("instance variable " + name() + " may not be accessed in an explicit constructor invocation");
+
+	    Variable v = decl();
+	    if(!v.isFinal() && !v.isClassVariable() && !v.isInstanceVariable() && v.hostType() != hostType())
+	      error("A parameter/variable used but not declared in an inner class must be declared final");
+
+	    // 8.3.2.3
+	    if((decl().isInstanceVariable() || decl().isClassVariable()) && !isQualified()) {
+	      if(hostType() != null && !hostType().declaredBeforeUse(decl(), this)) {
+	        if(inSameInitializer() && !simpleAssignment() && inDeclaringClass()) {
+	          BodyDecl b = closestBodyDecl(hostType());
+	          error("variable " + decl().name() + " is used in " + b + " before it is declared");
+	        }
+	      }
+	    }	    
+	    /* /copy & paste */
+	    
+	    /* new */	    
+	    /* TODO: file name from outside
+	     * read in Feature-Model */
+	    FeatureModel model = new FeatureModel();
+	    File guidsl_file = new File("model.m");
+
+		GuidslReader reader = new GuidslReader(model);
+		try {
+	      reader.readFromFile(guidsl_file);
+		} catch (FileNotFoundException e) {
+		  e.printStackTrace();
+		} catch (UnsupportedModelException e) {
+		  e.printStackTrace();
+		}
+		
+		/* get features */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		/* TODO: werden hierdurch ALLE benoetigten Features in der 
+		 * richtigen REIHENFOLGE eingelesen? */
+		listFeatures.addAll(model.getConcreteFeatures());
+	    
+		  /* Ist der Variablenzugriff ein Feldzugriff? */
+		  if (isFieldAccess()) {
+			int fromFeatureID = featureID();
+			int toFeatureID = decl().hostType().featureID();
+				
+			/* beide Features vorhanden? */
+			if(fromFeatureID != -1 && toFeatureID != -1) {
+				
+			  /* Wird auf ein anderes Feature zugegriffen? */
+			  if (!(fromFeatureID == toFeatureID)) {
+			    /*
+				 * Auf Reihenfolge Features aus dem FM zu
+				 * Feature(-ID)s aus dem AST achten!
+				 */				
+				Feature fromFeature = model.getFeature(listFeatures
+				  .get(fromFeatureID).getName());
+					 
+				Feature toFeature = model.getFeature(listFeatures
+				  .get(toFeatureID).getName());					 
+										
+				/* mit SAT-Solver testen, ob dieser Umstand 
+				 * (Zugriff auf Feld in optionalem Feature)
+				 * als zusŠtzliches Constraint im FM berŸcksichtigt 
+				 * wurde: fromFeature implies toFeature 
+				 * falls ja: okay
+				 * falls nein: Fehlermeldung
+				 *  (oder HinzufŸgen des Constraints zum FM)
+				 */
+						
+				FeatureDependencies dep = new FeatureDependencies(model);	 
+					 
+				if(never(dep, fromFeature, toFeature)) {
+				  /*
+				   * Zugriff auf ein Feld in einem Feature
+				   * gefunden, das in gegenseitigem Ausschluss steht
+				   * -> Fehlermeldung
+				   */					
+				  error("gegenseitiger Ausschluss:" 
+						+ "\n    Feature " + fromFeature.getName()
+						+ " greift auf das Feld\n      " + decl()
+						+ "\n    des Features "
+						+ toFeature.getName() + " zu.\n    "
+						+ fromFeature.getName() + " und "
+						+ toFeature.getName()
+						+ " schlie§en sich aber "
+						+ "gegenseitig aus.");
+				}
+					
+				if(maybe(dep, fromFeature, toFeature)) {
+				  /*
+				   * Zugriff auf ein Feld in einem optionalen Feature
+				   * gefunden -> Fehlermeldung
+				   */					
+				  error("Zugriff auf Feld in einem optionalen Feature:"
+						+ "\n    Feature " + fromFeature.getName()
+						+ " greift auf das Feld\n      " + decl()
+						+ "\n    des optionalen Features "
+						+ toFeature.getName() + " zu.");
+				}
+			  }
+			}
+		  }	
+	      /* /new */    
+	  }
+	
+	  protected boolean ASTNode.always(FeatureDependencies dep, 
+			                           Feature fromFeature, 
+			                           Feature toFeature) {		  	  
+		  return dep.always(fromFeature).contains(toFeature);
+	  }
+
+	  protected boolean ASTNode.never(FeatureDependencies dep,
+			                          Feature fromFeature,
+			                          Feature toFeature) {
+		  return dep.never(fromFeature).contains(toFeature);
+	  }
+	  
+	  /* TODO: check */
+	  protected boolean ASTNode.sometimes(FeatureDependencies dep,
+			                              Feature fromFeature,
+			                              Feature toFeature) {
+		  return !(always(dep, fromFeature, toFeature)) &&
+				  !(never(dep, fromFeature, toFeature));
+	  }
+	  
+	  protected boolean ASTNode.maybe(FeatureDependencies dep,
+			                          Feature fromFeature,
+			                          Feature toFeature) {
+		  return dep.maybe(fromFeature).contains(toFeature);
+	  }
+}
