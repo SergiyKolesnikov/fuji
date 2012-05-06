@@ -2,9 +2,7 @@
  * 2012-04-14
  * 
  * IPORTANT: 
- * add jar de.ovgu.featureide.fm.core... (FM-Test 03) and
- * add jar org.eclipse.core.resources... (FM-Test 02)
- * add jar org.sat4j.core
+ * add jar de.ovgu.featureide.fm.core... (FM-Test 03)
  * to Fuji's build-path
  * 
  * This aspect extends the JastAddJ's type check:
@@ -20,11 +18,6 @@ import de.ovgu.featureide.fm.core.Feature;
 import de.ovgu.featureide.fm.core.FeatureDependencies;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
-
-import org.sat4j.specs.TimeoutException;
-
-import org.prop4j.And;
-import org.prop4j.Not;
 
 aspect ExtendedTypeCheck {
 	
@@ -66,15 +59,15 @@ aspect ExtendedTypeCheck {
 	    /* TODO: file name from outside
 	     * read in Feature-Model */
 	    FeatureModel model = new FeatureModel();
-	    File guidsl_file = new File("neededButOptionalField.m");
+	    File guidsl_file = new File("model.m");
 
 		GuidslReader reader = new GuidslReader(model);
 		try {
-			reader.readFromFile(guidsl_file);
+	      reader.readFromFile(guidsl_file);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		  e.printStackTrace();
 		} catch (UnsupportedModelException e) {
-			e.printStackTrace();
+		  e.printStackTrace();
 		}
 		
 		/* get features */
@@ -83,48 +76,69 @@ aspect ExtendedTypeCheck {
 		 * richtigen REIHENFOLGE eingelesen? */
 		listFeatures.addAll(model.getConcreteFeatures());
 	    
-			/* Ist der Variablenzugriff ein Feldzugriff? */
-			if (isFieldAccess()) {
-				int fromFeatureID = featureID();
-				int toFeatureID = decl().hostType().featureID();
+		  /* Ist der Variablenzugriff ein Feldzugriff? */
+		  if (isFieldAccess()) {
+			int fromFeatureID = featureID();
+			int toFeatureID = decl().hostType().featureID();
 				
-				/* Wird auf ein anderes Feature zugegriffen? */
-				if (!(fromFeatureID == toFeatureID)) {
-					/*
-					 * Auf Reihenfolge Features aus dem FM zu
-					 * Feature(-ID)s aus dem AST achten!
-					 */				
-					 Feature fromFeature = model.getFeature(listFeatures
-					     .get(fromFeatureID).getName());
+			/* beide Features vorhanden? */
+			if(fromFeatureID != -1 && toFeatureID != -1) {
+				
+			  /* Wird auf ein anderes Feature zugegriffen? */
+			  if (!(fromFeatureID == toFeatureID)) {
+			    /*
+				 * Auf Reihenfolge Features aus dem FM zu
+				 * Feature(-ID)s aus dem AST achten!
+				 */				
+				Feature fromFeature = model.getFeature(listFeatures
+				  .get(fromFeatureID).getName());
 					 
-					 Feature toFeature = model.getFeature(listFeatures
-					     .get(toFeatureID).getName());					 
+				Feature toFeature = model.getFeature(listFeatures
+				  .get(toFeatureID).getName());					 
 										
-					 /* mit SAT-Solver testen, ob dieser Umstand 
-					  * (Zugriff auf Feld in optionalem Feature)
-					  * als zusŠtzliches Constraint im FM berŸcksichtigt 
-					  * wurde: fromFeature implies toFeature 
-					  * falls ja: okay
-					  * falls nein: Fehlermeldung
-					  *  (oder HinzufŸgen des Constraints zum FM)
-					  */
+				/* mit SAT-Solver testen, ob dieser Umstand 
+				 * (Zugriff auf Feld in optionalem Feature)
+				 * als zusŠtzliches Constraint im FM berŸcksichtigt 
+				 * wurde: fromFeature implies toFeature 
+				 * falls ja: okay
+				 * falls nein: Fehlermeldung
+				 *  (oder HinzufŸgen des Constraints zum FM)
+				 */
 						
-					FeatureDependencies dep = new FeatureDependencies(model);	 
+				FeatureDependencies dep = new FeatureDependencies(model);	 
 					 
-					if(!(always(dep, fromFeature, toFeature))) {
-						/*
-						 * Zugriff auf ein Feld in einem optionalen Feature
-						 * gefunden -> Fehlermeldung
-						 */					
-						error("Feature " + fromFeature.getName()
-						    + " greift auf das Feld\n" + decl()
-							+ "\ndes optionalen Features "
-							+ toFeature.getName() + " zu.");
-					}
+				if(never(dep, fromFeature, toFeature)) {
+				  /*
+				   * Zugriff auf ein Feld in einem Feature
+				   * gefunden, das in gegenseitigem Ausschluss steht
+				   * -> Fehlermeldung
+				   */					
+				  error("gegenseitiger Ausschluss:" 
+						+ "\n    Feature " + fromFeature.getName()
+						+ " greift auf das Feld\n      " + decl()
+						+ "\n    des Features "
+						+ toFeature.getName() + " zu.\n    "
+						+ fromFeature.getName() + " und "
+						+ toFeature.getName()
+						+ " schlie§en sich aber "
+						+ "gegenseitig aus.");
 				}
-			}	
-	    /* /new */
-	    
+					
+				if(maybe(dep, fromFeature, toFeature)) {
+				  /*
+				   * Zugriff auf ein Feld in einem optionalen Feature
+				   * gefunden -> Fehlermeldung
+				   */					
+				  error("Zugriff auf Feld in einem optionalen Feature:"
+						+ "\n    Feature " + fromFeature.getName()
+						+ " greift auf das Feld\n      " + decl()
+						+ "\n    des optionalen Features "
+						+ toFeature.getName() + " zu.");
+				}
+			  }
+			}
+		  }	
+	      /* /new */    
 	  }
 	
 	  protected boolean ASTNode.always(FeatureDependencies dep, 
