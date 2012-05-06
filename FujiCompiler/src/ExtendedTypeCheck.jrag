@@ -2,7 +2,7 @@
  * 2012-04-14
  * 
  * IPORTANT: 
- * add jar de.ovgu.featureide.fm.core... (FM-Test 01) and
+ * add jar de.ovgu.featureide.fm.core... (FM-Test 03) and
  * add jar org.eclipse.core.resources... (FM-Test 02)
  * add jar org.sat4j.core
  * to Fuji's build-path
@@ -12,14 +12,12 @@
  * - checks, if one feature tries to access a field of a second feature 
  *   that is optional -> error, if not explicitly stated as a constraint
  *   in the feature model
- * 
- * TODO:
- * - implement always, sometimes, never  
  *   
  */
 
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.Feature;
+import de.ovgu.featureide.fm.core.FeatureDependencies;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
@@ -101,78 +99,57 @@ aspect ExtendedTypeCheck {
 					 
 					 Feature toFeature = model.getFeature(listFeatures
 					     .get(toFeatureID).getName());					 
-
-					/* TODO: kann weggelassen werden, loeschen */
-					/* Ist Ziel-Feature optional? */			
-					//if (!(toFeature.isMandatory())) {
 										
-						/* mit SAT-Solver testen, ob dieser Umstand 
-						 * (Zugriff auf Feld in optionalem Feature)
-						 * als zusätzliches Constraint im FM berücksichtigt 
-						 * wurde: fromFeature implies toFeature 
-						 * falls ja: okay
-						 * falls nein: Fehlermeldung
-						 *  (oder Hinzufügen des Constraints zum FM)
-						 */
+					 /* mit SAT-Solver testen, ob dieser Umstand 
+					  * (Zugriff auf Feld in optionalem Feature)
+					  * als zusätzliches Constraint im FM berücksichtigt 
+					  * wurde: fromFeature implies toFeature 
+					  * falls ja: okay
+					  * falls nein: Fehlermeldung
+					  *  (oder Hinzufügen des Constraints zum FM)
+					  */
 						
-						Set<Feature> toFeatures = new HashSet<Feature>();
-						toFeatures.add(toFeature);
-						
-						Set<Feature> fromFeatures = new HashSet<Feature>();
-						fromFeatures.add(fromFeature);
-						
-						try {
-							if(!(always(model, fromFeatures, toFeatures))) {
-								/*
-						         * Zugriff auf ein Feld in einem optionalen Feature
-						         * gefunden -> Fehlermeldung
-						         */					
-						        error("Feature " + fromFeature.getName()
-								    + " greift auf das Feld\n" + decl()
-								    + "\ndes optionalen Features "
-								    + toFeature.getName() + " zu.");
-							}
-						} catch (TimeoutException e) {
-							e.printStackTrace();
-						}
-					//}				
+					FeatureDependencies dep = new FeatureDependencies(model);	 
+					 
+					if(!(always(dep, fromFeature, toFeature))) {
+						/*
+						 * Zugriff auf ein Feld in einem optionalen Feature
+						 * gefunden -> Fehlermeldung
+						 */					
+						error("Feature " + fromFeature.getName()
+						    + " greift auf das Feld\n" + decl()
+							+ "\ndes optionalen Features "
+							+ toFeature.getName() + " zu.");
+					}
 				}
 			}	
 	    /* /new */
 	    
 	  }
 	
-	  /* beide immer (wirklich: A und B ?) */
-	  protected boolean ASTNode.always(FeatureModel model, 
-			                           Set<Feature> fromFeatures, 
-			                           Set<Feature> toFeatures) 
-			                        		   throws TimeoutException {
-		  
-		  return model.checkImplies(fromFeatures, toFeatures); 
-		  // return model.checkCondition(new And(fromFeatures, toFeatures));
+	  protected boolean ASTNode.always(FeatureDependencies dep, 
+			                           Feature fromFeature, 
+			                           Feature toFeature) {		  	  
+		  return dep.always(fromFeature).contains(toFeature);
+	  }
+
+	  protected boolean ASTNode.never(FeatureDependencies dep,
+			                          Feature fromFeature,
+			                          Feature toFeature) {
+		  return dep.never(fromFeature).contains(toFeature);
 	  }
 	  
-//	  /* gegenseitiger Ausschluss */
-//	  /* TODO: was ist hier mit context gemeint? ->
-//	   * model.areMutualExclusive(context, featureslist); */
-//	  protected boolean ASTNode.never(FeatureModel model,
-//			                          Set<Feature> fromFeatures,
-//			                          Set<Feature> toFeatures) {
-//		  
-//		  List<Set<Feature>> list = new List<Set<Feature>>();
-//		  list.add(fromFeatures);
-//		  list.add(toFeatures);
-//		  
-//		  // return model.checkCondition(new And(fromFeatures, new Not(toFeatures)));
-//		  return model.areMutualExclusive(fromFeatures, list);
-//	  }
-//	  
-//	  /* def. */
-//	  protected boolean ASTNode.sometimes(FeatureModel model,
-//			                              Set<Feature> fromFeatures,
-//			                              Set<Feature> toFeatures) 
-//			                                  throws TimeoutException {
-//		  return !(always(model, fromFeatures, toFeatures)) &&
-//				  !(never(model, fromFeatures, toFeatures));
-//	  }
+	  /* TODO: check */
+	  protected boolean ASTNode.sometimes(FeatureDependencies dep,
+			                              Feature fromFeature,
+			                              Feature toFeature) {
+		  return !(always(dep, fromFeature, toFeature)) &&
+				  !(never(dep, fromFeature, toFeature));
+	  }
+	  
+	  protected boolean ASTNode.maybe(FeatureDependencies dep,
+			                          Feature fromFeature,
+			                          Feature toFeature) {
+		  return dep.maybe(fromFeature).contains(toFeature);
+	  }
 }
