@@ -10,6 +10,12 @@
  * - checks, if one feature tries to access a field of a second feature 
  *   that is optional -> error, if not explicitly stated as a constraint
  *   in the feature model
+ * - same for two mutual exclusive fields
+ * (MethodAccess.nameCheck())
+ * - checks, if one feature tries to access a method of a second feature
+ *   that is optional -> error, if not explicitly stated as a constraint
+ *   in the feature model
+ * - same for two mutual exclusive fields
  *   
  */
 
@@ -22,8 +28,10 @@ import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 aspect ExtendedTypeCheck {
 	
 	refine NameCheck public void VarAccess.nameCheck() {
+	
+		// NameCheck.VarAccess.nameCheck();
 		
-		/* copy & paste */	
+		/* copy&paste */	
 	    if(decls().isEmpty() && (!isQualified() || !qualifier().type().isUnknown() || qualifier().isPackageAccess()))
 	      error("no field named " + name());
 	    if(decls().size() > 1) {
@@ -53,7 +61,7 @@ aspect ExtendedTypeCheck {
 	        }
 	      }
 	    }	    
-	    /* /copy & paste */
+	    /* /copy&paste */
 	    
 	    /* new */	    
 	    /* TODO: file name from outside
@@ -121,7 +129,7 @@ aspect ExtendedTypeCheck {
 						+ fromFeature.getName() + " und "
 						+ toFeature.getName()
 						+ " schlie§en sich aber "
-						+ "gegenseitig aus.");
+						+ "gegenseitig aus.\n");
 				}
 					
 				if(maybe(dep, fromFeature, toFeature)) {
@@ -133,7 +141,7 @@ aspect ExtendedTypeCheck {
 						+ "\n    Feature " + fromFeature.getName()
 						+ " greift auf das Feld\n      " + decl()
 						+ "\n    des optionalen Features "
-						+ toFeature.getName() + " zu.");
+						+ toFeature.getName() + " zu.\n");
 				}
 			  }
 			}
@@ -165,5 +173,107 @@ aspect ExtendedTypeCheck {
 			                          Feature fromFeature,
 			                          Feature toFeature) {
 		  return dep.maybe(fromFeature).contains(toFeature);
+	  }
+	  
+	  refine MethodSignature15 public void MethodAccess.typeCheck() {
+		  
+		    /* copy&paste */
+		    if(isQualified() && decl().isAbstract() && qualifier().isSuperAccess())
+		        error("may not access abstract methods in superclass");
+		      if(!decl().isVariableArity() || invokesVariableArityAsArray()) {
+		        for(int i = 0; i < decl().getNumParameter(); i++) {
+		          TypeDecl exprType = getArg(i).type();
+		          TypeDecl parmType = decl().getParameter(i).type();
+		          if(!exprType.methodInvocationConversionTo(parmType) && !exprType.isUnknown() && !parmType.isUnknown()) {
+		            error("#The type " + exprType.typeName() + " of expr " +
+		              getArg(i) + " is not compatible with the method parameter " +
+		              decl().getParameter(i));
+		          }
+		        }
+		      }
+		      /* /copy&paste */
+		      
+		      /* new */
+		      /* TODO: file name from outside
+			     * read in Feature-Model */
+			    FeatureModel model = new FeatureModel();
+			    File guidsl_file = new File("model.m");
+
+				GuidslReader reader = new GuidslReader(model);
+				try {
+			      reader.readFromFile(guidsl_file);
+				} catch (FileNotFoundException e) {
+				  e.printStackTrace();
+				} catch (UnsupportedModelException e) {
+				  e.printStackTrace();
+				}
+				
+				/* get features */
+				ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+				/* TODO: werden hierdurch ALLE benoetigten Features in der 
+				 * richtigen REIHENFOLGE eingelesen? */
+				listFeatures.addAll(model.getConcreteFeatures());
+				
+				int fromFeatureID = featureID();
+				int toFeatureID = decl().hostType().featureID();
+					
+				/* beide Features vorhanden? */
+				if(fromFeatureID != -1 && toFeatureID != -1) {
+					
+				  /* Wird auf ein anderes Feature zugegriffen? */
+				  if (!(fromFeatureID == toFeatureID)) {
+				    /*
+					 * Auf Reihenfolge Features aus dem FM zu
+					 * Feature(-ID)s aus dem AST achten!
+					 */				
+					Feature fromFeature = model.getFeature(listFeatures
+					  .get(fromFeatureID).getName());
+						 
+					Feature toFeature = model.getFeature(listFeatures
+					  .get(toFeatureID).getName());					 
+											
+					/* mit SAT-Solver testen, ob dieser Umstand 
+					 * (Zugriff auf Feld in optionalem Feature)
+					 * als zusŠtzliches Constraint im FM berŸcksichtigt 
+					 * wurde: fromFeature implies toFeature 
+					 * falls ja: okay
+					 * falls nein: Fehlermeldung
+					 *  (oder HinzufŸgen des Constraints zum FM)
+					 */
+							
+					FeatureDependencies dep = new FeatureDependencies(model);	 
+						 
+					if(never(dep, fromFeature, toFeature)) {
+					  /*
+					   * Zugriff auf eine Methode in einem Feature
+					   * gefunden, das in gegenseitigem Ausschluss steht
+					   * -> Fehlermeldung
+					   */					
+					  error("gegenseitiger Ausschluss:" 
+							+ "\n    Feature " + fromFeature.getName()
+							+ " greift auf die Methode\n\n  " + decl()
+							+ "\n\n    des Features "
+							+ toFeature.getName() + " zu.\n    "
+							+ fromFeature.getName() + " und "
+							+ toFeature.getName()
+							+ " schlie§en sich aber "
+							+ "gegenseitig aus.\n");
+					}
+						
+					if(maybe(dep, fromFeature, toFeature)) {
+					  /*
+					   * Zugriff auf eine Methode in einem optionalen Feature
+					   * gefunden -> Fehlermeldung
+					   */					
+					  error("Zugriff auf Methode in einem optionalen Feature:"
+							+ "\n    Feature " + fromFeature.getName()
+							+ " greift auf die Methode\n\n  " + decl()
+							+ "\n\n    des optionalen Features "
+							+ toFeature.getName() + " zu.\n");
+					}
+				  }
+				}
+				
+		      /* /new */
 	  }
 }
