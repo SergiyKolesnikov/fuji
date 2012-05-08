@@ -494,6 +494,6 @@ public class Main implements CompositionContext {
     }
 
     private static String version() {
-        return "2011-12-22";
+        return "2012-03-26";
     }
 }
