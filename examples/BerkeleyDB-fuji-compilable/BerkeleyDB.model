@@ -13,7 +13,6 @@ DERIVATIVES : Derivative_LoggingEvictor_Statistics_Evictor_LoggingBase
 	| Derivative_LoggingEvictor_Evictor_LoggingBase
 	| Derivative_FSync_Latches
 	| Derivative_NIO_ChunkedNIO
-	| Derivative_IO
 	| Derivative_LoggingConfig_Statistics
 	| Derivative_FSync_Statistics
 	| Derivative_LookAHEADCache_Statistics
@@ -49,7 +48,6 @@ DERIVATIVES : Derivative_LoggingEvictor_Statistics_Evictor_LoggingBase
 	| Derivative_DeleteOp_MemoryBudget
 	| Derivative_Evictor_MemoryBudget
 	| Derivative_Evictor_CriticalEviction
-	| Derivative_Evictor
 	| Derivative_Latches_FileHandleCache
 	| Derivative_LoggingSevere_EnvironmentLocking
 	| Derivative_LoggingFinest_LoggingBase
@@ -68,10 +66,8 @@ ConcurrTrans : [Latches] [CheckLeaks] [FSync] :: _ConcurrTrans ;
 
 Persistance : [Checksum] IIO [EnvironmentLocking] Checkpointer [DiskFullErro] [FileHandleCache] [IICleaner] :: _Persistance ;
 
-IIO : OldIO
+IIO : [SynchronizedIO] IO :: OldIO
 	| NewIO ;
-
-OldIO : IO :: _OldIO ;
 
 NewIO : NIOAccess :: _NewIO ;
 
@@ -84,7 +80,7 @@ IICleaner : [CleanerDaemon] [LookAHEADCache] :: _IICleaner ;
 
 BTree : [INCompressor] [IEvictor] [Verifier] :: _BTree ;
 
-IEvictor : [CriticalEviction] Evictor :: _IEvictor ;
+IEvictor : [CriticalEviction] [EvictorDaemon] Evictor :: _IEvictor ;
 
 Ops : [DeleteOp] [RenameOp] [TruncateOp] :: _Ops ;
 
@@ -110,7 +106,6 @@ Derivative_Evictor_MemoryBudget_CriticalEviction iff Evictor and CriticalEvictio
 Derivative_LoggingEvictor_Evictor_LoggingBase iff LoggingBase and Evictor and LoggingEvictor ;
 Derivative_FSync_Latches iff Latches and FSync ;
 Derivative_NIO_ChunkedNIO iff ChunkedNIO and NIO ;
-Derivative_IO iff IO ;
 Derivative_LoggingConfig_Statistics iff LoggingConfig and Statistics ;
 Derivative_FSync_Statistics iff FSync and Statistics ;
 Derivative_LookAHEADCache_Statistics iff LookAHEADCache and Statistics ;
@@ -146,7 +141,6 @@ Derivative_Statistics_MemoryBudget iff Statistics and MemoryBudget ;
 Derivative_DeleteOp_MemoryBudget iff DeleteOp and MemoryBudget ;
 Derivative_Evictor_MemoryBudget iff Evictor and MemoryBudget ;
 Derivative_Evictor_CriticalEviction iff Evictor and CriticalEviction ;
-Derivative_Evictor iff Evictor ;
 Derivative_Latches_FileHandleCache iff Latches and FileHandleCache ;
 Derivative_LoggingSevere_EnvironmentLocking iff LoggingSevere and EnvironmentLocking ;
 Derivative_LoggingFinest_LoggingBase iff LoggingBase and LoggingFinest ;

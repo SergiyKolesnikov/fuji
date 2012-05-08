@@ -9,6 +9,7 @@ FileHandleCache
 CriticalEviction
 MemoryBudget
 Evictor
+EvictorDaemon
 RenameOp
 TruncateOp
 DeleteOp
@@ -21,6 +22,7 @@ Verifier
 CheckLeaks
 Statistics
 IO
+SynchronizedIO
 ChunkedNIO
 NIO
 Checksum
@@ -47,7 +49,6 @@ Derivative_LoggingFiner_LoggingBase
 Derivative_LoggingFinest_LoggingBase
 Derivative_LoggingSevere_EnvironmentLocking
 Derivative_Latches_FileHandleCache
-Derivative_Evictor_EvictorDaemon
 Derivative_Evictor_CriticalEviction
 Derivative_Evictor_MemoryBudget
 Derivative_DeleteOp_MemoryBudget
@@ -83,7 +84,6 @@ Derivative_Latches_Statistics
 Derivative_LookAHEADCache_Statistics
 Derivative_FSync_Statistics
 Derivative_LoggingConfig_Statistics
-Derivative_IO_SynchronizedIO
 Derivative_NIO_ChunkedNIO
 Derivative_FSync_Latches
 Derivative_LoggingEvictor_Evictor_LoggingBase
