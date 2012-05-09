@@ -1,6 +1,6 @@
 NewCompound1 : [Derivatives] Media+ [includeSorting] [includeFavourites] [includeCopyPhoto] [includePrivacy] base :: MobilMedia ;
 
-Derivatives : [includePhotoAlbum_x_CopyPhotoOrSMS] [includeVideo_x_notSimulatePlayVideo] [includeMMAPI_x_MusicAndVideo] [includeMMAPI_x_PhotoAlbumAndVideoOrMusic] [capturePhoto_x_CapturePhotoOrVideo] [includePhotoAlbum_x_SMSOrCapturePhoto] [x_misc] [includeVideo_x_MusicOrVideo] [includePhotoAlbum_x_PhotoAlbumAndMusicOrVideo] [capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto] [includeVideo_x_MusicAndVideo] [includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto] [includeCopyPhoto_includeMMAPI] [includeCopyPhoto_includeVideo] [includeMMAPI_includePhotoAlbum] [includePhotoAlbum_includeSmsFeature] [includeMMAPI_x_misc] [includePhotoAlbum_x_misc] [includeVideo_x_misc] [includeVideo_x_PhotoAlbumAndMusicOrVideo] [x_CapturePhotoOrVideo] [x_CopyPhotoOrSMSOrCapturePhoto] [x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto] [x_MusicAndVideo] [x_MusicAndVideo_x_misc] [x_MusicOrVideo] [x_PhotoAlbumAndVideoOrMusic] [x_PhotoAlbumAndVideoOrMusic_x_misc] [x_PhotoAlbumOrMusicOrVideo] :: _Derivatives ;
+Derivatives : [includePhotoAlbum_x_CopyPhotoOrSMS] [includeVideo_x_notSimulatePlayVideo] [includeMMAPI_x_MusicAndVideo] [includeMMAPI_x_PhotoAlbumAndVideoOrMusic] [capturePhoto_x_CapturePhotoOrVideo] [includePhotoAlbum_x_SMSOrCapturePhoto] [x_misc] [includeVideo_x_MusicOrVideo] [includePhotoAlbum_x_PhotoAlbumAndMusicOrVideo] [capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto] [includeVideo_x_MusicAndVideo] [includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto] [includeCopyPhoto_includeMMAPI] [includeCopyPhoto_includeVideo] [includeMMAPI_includePhotoAlbum] [includePhotoAlbum_includeSmsFeature] [includeMMAPI_x_misc] [includePhotoAlbum_x_misc] [includeVideo_x_misc] [includeVideo_x_PhotoAlbumAndMusicOrVideo] [x_CapturePhotoOrVideo] [x_CopyPhotoOrSMSOrCapturePhoto] [x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto] [x_MusicAndVideo] [x_MusicAndVideo_x_misc] [x_MusicOrVideo] [x_PhotoAlbumAndVideoOrMusic] [x_PhotoAlbumAndVideoOrMusic_x_misc] [x_PhotoAlbumOrMusicOrVideo] [x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto] [captureVideo_x_CapturePhotoOrVideo] [includeVideo_x_notMisc] [includePhotoAlbum_x_notMisc] [includeMMAPI_x_notMisc] :: _Derivatives ;
 
 Media : includePhotoAlbum [includeSmsFeature] [capturePhoto] :: Photo
 	| Music
@@ -38,4 +38,9 @@ x_MusicOrVideo iff Music or Video ;
 x_PhotoAlbumAndVideoOrMusic iff includePhotoAlbum and (Video or Music) ;
 x_PhotoAlbumAndVideoOrMusic_x_misc iff includePhotoAlbum and (Video or Music) and x_misc ;
 x_PhotoAlbumOrMusicOrVideo iff includePhotoAlbum or Music or Video ;
+x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto iff (capturePhoto or capturePhoto) and (includeCopyPhoto or includeSmsFeature or capturePhoto) ;
+captureVideo_x_CapturePhotoOrVideo iff capturePhoto or captureVideo ;
+includeVideo_x_notMisc iff includeVideo and not x_misc ;
+includePhotoAlbum_x_notMisc iff includePhotoAlbum and not x_misc ;
+includeMMAPI_x_notMisc iff includeMMAPI and not x_misc ;
 
