@@ -79,7 +79,7 @@ aspect ExtendedTypeCheck {
 					error("gegenseitiger Ausschluss:" 
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure 
-							+ "\n      " + decl
+							+ "\n" + decl
 							+ "\n    des Features "
 							+ toFeature.getName() + " zu.\n    "
 							+ fromFeature.getName() + " und "
@@ -90,14 +90,14 @@ aspect ExtendedTypeCheck {
 
 				if(maybe(dep, fromFeature, toFeature)) {
 					/*
-					 * Zugriff auf ein Feld/eine Methode 
+					 * Zugriff auf ein Feld/eine Methode/einen Typen 
 					 * in einem optionalen Feature
 					 * gefunden -> Fehlermeldung
 					 */					
-					error("Zugriff auf Feld in einem optionalen Feature:"
+					error("Zugriff auf optionales Feature:"
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure
-							+ "\n      " + decl
+							+ "\n" + decl
 							+ "\n    des optionalen Features "
 							+ toFeature.getName() + " zu.\n");
 				}
@@ -121,6 +121,14 @@ aspect ExtendedTypeCheck {
 		int toFeatureID = decl().hostType().featureID();
 		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
 				"die Methode", decl().toString());	
+	}
+	
+	refine GenericsTypeCheck public void TypeAccess.typeCheck() {
+		refined();
+		int fromFeatureID = featureID();
+		int toFeatureID = decl().hostType().featureID();
+		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
+				"den Typ", decl().toString());	
 	}
 	
 	public FeatureModel ASTNode.getFeatureModel(String fmFileName) {
