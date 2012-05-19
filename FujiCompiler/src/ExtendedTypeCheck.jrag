@@ -31,10 +31,71 @@ import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
 aspect ExtendedTypeCheck {
-	
+
+	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" */
+
+	public void ASTNode.collectSplErrors() {
+		//		    nameCheck();
+		//		    typeCheck();
+		//		    accessControl();
+		//		    exceptionHandling();
+		//		    checkUnreachableStmt();
+		//		    definiteAssignment();
+		//		    checkModifiers();
+		splTypeCheck();
+		for(int i = 0; i < getNumChild(); i++) {
+			getChild(i).collectSplErrors();
+		}
+	}
+
+	public void Program.splErrorCheck(Collection collection) {
+		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
+			CompilationUnit cu = (CompilationUnit)iter.next();
+			if(cu.fromSource()) {
+				cu.collectSplErrors();
+				collection.addAll(cu.errors);
+			}
+		}
+	}
+	public void Program.splErrorCheck(Collection collection, Collection warn) {
+		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
+			CompilationUnit cu = (CompilationUnit)iter.next();
+			if(cu.fromSource()) {
+				cu.collectSplErrors();
+				collection.addAll(cu.errors);
+				warn.addAll(cu.warnings);
+			}
+		}
+	}
+
+	public void CompilationUnit.splErrorCheck(Collection collection) {
+		collectSplErrors();
+		collection.addAll(errors);
+	}
+	public void CompilationUnit.splErrorCheck(Collection err, Collection warn) {
+		collectSplErrors();
+		err.addAll(errors);
+		warn.addAll(warnings);
+	}
+
+	public boolean Program.splErrorCheck() {
+		Collection collection = new LinkedList();
+		splErrorCheck(collection);
+		if(collection.isEmpty())
+			return false;
+		System.out.println("SPL Errors:");
+		for(Iterator iter = collection.iterator(); iter.hasNext(); ) {
+			String s = (String)iter.next();
+			System.out.println(s);
+		}
+		return true;
+	}
+
+	/* /copy_&_modify */
+
 	public void ASTNode.optionalAndMutualExclusiveErrors(int fromFeatureID,
 			int toFeatureID, String targetStructure, String decl) {
-		
+
 		/* TODO: file name from outside */
 		FeatureModel model = getFeatureModel("model.m");
 
@@ -43,7 +104,7 @@ aspect ExtendedTypeCheck {
 		/* TODO: werden hierdurch ALLE benoetigten Features in der 
 		 * richtigen REIHENFOLGE eingelesen? */
 		listFeatures.addAll(model.getConcreteFeatures());
-		
+
 		/* beide Features vorhanden? */
 		if(fromFeatureID != -1 && toFeatureID != -1) {
 
@@ -70,6 +131,10 @@ aspect ExtendedTypeCheck {
 
 				FeatureDependencies dep = new FeatureDependencies(model);	 
 
+				String declFirstLine = 
+						( decl.indexOf("\n") == -1 ? 
+								decl : decl.substring(0, decl.indexOf("\n")) + " ...");
+
 				if(never(dep, fromFeature, toFeature)) {
 					/*
 					 * Zugriff auf ein Feld/eine Methode in einem Feature
@@ -79,7 +144,7 @@ aspect ExtendedTypeCheck {
 					error("gegenseitiger Ausschluss:" 
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure 
-							+ "\n" + decl
+							+ "\n" + declFirstLine
 							+ "\n    des Features "
 							+ toFeature.getName() + " zu.\n    "
 							+ fromFeature.getName() + " und "
@@ -97,7 +162,7 @@ aspect ExtendedTypeCheck {
 					error("Zugriff auf optionales Feature:"
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure
-							+ "\n" + decl
+							+ "\n" + declFirstLine
 							+ "\n    des optionalen Features "
 							+ toFeature.getName() + " zu.\n");
 				}
@@ -105,7 +170,11 @@ aspect ExtendedTypeCheck {
 		}		
 	}
 
-	public void VarAccess.typeCheck() {
+	public void ASTNode.splTypeCheck() {
+
+	}
+
+	public void VarAccess.splTypeCheck() {
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {			
 			int fromFeatureID = featureID();
@@ -114,23 +183,21 @@ aspect ExtendedTypeCheck {
 					"das Feld", decl().toString());
 		}	  
 	}
-	
-	refine MethodSignature15 public void MethodAccess.typeCheck() {
-		refined();
+
+	public void MethodAccess.splTypeCheck() {
 		int fromFeatureID = featureID();
 		int toFeatureID = decl().hostType().featureID();
 		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
 				"die Methode", decl().toString());	
 	}
-	
-	refine GenericsTypeCheck public void TypeAccess.typeCheck() {
-		refined();
+
+	public void TypeAccess.splTypeCheck() {
 		int fromFeatureID = featureID();
 		int toFeatureID = decl().hostType().featureID();
 		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
 				"den Typ", decl().toString());	
 	}
-	
+
 	public FeatureModel ASTNode.getFeatureModel(String fmFileName) {
 		/* read in Feature-Model */
 		FeatureModel model = new FeatureModel();
