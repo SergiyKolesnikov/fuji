@@ -5,6 +5,9 @@
  * add jar de.ovgu.featureide.fm.core... (FM-Test 03)
  * to Fuji's build-path
  * 
+ * 
+ * TODO: update comment
+ * 
  * This aspect extends the JastAddJ's type check:
  * (VarAccess.nameCheck())
  * - checks, if one feature tries to access a field of a second feature 
@@ -94,6 +97,7 @@ aspect ExtendedTypeCheck {
 	}
 
 	/* /copy_&_modify */
+	
 
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			int toFeatureID, String targetStructure, String decl) {
@@ -168,56 +172,54 @@ aspect ExtendedTypeCheck {
 							+ "\n" + declFirstLine
 							+ "\n    des Features "
 							+ toFeature.getName() + " zu.\n"
-							+ "Das zweite Feature ist aber nicht in jeder "
-							+ "mšglichen validen Auwahl vorhanden.\n");
+							+ "Das Ziel-Feature ist aber nicht in jeder "
+							+ "mšglichen validen Auswahl vorhanden.\n");
 				}
 			}
 		}		
 	}
-	
+
 	public void ASTNode.addSplErrors(int fromFeatureID,
-			ArrayList<Integer> toFeatureIDs, String targetStructure, String decl) {
+			ArrayList<Integer> toFeatureIDs, String targetStructure, 
+			HashMap<Integer, ASTNode> mapDecls) {
 
 		/* TODO: file name from outside */
 		FeatureModel model = getFeatureModel("model.m");
-		
+
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 		/* TODO: werden hierdurch ALLE benoetigten Features in der 
 		 * richtigen REIHENFOLGE eingelesen? */
 		listFeatures.addAll(model.getConcreteFeatures());
-		
+
 		Feature fromFeature = model.getFeature(listFeatures
 				.get(fromFeatureID).getName());
-		
+
 		ArrayList<Set<Feature>> listToFeatures = new ArrayList<Set<Feature>>();
-		
-		System.out.print("toFeatureIDs: ");
+
 		for (int toFeatureID : toFeatureIDs) {
-			System.out.print(toFeatureID + " ");
 			Feature toFeature = model.getFeature(listFeatures.get(toFeatureID).getName());
 			HashSet<Feature> toFeatureSet = new HashSet<Feature>();
 			toFeatureSet.add(toFeature);
 			listToFeatures.add(toFeatureSet);
 		}
-		System.out.println();
-		
+
 		try {
 			if (!(model.areMutualExclusive(null, listToFeatures))) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(toFeatureIDs.size());
 				sb.append(" mšgliche Ziele:\n");
 				sb.append(fromFeature.getName());
-				sb.append("\nzielt auf ");
+				sb.append(" zielt auf ");
 				sb.append(targetStructure);
+				sb.append(" folgender Features:\n");
+				for (int toFeatureID : toFeatureIDs) {
+					sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
+					sb.append(":\t");
+					sb.append(mapDecls.get(toFeatureID));
+					sb.append("\n");
+				}
 				sb.append("\n");
-				sb.append(decl);
-				sb.append("\nfolgender Features:\n");
-			    for (int toFeatureID : toFeatureIDs) {
-			    	sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
-			    	sb.append("\t");
-			    }
-			    sb.append("\n");
 				error(sb.toString());
 			}
 		} catch (TimeoutException e) {
@@ -230,36 +232,83 @@ aspect ExtendedTypeCheck {
 	}
 
 	public void VarAccess.splTypeCheck() {
+		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
+
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {			
 			int fromFeatureID = featureID();
 			SimpleSet decls = decls();
 			if (decls.size() == 1) {
-				int toFeatureID = decl().hostType().featureID();
+				BodyDecl var = (BodyDecl) decl();
+				int toFeatureID = var.featureID();
 				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
-						decl().toString());
+						var.toString());
 			} else {
 				ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
-			    for(Iterator iter = decls.iterator(); iter.hasNext(); ){
-				    toFeatureIDs.add(((Variable) iter.next()).hostType().featureID());
-			    }
-			    addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", decls.iterator().next().toString());
+				for(Iterator iter = decls.iterator(); iter.hasNext(); ){
+					BodyDecl var = (BodyDecl) iter.next();
+					toFeatureIDs.add(var.featureID());
+					mapDecls.put(var.featureID(), var);
+				}
+				addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", 
+						mapDecls);
 			}
-		}  
+		}    
 	}
 
 	public void MethodAccess.splTypeCheck() {
+		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
+
 		int fromFeatureID = featureID();
-		int toFeatureID = decl().hostType().featureID();
-		addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
-				decl().toString());	
+		SimpleSet decls = decls();
+		if (decls.size() == 1) {
+			MethodDecl var = (MethodDecl) decl();
+			int toFeatureID = var.featureID();
+			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
+					var.toString());
+		} else {
+			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
+			for(Iterator iter = decls.iterator(); iter.hasNext(); ){
+				MethodDecl var = (MethodDecl) iter.next();
+				toFeatureIDs.add(var.featureID());
+				mapDecls.put(var.featureID(), var);
+			}
+			addSplErrors(fromFeatureID, toFeatureIDs, "die Methode", 
+					mapDecls);
+		}
 	}
 
 	public void TypeAccess.splTypeCheck() {
+		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
+		boolean defaultType = false;
+
 		int fromFeatureID = featureID();
-		int toFeatureID = decl().hostType().featureID();
-		addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
-				decl().toString());	
+		SimpleSet decls = decls();
+		//		if (decls.size() == 1) {
+		//			TypeDecl var = (TypeDecl) decl();
+		//			int toFeatureID = var.featureID();
+		////			System.out.print("Typ: ");
+		////			TypeDecl varDecl = (TypeDecl) decls.iterator().next();
+		////			System.out.print(varDecl.featureID() + " " + varDecl.toString());
+		////			System.out.print("\t" + toFeatureID + " " + var.toString() + "\n");
+		//			addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
+		//					var.toString());
+		//		} else {
+		//		System.out.print("Types: ");
+		ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
+		for(Iterator iter = decls.iterator(); iter.hasNext(); ){
+			TypeDecl var = (TypeDecl) iter.next();
+			toFeatureIDs.add(var.featureID());
+			//			    System.out.print(var.featureID() + " ");
+			defaultType = (var.featureID() == -1);
+			mapDecls.put(var.featureID(), var);
+		}
+		//		    System.out.println();
+		if (!(defaultType)) {
+			addSplErrors(fromFeatureID, toFeatureIDs, "den Typ", 
+					mapDecls);
+		}
+		//		}
 	}
 
 	public FeatureModel ASTNode.getFeatureModel(String fmFileName) {
