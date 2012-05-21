@@ -30,6 +30,8 @@ import de.ovgu.featureide.fm.core.FeatureDependencies;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
+import org.sat4j.specs.TimeoutException;
+
 aspect ExtendedTypeCheck {
 
 	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" */
@@ -93,7 +95,7 @@ aspect ExtendedTypeCheck {
 
 	/* /copy_&_modify */
 
-	public void ASTNode.optionalAndMutualExclusiveErrors(int fromFeatureID,
+	public void ASTNode.addSplErrors(int fromFeatureID,
 			int toFeatureID, String targetStructure, String decl) {
 
 		/* TODO: file name from outside */
@@ -137,11 +139,11 @@ aspect ExtendedTypeCheck {
 
 				if(never(dep, fromFeature, toFeature)) {
 					/*
-					 * Zugriff auf ein Feld/eine Methode in einem Feature
+					 * Zugriff auf ein Feld/eine Methode/einen Typen in einem Feature
 					 * gefunden, das in gegenseitigem Ausschluss steht
 					 * -> Fehlermeldung
 					 */					
-					error("gegenseitiger Ausschluss:" 
+					error("never-Beziehung:" 
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure 
 							+ "\n" + declFirstLine
@@ -149,8 +151,9 @@ aspect ExtendedTypeCheck {
 							+ toFeature.getName() + " zu.\n    "
 							+ fromFeature.getName() + " und "
 							+ toFeature.getName()
-							+ " schlie§en sich aber "
-							+ "gegenseitig aus.\n");
+							+ " kšnnen aber "
+							+ "nicht beide gleichzeitig in einer validen "
+							+ "Auswahl vorkommen.\n");
 				}
 
 				if(maybe(dep, fromFeature, toFeature)) {
@@ -159,15 +162,67 @@ aspect ExtendedTypeCheck {
 					 * in einem optionalen Feature
 					 * gefunden -> Fehlermeldung
 					 */					
-					error("Zugriff auf optionales Feature:"
+					error("maybe-Beziehung:"
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure
 							+ "\n" + declFirstLine
-							+ "\n    des optionalen Features "
-							+ toFeature.getName() + " zu.\n");
+							+ "\n    des Features "
+							+ toFeature.getName() + " zu.\n"
+							+ "Das zweite Feature ist aber nicht in jeder "
+							+ "mšglichen validen Auwahl vorhanden.\n");
 				}
 			}
 		}		
+	}
+	
+	public void ASTNode.addSplErrors(int fromFeatureID,
+			ArrayList<Integer> toFeatureIDs, String targetStructure, String decl) {
+
+		/* TODO: file name from outside */
+		FeatureModel model = getFeatureModel("model.m");
+		
+		/* get features */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		/* TODO: werden hierdurch ALLE benoetigten Features in der 
+		 * richtigen REIHENFOLGE eingelesen? */
+		listFeatures.addAll(model.getConcreteFeatures());
+		
+		Feature fromFeature = model.getFeature(listFeatures
+				.get(fromFeatureID).getName());
+		
+		ArrayList<Set<Feature>> listToFeatures = new ArrayList<Set<Feature>>();
+		
+		System.out.print("toFeatureIDs: ");
+		for (int toFeatureID : toFeatureIDs) {
+			System.out.print(toFeatureID + " ");
+			Feature toFeature = model.getFeature(listFeatures.get(toFeatureID).getName());
+			HashSet<Feature> toFeatureSet = new HashSet<Feature>();
+			toFeatureSet.add(toFeature);
+			listToFeatures.add(toFeatureSet);
+		}
+		System.out.println();
+		
+		try {
+			if (!(model.areMutualExclusive(null, listToFeatures))) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(toFeatureIDs.size());
+				sb.append(" mšgliche Ziele:\n");
+				sb.append(fromFeature.getName());
+				sb.append("\nzielt auf ");
+				sb.append(targetStructure);
+				sb.append("\n");
+				sb.append(decl);
+				sb.append("\nfolgender Features:\n");
+			    for (int toFeatureID : toFeatureIDs) {
+			    	sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
+			    	sb.append("\t");
+			    }
+			    sb.append("\n");
+				error(sb.toString());
+			}
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ASTNode.splTypeCheck() {
@@ -178,24 +233,33 @@ aspect ExtendedTypeCheck {
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {			
 			int fromFeatureID = featureID();
-			int toFeatureID = decl().hostType().featureID();
-			optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID, 
-					"das Feld", decl().toString());
-		}	  
+			SimpleSet decls = decls();
+			if (decls.size() == 1) {
+				int toFeatureID = decl().hostType().featureID();
+				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
+						decl().toString());
+			} else {
+				ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
+			    for(Iterator iter = decls.iterator(); iter.hasNext(); ){
+				    toFeatureIDs.add(((Variable) iter.next()).hostType().featureID());
+			    }
+			    addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", decls.iterator().next().toString());
+			}
+		}  
 	}
 
 	public void MethodAccess.splTypeCheck() {
 		int fromFeatureID = featureID();
 		int toFeatureID = decl().hostType().featureID();
-		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
-				"die Methode", decl().toString());	
+		addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
+				decl().toString());	
 	}
 
 	public void TypeAccess.splTypeCheck() {
 		int fromFeatureID = featureID();
 		int toFeatureID = decl().hostType().featureID();
-		optionalAndMutualExclusiveErrors(fromFeatureID, toFeatureID,
-				"den Typ", decl().toString());	
+		addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
+				decl().toString());	
 	}
 
 	public FeatureModel ASTNode.getFeatureModel(String fmFileName) {
