@@ -36,8 +36,13 @@ import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 import org.sat4j.specs.TimeoutException;
 
 aspect ExtendedTypeCheck {
+	
+	protected static FeatureModel ASTNode.featureModel;
 
-	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" */
+	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" 
+	 * added: FeatureModel
+	 * TODO: get sure, that the featureModel is properly initiated.
+	 * */
 
 	public void ASTNode.collectSplErrors() {
 		//		    nameCheck();
@@ -53,7 +58,10 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	public void Program.splErrorCheck(Collection collection) {
+	public void Program.splErrorCheck(FeatureModel model, Collection collection) {
+		
+		setFeatureModel(model);
+		
 		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
 			CompilationUnit cu = (CompilationUnit)iter.next();
 			if(cu.fromSource()) {
@@ -62,7 +70,10 @@ aspect ExtendedTypeCheck {
 			}
 		}
 	}
-	public void Program.splErrorCheck(Collection collection, Collection warn) {
+	public void Program.splErrorCheck(FeatureModel model, Collection collection, Collection warn) {
+		
+		setFeatureModel(model);
+		
 		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
 			CompilationUnit cu = (CompilationUnit)iter.next();
 			if(cu.fromSource()) {
@@ -73,19 +84,26 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	public void CompilationUnit.splErrorCheck(Collection collection) {
+	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection collection) {
+		
+		setFeatureModel(model);
+		
 		collectSplErrors();
 		collection.addAll(errors);
 	}
-	public void CompilationUnit.splErrorCheck(Collection err, Collection warn) {
+	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection err, Collection warn) {
+		
+		setFeatureModel(model);
+		
 		collectSplErrors();
 		err.addAll(errors);
 		warn.addAll(warnings);
 	}
 
-	public boolean Program.splErrorCheck() {
+	public boolean Program.splErrorCheck(FeatureModel model) {
+		
 		Collection collection = new LinkedList();
-		splErrorCheck(collection);
+		splErrorCheck(model, collection);
 		if(collection.isEmpty())
 			return false;
 		System.out.println("SPL Errors:");
@@ -102,8 +120,7 @@ aspect ExtendedTypeCheck {
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			int toFeatureID, String targetStructure, String decl) {
 
-		/* TODO: file name from outside */
-		FeatureModel model = getFeatureModel("model.m");
+		FeatureModel model = getFeatureModel();
 
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -183,8 +200,7 @@ aspect ExtendedTypeCheck {
 			ArrayList<Integer> toFeatureIDs, String targetStructure, 
 			HashMap<Integer, ASTNode> mapDecls) {
 
-		/* TODO: file name from outside */
-		FeatureModel model = getFeatureModel("model.m");
+		FeatureModel model = getFeatureModel();
 
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -311,20 +327,12 @@ aspect ExtendedTypeCheck {
 		//		}
 	}
 
-	public FeatureModel ASTNode.getFeatureModel(String fmFileName) {
-		/* read in Feature-Model */
-		FeatureModel model = new FeatureModel();
-		File guidsl_file = new File(fmFileName);
-
-		GuidslReader reader = new GuidslReader(model);
-		try {
-			reader.readFromFile(guidsl_file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedModelException e) {
-			e.printStackTrace();
-		}
-		return model;
+	public FeatureModel ASTNode.getFeatureModel() {
+		return featureModel;
+	}
+	
+	public void ASTNode.setFeatureModel(FeatureModel model) {	
+		featureModel = model;
 	}
 
 	protected boolean ASTNode.always(FeatureDependencies dep, 
