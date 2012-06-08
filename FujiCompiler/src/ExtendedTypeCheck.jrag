@@ -221,7 +221,9 @@ aspect ExtendedTypeCheck {
 		}
 
 		try {
+			/* if not (XOR(listToFeatures): exactly one feature present) */
 			if (!(model.areMutualExclusive(null, listToFeatures))) {
+				if (!(model.mayBeMissing(null, listToFeatures))) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(toFeatureIDs.size());
 				sb.append(" mšgliche Ziele:\n");
@@ -237,6 +239,25 @@ aspect ExtendedTypeCheck {
 				}
 				sb.append("\n");
 				error(sb.toString());
+				} else {
+					StringBuilder sb = new StringBuilder();
+					sb.append(toFeatureIDs.size());
+					sb.append(" optionale Ziele:\n");
+					sb.append(fromFeature.getName());
+					sb.append(" zielt auf ");
+					sb.append(targetStructure);
+					sb.append(" folgender Features:\n");
+					for (int toFeatureID : toFeatureIDs) {
+						sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
+						sb.append(":\t");
+						sb.append(mapDecls.get(toFeatureID));
+						sb.append("\n");
+					}
+					sb.append("es kann aber eine valide Auswahl geben, "
+							 +"in der alle diese Ziele nicht vorhanden sind\n"
+							 +"oder mehr als eines vorhanden ist.");
+					error(sb.toString());
+				}
 			}
 		} catch (TimeoutException e) {
 			e.printStackTrace();
@@ -277,6 +298,7 @@ aspect ExtendedTypeCheck {
 
 		int fromFeatureID = featureID();
 		SimpleSet decls = decls();
+		System.out.println(decls.size());
 		if (decls.size() == 1) {
 			MethodDecl var = (MethodDecl) decl();
 			int toFeatureID = var.featureID();
