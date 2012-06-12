@@ -297,8 +297,14 @@ aspect ExtendedTypeCheck {
 		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
 
 		int fromFeatureID = featureID();
-		SimpleSet decls = decls();
-		System.out.println(decls.size());
+		ArrayList<MethodDecl> decls = new ArrayList<MethodDecl>();
+		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
+			if (bd instanceof MethodDecl) {
+				if(((MethodDecl) bd).signature().equals(decl().signature())) {
+					decls.add((MethodDecl) bd);
+				}
+			}
+		}
 		if (decls.size() == 1) {
 			MethodDecl var = (MethodDecl) decl();
 			int toFeatureID = var.featureID();
@@ -306,8 +312,8 @@ aspect ExtendedTypeCheck {
 					var.toString());
 		} else {
 			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
-			for(Iterator iter = decls.iterator(); iter.hasNext(); ){
-				MethodDecl var = (MethodDecl) iter.next();
+			for(Iterator<MethodDecl> iter = decls.iterator(); iter.hasNext(); ){
+				MethodDecl var = iter.next();
 				toFeatureIDs.add(var.featureID());
 				mapDecls.put(var.featureID(), var);
 			}
