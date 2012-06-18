@@ -39,7 +39,7 @@ import org.sat4j.specs.TimeoutException;
 aspect ExtendedTypeCheck {
 
 	protected static FeatureModel ASTNode.featureModel;
-	
+
 	public FeatureModel ASTNode.getFeatureModel() {
 		return featureModel;
 	}
@@ -171,7 +171,7 @@ aspect ExtendedTypeCheck {
 					error("never-Beziehung:" 
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure 
-							+ "\n" + declFirstLine
+							+ "\n      " + declFirstLine
 							+ "\n    des Features "
 							+ toFeature.getName() + " zu.\n    "
 							+ fromFeature.getName() + " und "
@@ -188,7 +188,7 @@ aspect ExtendedTypeCheck {
 					error("maybe-Beziehung:"
 							+ "\n    Feature " + fromFeature.getName()
 							+ " greift auf " + targetStructure
-							+ "\n" + declFirstLine
+							+ "\n      " + declFirstLine
 							+ "\n    des Features "
 							+ toFeature.getName() + " zu.\n"
 							+ "Das Ziel-Feature ist aber nicht in jeder "
@@ -227,7 +227,7 @@ aspect ExtendedTypeCheck {
 				/* min. ein Feature nicht optional */
 				if (!(model.mayBeMissing(null, toFeaturesList))) {					
 					sb.append(" mšgliche Ziele:\n");
-				/* alle Features optional */
+					/* alle Features optional */
 				} else {
 					sb.append(" optionale Ziele ");
 					sb.append("(es kann eine valide Auswahl geben, "
@@ -244,8 +244,8 @@ aspect ExtendedTypeCheck {
 					String decl = mapDecls.get(toFeatureID).toString();
 					String declFirstLine = ( decl.indexOf("\n") == -1
 							? decl 
-							: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					sb.append(declFirstLine);
+									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
+					sb.append("      " + declFirstLine);
 					sb.append("\n");
 				}								
 				error(sb.toString());				
@@ -288,22 +288,22 @@ aspect ExtendedTypeCheck {
 		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
 
 		int fromFeatureID = featureID();
-		ArrayList<MethodDecl> decls = new ArrayList<MethodDecl>();
+		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof MethodDecl) {
 				if(((MethodDecl) bd).signature().equals(decl().signature())) {
-					decls.add((MethodDecl) bd);
+					methodDecls.add((MethodDecl) bd);
 				}
 			}
 		}
-		if (decls.size() == 1) {
+		if (methodDecls.size() == 1) {
 			MethodDecl var = (MethodDecl) decl();
 			int toFeatureID = var.featureID();
 			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
 					var.toString());
 		} else {
 			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
-			for(Iterator<MethodDecl> iter = decls.iterator(); iter.hasNext(); ){
+			for(Iterator<MethodDecl> iter = methodDecls.iterator(); iter.hasNext(); ){
 				MethodDecl var = iter.next();
 				toFeatureIDs.add(var.featureID());
 				mapDecls.put(var.featureID(), var);
@@ -316,33 +316,35 @@ aspect ExtendedTypeCheck {
 	public void TypeAccess.splTypeCheck() {
 		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
 		boolean defaultType = false;
-
 		int fromFeatureID = featureID();
-		SimpleSet decls = decls();
-				if (decls.size() == 1) {
-					TypeDecl var = (TypeDecl) decl();
-					int toFeatureID = var.featureID();
-					System.out.print("Typ: ");
-					TypeDecl varDecl = (TypeDecl) decls.iterator().next();
-					System.out.print(varDecl.featureID() + " " + varDecl.toString());
-					System.out.print("\t" + toFeatureID + " " + var.toString() + "\n");
-					addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
-							var.toString());
-				} else {
-				System.out.print("Types: ");
-		ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
-		for(Iterator iter = decls.iterator(); iter.hasNext(); ){
-			TypeDecl var = (TypeDecl) iter.next();
-			toFeatureIDs.add(var.featureID());
-						    System.out.print(var.featureID() + " ");
-			defaultType = (var.featureID() == -1);
-			mapDecls.put(var.featureID(), var);
-		}
-				    System.out.println();
-		if (!(defaultType)) {
-			addSplErrors(fromFeatureID, toFeatureIDs, "den Typ", 
-					mapDecls);
-		}
+		
+		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
+		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
+			if (bd instanceof ConstructorDecl) {
+				if (((ConstructorDecl) bd).signature().equals(decl().hostType().name() + "()")) {
+					constructorDecls.add((ConstructorDecl) bd);
 				}
+			}
+		}
+		
+		if (constructorDecls.size() == 1) {
+			TypeDecl var = (TypeDecl) decl();
+			int toFeatureID = var.featureID();
+			addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
+					var.toString());
+		} else {
+
+			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
+			for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
+				ConstructorDecl var = (ConstructorDecl) iter.next();
+				toFeatureIDs.add(var.featureID());
+				defaultType = (var.featureID() == -1);
+				mapDecls.put(var.featureID(), var);
+			}
+			if (!(defaultType)) {
+				addSplErrors(fromFeatureID, toFeatureIDs, "den Typ", 
+						mapDecls);
+			}
+		}
 	}
 }
