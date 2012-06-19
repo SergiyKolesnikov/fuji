@@ -1,9 +1,16 @@
 /* Extended Type Check
  * 2012-04-14
  * 
- * IPORTANT: 
- * add jar de.ovgu.featureide.fm.core... (FM-Test 03)
+ * IMPORTANT: 
+ * add jar de.ovgu.featureide.fm.core...jar (FM-Test 03)
  * to Fuji's build-path
+ * 
+ * for tests (TestSuite.java):
+ * add org.eclipse.equinox.common...jar (FM-Test 03)
+ * add jakarta.jar (FM-Test 03)
+ * add guidsl.jar (FM-Test 03)
+ * add org.sat4j.core.jar (FM-Test 03)
+ * to Fujis's build-path
  * 
  * TODO: update comment
  * 
@@ -232,7 +239,7 @@ aspect ExtendedTypeCheck {
 					sb.append(" optionale Ziele ");
 					sb.append("(es kann eine valide Auswahl geben, "
 							+"in der alle diese Ziele nicht vorhanden sind "
-							+"oder mehr als eines vorhanden ist.):\n");					
+							+"oder mehr als eines vorhanden ist):\n");					
 				}				
 				sb.append(fromFeature.getName());
 				sb.append(" zielt auf ");
@@ -245,7 +252,7 @@ aspect ExtendedTypeCheck {
 					String declFirstLine = ( decl.indexOf("\n") == -1
 							? decl 
 									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					sb.append("      " + declFirstLine);
+					sb.append(declFirstLine);
 					sb.append("\n");
 				}								
 				error(sb.toString());				
@@ -312,7 +319,7 @@ aspect ExtendedTypeCheck {
 					mapDecls);
 		}
 	}
-
+	
 	public void TypeAccess.splTypeCheck() {
 		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
 		boolean defaultType = false;
@@ -333,7 +340,6 @@ aspect ExtendedTypeCheck {
 			addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
 					var.toString());
 		} else {
-
 			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
 			for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
 				ConstructorDecl var = (ConstructorDecl) iter.next();
