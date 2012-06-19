@@ -1,0 +1,49 @@
+01 - FieldAccess:
+-----------------
+
+Erklaerung:
+-----------
+
+Zugriff von FeatureA auf ein Feld des FeatureB. 
+
+
+SubCases:
+---------
+
+01: FeatureB ist optional.
+model:    Base : FeatureA [FeatureB] :: _Base ;
+model-ok: Base : FeatureA [FeatureB] :: _Base ;
+          %%
+          FeatureA implies FeatureB ;
+
+02: FeatureA und FeatureB schlieszen sich gegenseitig aus.
+(durch zusaetzliches Constraint wird FeatureA getoetet.)
+model:    Base : FeatureA | FeatureB :: _Base ;
+model-ok: Base : FeatureA | FeatureB :: _Base ;
+          %%
+          FeatureA implies FeatureB ;
+          
+03: FeatureB2 implementiert die gleichen Typen wie FeatureB.
+(2 moegliche/optionale Ziele fuer Feldzugriff, Typzugriff)
+model:    Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
+model-ok: Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
+          %%
+          not FeatureB iff FeatureB2 ;
+     
+          
+04: komplexes Beispiel (jeweils nur Feldzugriffe):
+FeatureB2 und FeatureB3 implementieren die gleichen Typen wie FeatureB.
+
+   A;i ---> B ; j, jj
+     ^      |   ^^ ^
+     |      v   || |
+     |--- C;k   ||-|--- D;l
+     
+model:    Base : FeatureA [FeatureB] [FeatureC] FeatureD [FeatureB2] [FeatureB3] :: _Base ;
+model-ok: Base : FeatureA [FeatureB] [FeatureC] FeatureD [FeatureB2] [FeatureB3] :: _Base ;
+          %%
+          FeatureB iff ((not FeatureB2) and (not FeatureB3)) ;
+          FeatureB2 iff ((not FeatureB) and (not FeatureB3)) ;
+          FeatureB implies FeatureC ;
+          FeatureB2 implies FeatureC ;
+          FeatureB3 implies FeatureC ;
