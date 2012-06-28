@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import AST.ASTNode;
 import AST.CompilationUnit;
 import AST.Program;
 import de.ovgu.featureide.fm.core.Feature;
@@ -23,12 +25,14 @@ public class TestSuite {
 	public static Collection errors = new ArrayList();
 	@SuppressWarnings("unchecked")
 	public static Collection warnings = new ArrayList();
+	@SuppressWarnings("unchecked")
+	public static HashMap<Integer, ArrayList<Integer>> typeA = new HashMap<Integer, ArrayList<Integer>>();
 	/* /TEST */
 
 	/* Feature-Model */
 	private static FeatureModel model = new FeatureModel();
 	
-	private static String folder = "16/04";
+	private static String folder = "03/04";
 	private static String path = "TestCases/";
 	private static String modelName = "model.m";
 
@@ -82,10 +86,12 @@ public class TestSuite {
 			if (cu.fromSource()) {
 				
 				 /* Check for static semantic errors. */
-				cu.errorCheck(errors, warnings);
+				// cu.errorCheck(errors, warnings);
 				cu.splErrorCheck(model, errors, warnings);
 			}
-		}
+		}		
+		
+		System.out.println(ASTNode.getTypeAccessesString());
 		
 		if (!errors.isEmpty()) {
 			StringBuilder message = new StringBuilder();
@@ -94,6 +100,7 @@ public class TestSuite {
 			}
 			throw new SemanticErrorException(message.toString());
 		}
+		
 		if (!warnings.isEmpty()) {
 			StringBuilder message = new StringBuilder();
 			for (Object o : warnings) {
