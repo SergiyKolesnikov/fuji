@@ -97,8 +97,6 @@ aspect ExtendedTypeCheck {
 		/* TODO: werden hierdurch ALLE benoetigten Features in der 
 		 * richtigen REIHENFOLGE eingelesen? */
 		listFeatures.addAll(featureModel.getConcreteFeatures());
-
-//		System.out.println(typeAccesses.keySet());
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -304,7 +302,7 @@ aspect ExtendedTypeCheck {
 	}
 
 	public void ASTNode.splTypeCheck() {
-       /* collect TypeAccesses in Map */
+		
 	}
 
 	public void VarAccess.splTypeCheck() {
@@ -380,9 +378,6 @@ aspect ExtendedTypeCheck {
 			typeDeclFeatures = new HashMap<String, ArrayList<Integer>>();
 		}
 
-//		HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
-//		boolean defaultType = false;
-
 		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof ConstructorDecl) {
@@ -396,8 +391,6 @@ aspect ExtendedTypeCheck {
 		for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
 			ConstructorDecl var = (ConstructorDecl) iter.next();
 			toFeatureIDs.add(var.featureID());
-//			defaultType = (var.featureID() == -1);
-//			mapDecls.put(var.featureID(), var);
 		}
 		if (!(decl().hostType().featureID() == -1)) {
 			String decl = decl().hostType().toString();
@@ -405,63 +398,7 @@ aspect ExtendedTypeCheck {
 					( decl.indexOf("\n") == -1 ? 
 							decl : decl.substring(0, decl.indexOf("\n")) + " ... }");
 			typeDeclFeatures.put(declFirstLine, toFeatureIDs);
-			
-//			System.out.println(fromFeatureID + ", " + declFirstLine + ", " + toFeatureIDs.toString());
-		}
-		
+		}		
 		typeAccesses.put(fromFeatureID, typeDeclFeatures);
-
-//
-//		for(Iterator iter = decls().iterator(); iter.hasNext(); ){
-//			TypeDecl td = (TypeDecl) iter.next();
-//			int toFeatureID = td.featureID();
-//			if (toFeatureID != -1) {
-//				if(!(toFeatureIDs.contains(toFeatureID))) {
-//					toFeatureIDs.add(toFeatureID);
-//				}
-//			}
-//		}
-//
-//
-//		ArrayList<Integer> toFeatureIDs = typeAccesses.get(fromFeatureID);
-//		if (toFeatureIDs == null) {
-//			toFeatureIDs = new ArrayList<Integer>();
-//		}
-//
-//
-//
-//		typeAccesses.put(fromFeatureID, toFeatureIDs);
-			
-//			HashMap<Integer, ASTNode> mapDecls = new HashMap<Integer, ASTNode>();
-//			boolean defaultType = false;
-//			
-//			ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
-//			for(BodyDecl bd : decl().hostType().getBodyDecls()) {
-//				if (bd instanceof ConstructorDecl) {
-//					if (((ConstructorDecl) bd).signature().equals(decl().hostType().name() + "()")) {
-//						constructorDecls.add((ConstructorDecl) bd);
-//					}
-//				}
-//			}
-//			
-//			if (constructorDecls.size() == 1) {
-//				TypeDecl var = (TypeDecl) decl();
-//				int toFeatureID = var.featureID();
-//				addSplErrors(fromFeatureID, toFeatureID, "den Typ", 
-//						var.toString());
-//			} else {
-//				ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
-//				for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
-//					ConstructorDecl var = (ConstructorDecl) iter.next();
-//					toFeatureIDs.add(var.featureID());
-//					defaultType = (var.featureID() == -1);
-//					mapDecls.put(var.featureID(), var);
-//				}
-//				if (!(defaultType)) {
-//					addSplErrors(fromFeatureID, toFeatureIDs, "den Typ", 
-//							mapDecls);
-//				}
-//			}
-
 	}
 }
