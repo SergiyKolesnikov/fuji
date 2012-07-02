@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 
+/* TestSuite */
 public class TestSuite {
 
 	private static Main fuji;
@@ -25,13 +25,12 @@ public class TestSuite {
 	public static Collection errors = new ArrayList();
 	@SuppressWarnings("unchecked")
 	public static Collection warnings = new ArrayList();
-	@SuppressWarnings("unchecked")
-	public static HashMap<Integer, ArrayList<Integer>> typeA = new HashMap<Integer, ArrayList<Integer>>();
 	/* /TEST */
 
 	/* Feature-Model */
 	private static FeatureModel model = new FeatureModel();
 	
+	/* TestCase-Nr. */
 	private static String folder = "03/04";
 	private static String path = "TestCases/";
 	private static String modelName = "model.m";
@@ -65,8 +64,8 @@ public class TestSuite {
 		 * ob alle gewuneschten Features hierdurch richtig eingelesen werden,
 		 * dh. ohne Base, ... */
 		features.addAll(model.getConcreteFeatures());
+		
 		for (Feature f : features) {
-			/* System.out.println(f.getName()); */
 			featureNames.add(f.getName());
 		}
 
@@ -91,8 +90,10 @@ public class TestSuite {
 			}
 		}		
 		
+		/* print all TypeAccesses */
 		System.out.println(ASTNode.getTypeAccessesString());
 		
+		/* throw Semantic Errors */
 		if (!errors.isEmpty()) {
 			StringBuilder message = new StringBuilder();
 			for (Object o : errors) {
@@ -101,6 +102,7 @@ public class TestSuite {
 			throw new SemanticErrorException(message.toString());
 		}
 		
+		/* throw Compiler Warnings */
 		if (!warnings.isEmpty()) {
 			StringBuilder message = new StringBuilder();
 			for (Object o : warnings) {
