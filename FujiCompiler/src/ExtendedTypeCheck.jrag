@@ -12,27 +12,29 @@
  * add org.sat4j.core.jar (FM-Test 03)
  * to Fujis's build-path
  * 
- * TODO: update comment
- * 
  * This aspect extends the JastAddJ's type check:
  * (VarAccess.splTypeCheck())
  * - checks, if one feature tries to access a field of a second feature 
  *   that is optional -> error, if not explicitly stated as a constraint
  *   in the feature model
  * - same for two mutual exclusive fields
+ * - when two or more features provide an implementation for a type and 
+ *   all of them are optional, then it would be possible, that no implementation
+ *   of the type is present. 
  * (MethodAccess.splTypeCheck())
  * - checks, if one feature tries to access a method of a second feature
  *   that is optional -> error, if not explicitly stated as a constraint
  *   in the feature model
  * - same for two mutual exclusive fields
+ * - when two or more features provide an implementation for a type and 
+ *   all of them are optional, then it would be possible, that no implementation
+ *   of the type is present.
  * (TypeAccess.splTypeCheck())
- * - 
- * 
- * further:
- * - types
- * - classes
- * - interfaces
- * (optional and mutual exclusion)  
+ * - collect all type accesses and check, if all required types are present
+ *   in at least one feature each
+ *   - types, classes, interfaces, Generics, (try, catch, throw)
+ *   - Cast, Constructor,
+ *   - 4 types of inner classes (static, member, local, anonymous)
  */
 
 import de.ovgu.featureide.fm.core.FeatureModel;
@@ -45,9 +47,12 @@ import org.sat4j.specs.TimeoutException;
 
 aspect ExtendedTypeCheck {
 
+	/* hold the feature model */
 	protected static FeatureModel ASTNode.featureModel;
 	
-	/* collect TypeAccesses in Map */
+	/* collect TypeAccesses in Map 
+	 * format: map: fromFeatureID, map: name of needed type and list 
+	 * of toFeatureIDs, that implement this type */
 	protected static HashMap<Integer, HashMap<String, ArrayList<Integer>>> 
 	    ASTNode.typeAccesses = 
 	    new HashMap<Integer, HashMap<String, ArrayList<Integer>>>();
@@ -60,30 +65,35 @@ aspect ExtendedTypeCheck {
 		featureModel = model;
 	}
 
+	/* (fromFeature ALWAYS toFeature) due to feature model */
 	protected boolean ASTNode.always(FeatureDependencies dep, 
 			Feature fromFeature, 
 			Feature toFeature) {		  	  
 		return dep.always(fromFeature).contains(toFeature);
 	}
 
+	/* (fromFeature NEVER toFeature) due to feature model */
 	protected boolean ASTNode.never(FeatureDependencies dep,
 			Feature fromFeature,
 			Feature toFeature) {
 		return dep.never(fromFeature).contains(toFeature);
 	}
 
+	/* (fromFeature MAYBE toFeature) due to feature model */
 	protected boolean ASTNode.maybe(FeatureDependencies dep,
 			Feature fromFeature,
 			Feature toFeature) {
 		return dep.maybe(fromFeature).contains(toFeature);
 	}
 
+	
 	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" 
 	 * in front of method names or in method names
 	 * added: FeatureModel in ASTNode
 	 * TODO: get sure, that the featureModel is properly initiated.
 	 */
 
+	/* */
 	public void ASTNode.collectSplErrors() {
 		splTypeCheck();
 		for(int i = 0; i < getNumChild(); i++) {
@@ -91,6 +101,7 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
+	/* DEBUG */
 	public static String ASTNode.getTypeAccessesString() {
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -103,17 +114,21 @@ aspect ExtendedTypeCheck {
 		sb.append("Feature (\"/\" = braucht) Typ" +
 				"\t\t->\timplementiert in Feature(s)\n");
 		
+		/* for all fromFeatureIDs */
 		for (int i : typeAccesses.keySet()) {
 			Feature fromFeature = featureModel.getFeature(listFeatures
 					.get(i).getName());
+			/* needs types */
 			if (!(typeAccesses.get(i).isEmpty())) {
 				sb.append(fromFeature.getName());
-				HashMap<String, ArrayList<Integer>> typeDeclFeatures = typeAccesses.get(i);				
+				HashMap<String, ArrayList<Integer>> typeDeclFeatures = typeAccesses.get(i);
+				/* list names of needed types ... */
 				for(String td : typeDeclFeatures.keySet()) {
 					sb.append(" / " + td);
 					sb.append("\t->\t[ ");
 					Feature toFeature;
-					ArrayList<Integer> toFeatureIDs = typeDeclFeatures.get(td);	
+					ArrayList<Integer> toFeatureIDs = typeDeclFeatures.get(td);
+					/* ... and the features, that implement this type */
 					for (int j : toFeatureIDs) {
 						toFeature = featureModel.getFeature(listFeatures.get(j).getName());
 						sb.append(toFeature.getName() + ", ");
@@ -208,7 +223,8 @@ aspect ExtendedTypeCheck {
 				/* Ausgabe nur der ersten Zeile der Zielstruktur */
 				String declFirstLine = 
 						( decl.indexOf("\n") == -1 ? 
-								decl : decl.substring(0, decl.indexOf("\n")) + " ... }");
+								decl : decl.substring(0, decl.indexOf("\n")) 
+								       + " ... }");
 
 				/* fromFeature und toFeature koennen nicht beide gleichzeitig
 				 * in einer validen Auswahl vorkommen -> Fehler
@@ -257,6 +273,8 @@ aspect ExtendedTypeCheck {
 		listFeatures.addAll(model.getConcreteFeatures());
 		Feature fromFeature = model.getFeature(listFeatures
 				.get(fromFeatureID).getName());
+		
+		/* Liste einer Menge von Zielfeatures */
 		ArrayList<Set<Feature>> toFeaturesList = new ArrayList<Set<Feature>>();
 		for (int toFeatureID : toFeatureIDs) {
 			Feature toFeature = model.getFeature(listFeatures.get(toFeatureID).getName());
