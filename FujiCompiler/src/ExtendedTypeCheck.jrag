@@ -49,13 +49,6 @@ aspect ExtendedTypeCheck {
 
 	/* hold the feature model */
 	protected static FeatureModel ASTNode.featureModel;
-	
-	/* collect TypeAccesses in Map 
-	 * format: map: fromFeatureID, map: name of needed type and list 
-	 * of toFeatureIDs, that implement this type */
-	protected static HashMap<Integer, HashMap<String, ArrayList<Integer>>> 
-	    ASTNode.typeAccesses = 
-	    new HashMap<Integer, HashMap<String, ArrayList<Integer>>>();
 
 	public FeatureModel ASTNode.getFeatureModel() {
 		return featureModel;
@@ -63,6 +56,33 @@ aspect ExtendedTypeCheck {
 
 	public void ASTNode.setFeatureModel(FeatureModel model) {	
 		featureModel = model;
+	}
+	
+	/* collect TypeAccesses in Map 
+	 * format: map: fromFeatureID, map: name of needed type and list 
+	 * of toFeatureIDs, that implement this type */
+	protected static HashMap<Integer, HashMap<String, ArrayList<Integer>>> 
+	    ASTNode.typeAccesses = 
+	    new HashMap<Integer, HashMap<String, ArrayList<Integer>>>();
+	
+	protected ArrayList Program.errors = new ArrayList();
+	
+	protected ArrayList Program.warnings = new ArrayList();
+	
+	public void ASTNode.typeError(String s) {
+		ASTNode node = this;
+		while(node != null && !(node instanceof Program))
+			node = node.getParent();
+		Program pr = (Program)node;
+		if(getNumChild() == 0 && getStart() != 0 && getEnd() != 0) {  
+			int line = getLine(getStart());
+			int column = getColumn(getStart());
+			int endLine = getLine(getEnd());
+			int endColumn = getColumn(getEnd());
+			pr.errors.add(new Problem(sourceFile(), s, line, column, endLine, endColumn, Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
+		}
+		else
+			pr.errors.add(new Problem(sourceFile(), s, lineNumber(), Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
 	}
 
 	/* (fromFeature ALWAYS toFeature) due to feature model */
@@ -109,14 +129,14 @@ aspect ExtendedTypeCheck {
 					
 					/* only one implementation */
 					if(toFeatureIDs.size() == 1) {
-						addSplErrors(i, toFeatureIDs.get(0), "den Typ", td);
+						addSplErrors(i, toFeatureIDs.get(0), "den Typ", td, true);
 				    /* more than one implementation*/
 					} else {
 						HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
 						for(int toFeatureID : toFeatureIDs) {
 							mapDecls.put(toFeatureID, td);
 						}
-						addSplErrors(i, toFeatureIDs, "den Typ", mapDecls);
+						addSplErrors(i, toFeatureIDs, "den Typ", mapDecls, true);
 					}
 				}
 			}
@@ -183,10 +203,11 @@ aspect ExtendedTypeCheck {
 			CompilationUnit cu = (CompilationUnit)iter.next();
 			if(cu.fromSource()) {
 				cu.collectSplErrors();
-				collectSplTypeErrors();
 				collection.addAll(cu.errors);
 			}
 		}
+		collectSplTypeErrors();
+		collection.addAll(errors);
 	}
 
 	public void Program.splErrorCheck(FeatureModel model, Collection collection, Collection warn) {	
@@ -195,24 +216,24 @@ aspect ExtendedTypeCheck {
 			CompilationUnit cu = (CompilationUnit)iter.next();
 			if(cu.fromSource()) {
 				cu.collectSplErrors();
-				collectSplTypeErrors();
 				collection.addAll(cu.errors);
 				warn.addAll(cu.warnings);
 			}
 		}
+		collectSplTypeErrors();
+		collection.addAll(errors);
+		warn.addAll(warnings);
 	}
 
 	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection collection) {
 		setFeatureModel(model);
 		collectSplErrors();
-		collectSplTypeErrors();
 		collection.addAll(errors);
 	}
 
 	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection err, Collection warn) {		
 		setFeatureModel(model);
 		collectSplErrors();
-		collectSplTypeErrors();
 		err.addAll(errors);
 		warn.addAll(warnings);
 	}
@@ -235,7 +256,7 @@ aspect ExtendedTypeCheck {
 
 	/* Ausgabe von Fehlern bei nur einem Zielfeature */
 	public void ASTNode.addSplErrors(int fromFeatureID,
-			int toFeatureID, String targetStructure, String decl) {
+			int toFeatureID, String targetStructure, String decl, boolean isTypeAccess) {
 		FeatureModel model = getFeatureModel();
 
 		/* get features */
@@ -270,32 +291,53 @@ aspect ExtendedTypeCheck {
 				/* fromFeature und toFeature koennen nicht beide gleichzeitig
 				 * in einer validen Auswahl vorkommen -> Fehler
 				 */
-				if(never(dep, fromFeature, toFeature)) {				
-					error("never-Beziehung:" 
-							+ "\n    Feature " + fromFeature.getName()
-							+ " greift auf " + targetStructure 
-							+ "\n      " + declFirstLine
-							+ "\n    des Features "
-							+ toFeature.getName() + " zu.\n    "
-							+ fromFeature.getName() + " und "
-							+ toFeature.getName()
-							+ " kšnnen aber "
-							+ "nicht beide gleichzeitig in einer validen "
-							+ "Auswahl vorkommen.\n");
+				if(never(dep, fromFeature, toFeature)) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("never-Beziehung:");
+					sb.append("\n    Feature ");
+					sb.append(fromFeature.getName());
+					sb.append(" greift auf ");
+					sb.append(targetStructure);
+					sb.append("\n      ");
+					sb.append(declFirstLine);
+					sb.append("\n    des Features ");
+					sb.append(toFeature.getName());
+					sb.append(" zu.\n    ");
+					sb.append(fromFeature.getName());
+					sb.append(" und ");
+					sb.append(toFeature.getName());
+					sb.append(" kšnnen aber ");
+					sb.append("nicht beide gleichzeitig in einer validen ");
+					sb.append("Auswahl vorkommen.\n");
+					if(isTypeAccess) {
+						typeError(sb.toString());
+					} else {
+						error(sb.toString());
+					}
 				}
 
 				/* toFeature kann, muss aber nicht in einer validen Auswahl
 				 * vorkommen -> moegliche Fehlerquelle
 				 */
 				if(maybe(dep, fromFeature, toFeature)) {				
-					error("maybe-Beziehung:"
-							+ "\n    Feature " + fromFeature.getName()
-							+ " greift auf " + targetStructure
-							+ "\n      " + declFirstLine
-							+ "\n    des Features "
-							+ toFeature.getName() + " zu.\n"
-							+ "Das Ziel-Feature ist aber nicht in jeder "
-							+ "mšglichen validen Auswahl vorhanden.\n");
+					StringBuilder sb = new StringBuilder();
+					sb.append("maybe-Beziehung:");
+					sb.append("\n    Feature ");
+					sb.append(fromFeature.getName());
+					sb.append(" greift auf ");
+					sb.append(targetStructure);
+					sb.append("\n      ");
+					sb.append(declFirstLine);
+					sb.append("\n    des Features ");
+					sb.append(toFeature.getName());
+					sb.append(" zu.\n");
+					sb.append("Das Ziel-Feature ist aber nicht in jeder ");
+					sb.append("mšglichen validen Auswahl vorhanden.\n");
+					if(isTypeAccess) {
+						typeError(sb.toString());
+					} else {
+						error(sb.toString());
+					}
 				}
 			}
 		}		
@@ -304,7 +346,7 @@ aspect ExtendedTypeCheck {
 	/* Ausgabe von Fehlern bei mehreren Zielfeatures */
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			ArrayList<Integer> toFeatureIDs, String targetStructure, 
-			HashMap<Integer, String> mapDecls) {
+			HashMap<Integer, String> mapDecls, boolean isTypeAccess) {
 		FeatureModel model = getFeatureModel();
 
 		/* get features */
@@ -342,8 +384,12 @@ aspect ExtendedTypeCheck {
 					String decl = mapDecls.get(toFeatureID);
 					sb.append(decl);
 					sb.append("\n");
-				}								
-				error(sb.toString()); 
+				}
+				if(isTypeAccess) {
+					typeError(sb.toString());
+				} else {
+					error(sb.toString());
+				}
 			}				
 		} catch (TimeoutException e) {
 			e.printStackTrace();
@@ -366,7 +412,7 @@ aspect ExtendedTypeCheck {
 				BodyDecl var = (BodyDecl) decl();
 				int toFeatureID = var.featureID();
 				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
-						var.toString());
+						var.toString(), false);
 			/* mehrere Zielfeatures */
 			} else {
 				ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
@@ -380,7 +426,7 @@ aspect ExtendedTypeCheck {
 					mapDecls.put(var.featureID(), declFirstLine);
 				}
 				addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", 
-						mapDecls);
+						mapDecls, false);
 			}
 		}    
 	}
@@ -403,7 +449,7 @@ aspect ExtendedTypeCheck {
 			MethodDecl var = (MethodDecl) decl();
 			int toFeatureID = var.featureID();
 			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
-					var.toString());
+					var.toString(), false);
 		/* mehrere Methoden mit dieser Signatur */
 		} else {
 			ArrayList<Integer> toFeatureIDs = new ArrayList<Integer>();
@@ -417,7 +463,7 @@ aspect ExtendedTypeCheck {
 				mapDecls.put(var.featureID(), declFirstLine);
 			}
 			addSplErrors(fromFeatureID, toFeatureIDs, "die Methode", 
-					mapDecls);
+					mapDecls, false);
 		}
 	}
 	
