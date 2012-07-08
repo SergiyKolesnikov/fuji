@@ -78,20 +78,22 @@ public class TestSuite {
 		Program ast = astIter.next();
 
 		/* TEST */
-		@SuppressWarnings("unchecked")
-		Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
-		while (iter.hasNext()) {
-			CompilationUnit cu = iter.next();
-			if (cu.fromSource()) {
-				
-				 /* Check for static semantic errors. */
-				// cu.errorCheck(errors, warnings);
-				cu.splErrorCheck(model, errors, warnings);
-			}
-		}		
+//		@SuppressWarnings("unchecked")
+//		Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
+//		while (iter.hasNext()) {
+//			CompilationUnit cu = iter.next();
+//			if (cu.fromSource()) {
+//				
+//				 /* Check for static semantic errors. */
+//				// cu.errorCheck(errors, warnings);
+//				cu.splErrorCheck(model, errors, warnings);
+//			}
+//		}
+		
+		ast.splErrorCheck(model, errors, warnings);
 		
 		/* print all TypeAccesses */
-		System.out.println(ASTNode.getTypeAccessesString());
+		// System.out.println(ASTNode.getTypeAccessesString());
 		
 		/* throw Semantic Errors */
 		if (!errors.isEmpty()) {
