@@ -1,1 +1,1 @@
-Base : FeatureI [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;
+Base : [FeatureI] [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;

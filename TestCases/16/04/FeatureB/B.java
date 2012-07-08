@@ -1,5 +1,5 @@
 public class B {
-    public static void foo() throws E {
+    public static void bar() throws E {
         throw new E();
     }
 }

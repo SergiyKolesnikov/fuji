@@ -24,6 +24,7 @@ model-ok: Base : FeatureA | FeatureB :: _Base ;
           
 03: FeatureB2 implementiert die gleichen Typen wie FeatureB.
 (2 moegliche/optionale Ziele fuer Feldzugriff, Methodenzugriff, Typzugriff)
+(kann auf beliebig viele moegliche/optionale Ziele erweitert werden)
 model:    Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
 model-ok: Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
           %%

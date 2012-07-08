@@ -1,7 +1,9 @@
 public class A {
-    try {
-        B.foo();
-    } catch(E e) {
-        // handle exception
-    }
+	public static void foo() {
+		try {
+			B.bar();
+		} catch (E e) {
+			// handle exception
+		}
+	}
 }
