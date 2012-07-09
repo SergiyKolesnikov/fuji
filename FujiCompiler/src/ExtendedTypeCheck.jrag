@@ -138,11 +138,7 @@ aspect ExtendedTypeCheck {
 						addSplErrors(i, toFeatureIDs.iterator().next(), "den Typ", td, true);
 				    /* more than one implementation */
 					} else if(toFeatureIDs.size() > 1) {
-						HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-						for(int toFeatureID : toFeatureIDs) {
-							mapDecls.put(toFeatureID, td);
-						}
-						addSplErrors(i, toFeatureIDs, "den Typ", mapDecls, true);
+						addSplErrors(i, toFeatureIDs, "den Typ", td, true);
 					}
 				}
 			}
@@ -287,12 +283,6 @@ aspect ExtendedTypeCheck {
 
 				/* Ermittle Abhaengigkeiten aus dem FM */
 				FeatureDependencies dep = new FeatureDependencies(model);	 
-
-				/* Ausgabe nur der ersten Zeile der Zielstruktur */
-				String declFirstLine = 
-						( decl.indexOf("\n") == -1 ? 
-								decl : decl.substring(0, decl.indexOf("\n")) 
-								       + " ... }");
 		
 				/* kummulative Ausgabe der Quelldateinamen und Zeilennummern 
 				 * für einen Typzugriff aus einem Feature */
@@ -303,6 +293,7 @@ aspect ExtendedTypeCheck {
 						sbtei.append(s);
 						sbtei.append("\n");
 					}
+					sbtei.setLength(sbtei.length() - 1);
 				}
 
 				/* fromFeature und toFeature koennen nicht beide gleichzeitig
@@ -312,15 +303,15 @@ aspect ExtendedTypeCheck {
 				if(never(dep, fromFeature, toFeature)) {
 					StringBuilder sb = new StringBuilder();
 					sb.append("never-Beziehung:");
-					sb.append("\n    Feature ");
+					sb.append("\nFeature ");
 					sb.append(fromFeature.getName());
 					sb.append(" greift auf ");
 					sb.append(targetStructure);
-					sb.append("\n      ");
-					sb.append(declFirstLine);
-					sb.append("\n    des Features ");
+					sb.append("\n  ");
+					sb.append(decl);
+					sb.append("\ndes Features ");
 					sb.append(toFeature.getName());
-					sb.append(" zu.\n    ");
+					sb.append(" zu.\n");
 					sb.append(fromFeature.getName());
 					sb.append(" und ");
 					sb.append(toFeature.getName());
@@ -340,13 +331,13 @@ aspect ExtendedTypeCheck {
 				if(maybe(dep, fromFeature, toFeature)) {				
 					StringBuilder sb = new StringBuilder();
 					sb.append("maybe-Beziehung:");
-					sb.append("\n    Feature ");
+					sb.append("\nFeature ");
 					sb.append(fromFeature.getName());
 					sb.append(" greift auf ");
 					sb.append(targetStructure);
-					sb.append("\n      ");
-					sb.append(declFirstLine);
-					sb.append("\n    des Features ");
+					sb.append("\n  ");
+					sb.append(decl);
+					sb.append("\ndes Features ");
 					sb.append(toFeature.getName());
 					sb.append(" zu.\n");
 					sb.append("Das Ziel-Feature ist aber nicht in jeder ");
@@ -364,7 +355,7 @@ aspect ExtendedTypeCheck {
 	/* Ausgabe von Fehlern bei mehreren Zielfeatures */
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashSet<Integer> toFeatureIDs, String targetStructure, 
-			HashMap<Integer, String> mapDecls, boolean isTypeAccess) {
+			String decl, boolean isTypeAccess) {
 		FeatureModel model = getFeatureModel();
 
 		/* get features */
@@ -386,11 +377,12 @@ aspect ExtendedTypeCheck {
 
 		StringBuilder sbtei = new StringBuilder();
 		if(isTypeAccess) {
-			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(mapDecls.get(mapDecls.keySet().iterator().next()));
+			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
 			for(String s : tei.getAccessSourceInfo()) {
 				sbtei.append(s);
 				sbtei.append("\n");
 			}
+			sbtei.setLength(sbtei.length() - 1);
 		}
 
 		try {
@@ -403,15 +395,15 @@ aspect ExtendedTypeCheck {
 						+ "in der alle diese Ziele nicht vorhanden sind):\n");					
 				sb.append(fromFeature.getName());
 				sb.append(" zielt auf ");
-				sb.append(targetStructure);
-				sb.append(" folgender Features:\n");
+				sb.append(targetStructure + ":\n");
+				sb.append("  " + decl + "\n");
+				sb.append("folgender Features:\t");
 				for (int toFeatureID : toFeatureIDs) {
 					sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
-					sb.append(":\t");
-					String decl = mapDecls.get(toFeatureID);
-					sb.append(decl);
-					sb.append("\n");
+					sb.append(", ");
 				}
+				sb.setLength(sb.length() - 2);
+				sb.append("\n");
 				if(isTypeAccess) {
 					typeError(sbtei.toString(), sb.toString());
 				} else {
@@ -428,39 +420,34 @@ aspect ExtendedTypeCheck {
 	}
 
 	public void VarAccess.splTypeCheck() {
-		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {			
 			int fromFeatureID = featureID();
 			SimpleSet decls = decls();
+			String decl = decl().toString();
+			String declFirstLine = ( decl.indexOf("\n") == -1
+					? decl
+							: decl.substring(0, decl.indexOf("\n")) + " ... }" );
 			/* nur ein Zielfeature */
 			if (decls.size() == 1) {
 				BodyDecl var = (BodyDecl) decl();
 				int toFeatureID = var.featureID();
 				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
-						var.toString(), false);
+						declFirstLine, false);
 			/* mehrere Zielfeatures */
 			} else if(decls.size() > 1) {
 				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
 				for(Iterator iter = decls.iterator(); iter.hasNext(); ){
 					BodyDecl var = (BodyDecl) iter.next();
 					toFeatureIDs.add(var.featureID());
-					String decl = var.toString();
-					String declFirstLine = ( decl.indexOf("\n") == -1
-							? decl 
-									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					mapDecls.put(var.featureID(), declFirstLine);
 				}
 				addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", 
-						mapDecls, false);
+						declFirstLine, false);
 			}
 		}    
 	}
 
 	public void MethodAccess.splTypeCheck() {
-		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-
 		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
 		/* ermittle im Typ alle Methoden mit gleicher Signatur */
@@ -471,27 +458,25 @@ aspect ExtendedTypeCheck {
 				}
 			}
 		}
+		String decl = decl().toString();
+		String declFirstLine = ( decl.indexOf("\n") == -1
+				? decl 
+						: decl.substring(0, decl.indexOf("\n")) + " ... }" );
 		/* nur eine Methode mit dieser Signatur */
 		if (methodDecls.size() == 1) {
 			MethodDecl var = (MethodDecl) decl();
 			int toFeatureID = var.featureID();
 			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
-					var.toString(), false);
+					declFirstLine, false);
 		/* mehrere Methoden mit dieser Signatur */
 		} else if(methodDecls.size() > 1) {
-
 			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
 			for(Iterator<MethodDecl> iter = methodDecls.iterator(); iter.hasNext(); ){
 				MethodDecl var = iter.next();
 				toFeatureIDs.add(var.featureID());
-				String decl = var.toString();
-				String declFirstLine = ( decl.indexOf("\n") == -1
-						? decl 
-								: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-				mapDecls.put(var.featureID(), declFirstLine);
 			}
 			addSplErrors(fromFeatureID, toFeatureIDs, "die Methode", 
-					mapDecls, false);
+					declFirstLine, false);
 		} 	
 	}
 	
