@@ -98,6 +98,7 @@ public class TestSuite {
 		/* throw Semantic Errors */
 		if (!errors.isEmpty()) {
 			StringBuilder message = new StringBuilder();
+			message.append("\n");
 			for (Object o : errors) {
 				message.append(o + "\n");
 			}
@@ -107,6 +108,7 @@ public class TestSuite {
 		/* throw Compiler Warnings */
 		if (!warnings.isEmpty()) {
 			StringBuilder message = new StringBuilder();
+			message.append("\n");
 			for (Object o : warnings) {
 				message.append(o + "\n");
 			}
