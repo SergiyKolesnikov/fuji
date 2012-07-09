@@ -49,7 +49,7 @@ import fuji.TypeErrorInfo;
 
 aspect ExtendedTypeCheck {
 
-	/* hold the feature model */
+	/* the feature model */
 	protected static FeatureModel ASTNode.featureModel;
 
 	public FeatureModel ASTNode.getFeatureModel() {
@@ -60,25 +60,31 @@ aspect ExtendedTypeCheck {
 		featureModel = model;
 	}
 	
-	/* collect TypeAccesses in Map 
-	 * format: map: fromFeatureID, map: name of needed type and list 
-	 * of toFeatureIDs, that implement this type */
+	/* collect all TypeAccesses in Map 
+	 * format: map: fromFeatureID, map: name of needed type and TypeErrorInfo
+	 * (list of toFeatureIDs, that implement this type and source file name
+	 * and line number of type accesses of this type) */
 	protected static HashMap<Integer, HashMap<String, TypeErrorInfo>> 
 	    ASTNode.typeAccesses = 
 	    new HashMap<Integer, HashMap<String, TypeErrorInfo>>();
 	
+	/* for type accesses */
 	protected ArrayList Program.errors = new ArrayList();
 	
+	/* for type accesses */
 	protected ArrayList Program.warnings = new ArrayList();
 	
+	/* report a type error */
 	public void ASTNode.typeError(String accessSourceInfo, String msg) {
 		ASTNode node = this;
 		while(node != null && !(node instanceof Program))
 			node = node.getParent();
 		Program pr = (Program)node;
-			pr.errors.add(new Problem(accessSourceInfo, msg, Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
+			pr.errors.add(new Problem(accessSourceInfo, msg, 
+					Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
 	}
 	
+	/* line numbers included in fileName */
     public Problem.Problem(String fileName, String message, Severity severity, Kind kind) {
         this(fileName, message);
         this.kind = kind;
@@ -118,20 +124,20 @@ aspect ExtendedTypeCheck {
 		for (int i : typeAccesses.keySet()) {
 			Feature fromFeature = featureModel.getFeature(listFeatures
 					.get(i).getName());
-			/* needs types */
+			/* Feature needs types */
 			if (!(typeAccesses.get(i).isEmpty())) {			
-				HashMap<String, TypeErrorInfo> typeDeclFeatures = typeAccesses.get(i);
+				HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(i);
 							
-				/* list names of needed types ... */
-				for(String td : typeDeclFeatures.keySet()) {
-					Feature toFeature;
-					HashSet<Integer> toFeatureIDs = typeDeclFeatures.get(td).getToFeatureIDs();
+				/* list qualified names of needed types ... */
+				for(String td : typeNamesAndInfo.keySet()) {
+					/* list of IDs of features, that implement this type */
+					HashSet<Integer> toFeatureIDs = typeNamesAndInfo.get(td).getToFeatureIDs();
 					
 					/* only one implementation */
 					if(toFeatureIDs.size() == 1) {
 						addSplErrors(i, toFeatureIDs.iterator().next(), "den Typ", td, true);
-				    /* more than one implementation*/
-					} else {
+				    /* more than one implementation */
+					} else if(toFeatureIDs.size() > 1) {
 						HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
 						for(int toFeatureID : toFeatureIDs) {
 							mapDecls.put(toFeatureID, td);
@@ -177,14 +183,14 @@ aspect ExtendedTypeCheck {
 //					.get(i).getName());
 //			/* needs types */
 //			if (!(typeAccesses.get(i).isEmpty())) {			
-//				HashMap<String, ArrayList<Integer>> typeDeclFeatures = typeAccesses.get(i);
+//				HashMap<String, ArrayList<Integer>> typeNamesAndInfo = typeAccesses.get(i);
 //				/* list names of needed types ... */
-//				for(String td : typeDeclFeatures.keySet()) {
+//				for(String td : typeNamesAndInfo.keySet()) {
 //					sb.append(fromFeature.getName());
 //					sb.append("\t / \t" + td);
 //					sb.append("\t->\t[ ");
 //					Feature toFeature;
-//					ArrayList<Integer> toFeatureIDs = typeDeclFeatures.get(td);
+//					ArrayList<Integer> toFeatureIDs = typeNamesAndInfo.get(td);
 //					/* ... and the features, that implement this type */
 //					for (int j : toFeatureIDs) {
 //						toFeature = featureModel.getFeature(listFeatures.get(j).getName());
@@ -288,6 +294,8 @@ aspect ExtendedTypeCheck {
 								decl : decl.substring(0, decl.indexOf("\n")) 
 								       + " ... }");
 		
+				/* kummulative Ausgabe der Quelldateinamen und Zeilennummern 
+				 * fŸr einen Typzugriff aus einem Feature */
 				StringBuilder sbtei = new StringBuilder();
 				if(isTypeAccess) {
 					TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
@@ -298,7 +306,8 @@ aspect ExtendedTypeCheck {
 				}
 
 				/* fromFeature und toFeature koennen nicht beide gleichzeitig
-				 * in einer validen Auswahl vorkommen -> Fehler
+				 * in einer validen Auswahl vorkommen (never-Beziehung)
+				 * -> Fehler
 				 */
 				if(never(dep, fromFeature, toFeature)) {
 					StringBuilder sb = new StringBuilder();
@@ -326,7 +335,7 @@ aspect ExtendedTypeCheck {
 				}
 
 				/* toFeature kann, muss aber nicht in einer validen Auswahl
-				 * vorkommen -> moegliche Fehlerquelle
+				 * vorkommen (maybe-Beziehung) -> moegliche Fehlerquelle
 				 */
 				if(maybe(dep, fromFeature, toFeature)) {				
 					StringBuilder sb = new StringBuilder();
@@ -374,12 +383,10 @@ aspect ExtendedTypeCheck {
 			toFeatureSet.add(toFeature);
 			toFeaturesList.add(toFeatureSet);
 		}
-		
-		int toFID = mapDecls.keySet().iterator().next();
-		
+
 		StringBuilder sbtei = new StringBuilder();
 		if(isTypeAccess) {
-			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(mapDecls.get(toFID));
+			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(mapDecls.get(mapDecls.keySet().iterator().next()));
 			for(String s : tei.getAccessSourceInfo()) {
 				sbtei.append(s);
 				sbtei.append("\n");
@@ -434,7 +441,7 @@ aspect ExtendedTypeCheck {
 				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
 						var.toString(), false);
 			/* mehrere Zielfeatures */
-			} else {
+			} else if(decls.size() > 1) {
 				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
 				for(Iterator iter = decls.iterator(); iter.hasNext(); ){
 					BodyDecl var = (BodyDecl) iter.next();
@@ -459,7 +466,7 @@ aspect ExtendedTypeCheck {
 		/* ermittle im Typ alle Methoden mit gleicher Signatur */
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof MethodDecl) {
-				if(((MethodDecl) bd).signature().equals(decl().signature())) {
+				if (((MethodDecl) bd).signature().equals(decl().signature())) {
 					methodDecls.add((MethodDecl) bd);
 				}
 			}
@@ -471,7 +478,8 @@ aspect ExtendedTypeCheck {
 			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
 					var.toString(), false);
 		/* mehrere Methoden mit dieser Signatur */
-		} else {
+		} else if(methodDecls.size() > 1) {
+
 			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
 			for(Iterator<MethodDecl> iter = methodDecls.iterator(); iter.hasNext(); ){
 				MethodDecl var = iter.next();
@@ -484,7 +492,7 @@ aspect ExtendedTypeCheck {
 			}
 			addSplErrors(fromFeatureID, toFeatureIDs, "die Methode", 
 					mapDecls, false);
-		}
+		} 	
 	}
 	
 	public void TypeAccess.splTypeCheck() {		
@@ -501,9 +509,9 @@ aspect ExtendedTypeCheck {
 		 * source file(s), line number(s) */
 		int fromFeatureID = featureID();
 		
-		HashMap<String, TypeErrorInfo> typeDeclFeatures = typeAccesses.get(fromFeatureID);
-		if(typeDeclFeatures == null) {
-			typeDeclFeatures = new HashMap<String, TypeErrorInfo>();
+		HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(fromFeatureID);
+		if(typeNamesAndInfo == null) {
+			typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
 		}
 		
 		String qualifiedName = ( decl().hostType().packageName() != "" 
@@ -512,7 +520,7 @@ aspect ExtendedTypeCheck {
 						+ "." 
 						+ decl().hostType().name();
 		
-		TypeErrorInfo tei = typeDeclFeatures.get(qualifiedName);
+		TypeErrorInfo tei = typeNamesAndInfo.get(qualifiedName);
 		if(tei == null) {
 			tei = new TypeErrorInfo(new HashSet<Integer>(), new HashSet<String>());
 		}
@@ -521,6 +529,7 @@ aspect ExtendedTypeCheck {
 
 		/* extends (?, weglassen): Vorhandensein von mehreren 
 		 * Default-Constructoren */
+		
 		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof ConstructorDecl) {
@@ -539,10 +548,10 @@ aspect ExtendedTypeCheck {
 		
 		tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
 
+		/* default-Typen nicht sammeln */
 		if (!(decl().hostType().featureID() == -1)) {
-
-			typeDeclFeatures.put(qualifiedName, tei);
+			typeNamesAndInfo.put(qualifiedName, tei);
 		}		
-		typeAccesses.put(fromFeatureID, typeDeclFeatures);
+		typeAccesses.put(fromFeatureID, typeNamesAndInfo);
 	}
 }
