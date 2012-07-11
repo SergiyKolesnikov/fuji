@@ -1,0 +1,53 @@
+08 - TypeAccess: implements
+------------------------
+
+Erklaerung:
+-----------
+
+FeatureA implementiert (implements) FeatureI.
+
+
+SubCases:
+---------
+
+01: FeatureI ist optional.
+model:    Base : FeatureA [FeatureI] :: _Base ;
+model-ok: Base : FeatureA [FeatureI] :: _Base ;
+          %%
+          FeatureA implies FeatureI ;
+
+02: FeatureA und FeatureI schlieszen sich gegenseitig aus.
+(durch zusaetzliches Constraint wird FeatureA getoetet.)
+model:    Base : FeatureA | FeatureI :: _Base ;
+model-ok: Base : FeatureA | FeatureI :: _Base ;
+          %%
+          FeatureA implies FeatureI ;
+
+03: FeatureI2 implementiert die gleichen Typen wie FeatureI.
+(2 moegliche/optionale Ziele fuer Typzugriff)
+model:    Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
+model-ok: Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
+          %%
+          not FeatureI iff FeatureI2 ;
+
+04: komplexes Beispiel:
+(FeatureA2 implementiert die gleichen Typen wie FeatureA.)
+
+        I;interface;foo()
+          ^         ^
+          |         |
+     implements implements
+          |         |
+          A         D
+          ^
+          |
+      ----^----
+      |       |
+   extends extends
+      |       |
+      B       C
+      
+model:    Base : FeatureI [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;
+model-ok: Base : FeatureI [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;
+          %%
+          not FeatureA iff FeatureA2 ;

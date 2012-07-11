@@ -1,0 +1,10 @@
+16 - TypeAccess:
+try, catch, Exceptions
+
+Erklaerung:
+
+SubCases:
+01
+02
+03
+04
