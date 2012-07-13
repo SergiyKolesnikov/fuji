@@ -160,45 +160,6 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
-//	/* DEBUG */
-//	public static String ASTNode.getTypeAccessesString() {
-//		/* get features */
-//		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-//		/* TODO: werden hierdurch ALLE benoetigten Features in der 
-//		 * richtigen REIHENFOLGE eingelesen? */
-//		listFeatures.addAll(featureModel.getConcreteFeatures());
-//		
-//		StringBuilder sb = new StringBuilder();
-//		
-//		sb.append("Feature (\"/\" = braucht) Typ" +
-//				"\t->\timplementiert in Feature(s)\n");
-//		
-//		/* for all fromFeatureIDs */
-//		for (int i : typeAccesses.keySet()) {
-//			Feature fromFeature = featureModel.getFeature(listFeatures
-//					.get(i).getName());
-//			/* needs types */
-//			if (!(typeAccesses.get(i).isEmpty())) {			
-//				HashMap<String, ArrayList<Integer>> typeNamesAndInfo = typeAccesses.get(i);
-//				/* list names of needed types ... */
-//				for(String td : typeNamesAndInfo.keySet()) {
-//					sb.append(fromFeature.getName());
-//					sb.append("\t / \t" + td);
-//					sb.append("\t->\t[ ");
-//					Feature toFeature;
-//					ArrayList<Integer> toFeatureIDs = typeNamesAndInfo.get(td);
-//					/* ... and the features, that implement this type */
-//					for (int j : toFeatureIDs) {
-//						toFeature = featureModel.getFeature(listFeatures.get(j).getName());
-//						sb.append(toFeature.getName() + ", ");
-//					}
-//					sb.append("]\n");
-//				}
-//			}
-//		}
-//		return sb.toString();
-//	}
-
 	public void Program.splErrorCheck(FeatureModel model, Collection collection) {
 		setFeatureModel(model);
 		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
@@ -375,6 +336,8 @@ aspect ExtendedTypeCheck {
 			toFeaturesList.add(toFeatureSet);
 		}
 
+		/* for TypeAccess: list all source files and line numbers,
+		 * where a TypeAccess to a specific type takes place */
 		StringBuilder sbtei = new StringBuilder();
 		if(isTypeAccess) {
 			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
@@ -485,8 +448,8 @@ aspect ExtendedTypeCheck {
 		 * Generics
 		 * Cast
 		 * Constructor
-		 * innere Klassen
-		 * Methodenredefinition, anonyme Methoden */
+		 * innere Klassen (4 Typen)
+		 */
 		
 		/* given for this TypeAccess: fromFeatureID, type name */
 
@@ -499,6 +462,7 @@ aspect ExtendedTypeCheck {
 			typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
 		}
 		
+		/* <package name (default: "(default package)")>.<type name> */
 		String qualifiedName = ( decl().hostType().packageName() != "" 
 				? decl().hostType().packageName() 
 						: "(default package)" ) 
@@ -511,10 +475,8 @@ aspect ExtendedTypeCheck {
 		}
 		
 		HashSet<Integer> toFeatureIDs = tei.getToFeatureIDs();
-
-		/* extends (?, weglassen): Vorhandensein von mehreren 
-		 * Default-Constructoren */
 		
+		/* find all default constructors of this type */
 		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof ConstructorDecl) {
@@ -522,15 +484,15 @@ aspect ExtendedTypeCheck {
 					constructorDecls.add((ConstructorDecl) bd);
 				}
 			}
-		}		
+		}
+		/* collect all featureIDs of features, that implement this type,
+		 * i.e. that have a default constructor for this type */
 		for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
 			ConstructorDecl var = (ConstructorDecl) iter.next();
 			toFeatureIDs.add(var.featureID());
 		}
-		/* /extends */
 		
-		/* implements (?, weglassen), Interface */
-		
+		/* remember source file and line number of type access */
 		tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
 
 		/* default-Typen nicht sammeln */
