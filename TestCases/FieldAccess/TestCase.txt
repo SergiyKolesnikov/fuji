@@ -1,4 +1,4 @@
-01 - FieldAccess:
+FieldAccess:
 -----------------
 
 Erklaerung:
@@ -24,7 +24,7 @@ model-ok: Base : FeatureA | FeatureB :: _Base ;
           FeatureA implies FeatureB ;
           
 03: FeatureB2 implementiert die gleichen Typen wie FeatureB.
-(2 moegliche/optionale Ziele fuer Feldzugriff, Typzugriff)
+(2 (oder mehr) optionale Ziele fuer Feldzugriff, Typzugriff)
 model:    Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
 model-ok: Base : FeatureA [FeatureB] [FeatureB2] :: _Base ;
           %%

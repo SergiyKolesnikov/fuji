@@ -1,0 +1,26 @@
+TypeAccess: inner classes: anonymous
+------------------------
+
+Erklaerung:
+-----------
+
+In FeatureA 
+
+SubCases:
+---------
+
+01: 
+model:    
+model-ok: 
+
+02: 
+model:    
+model-ok: 
+
+03: 
+model:    
+model-ok: 
+
+04: 
+model:    
+model-ok: 

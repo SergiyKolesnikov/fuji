@@ -1,4 +1,4 @@
-08 - TypeAccess: implements
+TypeAccess: implements
 ------------------------
 
 Erklaerung:
@@ -24,7 +24,7 @@ model-ok: Base : FeatureA | FeatureI :: _Base ;
           FeatureA implies FeatureI ;
 
 03: FeatureI2 implementiert die gleichen Typen wie FeatureI.
-(2 moegliche/optionale Ziele fuer Typzugriff)
+(2 (oder mehr) optionale Ziele fuer Typzugriff)
 model:    Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
 model-ok: Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
           %%

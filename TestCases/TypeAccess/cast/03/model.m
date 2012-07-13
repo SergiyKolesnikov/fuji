@@ -1,0 +1,1 @@
+Base : FeatureA [FeatureB] [FeatureB2] FeatureC :: _Base ;

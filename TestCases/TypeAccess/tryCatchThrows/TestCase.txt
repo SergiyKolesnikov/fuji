@@ -1,4 +1,4 @@
-16 - TypeAccess:
+TypeAccess:
 try, catch, Exceptions
 
 Erklaerung:
