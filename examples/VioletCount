@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd Violet
+java -Xmx3600m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic VioletComp.features
+#java -Xmx63000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic VioletComp.features

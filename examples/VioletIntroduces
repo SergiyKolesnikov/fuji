@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd Violet
+rm -rf classes 2>/dev/null
+java -Xmx512m -jar ../../FujiCompiler/build/fuji.jar -fopIntroduces VioletComp.features

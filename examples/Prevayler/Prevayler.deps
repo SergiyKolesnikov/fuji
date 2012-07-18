@@ -1,0 +1,123 @@
+X ALWAYS Y := If X is selected Y is selected in every valid configuration.
+X MAYBE Y   := If X is selected Y is selected in at least one but not all valid configurations. 
+X NEVER Y   := If X is selected Y cannot be selected in any valid configuration.
+
+Replication ALWAYS PrevaylerSPL
+Replication ALWAYS PrevaylerSPL
+Replication ALWAYS SPL
+Replication ALWAYS SPL
+Replication ALWAYS base
+Replication ALWAYS base
+Replication MAYBE Censor
+Replication MAYBE Censor
+Replication MAYBE GZip
+Replication MAYBE GZip
+Replication MAYBE Monitor
+Replication MAYBE Monitor
+Replication MAYBE Snapshot
+Replication MAYBE Snapshot
+
+PrevaylerSPL ALWAYS SPL
+PrevaylerSPL ALWAYS SPL
+PrevaylerSPL ALWAYS base
+PrevaylerSPL ALWAYS base
+PrevaylerSPL MAYBE Censor
+PrevaylerSPL MAYBE Censor
+PrevaylerSPL MAYBE GZip
+PrevaylerSPL MAYBE GZip
+PrevaylerSPL MAYBE Monitor
+PrevaylerSPL MAYBE Monitor
+PrevaylerSPL MAYBE Replication
+PrevaylerSPL MAYBE Replication
+PrevaylerSPL MAYBE Snapshot
+PrevaylerSPL MAYBE Snapshot
+
+Snapshot ALWAYS PrevaylerSPL
+Snapshot ALWAYS PrevaylerSPL
+Snapshot ALWAYS SPL
+Snapshot ALWAYS SPL
+Snapshot ALWAYS base
+Snapshot ALWAYS base
+Snapshot MAYBE Censor
+Snapshot MAYBE Censor
+Snapshot MAYBE GZip
+Snapshot MAYBE GZip
+Snapshot MAYBE Monitor
+Snapshot MAYBE Monitor
+Snapshot MAYBE Replication
+Snapshot MAYBE Replication
+
+SPL ALWAYS PrevaylerSPL
+SPL ALWAYS PrevaylerSPL
+SPL ALWAYS base
+SPL ALWAYS base
+SPL MAYBE Censor
+SPL MAYBE Censor
+SPL MAYBE GZip
+SPL MAYBE GZip
+SPL MAYBE Monitor
+SPL MAYBE Monitor
+SPL MAYBE Replication
+SPL MAYBE Replication
+SPL MAYBE Snapshot
+SPL MAYBE Snapshot
+
+base ALWAYS PrevaylerSPL
+base ALWAYS PrevaylerSPL
+base ALWAYS SPL
+base ALWAYS SPL
+base MAYBE Censor
+base MAYBE Censor
+base MAYBE GZip
+base MAYBE GZip
+base MAYBE Monitor
+base MAYBE Monitor
+base MAYBE Replication
+base MAYBE Replication
+base MAYBE Snapshot
+base MAYBE Snapshot
+
+GZip ALWAYS PrevaylerSPL
+GZip ALWAYS PrevaylerSPL
+GZip ALWAYS SPL
+GZip ALWAYS SPL
+GZip ALWAYS base
+GZip ALWAYS base
+GZip MAYBE Censor
+GZip MAYBE Censor
+GZip MAYBE Monitor
+GZip MAYBE Monitor
+GZip MAYBE Replication
+GZip MAYBE Replication
+GZip MAYBE Snapshot
+GZip MAYBE Snapshot
+
+Monitor ALWAYS PrevaylerSPL
+Monitor ALWAYS PrevaylerSPL
+Monitor ALWAYS SPL
+Monitor ALWAYS SPL
+Monitor ALWAYS base
+Monitor ALWAYS base
+Monitor MAYBE Censor
+Monitor MAYBE Censor
+Monitor MAYBE GZip
+Monitor MAYBE GZip
+Monitor MAYBE Replication
+Monitor MAYBE Replication
+Monitor MAYBE Snapshot
+Monitor MAYBE Snapshot
+
+Censor ALWAYS PrevaylerSPL
+Censor ALWAYS PrevaylerSPL
+Censor ALWAYS SPL
+Censor ALWAYS SPL
+Censor ALWAYS base
+Censor ALWAYS base
+Censor MAYBE GZip
+Censor MAYBE GZip
+Censor MAYBE Monitor
+Censor MAYBE Monitor
+Censor MAYBE Replication
+Censor MAYBE Replication
+Censor MAYBE Snapshot
+Censor MAYBE Snapshot

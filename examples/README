@@ -1,0 +1,7 @@
+We have applied Fuji to ten non-trivial feature-oriented programs.
+This directory consists the sources of all programs as well as data
+which we collected about the member accesses in the programs. For each
+program there is a .csv file containing the data and a script that
+invokes Fuji such that the data are collect once more.
+
+lib - contains jars used by the example SPLs.

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd ZipMe/classes
+java ZipMETest

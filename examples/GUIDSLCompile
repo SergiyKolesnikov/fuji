@@ -1,0 +1,6 @@
+#!/bin/sh
+CL=classes
+
+cd GUIDSL
+/bin/rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -classpath '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$CL" GUIDSLComp.features

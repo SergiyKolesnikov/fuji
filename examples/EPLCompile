@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd EPL
+/bin/rm -rf classes
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d classes EPLComp.features

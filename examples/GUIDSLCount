@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd GUIDSL
+java -Xmx63000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic GUIDSLComp.features
+#java -Xmx1024m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic GUIDSLComp.features

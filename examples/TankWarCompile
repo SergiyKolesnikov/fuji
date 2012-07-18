@@ -1,0 +1,8 @@
+#!/bin/sh
+
+CL=classes
+
+cd TankWar
+/bin/rm -rf "$CL"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" TankWarComp.features \
+	&& cp Resources/* "$CL"

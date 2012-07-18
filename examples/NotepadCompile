@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd Notepad
+/bin/rm -rf classes
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d classes NotepadComp.features \
+	&& /bin/cp -rf notepad_resources/* classes

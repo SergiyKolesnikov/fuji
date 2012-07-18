@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd Notepad
+java -Xmx3600m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic NotepadComp.features
+#java -Xmx63000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic NotepadComp.features
