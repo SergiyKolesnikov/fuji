@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd TankWar
-java -jar ../../FujiCompiler/build/fuji.jar -fopIntroduces TankWarAll.features

@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-cd GPL
-java -Xmx3600m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic GPLComp.features
-#java -Xmx1024m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic GPLComp.features

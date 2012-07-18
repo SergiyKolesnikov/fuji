@@ -1,8 +1,0 @@
-#!/bin/sh
-
-cd Prevayler
-/bin/rm -rf classes
-mkdir classes
-javac -cp ../lib/cide.jar:../lib/skaringa.jar:../lib/log4j.jar:../lib/xstream.jar:../lib/javamatch.jar \
-        -d classes \
-        `find sources -name '*.java'`

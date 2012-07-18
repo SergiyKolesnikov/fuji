@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for I in `ls -1 *Compile`; do
-  echo ===$I===
-  time --format 'user: %U, system: %S, wall: %E, CPU: %P, memory: %MKB' ./$I
-done

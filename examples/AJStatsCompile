@@ -1,6 +1,0 @@
-#!/bin/sh
-CL=classes
-
-cd AJStats
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" AJStatsComp.features

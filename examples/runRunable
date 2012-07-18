@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for I in `ls -1 *Run`; do
-  echo ===$I===
-  ./$I
-done

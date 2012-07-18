@@ -1,6 +1,0 @@
-#!/bin/sh
-CL=classes
-
-cd BerkeleyDB-fuji-compilable
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" -cp ../lib/cide.jar BerkeleyDBComp.features

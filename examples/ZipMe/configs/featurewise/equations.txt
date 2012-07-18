@@ -1,6 +1,0 @@
-Base,Compress
-Base,Compress,Extract
-Base,CRC,GZIP,Compress,DerivativeGZIPCRC,DerivativeCompressCRC,DerivativeCompressGZIP,DerivativeCompressGZIPCRC
-Base,CRC,Compress,DerivativeCompressCRC
-Base,ArchiveCheck,Compress
-Base,Adler32Checksum,Compress,DerivativeCompressAdler32Checksum

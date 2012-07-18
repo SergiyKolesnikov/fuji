@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd PKJab
-java -Xmx3600m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic PKJabComp.features
-#java -Xmx1024m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic PKJabComp.features

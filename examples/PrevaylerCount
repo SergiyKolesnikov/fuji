@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd Prevayler
-java -Xmx36000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic PrevaylerComp.features
-#java -Xmx63000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic PrevaylerComp.features

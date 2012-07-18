@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd EPL
-java -Xmx3600m -Ddebug -jar ../../FujiCompiler/build/fuji.jar -fopStatistic EPLComp.features
-#java -Xmx63000m -jar ../../FujiCompiler/build/fuji.jar -fopStatistic EPLComp.features

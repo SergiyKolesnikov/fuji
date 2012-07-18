@@ -1,3 +1,0 @@
-#!/bin/sh
-
-java -cp ./PKJab/classes/ de.uni_passau.fim.pkjab.view.PKjab

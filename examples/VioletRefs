@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd Violet
-rm -rf classes 2>/dev/null
-java -Xmx1024m -jar ../../FujiCompiler/build/fuji.jar -fopRefs VioletComp.features
