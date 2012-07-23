@@ -135,10 +135,10 @@ aspect ExtendedTypeCheck {
 					
 					/* only one implementation */
 					if(toFeatureIDs.size() == 1) {
-						addSplErrors(i, toFeatureIDs.iterator().next(), "den Typ", td, true);
+						addSplErrors(i, toFeatureIDs.iterator().next(), "auf den Typ", td, true);
 				    /* more than one implementation */
 					} else if(toFeatureIDs.size() > 1) {
-						addSplErrors(i, toFeatureIDs, "den Typ", td, true);
+						addSplErrors(i, toFeatureIDs, "auf den Typ", td, true);
 					}
 				}
 			}
@@ -266,7 +266,7 @@ aspect ExtendedTypeCheck {
 					sb.append("never-Beziehung:");
 					sb.append("\nFeature ");
 					sb.append(fromFeature.getName());
-					sb.append(" greift auf ");
+					sb.append(" greift ");
 					sb.append(targetStructure);
 					sb.append("\n  ");
 					sb.append(decl);
@@ -294,7 +294,7 @@ aspect ExtendedTypeCheck {
 					sb.append("maybe-Beziehung:");
 					sb.append("\nFeature ");
 					sb.append(fromFeature.getName());
-					sb.append(" greift auf ");
+					sb.append(" greift ");
 					sb.append(targetStructure);
 					sb.append("\n  ");
 					sb.append(decl);
@@ -357,8 +357,8 @@ aspect ExtendedTypeCheck {
 				sb.append("(es kann eine valide Auswahl geben, "
 						+ "in der alle diese Ziele nicht vorhanden sind):\n");					
 				sb.append(fromFeature.getName());
-				sb.append(" zielt auf ");
-				sb.append(targetStructure + ":\n");
+				sb.append(" zielt ");
+				sb.append(targetStructure + "\n");
 				sb.append("  " + decl + "\n");
 				sb.append("folgender Features:\t");
 				for (int toFeatureID : toFeatureIDs) {
@@ -395,7 +395,7 @@ aspect ExtendedTypeCheck {
 			if (decls.size() == 1) {
 				BodyDecl var = (BodyDecl) decl();
 				int toFeatureID = var.featureID();
-				addSplErrors(fromFeatureID, toFeatureID, "das Feld", 
+				addSplErrors(fromFeatureID, toFeatureID, " auf das Feld", 
 						declFirstLine, false);
 			/* mehrere Zielfeatures */
 			} else if(decls.size() > 1) {
@@ -404,7 +404,7 @@ aspect ExtendedTypeCheck {
 					BodyDecl var = (BodyDecl) iter.next();
 					toFeatureIDs.add(var.featureID());
 				}
-				addSplErrors(fromFeatureID, toFeatureIDs, "das Feld", 
+				addSplErrors(fromFeatureID, toFeatureIDs, "auf das Feld", 
 						declFirstLine, false);
 			}
 		}    
@@ -413,34 +413,90 @@ aspect ExtendedTypeCheck {
 	public void MethodAccess.splTypeCheck() {
 		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
-		/* ermittle im Typ alle Methoden mit gleicher Signatur */
-		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
-			if (bd instanceof MethodDecl) {
-				if (((MethodDecl) bd).signature().equals(decl().signature())) {
-					methodDecls.add((MethodDecl) bd);
+
+		/*
+		 * original-Check: Teste, ob eine Methode "original" heiszt, dann
+		 * sollte in diesem Typ (in diesem oder einem anderem Feature) eine
+		 * Methode mit gleicher Signatur wie die Aufrufumgebung existieren
+		 */
+
+		/*
+		 * Methodenaufruf original gefunden, in einem anderen Feature muss im
+		 * gleichen Typ eine Methode mit gleicher Signatur wir die Methode des
+		 * Aufrufkontexts enthalten sein und das Feature laut Feature-Modell
+		 * verfuegbar sein
+		 */
+		if (name().equals("original")) {
+			String context = ((MethodDecl) enclosingBodyDecl()).signature();
+			/* ermittle im Typ alle Methoden mit gleicher Signatur */
+			for (BodyDecl bd : hostType().getBodyDecls()) {
+				if (bd instanceof MethodDecl) {
+					MethodDecl md = (MethodDecl) bd;
+					if (md.signature().equals(context)
+							&& (md.featureID() != fromFeatureID)) {
+						methodDecls.add(md);
+					}
 				}
 			}
-		}
-		String decl = decl().toString();
-		String declFirstLine = ( decl.indexOf("\n") == -1
-				? decl 
-						: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-		/* nur eine Methode mit dieser Signatur */
-		if (methodDecls.size() == 1) {
-			MethodDecl var = (MethodDecl) decl();
-			int toFeatureID = var.featureID();
-			addSplErrors(fromFeatureID, toFeatureID, "die Methode", 
-					declFirstLine, false);
-		/* mehrere Methoden mit dieser Signatur */
-		} else if(methodDecls.size() > 1) {
-			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-			for(Iterator<MethodDecl> iter = methodDecls.iterator(); iter.hasNext(); ){
-				MethodDecl var = iter.next();
-				toFeatureIDs.add(var.featureID());
+			StringBuffer s = new StringBuffer();
+			s.append("mittels des original-Aufrufs\n  ");
+			s.append(name());
+			s.append("(");
+			for(int i = 0; i < getNumArg(); i++) {
+				if(i != 0)
+					s.append(", ");
+				s.append(getArg(i).type().typeName());
 			}
-			addSplErrors(fromFeatureID, toFeatureIDs, "die Methode", 
-					declFirstLine, false);
-		} 	
+			s.append(")");
+			s.append(" in der Methode " + context + " des Typs " + methodHost());
+			/* nur eine Methode mit dieser Signatur */
+			if (methodDecls.size() == 1) {
+				MethodDecl var = methodDecls.get(0);
+				int toFeatureID = var.featureID();
+				addSplErrors(fromFeatureID, toFeatureID, s.toString(),
+						"auf die Methode " + context, false);
+				/* mehrere Methoden mit dieser Signatur */
+			} else if (methodDecls.size() > 1) {
+				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+				for (Iterator<MethodDecl> iter = methodDecls.iterator(); iter
+						.hasNext();) {
+					MethodDecl var = iter.next();
+					toFeatureIDs.add(var.featureID());
+				}
+				addSplErrors(fromFeatureID, toFeatureIDs, s.toString(),
+						"auf die Methode " + context, false);
+			}
+		} else {
+			/* ermittle im Typ alle Methoden mit gleicher Signatur */
+			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+				if (bd instanceof MethodDecl) {
+					if (((MethodDecl) bd).signature()
+							.equals(decl().signature())) {
+						methodDecls.add((MethodDecl) bd);
+					}
+				}
+			}
+			String decl = decl().toString();
+			String declFirstLine = (decl.indexOf("\n") == -1 ? decl : decl
+					.substring(0, decl.indexOf("\n")) + " ... }");
+			/* nur eine Methode mit dieser Signatur */
+			if (methodDecls.size() == 1) {
+				MethodDecl var = (MethodDecl) decl();
+				int toFeatureID = var.featureID();
+				addSplErrors(fromFeatureID, toFeatureID, "auf die Methode",
+						declFirstLine, false);
+				/* mehrere Methoden mit dieser Signatur */
+			} else if (methodDecls.size() > 1) {
+				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+				for (Iterator<MethodDecl> iter = methodDecls.iterator(); iter
+						.hasNext();) {
+					MethodDecl var = iter.next();
+					toFeatureIDs.add(var.featureID());
+				}
+				addSplErrors(fromFeatureID, toFeatureIDs, "auf die Methode",
+						declFirstLine, false);
+			}
+		}
 	}
 	
 	public void TypeAccess.splTypeCheck() {		
