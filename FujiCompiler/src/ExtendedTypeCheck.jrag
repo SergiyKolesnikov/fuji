@@ -138,7 +138,11 @@ aspect ExtendedTypeCheck {
 						addSplErrors(i, toFeatureIDs.iterator().next(), "auf den Typ", td, true);
 				    /* more than one implementation */
 					} else if(toFeatureIDs.size() > 1) {
-						addSplErrors(i, toFeatureIDs, "auf den Typ", td, true);
+						HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
+						for(int toFeatureID : toFeatureIDs) {
+							mapDecls.put(toFeatureID, td);
+						}
+						addSplErrors(i, toFeatureIDs, "auf den Typ", mapDecls, true);
 					}
 				}
 			}
@@ -316,7 +320,7 @@ aspect ExtendedTypeCheck {
 	/* Ausgabe von Fehlern bei mehreren Zielfeatures */
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashSet<Integer> toFeatureIDs, String targetStructure, 
-			String decl, boolean isTypeAccess) {
+			HashMap<Integer, String> mapDecls, boolean isTypeAccess) {
 		FeatureModel model = getFeatureModel();
 
 		/* get features */
@@ -340,7 +344,7 @@ aspect ExtendedTypeCheck {
 		 * where a TypeAccess to a specific type takes place */
 		StringBuilder sbtei = new StringBuilder();
 		if(isTypeAccess) {
-			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
+			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(mapDecls.get(mapDecls.keySet().iterator().next()));
 			for(String s : tei.getAccessSourceInfo()) {
 				sbtei.append(s);
 				sbtei.append("\n");
@@ -355,18 +359,19 @@ aspect ExtendedTypeCheck {
 				sb.append(toFeatureIDs.size());
 				sb.append(" optionale Ziele ");
 				sb.append("(es kann eine valide Auswahl geben, "
-						+ "in der alle diese Ziele nicht vorhanden sind):\n");					
+						+ "in der alle diese Ziele nicht vorhanden sind):\n");
+				sb.append("Feature ");
 				sb.append(fromFeature.getName());
 				sb.append(" zielt ");
-				sb.append(targetStructure + "\n");
-				sb.append("  " + decl + "\n");
-				sb.append("folgender Features:\t");
+				sb.append(targetStructure);
+				sb.append(" folgender Features:\n");
 				for (int toFeatureID : toFeatureIDs) {
 					sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
-					sb.append(", ");
+					sb.append(":\t");
+					String decl = mapDecls.get(toFeatureID);
+					sb.append(decl);
+					sb.append("\n");
 				}
-				sb.setLength(sb.length() - 2);
-				sb.append("\n");
 				if(isTypeAccess) {
 					typeError(sbtei.toString(), sb.toString());
 				} else {
@@ -383,6 +388,8 @@ aspect ExtendedTypeCheck {
 	}
 
 	public void VarAccess.splTypeCheck() {
+		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
+
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {			
 			int fromFeatureID = featureID();
@@ -395,7 +402,7 @@ aspect ExtendedTypeCheck {
 			if (decls.size() == 1) {
 				BodyDecl var = (BodyDecl) decl();
 				int toFeatureID = var.featureID();
-				addSplErrors(fromFeatureID, toFeatureID, " auf das Feld", 
+				addSplErrors(fromFeatureID, toFeatureID, "auf das Feld", 
 						declFirstLine, false);
 			/* mehrere Zielfeatures */
 			} else if(decls.size() > 1) {
@@ -403,14 +410,21 @@ aspect ExtendedTypeCheck {
 				for(Iterator iter = decls.iterator(); iter.hasNext(); ){
 					BodyDecl var = (BodyDecl) iter.next();
 					toFeatureIDs.add(var.featureID());
+					decl = var.toString();
+					declFirstLine = ( decl.indexOf("\n") == -1
+							? decl 
+									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
+					mapDecls.put(var.featureID(), declFirstLine);
 				}
 				addSplErrors(fromFeatureID, toFeatureIDs, "auf das Feld", 
-						declFirstLine, false);
+						mapDecls, false);
 			}
 		}    
 	}
 
 	public void MethodAccess.splTypeCheck() {
+		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
+
 		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
 
@@ -449,12 +463,13 @@ aspect ExtendedTypeCheck {
 			}
 			s.append(")");
 			s.append(" in der Methode " + context + " des Typs " + methodHost());
+			s.append(" auf die Methode");
 			/* nur eine Methode mit dieser Signatur */
 			if (methodDecls.size() == 1) {
 				MethodDecl var = methodDecls.get(0);
 				int toFeatureID = var.featureID();
 				addSplErrors(fromFeatureID, toFeatureID, s.toString(),
-						"auf die Methode " + context, false);
+						context, false);
 				/* mehrere Methoden mit dieser Signatur */
 			} else if (methodDecls.size() > 1) {
 				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
@@ -462,9 +477,16 @@ aspect ExtendedTypeCheck {
 						.hasNext();) {
 					MethodDecl var = iter.next();
 					toFeatureIDs.add(var.featureID());
+					String decl = var.toString();
+				    String declFirstLine = ( decl.indexOf("\n") == -1
+						? decl 
+								: decl.substring(0, decl.indexOf("\n")) + " ... }" );
+				    mapDecls.put(var.featureID(), declFirstLine);
 				}
+//				addSplErrors(fromFeatureID, toFeatureIDs, s.toString(),
+//						"auf die Methode " + context, false);
 				addSplErrors(fromFeatureID, toFeatureIDs, s.toString(),
-						"auf die Methode " + context, false);
+						mapDecls, false);
 			}
 		} else {
 			/* ermittle im Typ alle Methoden mit gleicher Signatur */
@@ -492,9 +514,14 @@ aspect ExtendedTypeCheck {
 						.hasNext();) {
 					MethodDecl var = iter.next();
 					toFeatureIDs.add(var.featureID());
+					decl = var.toString();
+				    declFirstLine = ( decl.indexOf("\n") == -1
+						? decl 
+								: decl.substring(0, decl.indexOf("\n")) + " ... }" );
+				    mapDecls.put(var.featureID(), declFirstLine);
 				}
-				addSplErrors(fromFeatureID, toFeatureIDs, "auf die Methode",
-						declFirstLine, false);
+				addSplErrors(fromFeatureID, toFeatureIDs, "auf die Methode", 
+					mapDecls, false);
 			}
 		}
 	}
