@@ -427,7 +427,7 @@ aspect ExtendedTypeCheck {
 
 		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
-
+		
 		/*
 		 * original-Check: Teste, ob eine Methode "original" heiszt, dann
 		 * sollte in diesem Typ (in diesem oder einem anderem Feature) eine
@@ -526,20 +526,13 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
-	public void TypeAccess.splTypeCheck() {		
-		/* try, catch, throws
-		 * Generics
-		 * Cast
-		 * Constructor
-		 * innere Klassen (4 Typen)
-		 */
-		
+	public void TypeAccess.splTypeCheck() {				
 		/* given for this TypeAccess: fromFeatureID, type name */
-
 		/* collect all TypeAccesses: source feature, type, target feature(s),
 		 * source file(s), line number(s) */
-		int fromFeatureID = featureID();
 		
+		int fromFeatureID = featureID();
+
 		HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(fromFeatureID);
 		if(typeNamesAndInfo == null) {
 			typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
@@ -559,17 +552,18 @@ aspect ExtendedTypeCheck {
 		
 		HashSet<Integer> toFeatureIDs = tei.getToFeatureIDs();
 		
-		/* find all default constructors of this type */
+		/* find all constructors of this type to get sure that the type
+		 * is reachable, but this is not enough: also get sure that
+		 * the right constructor is reachable 
+		 * --> ClassInstanceExpr.splTypeCheck() */
 		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
 		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof ConstructorDecl) {
-				if (((ConstructorDecl) bd).signature().equals(decl().hostType().name() + "()")) {
 					constructorDecls.add((ConstructorDecl) bd);
-				}
 			}
 		}
 		/* collect all featureIDs of features, that implement this type,
-		 * i.e. that have a default constructor for this type */
+		 * i.e. that have a constructor for this type */
 		for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
 			ConstructorDecl var = (ConstructorDecl) iter.next();
 			toFeatureIDs.add(var.featureID());
@@ -583,5 +577,49 @@ aspect ExtendedTypeCheck {
 			typeNamesAndInfo.put(qualifiedName, tei);
 		}		
 		typeAccesses.put(fromFeatureID, typeNamesAndInfo);
+	}
+	
+	public void ClassInstanceExpr.splTypeCheck() {		
+		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
+
+		int fromFeatureID = featureID();
+		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
+
+		/* */
+
+		/* ermittle im Typ alle Konstruktoren mit gleicher Signatur */
+		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+			if (bd instanceof ConstructorDecl) {
+				if (((ConstructorDecl) bd).signature()
+						.equals(decl().signature())) {
+					constructorDecls.add((ConstructorDecl) bd);
+				}
+			}
+		}
+		String decl = decl().toString();
+		String declFirstLine = (decl.indexOf("\n") == -1 ? decl : decl
+				.substring(0, decl.indexOf("\n")) + " ... }");
+		/* nur ein Konstruktor mit dieser Signatur */
+		if (constructorDecls.size() == 1) {
+			ConstructorDecl var = (ConstructorDecl) decl();
+			int toFeatureID = var.featureID();
+			addSplErrors(fromFeatureID, toFeatureID, "auf den Konstruktor",
+					declFirstLine, false);
+			/* mehrere Konstruktoren mit dieser Signatur */
+		} else if (constructorDecls.size() > 1) {
+			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+			for (Iterator<ConstructorDecl> iter = constructorDecls.iterator(); iter
+					.hasNext();) {
+				ConstructorDecl var = iter.next();
+				toFeatureIDs.add(var.featureID());
+				decl = var.toString();
+				declFirstLine = ( decl.indexOf("\n") == -1
+						? decl 
+								: decl.substring(0, decl.indexOf("\n")) + " ... }" );
+				mapDecls.put(var.featureID(), declFirstLine);
+			}
+			addSplErrors(fromFeatureID, toFeatureIDs, "auf den Konstruktor", 
+					mapDecls, false);
+		}
 	}
 }
