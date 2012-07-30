@@ -352,9 +352,12 @@ aspect ExtendedTypeCheck {
 			sbtei.setLength(sbtei.length() - 1);
 		}
 
+		HashSet<Feature> accessingFeature = new HashSet<Feature>();
+		accessingFeature.add(fromFeature);
+
 		try {
-			/* alle Features optional */
-			if (model.mayBeMissing(null, toFeaturesList)) {	
+			/* alle Features optional, aufrufendes Feature ist gesetzt */
+			if (model.mayBeMissing(accessingFeature, toFeaturesList)) {	
 				StringBuilder sb = new StringBuilder();
 				sb.append(toFeatureIDs.size());
 				sb.append(" optionale Ziele ");
@@ -531,52 +534,55 @@ aspect ExtendedTypeCheck {
 		/* collect all TypeAccesses: source feature, type, target feature(s),
 		 * source file(s), line number(s) */
 		
-		int fromFeatureID = featureID();
+		/* ignore importDecl */
+		if(isRaw()) {
+			int fromFeatureID = featureID();
 
-		HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(fromFeatureID);
-		if(typeNamesAndInfo == null) {
-			typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
-		}
-		
-		/* <package name (default: "(default package)")>.<type name> */
-		String qualifiedName = ( decl().hostType().packageName() != "" 
-				? decl().hostType().packageName() 
-						: "(default package)" ) 
-						+ "." 
-						+ decl().hostType().name();
-		
-		TypeErrorInfo tei = typeNamesAndInfo.get(qualifiedName);
-		if(tei == null) {
-			tei = new TypeErrorInfo(new HashSet<Integer>(), new HashSet<String>());
-		}
-		
-		HashSet<Integer> toFeatureIDs = tei.getToFeatureIDs();
-		
-		/* find all constructors of this type to get sure that the type
-		 * is reachable, but this is not enough: also get sure that
-		 * the right constructor is reachable 
-		 * --> ClassInstanceExpr.splTypeCheck() */
-		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
-		for(BodyDecl bd : decl().hostType().getBodyDecls()) {
-			if (bd instanceof ConstructorDecl) {
-					constructorDecls.add((ConstructorDecl) bd);
+			HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(fromFeatureID);
+			if(typeNamesAndInfo == null) {
+				typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
 			}
-		}
-		/* collect all featureIDs of features, that implement this type,
-		 * i.e. that have a constructor for this type */
-		for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
-			ConstructorDecl var = (ConstructorDecl) iter.next();
-			toFeatureIDs.add(var.featureID());
-		}
-		
-		/* remember source file and line number of type access */
-		tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
 
-		/* default-Typen nicht sammeln */
-		if (!(decl().hostType().featureID() == -1)) {
-			typeNamesAndInfo.put(qualifiedName, tei);
-		}		
-		typeAccesses.put(fromFeatureID, typeNamesAndInfo);
+			/* <package name (default: "(default package)")>.<type name> */
+			String qualifiedName = ( decl().hostType().packageName() != "" 
+					? decl().hostType().packageName() 
+							: "(default package)" ) 
+							+ "." 
+							+ decl().hostType().name();
+
+			TypeErrorInfo tei = typeNamesAndInfo.get(qualifiedName);
+			if(tei == null) {
+				tei = new TypeErrorInfo(new HashSet<Integer>(), new HashSet<String>());
+			}
+
+			HashSet<Integer> toFeatureIDs = tei.getToFeatureIDs();
+
+			/* find all constructors of this type to get sure that the type
+			 * is reachable, but this is not enough: also get sure that
+			 * the right constructor is reachable 
+			 * --> ClassInstanceExpr.splTypeCheck() */
+			ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
+			for(BodyDecl bd : decl().hostType().getBodyDecls()) {
+				if (bd instanceof ConstructorDecl) {
+					constructorDecls.add((ConstructorDecl) bd);
+				}
+			}
+			/* collect all featureIDs of features, that implement this type,
+			 * i.e. that have a constructor for this type */
+			for(Iterator iter = constructorDecls.iterator(); iter.hasNext(); ){
+				ConstructorDecl var = (ConstructorDecl) iter.next();
+				toFeatureIDs.add(var.featureID());
+			}
+
+			/* remember source file and line number of type access */
+			tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
+
+			/* default-Typen nicht sammeln */
+			if (!(decl().hostType().featureID() == -1)) {
+				typeNamesAndInfo.put(qualifiedName, tei);
+			}		
+			typeAccesses.put(fromFeatureID, typeNamesAndInfo);
+		}
 	}
 	
 	public void ClassInstanceExpr.splTypeCheck() {		
