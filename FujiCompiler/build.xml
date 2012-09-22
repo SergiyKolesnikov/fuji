@@ -233,6 +233,11 @@
 	<include name="${copying}"/>
       </fileset>
       <zipfileset includes="**/*.class" src="${lib}/commons-cli-1.2/commons-cli-1.2.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/equinox/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/featureide/de.ovgu.featureide.fm.core_2.6.1.201204272223.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/guidsl/guidsl.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/jakarta/jakarta.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/sat4j/org.sat4j.core.jar"/>
     </jar>
   </target>
 
