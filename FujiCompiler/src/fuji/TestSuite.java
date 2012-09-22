@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import AST.ASTNode;
-import AST.CompilationUnit;
 import AST.Program;
 import de.ovgu.featureide.fm.core.Feature;
 import de.ovgu.featureide.fm.core.FeatureModel;
@@ -19,21 +17,23 @@ import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 public class TestSuite {
 
 	private static Main fuji;
-	
-	/* TEST */
+
 	@SuppressWarnings("unchecked")
 	public static Collection errors = new ArrayList();
 	@SuppressWarnings("unchecked")
 	public static Collection warnings = new ArrayList();
-	/* /TEST */
 
 	/* Feature-Model */
 	private static FeatureModel model = new FeatureModel();
 	
 	/* TestCase-Nr. */
-	private static String folder = "03/04";
-	private static String path = "TestCases/";
-	private static String modelName = "model.m";
+	private static String folder = "EPL";
+	private static String path = "examples/";
+	private static String modelName = "EPL.model";
+	
+//	private static String folder = "other/04";
+//	private static String path = "TestCases/";
+//	private static String modelName = "model.m";
 
 	public static void main(String[] args) throws Exception {
 
@@ -60,9 +60,6 @@ public class TestSuite {
 				path + folder,
 				"-fopRefs" };
 		
-		/* TODO: mit groeszerem Beispiel testen, 
-		 * ob alle gewuneschten Features hierdurch richtig eingelesen werden,
-		 * dh. ohne Base, ... */
 		features.addAll(model.getConcreteFeatures());
 		
 		for (Feature f : features) {
@@ -76,24 +73,9 @@ public class TestSuite {
 		Composition comp = fuji.getComposition(fuji);
 		Iterator<Program> astIter = comp.getASTIterator();
 		Program ast = astIter.next();
-
-		/* TEST */
-//		@SuppressWarnings("unchecked")
-//		Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
-//		while (iter.hasNext()) {
-//			CompilationUnit cu = iter.next();
-//			if (cu.fromSource()) {
-//				
-//				 /* Check for static semantic errors. */
-//				// cu.errorCheck(errors, warnings);
-//				cu.splErrorCheck(model, errors, warnings);
-//			}
-//		}
 		
+		// ast.errorCheck(errors, warnings);
 		ast.splErrorCheck(model, errors, warnings);
-		
-		/* print all TypeAccesses */
-		// System.out.println(ASTNode.getTypeAccessesString());
 		
 		/* throw Semantic Errors */
 		if (!errors.isEmpty()) {
@@ -114,6 +96,5 @@ public class TestSuite {
 			}
 			throw new CompilerWarningException(message.toString());
 		}
-		/* /TEST */
 	}
 }
