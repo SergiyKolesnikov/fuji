@@ -1,0 +1,21 @@
+#!/bin/bash
+
+(( CpuTimeAll=0 ))
+(( CpuTimeCurrent=0 ))
+
+for variantdir in $1/products/Variant*
+do
+  for configfile in $variantdir/Variant*.config
+  do
+    (( CpuTimeCurrent=0 ))
+    CpuTimeCurrent=`java -jar fuji.jar \
+         -basedir $1/features \
+         $configfile \
+         2> $variantdir/out.txt`
+    echo "$configfile done. cpu time: $((CpuTimeCurrent/1000000)) milliseconds."
+    (( CpuTimeAll+=CpuTimeCurrent ))
+  done
+done
+(( CpuTimeAllMilliseconds=CpuTimeAll/1000000 ))
+echo "cpu time:   $CpuTimeAll nanoseconds"
+echo "          = $((CpuTimeAllMilliseconds/60000))m$(((CpuTimeAllMilliseconds%60000)/1000)).$(((CpuTimeAllMilliseconds%60000)%1000))s"

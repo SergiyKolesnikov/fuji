@@ -1,0 +1,15 @@
+#!/bin/bash
+
+(( CpuTime=0 ))
+
+CpuTime=`\
+java -jar fuji.jar \
+     -basedir $1/features \
+     -fopRefs \
+     -typechecker \
+     $1/model.m \
+     2> $1/typecheckerout.txt`
+echo "Typechecker for $1 done."
+(( CpuTimeMilliseconds=CpuTime/1000000 ))
+echo "cpu time:   $CpuTime nanoseconds"
+echo "          = $CpuTimeMilliseconds milliseconds"
