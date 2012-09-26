@@ -29,6 +29,8 @@ import AST.CompilationUnit;
 import AST.ComposingVisitor;
 import AST.Program;
 
+import java.lang.management.*;
+
 /**
  * The main fuji class. Manages all the work.
  * 
@@ -45,6 +47,9 @@ public class Main implements CompositionContext {
 
 	/* Feature-Model */
 	private static FeatureModel model = new FeatureModel();
+	
+	private static long startCpuTimeNano = 0L;
+	private static long taskCpuTimeNano = 0L;
 
 	/**
 	 * Starts fuji and processes exceptions.
@@ -53,7 +58,8 @@ public class Main implements CompositionContext {
 	 *            command line arguments.
 	 */
 	public static void main(String[] args) {
-		try {
+		startCpuTimeNano = getCpuTime();
+		try {		
 			new Main(args, null);
 		} catch (WrongArgumentException e) {
 			printError(e.getMessage());
@@ -72,6 +78,8 @@ public class Main implements CompositionContext {
 		} catch (CompositionErrorException e) {
 			printError(e.getMessage() + "\n");
 		}
+		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
+		System.out.println(taskCpuTimeNano);
 	}
 
 	/**
@@ -155,7 +163,7 @@ public class Main implements CompositionContext {
 		/* Select composition strategy. */
 		if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)) {
 			composingVisitor = new AST.ComposingVisitorRSF();
-			// generateClassFiles = false; /* TYPECHECKER */
+			generateClassFiles = false;
 			useSingleDependencyGraph = true;
 		} else {
 			composingVisitor = new AST.ComposingVisitorNormal();
@@ -213,15 +221,14 @@ public class Main implements CompositionContext {
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
 			
-			// processAST(composition);
-			
 			Iterator<Program> astIter = composition.getASTIterator();
 			Program ast = astIter.next();
 
 			if (cmd.hasOption(TYPECHECKER)) {
 				ast.splErrorCheck(model, errors, warnings);
 			} else {
-				ast.errorCheck(errors, warnings);
+				// ast.errorCheck(errors, warnings);
+				processAST(composition);
 			}
 
 			/* throw Semantic Errors */
@@ -425,11 +432,11 @@ public class Main implements CompositionContext {
 
 			cu.printIntros(spl.getFeatureModulePathnames());
 		}
-//		if (cmd.hasOption(EXT_REFS) && spl.isBaseRoleSourcefile(cu.pathName())
-//				&& !processedCUs.contains(cu.pathName())) {
-//
-//			cu.printRefs(spl.getFeatureModulePathnames());
-//		} /* TYPECHECKER */
+		if (cmd.hasOption(EXT_REFS) && spl.isBaseRoleSourcefile(cu.pathName())
+				&& !processedCUs.contains(cu.pathName())) {
+
+			cu.printRefs(spl.getFeatureModulePathnames());
+		}
 		if (generateClassFiles) {
 
 			/*
@@ -583,6 +590,33 @@ public class Main implements CompositionContext {
 	}
 
 	private static String version() {
-		return "2012-09-22"; /* TYPECHECKER */
+		return "2012-09-26"; /* TYPECHECKER */
+	}
+	
+	/* for benchmarks: 
+	 * http://nadeausoftware.com/
+	 * articles/2008/03/java_tip_how_get_cpu_and_user_time_benchmarking
+	 * #TimingasinglethreadedtaskusingCPUsystemandusertime
+	 */
+	 
+	/** Get CPU time in nanoseconds. */
+	public static long getCpuTime( ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    return bean.isCurrentThreadCpuTimeSupported( ) ?
+	        bean.getCurrentThreadCpuTime( ) : 0L;
+	}
+	 
+	/** Get user time in nanoseconds. */
+	public static long getUserTime( ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    return bean.isCurrentThreadCpuTimeSupported( ) ?
+	        bean.getCurrentThreadUserTime( ) : 0L;
+	}
+
+	/** Get system time in nanoseconds. */
+	public static long getSystemTime( ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    return bean.isCurrentThreadCpuTimeSupported( ) ?
+	        (bean.getCurrentThreadCpuTime( ) - bean.getCurrentThreadUserTime( )) : 0L;
 	}
 }
