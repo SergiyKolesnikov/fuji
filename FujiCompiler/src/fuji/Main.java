@@ -220,14 +220,14 @@ public class Main implements CompositionContext {
 
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
-			
-			Iterator<Program> astIter = composition.getASTIterator();
-			Program ast = astIter.next();
-
 			if (cmd.hasOption(TYPECHECKER)) {
+				Iterator<Program> astIter = composition.getASTIterator();
+				Program ast = astIter.next();
 				ast.splErrorCheck(model, errors, warnings);
 			} else {
-				// ast.errorCheck(errors, warnings);
+//				Iterator<Program> astIter = composition.getASTIterator();
+//				Program ast = astIter.next();
+//				ast.errorCheck(errors, warnings);
 				processAST(composition);
 			}
 
@@ -383,19 +383,20 @@ public class Main implements CompositionContext {
 	public void processAST(Composition composition) throws IOException,
 			WrongArgumentException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
+		
 		Iterator<Program> astIter = composition.getASTIterator();
-
+		
 		/* Process the ASTs according to the user specified options. */
 		@SuppressWarnings("unchecked")
 		Collection errors = new ArrayList();
 		@SuppressWarnings("unchecked")
 		Collection warnings = new ArrayList();
-		while (astIter.hasNext()) {
-			Program ast = astIter.next();
+		while (astIter.hasNext()) {			
+			Program ast = astIter.next();			
 			@SuppressWarnings("unchecked")
-			Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
+			Iterator iter = ast.compilationUnitIterator();
 			while (iter.hasNext()) {
-				CompilationUnit cu = iter.next();
+				CompilationUnit cu = (CompilationUnit) iter.next();
 				if (cu.fromSource()) {
 					processCU(cu, errors, warnings);
 				}
@@ -437,6 +438,7 @@ public class Main implements CompositionContext {
 
 			cu.printRefs(spl.getFeatureModulePathnames());
 		}
+		
 		if (generateClassFiles) {
 
 			/*
