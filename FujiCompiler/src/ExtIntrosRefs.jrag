@@ -463,27 +463,46 @@ aspect IntrosRefsUtil {
          */
         public static String formatRefSource(String featureName, Expr expr) {
             StringBuilder source = new StringBuilder();
-            TypeDecl host = visibleHostType(expr.hostType());
             if (! featureName.isEmpty())
                 source.append(DELIM_FEATURE + featureName);
+            boolean isStatic = false;
+            source.append(DELIM_STATIC);
+            TypeDecl host = visibleHostType(expr.hostType());
             source.append(typeDeclQName(host));
             BodyDecl enclosing = expr.enclosingBodyDecl();
             if (enclosing != null) {
                 // TODO else if branch for FieldDecl
                 if (enclosing instanceof MethodDecl) {
+                    MethodDecl enclosingMD = (MethodDecl) enclosing;
                     source.append(DELIM_METHOD);
-                    source.append(signature((MethodDecl) enclosing));
+                    source.append(signature(enclosingMD));
+                    source.append(DELIM_TYPE);
+                    source.append(enclosingMD.getTypeAccess().type().typeName());
+                    isStatic = enclosingMD.isStatic();
                 } else if (enclosing instanceof ConstructorDecl) {
                     source.append(DELIM_CONS);
                     source.append(signature((ConstructorDecl) enclosing));
                 } else if (enclosing instanceof FieldDeclaration) {
+                    FieldDeclaration enclosingFD = (FieldDeclaration) enclosing;
                     source.append(DELIM_FIELD);
-                    source.append(((FieldDeclaration) enclosing).getID());
+                    source.append(enclosingFD.getID());
+                    source.append(DELIM_TYPE);
+                    source.append(enclosingFD.getTypeAccess().type().typeName());                    
+                    isStatic = enclosingFD.isStatic();
                 } else {
                     // static or dynamic initialitzers, do nothing.
                 }
             }
-            return source.toString();
+            
+            /* 
+             * Decide if the static delimiter that we inserted in the beginning 
+             * should stay. 
+             */
+            String sourceString = source.toString();
+            if (!isStatic) {
+                sourceString = sourceString.replace(DELIM_STATIC, "");
+            }
+            return sourceString;
         }
     }
 }
