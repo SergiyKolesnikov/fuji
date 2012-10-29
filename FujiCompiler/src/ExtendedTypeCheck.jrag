@@ -48,8 +48,6 @@ import org.sat4j.specs.TimeoutException;
 import fuji.TypeErrorInfo;
 
 aspect ExtendedTypeCheck {
-	
-	/* TEST */
 
 	/* the feature model */
 	protected static FeatureModel ASTNode.featureModel;
