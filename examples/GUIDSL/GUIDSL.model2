@@ -25,7 +25,7 @@ GUIDSL : kernel genbali dgram
 [ordergs]
 [cubeInterface] :: _GUIDSL ;
 
-%% // stack behavoir: feature list grows from top to bottom:
+%% // stack behavior: feature list grows from top to bottom:
 
 cubeInterface implies ordergs ;
 ordergs implies tool ;

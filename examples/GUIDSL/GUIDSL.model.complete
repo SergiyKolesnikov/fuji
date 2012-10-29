@@ -1,8 +1,6 @@
-// assumed model (all features optional except base feature and
+// assumed model (all features optional except first three features and
 //                stack behavior: see below)
-GUIDSL : kernel
-[genbali]
-[dgram]
+GUIDSL : kernel genbali dgram
 [dmain]
 [swingutils]
 [gspec]
@@ -52,5 +50,12 @@ fillgs implies gspec ;
 gspec implies swingutils ;
 swingutils implies dmain ;
 dmain implies dgram ;
-dgram implies genbali ;
-genbali implies kernel ;
+
+// added:
+eharvest implies bexpr ;
+eharvest implies cnfFormat ;
+clauselist implies cnfFormat ;
+guigs implies cnfFormat ;
+guigs implies guiext ;
+guigs implies guilisteners ;
+guilisteners implies output ;
