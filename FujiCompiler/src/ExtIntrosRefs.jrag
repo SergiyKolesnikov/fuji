@@ -118,10 +118,6 @@ aspect Refs {
         }
     }
     
-    private java.util.Collection<Access> ClassDecl.preservedSuperClassAccesses = new java.util.ArrayList<Access>();
-    public void ClassDecl.addPreservedSuperClassAccess(Access ac) {
-        preservedSuperClassAccesses.add(ac);
-    }
     public void ClassDecl.printRefs(java.util.List<String> featureModulePathnames) {
         if (hasSuperClassAccess()) {
             Opt<Access> ext = getSuperClassAccessOpt();

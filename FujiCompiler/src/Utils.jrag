@@ -1,0 +1,5 @@
+aspect Utils {
+    /* Allows every node to access the program node. */
+    syn Program ASTNode.getProgram() = getParent().getProgram();
+    eq Program.getProgram() = this;
+}

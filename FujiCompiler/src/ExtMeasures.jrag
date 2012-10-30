@@ -1,0 +1,51 @@
+
+/**
+ * AST Size measure (ASTS).  Measure for program size.  It counts nodes in the 
+ * AST of a programm. 
+ */
+aspect ASTSMeasure {
+
+    /**
+     * Measure ASTS vor compilation units that come from source files.  The 
+     * output is the sum of ASTS for these compilation units.  In 
+     * this way we can exclude compilation units from java run-time and 
+     * libraries that are not part of the SPL.
+     */
+    syn int Program.measureASTSSource() {
+        int asts = 0;
+        for (CompilationUnit cu : getProgram().getCompilationUnits()) {
+            if (cu.fromSource()) {
+                asts += cu.measureTreeSize();
+            }
+        }
+        return asts;
+    }
+
+    /**
+     * Measure ASTS vor all compilation units.  The output is the sum of ASTS 
+     * for these compilation units.
+     */
+    syn int Program.measureASTSAll() {
+        int asts = 0;
+        for (CompilationUnit cu : getProgram().getCompilationUnits()) {
+                asts += cu.measureTreeSize();
+        }
+        return asts;
+    }
+    
+    /**
+     * Measrue the size of the AST rooted in this ASTNode. 
+     */
+    syn int ASTNode.measureTreeSize() {
+        int size = 0;
+        if (getNumChild() == 0)
+            size = 1;
+        else {
+            for (int i = 0; i < getNumChild(); ++i) {
+                size += getChild(i).measureTreeSize();
+            }
+            ++size;
+        }
+        return size;
+    }
+}

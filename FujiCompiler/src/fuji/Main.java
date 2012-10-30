@@ -114,6 +114,20 @@ public class Main implements CompositionContext {
             return;
         }
 
+        /* Check compatibility of command-line options. */
+        if ((cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS))
+                && cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+
+            /*
+             * Intros/Refs calculation ComposingVisitorRSF and ASTS calculation
+             * requires ComposingVisitorNormal
+             */
+
+            throw new WrongArgumentException("Incompatible options:"
+                    + EXT_INTROS + "/" + EXT_REFS + "and" + EXT_MEASURE_ASTS_SOURCE
+                    + "\n");
+        }
+
         /*
          * Check the features file argument. If in programmatic mode features
          * file argument can be omitted.
@@ -133,17 +147,21 @@ public class Main implements CompositionContext {
                     "Could not process the command-line options correctly.");
         }
 
+        /* Decide if the class file should be generated. */
+        if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)
+                || cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+            generateClassFiles = false;
+        }
+
         /* Select composition strategy. */
         if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)) {
             composingVisitor = new AST.ComposingVisitorRSF();
-            generateClassFiles = false;
-            useSingleDependencyGraph = true;
         } else {
             composingVisitor = new AST.ComposingVisitorNormal();
         }
 
-        String basedir = cmd.getOptionValue(BASEDIR, System
-                .getProperty("user.dir"));
+        String basedir = cmd.getOptionValue(BASEDIR,
+                System.getProperty("user.dir"));
 
         /* Decide where the features list comes from. */
         if (featuresFilePathname != null) {
@@ -175,16 +193,18 @@ public class Main implements CompositionContext {
         ops.addOption(OptionBuilder.hasArg().withArgName("path")
                 .withDescription("Override location of bootstrap class files")
                 .create(BOOTCLASSPATH));
-        ops.addOption(OptionBuilder.hasArg().withArgName("path")
+        ops.addOption(OptionBuilder
+                .hasArg()
+                .withArgName("path")
                 .withDescription(
                         "Specify where to find user class files and "
                                 + "annotation processors").withLongOpt("cp")
                 .create(CLASSPATH));
-        ops
-                .addOption(OptionBuilder.hasArg().withArgName("directory")
-                        .withDescription(
-                                "Specify where to place generated class files")
-                        .create(D));
+        ops.addOption(OptionBuilder
+                .hasArg()
+                .withArgName("directory")
+                .withDescription("Specify where to place generated class files")
+                .create(D));
         ops.addOption(OptionBuilder.hasArg().withArgName("dirs")
                 .withDescription("Override location of installed extensions")
                 .create(EXTDIRS));
@@ -206,7 +226,9 @@ public class Main implements CompositionContext {
                 "Print introduces relations").create(EXT_INTROS));
         ops.addOption(OptionBuilder.withDescription("Print ref relations")
                 .create(EXT_REFS));
-        ops.addOption(OptionBuilder.hasArg().withArgName("directory")
+        ops.addOption(OptionBuilder
+                .hasArg()
+                .withArgName("directory")
                 .withDescription(
                         "Make source to source translation "
                                 + "and write generated java code to the "
@@ -216,6 +238,10 @@ public class Main implements CompositionContext {
                         + "mode is used to control fuji from "
                         + "another program and not by using command-line.")
                 .create(PROG_MODE));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "Calculate the ASTS measure (only CompilationUnits that come from source files are analyzed).")
+                .create(EXT_MEASURE_ASTS_SOURCE));
 
         return ops;
     }
@@ -288,18 +314,18 @@ public class Main implements CompositionContext {
      * @throws SemanticErrorException
      * @throws CompilerWarningException
      */
+    @SuppressWarnings("rawtypes")
     public void processAST(Composition composition) throws IOException,
             WrongArgumentException, SyntacticErrorException,
             SemanticErrorException, CompilerWarningException {
         Iterator<Program> astIter = composition.getASTIterator();
 
         /* Process the ASTs according to the user specified options. */
-        @SuppressWarnings("unchecked")
+        Program ast = null;
         Collection errors = new ArrayList();
-        @SuppressWarnings("unchecked")
         Collection warnings = new ArrayList();
         while (astIter.hasNext()) {
-            Program ast = astIter.next();
+            ast = astIter.next();
             @SuppressWarnings("unchecked")
             Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
             while (iter.hasNext()) {
@@ -323,13 +349,18 @@ public class Main implements CompositionContext {
             }
             throw new CompilerWarningException(message.toString());
         }
+        
+        /* Do analysis on the whole AST. */
+        if (cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+            System.out.println(ast.measureASTSSource());
+        }
     }
 
     /**
      * Process a CompilationUnit according to the user options. And remember
      * processed CUs.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     private void processCU(CompilationUnit cu, Collection errors,
             Collection warnings) throws IOException, WrongArgumentException,
             SyntacticErrorException {
@@ -471,13 +502,14 @@ public class Main implements CompositionContext {
         public static final String SOURCEPATH = "sourcepath"; //
         public static final String VERSION = "version";
 
-        /* Not JastAddJ options. */
+        /* Fuji-specific options. */
         public static final String BASEDIR = "basedir";
         public static final String EXT_ACCESSCOUNT = "fopStatistic"; //
         public static final String EXT_INTROS = "fopIntroduces"; //
         public static final String EXT_REFS = "fopRefs"; //
         public static final String SRC = "src";
         public static final String PROG_MODE = "progmode";
+        public static final String EXT_MEASURE_ASTS_SOURCE = "mASTS";
     }
 
     private static void printError(String message) {
