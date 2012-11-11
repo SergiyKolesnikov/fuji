@@ -833,14 +833,11 @@ aspect ComposingVisitorRSF {
                 if (baseCD.hasSuperClassAccess()) {
 
                     /*
-                     * Preserving Accesses of the base type for refs generation.
-                     * TODO It is a hack: The Access to the super class is added
-                     * to the list of implemented interfaces, but the super
-                     * class is not an interface.
+                     * Preserve the SuperClassAccess of the base type for later 
+                     * use (e.g. in refs generation).
                      */
                     Access baseSup = baseCD.getSuperClassAccess();
                     baseCD.addPreservedSuperClassAccess(baseSup);
-                    //baseCD.getImplementsListNoTransform().add(baseSup);
                 }
                 Access featSup = featCD.getSuperClassAccess();
                 featSup.setOldParent(featSup.getParent());
@@ -1095,5 +1092,20 @@ aspect ComposeUtil {
         if (refiningTypes == null)
             refiningTypes = new java.util.ArrayList<ReferenceType>();
         refiningTypes.add(type);
+    }
+    
+    /*
+     * The family-based composing visitor (RSF) saves the SuperClassAccess of a 
+     * ClassDecl (i.e. type name from the extends-clause of a class) in the 
+     * preservedSuperClassAccesses attribute before this SuperClassAccess is 
+     * substituted by the SuperClassAccess from a refinement.  In this way we 
+     * do not loose any information.
+     */
+    private Collection<Access> ClassDecl.preservedSuperClassAccesses = new java.util.ArrayList<Access>();
+    public void ClassDecl.addPreservedSuperClassAccess(Access ac) {
+        preservedSuperClassAccesses.add(ac);
+    }
+    public Collection<Access> ClassDecl.getPreservedSuperClassAccess() {
+        return preservedSuperClassAccesses;
     }
 }

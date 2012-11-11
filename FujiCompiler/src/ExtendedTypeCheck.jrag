@@ -427,7 +427,6 @@ aspect ExtendedTypeCheck {
 
 	public void MethodAccess.splTypeCheck() {
 		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-
 		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
 		
@@ -444,8 +443,10 @@ aspect ExtendedTypeCheck {
 		 * verfuegbar sein
 		 */
 		if (name().equals("original")) {
+			/* in welcher Methode ist dieser original-Aufruf enthalten? */
 			String context = ((MethodDecl) enclosingBodyDecl()).signature();
-			/* ermittle im Typ alle Methoden mit gleicher Signatur */
+			/* ermittle im Typ alle Methoden mit gleicher Signatur, 
+			 * die aus einem andernen Feature stammen */
 			for (BodyDecl bd : hostType().getBodyDecls()) {
 				if (bd instanceof MethodDecl) {
 					MethodDecl md = (MethodDecl) bd;
@@ -534,10 +535,37 @@ aspect ExtendedTypeCheck {
 		/* collect all TypeAccesses: source feature, type, target feature(s),
 		 * source file(s), line number(s) */
 		
+		int fromFeatureID = getOldParent().featureID();
+		FeatureModel model = getFeatureModel();
+		/* get features */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		/* TODO: werden hierdurch ALLE benoetigten Features in der 
+		 * richtigen REIHENFOLGE eingelesen? */
+		listFeatures.addAll(model.getConcreteFeatures());
+		
+		Feature fromFeature = model.getFeature(listFeatures
+				.get(fromFeatureID).getName());
+		
+		/* test if types from outside (from libraries) are missing */
+		/* copied from nameCheck(): */
+		if(!(isRaw())) {
+			if(isQualified() && !qualifier().isTypeAccess() && !qualifier().isPackageAccess())
+				error("can not access the type named " + decl().typeName() + " in this context\n");
+			if(decls().isEmpty())
+				error(fromFeature.getName() + ": no visible type named " + typeName() + "\n");
+			if(decls().size() > 1) {
+				StringBuffer s = new StringBuffer();
+				s.append("several types named " + name() + ":");
+				for(Iterator iter = decls().iterator(); iter.hasNext(); ) {
+					TypeDecl t = (TypeDecl)iter.next();
+					s.append(" " + t.typeName());
+				}
+				error(s.toString() + "\n");
+			}
+		}
+		
 		/* ignore importDecl */
 		if(isRaw()) {
-			int fromFeatureID = featureID();
-
 			HashMap<String, TypeErrorInfo> typeNamesAndInfo = typeAccesses.get(fromFeatureID);
 			if(typeNamesAndInfo == null) {
 				typeNamesAndInfo = new HashMap<String, TypeErrorInfo>();
@@ -628,4 +656,19 @@ aspect ExtendedTypeCheck {
 					mapDecls, false);
 		}
 	}
+	
+/*	public void ClassDecl.splTypeCheck(){
+		StringBuilder st = new StringBuilder();
+		st.append(name() + ": ");
+		if (getPreservedSuperClassAccess().isEmpty()) {
+			st.append("empty");
+		} else {
+			for (Access ac : getPreservedSuperClassAccess()) {
+				st.append("(" + ac.featureID() + ", " + ac.typeName() + "), ");
+			}
+			st.setLength(st.length() - 1);
+		}
+		st.append("\n");
+		System.out.println(st.toString());
+	}*/
 }
