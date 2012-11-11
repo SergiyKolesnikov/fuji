@@ -47,7 +47,8 @@ public class Main implements CompositionContext {
 
 	/* Feature-Model */
 	private static FeatureModel model = new FeatureModel();
-	
+
+	/* Benchmark */
 	private static long startCpuTimeNano = 0L;
 	private static long taskCpuTimeNano = 0L;
 
@@ -58,17 +59,22 @@ public class Main implements CompositionContext {
 	 *            command line arguments.
 	 */
 	public static void main(String[] args) {
-		startCpuTimeNano = getCpuTime();
-		try {		
+		try {
+			/* Benchmark: measure time needed to construct the AST */
+			startCpuTimeNano = getCpuTime();
 			new Main(args, null);
 		} catch (WrongArgumentException e) {
 			printError(e.getMessage());
+			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (ParseException e) {
 			printError(e.getMessage());
+			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (IOException e) {
 			printError(e.getMessage());
+			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (FeatureDirNotFoundException e) {
 			printError(e.getMessage());
+			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (SyntacticErrorException e) {
 			printError(e.getMessage());
 		} catch (SemanticErrorException e) {
@@ -77,9 +83,11 @@ public class Main implements CompositionContext {
 			System.err.println(e.getMessage());
 		} catch (CompositionErrorException e) {
 			printError(e.getMessage() + "\n");
+			System.out.println("BENCHMARK INCOMPLETE");
 		}
+		/* Benchmark: time needed to check for errors */
 		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
-		System.out.println(taskCpuTimeNano);
+		System.out.println("(spl) error check: " + taskCpuTimeNano);
 	}
 
 	/**
@@ -104,7 +112,6 @@ public class Main implements CompositionContext {
 			throws WrongArgumentException, ParseException, IOException,
 			FeatureDirNotFoundException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
-
 		/*
 		 * The flag controls the construction of the SPL structure
 		 * representation. If true, only one dependency graph containing all the
@@ -140,6 +147,18 @@ public class Main implements CompositionContext {
 			return;
 		}
 
+		/* Check compatibility of command-line options. */
+		if ((cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS))
+				&& cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+			/*
+			 * Intros/Refs calculation ComposingVisitorRSF and ASTS calculation
+			 * requires ComposingVisitorNormal
+			 */
+			throw new WrongArgumentException("Incompatible options:"
+					+ EXT_INTROS + "/" + EXT_REFS + "and"
+					+ EXT_MEASURE_ASTS_SOURCE + "\n");
+		}
+
 		/*
 		 * Check the features file or feature model file in GUIDSL format
 		 * (typechecker mode) argument. If in programmatic mode features file
@@ -160,11 +179,15 @@ public class Main implements CompositionContext {
 					"Could not process the command-line options correctly.");
 		}
 
+		/* Decide if the class file should be generated. */
+		if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)
+				|| cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+			generateClassFiles = false;
+		}
+
 		/* Select composition strategy. */
 		if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)) {
 			composingVisitor = new AST.ComposingVisitorRSF();
-			generateClassFiles = false;
-			useSingleDependencyGraph = true;
 		} else {
 			composingVisitor = new AST.ComposingVisitorNormal();
 		}
@@ -199,7 +222,6 @@ public class Main implements CompositionContext {
 				spl = new SPLStructure(basedir, featureNames,
 						useSingleDependencyGraph);
 			} else {
-
 				/* Use features file */
 				spl = new SPLStructure(basedir,
 						featuresFileOrFeatureModelFilePathname,
@@ -207,7 +229,6 @@ public class Main implements CompositionContext {
 			}
 
 		} else {
-
 			/*
 			 * Take the features list from the parameter supplied to the
 			 * constructor.
@@ -218,6 +239,13 @@ public class Main implements CompositionContext {
 
 		backboneCompilerArgs = constructBackboneCompilerArgs();
 
+		/* Benchmark: time needed to construct the AST */
+		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
+		System.out.println("construct AST:     " + taskCpuTimeNano);
+
+		/* Benchmark: measure time needed to check for errors */
+		startCpuTimeNano = getCpuTime();
+
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
 			if (cmd.hasOption(TYPECHECKER)) {
@@ -225,9 +253,6 @@ public class Main implements CompositionContext {
 				Program ast = astIter.next();
 				ast.splErrorCheck(model, errors, warnings);
 			} else {
-//				Iterator<Program> astIter = composition.getASTIterator();
-//				Program ast = astIter.next();
-//				ast.errorCheck(errors, warnings);
 				processAST(composition);
 			}
 
@@ -308,6 +333,10 @@ public class Main implements CompositionContext {
 				"Instantiate fuji in typechecker mode. A file containing "
 						+ "the feature module is expected instead of the file "
 						+ "containing a list of features.").create(TYPECHECKER));
+		ops.addOption(OptionBuilder
+				.withDescription(
+						"Calculate the ASTS measure (only CompilationUnits that come from source files are analyzed).")
+				.create(EXT_MEASURE_ASTS_SOURCE));
 
 		return ops;
 	}
@@ -383,16 +412,16 @@ public class Main implements CompositionContext {
 	public void processAST(Composition composition) throws IOException,
 			WrongArgumentException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
-		
+
 		Iterator<Program> astIter = composition.getASTIterator();
-		
+
 		/* Process the ASTs according to the user specified options. */
 		@SuppressWarnings("unchecked")
 		Collection errors = new ArrayList();
 		@SuppressWarnings("unchecked")
 		Collection warnings = new ArrayList();
-		while (astIter.hasNext()) {			
-			Program ast = astIter.next();			
+		while (astIter.hasNext()) {
+			Program ast = astIter.next();
 			@SuppressWarnings("unchecked")
 			Iterator iter = ast.compilationUnitIterator();
 			while (iter.hasNext()) {
@@ -438,7 +467,7 @@ public class Main implements CompositionContext {
 
 			cu.printRefs(spl.getFeatureModulePathnames());
 		}
-		
+
 		if (generateClassFiles) {
 
 			/*
@@ -462,22 +491,22 @@ public class Main implements CompositionContext {
 			 * Check for static semantic errors.
 			 */
 			cu.errorCheck(errors, warnings);
-			
-//			if (errors.isEmpty()) {
-//
-//				/*
-//				 * Write source code for the compilation unit. This must be done
-//				 * before cu.transformation() is called.
-//				 */
-//				if (cmd.hasOption(SRC) && cu.fromRole()) {
-//					generateSourcefile(cmd.getOptionValue(SRC), cu);
-//				}
-//				if (cmd.hasOption(EXT_ACCESSCOUNT)) {
-//					// TODO
-//				}
-//				// cu.transformation(); // BENCHMARK
-//				// cu.generateClassfile(); // BENCHMARK
-//			}
+
+			// if (errors.isEmpty()) {
+			//
+			// /*
+			// * Write source code for the compilation unit. This must be done
+			// * before cu.transformation() is called.
+			// */
+			// if (cmd.hasOption(SRC) && cu.fromRole()) {
+			// generateSourcefile(cmd.getOptionValue(SRC), cu);
+			// }
+			// if (cmd.hasOption(EXT_ACCESSCOUNT)) {
+			// // TODO
+			// }
+			// // cu.transformation(); // BENCHMARK
+			// // cu.generateClassfile(); // BENCHMARK
+			// }
 		}
 
 		processedCUs.add(cu.pathName());
@@ -573,6 +602,7 @@ public class Main implements CompositionContext {
 		public static final String EXT_REFS = "fopRefs"; //
 		public static final String SRC = "src";
 		public static final String PROG_MODE = "progmode";
+		public static final String EXT_MEASURE_ASTS_SOURCE = "mASTS";
 
 		/* TYPECHECKER */
 		public static final String TYPECHECKER = "typechecker";
@@ -594,31 +624,32 @@ public class Main implements CompositionContext {
 	private static String version() {
 		return "2012-09-26"; /* TYPECHECKER */
 	}
-	
-	/* for benchmarks: 
-	 * http://nadeausoftware.com/
+
+	/*
+	 * for benchmarks: http://nadeausoftware.com/
 	 * articles/2008/03/java_tip_how_get_cpu_and_user_time_benchmarking
 	 * #TimingasinglethreadedtaskusingCPUsystemandusertime
 	 */
-	 
+
 	/** Get CPU time in nanoseconds. */
-	public static long getCpuTime( ) {
-	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
-	    return bean.isCurrentThreadCpuTimeSupported( ) ?
-	        bean.getCurrentThreadCpuTime( ) : 0L;
+	public static long getCpuTime() {
+		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+		return bean.isCurrentThreadCpuTimeSupported() ? bean
+				.getCurrentThreadCpuTime() : 0L;
 	}
-	 
+
 	/** Get user time in nanoseconds. */
-	public static long getUserTime( ) {
-	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
-	    return bean.isCurrentThreadCpuTimeSupported( ) ?
-	        bean.getCurrentThreadUserTime( ) : 0L;
+	public static long getUserTime() {
+		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+		return bean.isCurrentThreadCpuTimeSupported() ? bean
+				.getCurrentThreadUserTime() : 0L;
 	}
 
 	/** Get system time in nanoseconds. */
-	public static long getSystemTime( ) {
-	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
-	    return bean.isCurrentThreadCpuTimeSupported( ) ?
-	        (bean.getCurrentThreadCpuTime( ) - bean.getCurrentThreadUserTime( )) : 0L;
+	public static long getSystemTime() {
+		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+		return bean.isCurrentThreadCpuTimeSupported() ? (bean
+				.getCurrentThreadCpuTime() - bean.getCurrentThreadUserTime())
+				: 0L;
 	}
 }
