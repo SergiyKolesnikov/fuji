@@ -250,7 +250,7 @@ aspect ExtendedTypeCheck {
 				FeatureDependencies dep = new FeatureDependencies(model);	 
 		
 				/* kummulative Ausgabe der Quelldateinamen und Zeilennummern 
-				 * für einen Typzugriff aus einem Feature */
+				 * fuer einen Typzugriff aus einem Feature */
 				StringBuilder sbtei = new StringBuilder();
 				if(isTypeAccess) {
 					TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
@@ -280,7 +280,7 @@ aspect ExtendedTypeCheck {
 					sb.append(fromFeature.getName());
 					sb.append(" und ");
 					sb.append(toFeature.getName());
-					sb.append(" können aber ");
+					sb.append(" koennen aber ");
 					sb.append("nicht beide gleichzeitig in einer validen ");
 					sb.append("Auswahl vorkommen.\n");
 					if(isTypeAccess) {						
@@ -306,7 +306,7 @@ aspect ExtendedTypeCheck {
 					sb.append(toFeature.getName());
 					sb.append(" zu.\n");
 					sb.append("Das Ziel-Feature ist aber nicht in jeder ");
-					sb.append("möglichen validen Auswahl vorhanden.\n");
+					sb.append("moeglichen validen Auswahl vorhanden.\n");
 					if(isTypeAccess) {
 						typeError(sbtei.toString(), sb.toString());
 					} else {
@@ -535,24 +535,15 @@ aspect ExtendedTypeCheck {
 		/* collect all TypeAccesses: source feature, type, target feature(s),
 		 * source file(s), line number(s) */
 		
-		int fromFeatureID = getOldParent().featureID();
-		FeatureModel model = getFeatureModel();
-		/* get features */
-		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-		/* TODO: werden hierdurch ALLE benoetigten Features in der 
-		 * richtigen REIHENFOLGE eingelesen? */
-		listFeatures.addAll(model.getConcreteFeatures());
+		int fromFeatureID = featureID();
 		
-		Feature fromFeature = model.getFeature(listFeatures
-				.get(fromFeatureID).getName());
-		
-		/* test if types from outside (from libraries) are missing */
-		/* copied from nameCheck(): */
+/*		 test if types from outside (from libraries) are missing 
+		 copied from nameCheck(): 
 		if(!(isRaw())) {
 			if(isQualified() && !qualifier().isTypeAccess() && !qualifier().isPackageAccess())
 				error("can not access the type named " + decl().typeName() + " in this context\n");
 			if(decls().isEmpty())
-				error(fromFeature.getName() + ": no visible type named " + typeName() + "\n");
+				error("no visible type named " + typeName() + "\n");
 			if(decls().size() > 1) {
 				StringBuffer s = new StringBuffer();
 				s.append("several types named " + name() + ":");
@@ -562,7 +553,7 @@ aspect ExtendedTypeCheck {
 				}
 				error(s.toString() + "\n");
 			}
-		}
+		}*/
 		
 		/* ignore importDecl */
 		if(isRaw()) {
@@ -657,18 +648,111 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
-/*	public void ClassDecl.splTypeCheck(){
-		StringBuilder st = new StringBuilder();
-		st.append(name() + ": ");
-		if (getPreservedSuperClassAccess().isEmpty()) {
-			st.append("empty");
-		} else {
-			for (Access ac : getPreservedSuperClassAccess()) {
-				st.append("(" + ac.featureID() + ", " + ac.typeName() + "), ");
-			}
-			st.setLength(st.length() - 1);
+	public void ClassDecl.splTypeCheck() {
+
+		/*
+		 * in jeweiliger Liste (extends, implements, throws) herausfinden, in
+		 * welchem Feature Information fehlt (unter der Bedingung, dass in den
+		 * anderen Features keine widerspruechliche Information vorhanden ist)
+		 */
+
+		/*
+		 * maybe- oder never-Beziehung dieser Features zu/m informations-
+		 * tragenden Feature(s) herausfinden -> Fehlermeldung, wenn die
+		 * Information nicht in allen validen Produkten vorhanden sein kann
+		 * (wenn nicht mindestens ein informationstragendes Feature in
+		 * always-Beziehung zu mindestens einem Feature ohne diese Information
+		 * steht)
+		 */
+
+		/* - extends */
+		/* - implements */
+		/* - throws (auch fuer Interfaces moeglich?) */
+
+		/*
+		 * qualified name, gleichbenannte Klassen in verschiedenen
+		 * Verzeichnissen?
+		 */
+
+		/*
+		 * ermittle die Liste der Features, die an dieser Klasse beteiligt sind:
+		 * (alternativ: mittels SPLStructure getRoleGroups)
+		 */
+		HashSet<Integer> allFeatures = new HashSet<Integer>();
+		for (BodyDecl bd : getBodyDecls()) {
+			allFeatures.add(bd.featureID());
 		}
-		st.append("\n");
-		System.out.println(st.toString());
-	}*/
+
+		/*
+		 * ermittle alle Features, in denen extends-Information vorhanden ist
+		 */
+		HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
+		HashMap<Integer, String> extendInfo = new HashMap<Integer, String>();
+		if (!(getPreservedSuperClassAccess().isEmpty())) {
+			for (Access ac : getPreservedSuperClassAccess()) {
+				featuresWithExtendInfo.add(ac.featureID());
+				extendInfo.put(ac.featureID(), ac.toString());
+			}
+		}
+		if (hasSuperClassAccess()) {
+			featuresWithExtendInfo.add(getSuperClassAccess().featureID());
+			extendInfo.put(getSuperClassAccess().featureID(),
+					getSuperClassAccess().toString());
+		}
+
+		/* wenn ueberhaupt extends-Info vorhanden war: */
+		if (!(featuresWithExtendInfo.isEmpty())) {
+			/* ermittle alle Features, in denen extends-Information fehlt */
+			HashSet<Integer> featuresWithoutExtendInfo = new HashSet<Integer>(
+					allFeatures);
+			featuresWithoutExtendInfo.removeAll(featuresWithExtendInfo);
+
+			/*
+			 * wenn es noch Features gibt, in denen extends-Information fehlt,
+			 * ermittle Fehler:
+			 */
+			if (!(featuresWithoutExtendInfo.isEmpty())) {
+				for (int fromFeatureID : featuresWithoutExtendInfo) {
+					/*
+					 * unterscheide nach Anzahl der Features, in denen
+					 * extends-Information steht
+					 */
+					if (featuresWithExtendInfo.size() == 1) {
+						addSplErrors(fromFeatureID, featuresWithExtendInfo
+								.iterator().next(),
+								"auf die extends-Information",
+								getSuperClassAccess().toString(), false);
+					} else {
+						addSplErrors(fromFeatureID, featuresWithExtendInfo,
+								"auf die extends-Information", extendInfo,
+								false);
+					}
+				}
+			}
+		}
+	}
+	
+	public void InterfaceDecl.splTypeCheck() {
+		
+		/* fuer jedes Interface */
+		
+		/* ermittle die Liste der Features, die an diesem Interface
+		 * beteiligt sind (mittels SPLStructure getRoleGroups) */
+		
+		/* in jeweiliger Liste (extends, implements, throws) herausfinden,
+		 * in welchem Feature Information fehlt (unter der Bedingung, dass
+		 * in den anderen Features keine widerspruechliche Information
+		 * vorhanden ist) */
+		
+		/* maybe- oder never-Beziehung dieser Features zu/m informations-
+		 * tragenden Feature(s) herausfinden 
+		 * -> Fehlermeldung, wenn die Information nicht in allen
+		 * validen Produkten vorhanden sein kann 
+		 * (wenn nicht mindestens ein informationstragendes Feature in
+		 * always-Beziehung zu mindestens einem Feature ohne diese 
+		 * Information steht) */
+		
+		/* - extends */
+		
+	}
 }
