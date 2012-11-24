@@ -393,11 +393,9 @@ aspect ExtendedTypeCheck {
 
 	/* TODO: /backup */
 	
-	
-	/* Ausgabe von Fehlern bei nur einem Zielfeature */
-	public void ASTNode.addSplErrors(int fromFeatureID, int toFeatureID, 
-			String targetStructure, String decl, boolean isTypeAccess, 
-			TypeDecl sourceHostType, TypeDecl targetHostType, boolean secondRoundDone) {
+	public void ASTNode.addSplErrors(int fromFeatureID, SimpleSet decls,
+			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
+			boolean secondRoundDone) {
 		FeatureModel model = getFeatureModel();
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -406,315 +404,263 @@ aspect ExtendedTypeCheck {
 		 * REIHENFOLGE eingelesen?
 		 */
 		listFeatures.addAll(model.getConcreteFeatures());
-		/* beide Features vorhanden? */
-		if (fromFeatureID != -1 && toFeatureID != -1) {
-			/* Wird auf ein anderes Feature zugegriffen? */
-			if (!(fromFeatureID == toFeatureID)) {
-				/*
-				 * Auf Reihenfolge Features aus dem FM zu Feature(-ID)s aus dem AST
-				 * achten!
-				 */
-				Feature fromFeature = model.getFeature(listFeatures.get(fromFeatureID)
-						.getName());
-				Feature toFeature = model.getFeature(listFeatures.get(toFeatureID)
-						.getName());
-				/* Ermittle Abhaengigkeiten aus dem FM */
-				FeatureDependencies dep = new FeatureDependencies(model);
-				/*
-				 * kummulative Ausgabe der Quelldateinamen und Zeilennummern fuer einen
-				 * Typzugriff aus einem Feature
-				 */
-				StringBuilder sbtei = new StringBuilder();
-				if (isTypeAccess) {
-					TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(decl);
-					for (String s : tei.getAccessSourceInfo()) {
-						sbtei.append(s);
-						sbtei.append("\n");
-					}
-					sbtei.setLength(sbtei.length() - 1);
-				}
-				/*
-				 * fromFeature und toFeature koennen nicht beide gleichzeitig in einer
-				 * validen Auswahl vorkommen (never-Beziehung) -> Fehler
-				 */
-				if (never(dep, fromFeature, toFeature)) {
-					StringBuilder sb = new StringBuilder();
-					sb.append("never-Beziehung:");
-					sb.append("\nFeature ");
-					sb.append(fromFeature.getName());
-					sb.append(" greift ");
-					sb.append(targetStructure);
-					sb.append("\n  ");
-					sb.append(decl);
-					sb.append("\ndes Features ");
-					sb.append(toFeature.getName());
-					sb.append(" zu.\nDie Features ");
-					sb.append(fromFeature.getName());
-					sb.append(" und ");
-					sb.append(toFeature.getName());
-					sb.append(" koennen aber ");
-					sb.append("nicht beide gleichzeitig in einer validen ");
-					sb.append("Auswahl vorkommen.\n");
+		if (decls.size() == 1) {
+			BodyDecl decl = (BodyDecl) decls.iterator().next();
+			int toFeatureID = decl.featureID();
+			TypeDecl targetHostType = decl.hostType();
+			String declString = decl.toString();
+			String declFirstLine = (declString.indexOf("\n") == -1 ? declString
+					: declString.substring(0, declString.indexOf("\n")) + " ... }");
+
+			/* beide Features vorhanden? */
+			if (fromFeatureID != -1 && toFeatureID != -1) {
+				/* Wird auf ein anderes Feature zugegriffen? */
+				if (!(fromFeatureID == toFeatureID)) {
+					/*
+					 * Auf Reihenfolge Features aus dem FM zu Feature(-ID)s aus dem AST
+					 * achten!
+					 */
+					Feature fromFeature = model.getFeature(listFeatures
+							.get(fromFeatureID).getName());
+					Feature toFeature = model.getFeature(listFeatures.get(toFeatureID)
+							.getName());
+					/* Ermittle Abhaengigkeiten aus dem FM */
+					FeatureDependencies dep = new FeatureDependencies(model);
+					/*
+					 * kummulative Ausgabe der Quelldateinamen und Zeilennummern fuer
+					 * einen Typzugriff aus einem Feature
+					 */
+					StringBuilder sbtei = new StringBuilder();
 					if (isTypeAccess) {
-						typeError(sbtei.toString(), sb.toString());
-					} else {
-						error(sb.toString());
+						TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(
+								declFirstLine);
+						for (String s : tei.getAccessSourceInfo()) {
+							sbtei.append(s);
+							sbtei.append("\n");
+						}
+						sbtei.setLength(sbtei.length() - 1);
 					}
-				}
-				/*
-				 * toFeature kann, muss aber nicht in einer validen Auswahl vorkommen
-				 * (maybe-Beziehung) -> moegliche Fehlerquelle
-				 */
-				if (maybe(dep, fromFeature, toFeature)) {
-					StringBuilder sb = new StringBuilder();
-					sb.append("maybe-Beziehung:");
-					sb.append("\nFeature ");
-					sb.append(fromFeature.getName());
-					sb.append(" greift ");
-					sb.append(targetStructure);
-					sb.append("\n  ");
-					sb.append(decl);
-					sb.append("\ndes Features ");
-					sb.append(toFeature.getName());
-					sb.append(" zu.\n");
-					sb.append("Das Ziel-Feature ");
-					sb.append(toFeature.getName());
-					sb.append(" ist aber nicht in jeder ");
-					sb.append("moeglichen validen Auswahl vorhanden.\n");
-					if (isTypeAccess) {
-						typeError(sbtei.toString(), sb.toString());
-					} else {
-						error(sb.toString());
+					/*
+					 * fromFeature und toFeature koennen nicht beide gleichzeitig in einer
+					 * validen Auswahl vorkommen (never-Beziehung) -> Fehler
+					 */
+					if (never(dep, fromFeature, toFeature)) {
+						StringBuilder sb = new StringBuilder();
+						sb.append("never-Beziehung:");
+						sb.append("\nFeature ");
+						sb.append(fromFeature.getName());
+						sb.append(" greift ");
+						sb.append(targetStructure);
+						sb.append("\n  ");
+						sb.append(declFirstLine);
+						sb.append("\ndes Features ");
+						sb.append(toFeature.getName());
+						sb.append(" zu.\nDie Features ");
+						sb.append(fromFeature.getName());
+						sb.append(" und ");
+						sb.append(toFeature.getName());
+						sb.append(" koennen aber ");
+						sb.append("nicht beide gleichzeitig in einer validen ");
+						sb.append("Auswahl vorkommen.\n");
+						if (isTypeAccess) {
+							typeError(sbtei.toString(), sb.toString());
+						} else {
+							error(sb.toString());
+						}
 					}
-				}
-				if (!(secondRoundDone)) {
-					/* second Round */
-
 					/*
-					 * bekannt: 
-					 * - eindeutiges Ziel (d.h. eine toFeatureID),
-					 *   d.h. nur eine Implementierung des Typs, im dem sich das Ziel
-					 *   befindet  
-					 * - Quell- und Ziel-Feature sind beide vorhanden 
-					 * - Quell- und Ziel-Feature sind unterschiedlich
+					 * toFeature kann, muss aber nicht in einer validen Auswahl vorkommen
+					 * (maybe-Beziehung) -> moegliche Fehlerquelle
 					 */
+					if (maybe(dep, fromFeature, toFeature)) {
+						StringBuilder sb = new StringBuilder();
+						sb.append("maybe-Beziehung:");
+						sb.append("\nFeature ");
+						sb.append(fromFeature.getName());
+						sb.append(" greift ");
+						sb.append(targetStructure);
+						sb.append("\n  ");
+						sb.append(declFirstLine);
+						sb.append("\ndes Features ");
+						sb.append(toFeature.getName());
+						sb.append(" zu.\n");
+						sb.append("Das Ziel-Feature ");
+						sb.append(toFeature.getName());
+						sb.append(" ist aber nicht in jeder ");
+						sb.append("moeglichen validen Auswahl vorhanden.\n");
+						if (isTypeAccess) {
+							typeError(sbtei.toString(), sb.toString());
+						} else {
+							error(sb.toString());
+						}
+					}
+					if (!(secondRoundDone)) {
+						/* second Round */
 
-					/*
-					 * in jeweiliger Liste (extends, implements, throws) herausfinden, in
-					 * welchem Feature Information fehlt (unter der Bedingung, dass in den
-					 * anderen Features keine widerspruechliche Information vorhanden ist)
-					 * maybe- oder never-Beziehung dieser Features zu/m informations-
-					 * tragenden Feature(s) herausfinden -> Fehlermeldung, wenn die
-					 * Information nicht in allen validen Produkten vorhanden sein kann
-					 * (wenn nicht mindestens ein informationstragendes Feature in
-					 * always-Beziehung zu mindestens einem Feature ohne diese Information
-					 * steht) 
-					 * - extends (fuer Klassen und Interfaces) 
-					 * - implements (nur fuer Klassen) 
-					 * qualified name, gleichbenannte Klassen in verschiedenen Verzeichnissen? 
-					 * ermittle die Liste der Features, die
-					 * an dieser Klasse beteiligt sind: (alternativ: mittels SPLStructure
-					 * getRoleGroups)
-					 */
-
-					/*
-					 * ansonsten: teste, ob extends-, implements- oder throws- Information
-					 * nicht in dieser Klasse des Quellfeatures, dafuer aber nur in dieser
-					 * Klasse eines Zielfeatures steht, das mit dieser Klasse des
-					 * Quellfeatures in maybe-, never-, bzw. bei mehreren Ziele in
-					 * mayBeMissing-Beziehung steht
-					 */
-
-					/*
-					 * Zugriff kommt aus einer Klasse: pruefe auf extends und implements
-					 */
-					if (sourceHostType instanceof ClassDecl) {
-						ClassDecl sc = (ClassDecl) sourceHostType;
 						/*
-						 * ermittle, welche Features alle zu dieser Klasse beigetragen haben
+						 * bekannt: - eindeutiges Ziel (d.h. eine toFeatureID), d.h. nur
+						 * eine Implementierung des Typs, im dem sich das Ziel befindet -
+						 * Quell- und Ziel-Feature sind beide vorhanden - Quell- und
+						 * Ziel-Feature sind unterschiedlich
 						 */
-						HashSet<Integer> allFeatures = new HashSet<Integer>();
-						for (BodyDecl bd : sc.getBodyDecls()) {
-							allFeatures.add(bd.featureID());
-						}
-						/* Zugriff geht auf ein Element in einer Klasse */
-						if (targetHostType instanceof ClassDecl) {
-							/* extends-Info */
+
+						/*
+						 * in jeweiliger Liste (extends, implements, throws) herausfinden,
+						 * in welchem Feature Information fehlt (unter der Bedingung, dass
+						 * in den anderen Features keine widerspruechliche Information
+						 * vorhanden ist) maybe- oder never-Beziehung dieser Features zu/m
+						 * informations- tragenden Feature(s) herausfinden -> Fehlermeldung,
+						 * wenn die Information nicht in allen validen Produkten vorhanden
+						 * sein kann (wenn nicht mindestens ein informationstragendes
+						 * Feature in always-Beziehung zu mindestens einem Feature ohne
+						 * diese Information steht) - extends (fuer Klassen und Interfaces)
+						 * - implements (nur fuer Klassen) qualified name, gleichbenannte
+						 * Klassen in verschiedenen Verzeichnissen? ermittle die Liste der
+						 * Features, die an dieser Klasse beteiligt sind: (alternativ:
+						 * mittels SPLStructure getRoleGroups)
+						 */
+
+						/*
+						 * ansonsten: teste, ob extends-, implements- oder throws-
+						 * Information nicht in dieser Klasse des Quellfeatures, dafuer aber
+						 * nur in dieser Klasse eines Zielfeatures steht, das mit dieser
+						 * Klasse des Quellfeatures in maybe-, never-, bzw. bei mehreren
+						 * Ziele in mayBeMissing-Beziehung steht
+						 */
+
+						/*
+						 * Zugriff kommt aus einer Klasse: pruefe auf extends und implements
+						 */
+						if (sourceHostType instanceof ClassDecl) {
+							ClassDecl sc = (ClassDecl) sourceHostType;
 							/*
-							 * ermittle alle Features, in denen extends-Information mit diesem
-							 * targetHostType vorhanden ist
-							 */
-							HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
-							if (!(sc.getPreservedSuperClassAccess().isEmpty())) {
-								for (Access ac : sc.getPreservedSuperClassAccess()) {
-									/* wenn das der gesuchte Typ ist */
-									if (ac.type().equals(targetHostType)) {
-										/*
-										 * speichere featureID des Features, das diese
-										 * extends-Information enthaelt
-										 */
-										featuresWithExtendInfo.add(ac.featureID());
-									}
-								}
-							}
-							if (sc.hasSuperClassAccess()) {
-								/* wenn das der gesuchte Typ ist */
-								if (sc.getSuperClassAccess().type().equals(targetHostType)) {
-									featuresWithExtendInfo.add(sc.getSuperClassAccess()
-											.featureID());
-								}
-							}
-							/*
-							 * wenn ueberhaupt extends-Info mit diesem targetType vorhanden
-							 * war:
-							 */
-							if (!(featuresWithExtendInfo.isEmpty())) {
-								/*
-								 * fehlt in fromFeature die extends-Information mit diesem
-								 * targetType?
-								 */
-								if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-									/*
-									 * unterscheide nach Anzahl der Features, in denen
-									 * extends-Information mit diesem targeType steht
-									 */
-									if (featuresWithExtendInfo.size() == 1) {
-										addSplErrors(fromFeatureID, featuresWithExtendInfo
-												.iterator().next(),
-												"mittels nicht immer vorhandener extends-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), decl, false,
-												sourceHostType, targetHostType, true);
-									} else {
-										HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
-										targetHostTypes.add(targetHostType);
-										HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-										for (Integer i : featuresWithExtendInfo) {
-											mapDecls.put(i, decl);
-										}
-										/* TODO: Ausgabe bei mehreren Zielen ueberpruefen */
-										addSplErrors(fromFeatureID, featuresWithExtendInfo,
-												"mittels nicht immer vorhandener extends-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), mapDecls,
-												false, sourceHostType, targetHostTypes, true);
-									}
-								}
-							}
-						}
-						/* Zugriff geht auf ein Element aus einem Interface */
-						if (targetHostType instanceof InterfaceDecl) {
-							/* implements-Info */
-							/*
-							 * ermittle alle Features, in denen die implements-Info mit diesem
-							 * targetHostType vorhanden ist
-							 */
-							HashSet<Integer> featuresWithImplementInfo = new HashSet<Integer>();
-							if (sc.getNumImplements() != 0) {
-								for (Access ac : sc.getImplementsList()) {
-									if (ac.type().equals(targetHostType)) {
-										featuresWithImplementInfo.add(ac.featureID());
-									}
-								}
-							}
-							/* wenn ueberhaupt Features diesen targetHostType implementieren */
-							if (!(featuresWithImplementInfo.isEmpty())) {
-								/* fehlt im fromFeature diese implements-Information? */
-								if (!(featuresWithImplementInfo.contains(fromFeature))) {
-									/*
-									 * unterscheide nach Anzahl der Features, in denen
-									 * extends-Information mit diesem targeHostType steht
-									 */
-									if (featuresWithImplementInfo.size() == 1) {
-										addSplErrors(fromFeatureID, featuresWithImplementInfo
-												.iterator().next(),
-												"mittels nicht immer vorhandener implements-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), decl, false,
-												sourceHostType, targetHostType, true);
-									} else {
-										HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
-										targetHostTypes.add(targetHostType);
-										HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-										for (Integer i : featuresWithImplementInfo) {
-											mapDecls.put(i, decl);
-										}
-										/* TODO: Ausgabe bei mehreren Zielen ueberpruefen */
-										addSplErrors(fromFeatureID, featuresWithImplementInfo,
-												"mittels nicht immer vorhandener implements-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), mapDecls,
-												false, sourceHostType, targetHostTypes, true);
-									}
-								}
-							}
-						}
-					}
-					/* Zugriff kommt aus einem Interface: pruefe auf extends */
-					if (sourceHostType instanceof InterfaceDecl) {
-						if (targetHostType instanceof InterfaceDecl) {
-							InterfaceDecl si = (InterfaceDecl) sourceHostType;
-							/*
-							 * ermittle, welche Features alle zu diesem Interface beigetragen
+							 * ermittle, welche Features alle zu dieser Klasse beigetragen
 							 * haben
 							 */
 							HashSet<Integer> allFeatures = new HashSet<Integer>();
-							for (BodyDecl bd : si.getBodyDecls()) {
+							for (BodyDecl bd : sc.getBodyDecls()) {
 								allFeatures.add(bd.featureID());
 							}
-
-							/* extends-Info */
-							/*
-							 * ermittle alle Features, in denen extends-Information mit diesem
-							 * targetHostType vorhanden ist
-							 */
-							HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
-							if (si.getNumSuperInterfaceId() != 0) {
-								for (Access ac : si.getSuperInterfaceIdList()) {
+							/* Zugriff geht auf ein Element in einer Klasse */
+							if (targetHostType instanceof ClassDecl) {
+								/* extends-Info */
+								/*
+								 * ermittle alle Features, in denen extends-Information mit
+								 * diesem targetHostType vorhanden ist
+								 */
+								HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
+								if (!(sc.getPreservedSuperClassAccess().isEmpty())) {
+									for (Access ac : sc.getPreservedSuperClassAccess()) {
+										/* wenn das der gesuchte Typ ist */
+										if (ac.type().equals(targetHostType)) {
+											/*
+											 * speichere featureID des Features, das diese
+											 * extends-Information enthaelt
+											 */
+											featuresWithExtendInfo.add(ac.featureID());
+										}
+									}
+								}
+								if (sc.hasSuperClassAccess()) {
 									/* wenn das der gesuchte Typ ist */
-									if (ac.type().equals(targetHostType)) {
-										/*
-										 * speichere featureID des Features, das diese
-										 * extends-Information enthaelt
-										 */
-										featuresWithExtendInfo.add(ac.featureID());
+									if (sc.getSuperClassAccess().type().equals(targetHostType)) {
+										featuresWithExtendInfo.add(sc.getSuperClassAccess()
+												.featureID());
+									}
+								}
+								/*
+								 * wenn ueberhaupt extends-Info mit diesem targetType vorhanden
+								 * war:
+								 */
+								if (!(featuresWithExtendInfo.isEmpty())) {
+									/*
+									 * fehlt in fromFeature die extends-Information mit diesem
+									 * targetType?
+									 */
+									if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
+										/* TODO: Ausgabe bei mehreren Zielen ueberpruefen */
+										addSplErrors(fromFeatureID, decls,
+												"mittels nicht immer vorhandener extends-Information "
+														+ targetStructure + " im Typ "
+														+ targetHostType.name().toString(), false,
+												sourceHostType, true);
 									}
 								}
 							}
-							/*
-							 * wenn ueberhaupt extends-Info mit diesem targetType vorhanden
-							 * war:
-							 */
-							if (!(featuresWithExtendInfo.isEmpty())) {
+							/* Zugriff geht auf ein Element aus einem Interface */
+							if (targetHostType instanceof InterfaceDecl) {
+								/* implements-Info */
 								/*
-								 * fehlt in fromFeature die extends-Information mit diesem
-								 * targetType?
+								 * ermittle alle Features, in denen die implements-Info mit
+								 * diesem targetHostType vorhanden ist
 								 */
-								if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-									/*
-									 * unterscheide nach Anzahl der Features, in denen
-									 * extends-Information mit diesem targeType steht
-									 */
-									if (featuresWithExtendInfo.size() == 1) {
-										addSplErrors(fromFeatureID, featuresWithExtendInfo
-												.iterator().next(),
-												"mittels nicht immer vorhandener extends-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), decl, false,
-												sourceHostType, targetHostType, true);
-									} else {
-										HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
-										targetHostTypes.add(targetHostType);
-										HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-										for (Integer i : featuresWithExtendInfo) {
-											mapDecls.put(i, decl);
+								HashSet<Integer> featuresWithImplementInfo = new HashSet<Integer>();
+								if (sc.getNumImplements() != 0) {
+									for (Access ac : sc.getImplementsList()) {
+										if (ac.type().equals(targetHostType)) {
+											featuresWithImplementInfo.add(ac.featureID());
 										}
-										/* TODO: Ausgabe bei mehreren Zielen ueberpruefen */
-										addSplErrors(fromFeatureID, featuresWithExtendInfo,
+									}
+								}
+								/* wenn ueberhaupt Features diesen targetHostType implementieren */
+								if (!(featuresWithImplementInfo.isEmpty())) {
+									/* fehlt im fromFeature diese implements-Information? */
+									if (!(featuresWithImplementInfo.contains(fromFeature))) {
+										addSplErrors(fromFeatureID, decls,
+												"mittels nicht immer vorhandener implements-Information "
+														+ targetStructure + " im Typ "
+														+ targetHostType.name().toString(), false,
+												sourceHostType, true);
+									}
+								}
+							}
+						}
+						/* Zugriff kommt aus einem Interface: pruefe auf extends */
+						if (sourceHostType instanceof InterfaceDecl) {
+							if (targetHostType instanceof InterfaceDecl) {
+								InterfaceDecl si = (InterfaceDecl) sourceHostType;
+								/*
+								 * ermittle, welche Features alle zu diesem Interface
+								 * beigetragen haben
+								 */
+								HashSet<Integer> allFeatures = new HashSet<Integer>();
+								for (BodyDecl bd : si.getBodyDecls()) {
+									allFeatures.add(bd.featureID());
+								}
+
+								/* extends-Info */
+								/*
+								 * ermittle alle Features, in denen extends-Information mit
+								 * diesem targetHostType vorhanden ist
+								 */
+								HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
+								if (si.getNumSuperInterfaceId() != 0) {
+									for (Access ac : si.getSuperInterfaceIdList()) {
+										/* wenn das der gesuchte Typ ist */
+										if (ac.type().equals(targetHostType)) {
+											/*
+											 * speichere featureID des Features, das diese
+											 * extends-Information enthaelt
+											 */
+											featuresWithExtendInfo.add(ac.featureID());
+										}
+									}
+								}
+								/*
+								 * wenn ueberhaupt extends-Info mit diesem targetType vorhanden
+								 * war:
+								 */
+								if (!(featuresWithExtendInfo.isEmpty())) {
+									/*
+									 * fehlt in fromFeature die extends-Information mit diesem
+									 * targetType?
+									 */
+									if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
+										addSplErrors(fromFeatureID, decls,
 												"mittels nicht immer vorhandener extends-Information "
 														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), mapDecls,
-												false, sourceHostType, targetHostTypes, true);
+														+ targetHostType.name().toString(), false,
+												sourceHostType, true);
 									}
 								}
 							}
@@ -722,120 +668,96 @@ aspect ExtendedTypeCheck {
 					}
 				}
 			}
-		}	
-	}
-
-	/* TODO: secondRound auch fuer mehrere Zielfeatures */
-	/* Ausgabe von Fehlern bei mehreren Zielfeatures */
-	public void ASTNode.addSplErrors(int fromFeatureID,
-			HashSet<Integer> toFeatureIDs, String targetStructure, 
-			HashMap<Integer, String> mapDecls, boolean isTypeAccess, 
-			TypeDecl sourceHostType, HashSet<TypeDecl> targetHostTypes, boolean secondRoundDone) {
-		FeatureModel model = getFeatureModel();
-		/* get features */
-		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-		/* TODO: werden hierdurch ALLE benoetigten Features in der 
-		 * richtigen REIHENFOLGE eingelesen? */
-		listFeatures.addAll(model.getConcreteFeatures());
-		Feature fromFeature = model.getFeature(listFeatures
-				.get(fromFeatureID).getName());
-		/* Liste einer Menge von Zielfeatures */
-		ArrayList<Set<Feature>> toFeaturesList = new ArrayList<Set<Feature>>();
-		for (int toFeatureID : toFeatureIDs) {
-			Feature toFeature = model.getFeature(listFeatures.get(toFeatureID).getName());
-			HashSet<Feature> toFeatureSet = new HashSet<Feature>();
-			toFeatureSet.add(toFeature);
-			toFeaturesList.add(toFeatureSet);
-		}
-		/* for TypeAccess: list all source files and line numbers,
-		 * where a TypeAccess to a specific type takes place */
-		StringBuilder sbtei = new StringBuilder();
-		if(isTypeAccess) {
-			TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(mapDecls.get(mapDecls.keySet().iterator().next()));
-			for(String s : tei.getAccessSourceInfo()) {
-				sbtei.append(s);
-				sbtei.append("\n");
+		} else if (decls.size() > 1) {
+			/* TODO: add secondRound */
+			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+			HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
+			HashSet<TypeDecl> targetTypes = new HashSet<TypeDecl>();
+			for(Iterator iter = decls.iterator(); iter.hasNext(); ){
+				BodyDecl var = (BodyDecl) iter.next();
+				toFeatureIDs.add(var.featureID());
+				String declString = var.toString();
+				String declFirstLine = ( declString.indexOf("\n") == -1 ? declString 
+						: declString.substring(0, declString.indexOf("\n")) + " ... }" );
+				mapDecls.put(var.featureID(), declFirstLine);
+				targetTypes.add(var.hostType());
 			}
-			sbtei.setLength(sbtei.length() - 1);
-		}
-		HashSet<Feature> accessingFeature = new HashSet<Feature>();
-		accessingFeature.add(fromFeature);
-		try {
-			/* alle Features optional, aufrufendes Feature ist gesetzt */
-			if (model.mayBeMissing(accessingFeature, toFeaturesList)) {	
-				StringBuilder sb = new StringBuilder();
-				sb.append(toFeatureIDs.size());
-				sb.append(" optionale Ziele ");
-				sb.append("(es kann eine valide Auswahl geben, "
-						+ "in der alle diese Ziele nicht vorhanden sind):\n");
-				sb.append("Feature ");
-				sb.append(fromFeature.getName());
-				sb.append(" zielt ");
-				sb.append(targetStructure);
-				sb.append(" folgender Features:\n");
-				for (int toFeatureID : toFeatureIDs) {
-					sb.append(model.getFeature(listFeatures.get(toFeatureID).getName()).getName());
-					sb.append(":\t");
-					String decl = mapDecls.get(toFeatureID);
-					sb.append(decl);
-					sb.append("\n");
+			
+			Feature fromFeature = model.getFeature(listFeatures.get(fromFeatureID)
+					.getName());
+			/* Liste einer Menge von Zielfeatures */
+			ArrayList<Set<Feature>> toFeaturesList = new ArrayList<Set<Feature>>();
+			for (int toFeatureID : toFeatureIDs) {
+				Feature toFeature = model.getFeature(listFeatures.get(toFeatureID)
+						.getName());
+				HashSet<Feature> toFeatureSet = new HashSet<Feature>();
+				toFeatureSet.add(toFeature);
+				toFeaturesList.add(toFeatureSet);
+			}
+			/*
+			 * for TypeAccess: list all source files and line numbers, where a
+			 * TypeAccess to a specific type takes place
+			 */
+			StringBuilder sbtei = new StringBuilder();
+			if (isTypeAccess) {
+				TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(
+						mapDecls.get(mapDecls.keySet().iterator().next()));
+				for (String s : tei.getAccessSourceInfo()) {
+					sbtei.append(s);
+					sbtei.append("\n");
 				}
-				if(isTypeAccess) {
-					typeError(sbtei.toString(), sb.toString());
-				} else {
-					error(sb.toString());
+				sbtei.setLength(sbtei.length() - 1);
+			}
+			HashSet<Feature> accessingFeature = new HashSet<Feature>();
+			accessingFeature.add(fromFeature);
+			try {
+				/* alle Features optional, aufrufendes Feature ist gesetzt */
+				if (model.mayBeMissing(accessingFeature, toFeaturesList)) {
+					StringBuilder sb = new StringBuilder();
+					sb.append(toFeatureIDs.size());
+					sb.append(" optionale Ziele ");
+					sb.append("(es kann eine valide Auswahl geben, "
+							+ "in der alle diese Ziele nicht vorhanden sind):\n");
+					sb.append("Feature ");
+					sb.append(fromFeature.getName());
+					sb.append(" zielt ");
+					sb.append(targetStructure);
+					sb.append(" folgender Features:\n");
+					for (int toFeatureID : toFeatureIDs) {
+						sb.append(model.getFeature(listFeatures.get(toFeatureID).getName())
+								.getName());
+						sb.append(":\t");
+						String decl = mapDecls.get(toFeatureID);
+						sb.append(decl);
+						sb.append("\n");
+					}
+					if (isTypeAccess) {
+						typeError(sbtei.toString(), sb.toString());
+					} else {
+						error(sb.toString());
+					}
 				}
-			}				
-		} catch (TimeoutException e) {
-			e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void ASTNode.splTypeCheck() { }
 
 	public void VarAccess.splTypeCheck() {
-		HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-		HashSet<TypeDecl> targetTypes = new HashSet<TypeDecl>();
 		/* Ist der Variablenzugriff ein Feldzugriff? */
 		if (isFieldAccess()) {
-			int fromFeatureID = featureID();
-			SimpleSet decls = decls();
-			String decl = decl().toString();			
-			String declFirstLine = ( decl.indexOf("\n") == -1 ? decl
-					: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-			/* nur ein Zielfeature */
-			if (decls.size() == 1) {
-				BodyDecl var = (BodyDecl) decl();
-				int toFeatureID = var.featureID();
-				addSplErrors(fromFeatureID, toFeatureID, "auf das Feld", 
-						declFirstLine, false, hostType(), decl().hostType(), false);
-				/* mehrere Zielfeatures */
-			} else if(decls.size() > 1) {			
-				for(Iterator iter = decls.iterator(); iter.hasNext(); ){
-					BodyDecl var = (BodyDecl) iter.next();
-					toFeatureIDs.add(var.featureID());
-					decl = var.toString();
-					declFirstLine = ( decl.indexOf("\n") == -1 ? decl 
-							: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					mapDecls.put(var.featureID(), declFirstLine);
-					targetTypes.add(var.hostType());
-				}
-				addSplErrors(fromFeatureID, toFeatureIDs, "auf das Feld", 
-						mapDecls, false, hostType(), targetTypes, false);
-			}
+				addSplErrors(featureID(), decls(), "auf das Feld", false, hostType(), false);
 		}    
 	}
 
 	public void MethodAccess.splTypeCheck() {
-		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-		int fromFeatureID = featureID();
 		ArrayList<MethodDecl> methodDecls = new ArrayList<MethodDecl>();
-		HashSet<TypeDecl> targetTypes = new HashSet<TypeDecl>();		
 		/*
-		 * original-Check: Teste, ob eine Methode "original" heiszt, dann
-		 * sollte in diesem Typ (in diesem oder einem anderem Feature) eine
-		 * Methode mit gleicher Signatur wie die Aufrufumgebung existieren
+		 * original-Check: Teste, ob eine Methode "original" heiszt, dann sollte in
+		 * diesem Typ (in diesem oder einem anderem Feature) eine Methode mit
+		 * gleicher Signatur wie die Aufrufumgebung existieren
 		 */
 		/*
 		 * Methodenaufruf original gefunden, in einem anderen Feature muss im
@@ -846,13 +768,14 @@ aspect ExtendedTypeCheck {
 		if (name().equals("original")) {
 			/* in welcher Methode ist dieser original-Aufruf enthalten? */
 			String context = ((MethodDecl) enclosingBodyDecl()).signature();
-			/* ermittle im Typ alle Methoden mit gleicher Signatur, 
-			 * die aus einem andernen Feature stammen */
+			/*
+			 * ermittle im Typ alle Methoden mit gleicher Signatur, die aus einem
+			 * anderen Feature stammen
+			 */
 			for (BodyDecl bd : hostType().getBodyDecls()) {
 				if (bd instanceof MethodDecl) {
 					MethodDecl md = (MethodDecl) bd;
-					if (md.signature().equals(context)
-							&& (md.featureID() != fromFeatureID)) {
+					if (md.signature().equals(context) && (md.featureID() != featureID())) {
 						methodDecls.add(md);
 					}
 				}
@@ -861,73 +784,28 @@ aspect ExtendedTypeCheck {
 			s.append("mittels des original-Aufrufs\n  ");
 			s.append(name());
 			s.append("(");
-			for(int i = 0; i < getNumArg(); i++) {
-				if(i != 0)
+			for (int i = 0; i < getNumArg(); i++) {
+				if (i != 0) {
 					s.append(", ");
+				}
 				s.append(getArg(i).type().typeName());
 			}
 			s.append(")");
 			s.append(" in der Methode " + context + " des Typs " + methodHost());
 			s.append(" auf die Methode");
-			/* nur eine Methode mit dieser Signatur */
-			if (methodDecls.size() == 1) {
-				MethodDecl var = methodDecls.get(0);
-				int toFeatureID = var.featureID();
-				addSplErrors(fromFeatureID, toFeatureID, s.toString(),
-						context, false, hostType(), var.hostType(), false);
-				/* mehrere Methoden mit dieser Signatur */
-			} else if (methodDecls.size() > 1) {
-				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-				for (Iterator<MethodDecl> iter = methodDecls.iterator(); iter
-						.hasNext();) {
-					MethodDecl var = iter.next();
-					toFeatureIDs.add(var.featureID());
-					String decl = var.toString();
-					String declFirstLine = ( decl.indexOf("\n") == -1
-							? decl 
-									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					mapDecls.put(var.featureID(), declFirstLine);
-					targetTypes.add(var.hostType());
-				}
-				addSplErrors(fromFeatureID, toFeatureIDs, s.toString(),
-						mapDecls, false, hostType(), targetTypes, false);
-			}
+			addSplErrors(featureID(), new SimpleSet.SimpleSetImpl(methodDecls),
+					s.toString(), false, hostType(), false);
 		} else {
 			/* ermittle im Typ alle Methoden mit gleicher Signatur */
 			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
 				if (bd instanceof MethodDecl) {
-					if (((MethodDecl) bd).signature()
-							.equals(decl().signature())) {
+					if (((MethodDecl) bd).signature().equals(decl().signature())) {
 						methodDecls.add((MethodDecl) bd);
 					}
 				}
 			}
-			String decl = decl().toString();
-			String declFirstLine = (decl.indexOf("\n") == -1 ? decl : decl
-					.substring(0, decl.indexOf("\n")) + " ... }");
-			/* nur eine Methode mit dieser Signatur */
-			if (methodDecls.size() == 1) {
-				MethodDecl var = (MethodDecl) decl();
-				int toFeatureID = var.featureID();
-				addSplErrors(fromFeatureID, toFeatureID, "auf die Methode",
-						declFirstLine, false, hostType(), var.hostType(), false);
-				/* mehrere Methoden mit dieser Signatur */
-			} else if (methodDecls.size() > 1) {
-				HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-				for (Iterator<MethodDecl> iter = methodDecls.iterator(); iter
-						.hasNext();) {
-					MethodDecl var = iter.next();
-					toFeatureIDs.add(var.featureID());
-					decl = var.toString();
-					declFirstLine = ( decl.indexOf("\n") == -1
-							? decl 
-									: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-					mapDecls.put(var.featureID(), declFirstLine);
-					targetTypes.add(var.hostType());
-				}
-				addSplErrors(fromFeatureID, toFeatureIDs, "auf die Methode", 
-						mapDecls, false, hostType(), targetTypes, false);
-			}
+			addSplErrors(featureID(), new SimpleSet.SimpleSetImpl(methodDecls),
+					"auf die Methode", false, hostType(), false);
 		}
 	}
 
@@ -981,45 +859,17 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	public void ClassInstanceExpr.splTypeCheck() {		
-		HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-		HashSet<TypeDecl> targetTypes = new HashSet<TypeDecl>();		
-		int fromFeatureID = featureID();
+	public void ClassInstanceExpr.splTypeCheck() {
 		ArrayList<ConstructorDecl> constructorDecls = new ArrayList<ConstructorDecl>();
 		/* ermittle im Typ alle Konstruktoren mit gleicher Signatur */
 		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
 			if (bd instanceof ConstructorDecl) {
-				if (((ConstructorDecl) bd).signature()
-						.equals(decl().signature())) {
+				if (((ConstructorDecl) bd).signature().equals(decl().signature())) {
 					constructorDecls.add((ConstructorDecl) bd);
 				}
 			}
 		}
-		String decl = decl().toString();
-		String declFirstLine = (decl.indexOf("\n") == -1 ? decl : decl
-				.substring(0, decl.indexOf("\n")) + " ... }");
-		/* nur ein Konstruktor mit dieser Signatur */
-		if (constructorDecls.size() == 1) {
-			ConstructorDecl var = (ConstructorDecl) decl();
-			int toFeatureID = var.featureID();
-			addSplErrors(fromFeatureID, toFeatureID, "auf den Konstruktor",
-					declFirstLine, false, hostType(), var.hostType(), false);
-			/* mehrere Konstruktoren mit dieser Signatur */
-		} else if (constructorDecls.size() > 1) {
-			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-			for (Iterator<ConstructorDecl> iter = constructorDecls.iterator(); iter
-					.hasNext();) {
-				ConstructorDecl var = iter.next();
-				toFeatureIDs.add(var.featureID());
-				decl = var.toString();
-				declFirstLine = ( decl.indexOf("\n") == -1
-						? decl 
-								: decl.substring(0, decl.indexOf("\n")) + " ... }" );
-				mapDecls.put(var.featureID(), declFirstLine);
-				targetTypes.add(var.hostType());
-			}
-			addSplErrors(fromFeatureID, toFeatureIDs, "auf den Konstruktor", 
-					mapDecls, false, hostType(), targetTypes, false);
-		}
+		addSplErrors(featureID(), new SimpleSet.SimpleSetImpl(constructorDecls),
+				"auf den Konstruktor", false, hostType(), false);
 	}
 }
