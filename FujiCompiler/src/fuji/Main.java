@@ -87,7 +87,7 @@ public class Main implements CompositionContext {
 		}
 		/* Benchmark: time needed to check for errors */
 		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
-		System.out.println("(spl) error check: " + taskCpuTimeNano);
+		System.out.println("(spl) error check: " + (taskCpuTimeNano/1000000) + " ms");
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class Main implements CompositionContext {
 
 		/* Benchmark: time needed to construct the AST */
 		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
-		System.out.println("construct AST:     " + taskCpuTimeNano);
+		System.out.println("construct AST:     " + (taskCpuTimeNano/1000000) + " ms");
 
 		/* Benchmark: measure time needed to check for errors */
 		startCpuTimeNano = getCpuTime();
