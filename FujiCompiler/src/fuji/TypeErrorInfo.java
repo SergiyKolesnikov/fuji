@@ -2,29 +2,31 @@ package fuji;
 
 import java.util.HashSet;
 
+import AST.SimpleSet;
+
 /** Keeps info about:<ul><li>the IDs of the target features, 
  * that implement a certain type, and</li><li>source file names and line numbers 
  * of accesses of a certain type</li></ul>*/
 public class TypeErrorInfo {
 	
-	/* IDs of the target features, that implement a certain type */
-	private HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+	/* Accesses to implementations of a certain type */
+	private SimpleSet decls;
 	
 	/* source file names and line numbers of accesses of a certain type */
 	private HashSet<String> accessSourceInfo = new HashSet<String>();
 	
-	public TypeErrorInfo(HashSet<Integer> toFeatureIDs, 
+	public TypeErrorInfo(SimpleSet decls, 
 			HashSet<String> accessSourceInfo) {
-		this.toFeatureIDs = toFeatureIDs;
+		this.decls = decls;
 		this.accessSourceInfo = accessSourceInfo;
 	}
 
-	public HashSet<Integer> getToFeatureIDs() {
-		return toFeatureIDs;
+	public SimpleSet getDecls() {
+		return decls;
 	}
 
-	public void setToFeatureIDs(HashSet<Integer> toFeatureIDs) {
-		this.toFeatureIDs = toFeatureIDs;
+	public void setDecls(SimpleSet decls) {
+		this.decls = decls;
 	}
 
 	public HashSet<String> getAccessSourceInfo() {
