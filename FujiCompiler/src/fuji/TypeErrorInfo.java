@@ -4,9 +4,9 @@ import java.util.HashSet;
 
 import AST.SimpleSet;
 
-/** Keeps info about:<ul><li>the IDs of the target features, 
- * that implement a certain type, and</li><li>source file names and line numbers 
- * of accesses of a certain type</li></ul>*/
+/** Keeps info about:<ul><li>the accesses to implementations of a certain type, 
+ * and</li><li>source file names and line numbers 
+ * of accesses of a certain type</li></ul> */
 public class TypeErrorInfo {
 	
 	/* Accesses to implementations of a certain type */
