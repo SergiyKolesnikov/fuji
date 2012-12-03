@@ -41,7 +41,7 @@ public class Composition {
      * 
      * @return an iterator over the ASTs build for the SPL's dependency graphs.
      */
-    public ASTIterator getASTIterator() {
+    public Iterator<Program> getASTIterator() {
         return this.new ASTIterator();
     }
 
