@@ -77,6 +77,12 @@ aspect ExtendedTypeCheck {
 
 	/* for type accesses */
 	protected ArrayList Program.warnings = new ArrayList();
+	
+	/* for addSplError */
+	protected static final int ASTNode.FIRST_ROUND = 0;
+	protected static final int ASTNode.CLASS_EXTENDS_CLASS = 1;
+	protected static final int ASTNode.CLASS_IMPLEMENTS_INTERFACE = 2;
+	protected static final int ASTNode.INTERFACE_EXTENDS_INTERFACE = 3;
 
 	/* report a type error */
 	/* correct line number and file name */
@@ -142,7 +148,7 @@ aspect ExtendedTypeCheck {
 								  declsAndTargetHostType.put((ASTNode) iter.next(), targetHostType);
 								}
 								/* check for SPL errors */
-								addSplErrors(i, declsAndTargetHostType, "auf den Typ", true, sourceHostType, false);
+								addSplErrors(i, declsAndTargetHostType, "auf den Typ", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType);
 							}
 						}
 					}
@@ -225,7 +231,7 @@ aspect ExtendedTypeCheck {
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
-			boolean secondRoundDone) {
+			boolean secondRoundDone, int state, HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes) {
 		FeatureModel model = getFeatureModel();
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -239,9 +245,11 @@ aspect ExtendedTypeCheck {
 		/* just one target */
 		if (declsAndTargetHostTypes.keySet().size() == 1) {
 			ASTNode decl = declsAndTargetHostTypes.keySet().iterator().next();
-			String declString = decl.toString();
 			int toFeatureID = decl.featureID();
 			TypeDecl targetHostType = (TypeDecl) declsAndTargetHostTypes.get(decl).iterator().next();
+			ASTNode outputDecl = outputDeclsAndTargetHostTypes.keySet().iterator().next();
+			String outputDeclString = outputDecl.toString();
+			TypeDecl outputTargetHostType = (TypeDecl) outputDeclsAndTargetHostTypes.get(outputDecl).iterator().next();
 			String declFirstLine;
 			if (isTypeAccess) {
 				/* <package name (default:"(default package)")>.<type name> */
@@ -249,8 +257,8 @@ aspect ExtendedTypeCheck {
 						? targetHostType.packageName() 
 						: "(default package)" ) + "." + targetHostType.name();
 			} else {
-				declFirstLine = ( declString.indexOf("\n") == -1 ? declString
-						: declString.substring(0, declString.indexOf("\n")) + " ... }" );
+				declFirstLine = ( outputDeclString.indexOf("\n") == -1 ? outputDeclString
+						: outputDeclString.substring(0, outputDeclString.indexOf("\n")) + " ... }" );
 			}
 			/* both features present? */
 			if ((fromFeatureID != -1) && (toFeatureID != -1)) {
@@ -276,15 +284,60 @@ aspect ExtendedTypeCheck {
 					if (never(dep, fromFeature, toFeature)) {
 						StringBuilder sb = new StringBuilder();
 						sb.append("never-Beziehung:");
-						sb.append("\nFeature ");
-						sb.append(fromFeature.getName());
-						sb.append(" greift ");
-						sb.append(targetStructure);
-						sb.append("\n  ");
-						sb.append(declFirstLine);
-						sb.append("\ndes Features ");
-						sb.append(toFeature.getName());
-						sb.append(" zu.\nDie Features ");
+						if (state == FIRST_ROUND) {
+							sb.append("\nDas Feature ");
+							sb.append(fromFeature.getName());
+							sb.append(" greift ");
+							sb.append(targetStructure);
+							sb.append("\n  ");
+							sb.append(declFirstLine);
+							sb.append("\ndes Features ");
+							sb.append(toFeature.getName());
+							sb.append(" zu.\n");
+						} else {
+							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+								sb.append("\nDie Klasse ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append("\nDas Interface ");
+							}
+							sb.append(sourceHostType.name() + " des Features ");
+							sb.append(fromFeature.getName());
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append(" greift als Unterklasse der Klasse ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append(" greift als Implementierung des Interfaces ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append(" greift als Sub-Interface des Interfaces ");
+							}
+							sb.append(outputTargetHostType.name() + " ");
+							sb.append(targetStructure);
+							sb.append("\n  ");
+							sb.append(declFirstLine);
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append("\nder Klasse ");
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+								sb.append("\ndes Interfaces ");
+							}
+							sb.append(outputTargetHostType.name() + " zu.\n");
+							sb.append("Die Information, dass ");
+							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+								sb.append("die Klasse ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append("das Interface ");
+							}
+							sb.append(sourceHostType.name());
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append(" eine Unterklasse der Klasse ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append(" eine Implementierung des Interfaces ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append(" ein Sub-Interface des Interfaces ");
+							}
+							sb.append(outputTargetHostType.name());
+							sb.append(" ist, ist nur im Feature ");
+							sb.append(toFeature.getName() + " vorhanden.\n");
+						}
+						sb.append("Die Features ");
 						sb.append(fromFeature.getName());
 						sb.append(" und ");
 						sb.append(toFeature.getName());
@@ -302,16 +355,60 @@ aspect ExtendedTypeCheck {
 					if (maybe(dep, fromFeature, toFeature)) {
 						StringBuilder sb = new StringBuilder();
 						sb.append("maybe-Beziehung:");
-						sb.append("\nFeature ");
-						sb.append(fromFeature.getName());
-						sb.append(" greift ");
-						sb.append(targetStructure);
-						sb.append("\n  ");
-						sb.append(declFirstLine);
-						sb.append("\ndes Features ");
-						sb.append(toFeature.getName());
-						sb.append(" zu.\n");
-						sb.append("Das Ziel-Feature ");
+						if (state == FIRST_ROUND) {
+							sb.append("\nDas Feature ");
+							sb.append(fromFeature.getName());
+							sb.append(" greift ");
+							sb.append(targetStructure);
+							sb.append("\n  ");
+							sb.append(declFirstLine);
+							sb.append("\ndes Features ");
+							sb.append(toFeature.getName());
+							sb.append(" zu.\n");
+						} else {
+							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+								sb.append("\nDie Klasse ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append("\nDas Interface ");
+							}
+							sb.append(sourceHostType.name() + " des Features ");
+							sb.append(fromFeature.getName());
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append(" greift als Unterklasse der Klasse ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append(" greift als Implementierung des Interfaces ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append(" greift als Sub-Interface des Interfaces ");
+							}
+							sb.append(outputTargetHostType.name() + " ");
+							sb.append(targetStructure);
+							sb.append("\n  ");
+							sb.append(declFirstLine);
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append("\nder Klasse ");
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+								sb.append("\ndes Interfaces ");
+							}
+							sb.append(outputTargetHostType.name() + " zu.\n");
+							sb.append("Die Information, dass ");
+							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+								sb.append("die Klasse ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append("das Interface ");
+							}
+							sb.append(sourceHostType.name());
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append(" eine Unterklasse der Klasse ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append(" eine Implementierung des Interfaces ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append(" ein Sub-Interface des Interfaces ");
+							}
+							sb.append(outputTargetHostType.name());
+							sb.append(" ist, ist nur im Feature ");
+							sb.append(toFeature.getName() + " vorhanden.\n");
+						}
+						sb.append("Das Feature ");
 						sb.append(toFeature.getName());
 						sb.append(" ist aber nicht in jeder ");
 						sb.append("moeglichen validen Auswahl vorhanden.\n");
@@ -325,7 +422,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* more than one target */
 		} else if (declsAndTargetHostTypes.keySet().size() > 1) {
-			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();	
 			HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
 			for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter.hasNext(); ) {
 				ASTNode var = (ASTNode) iter.next();
@@ -343,6 +440,23 @@ aspect ExtendedTypeCheck {
 							: declString.substring(0, declString.indexOf("\n")) + " ... }" );
 				}
 				mapDecls.put(var.featureID(), declFirstLine);
+			}
+			HashMap<Integer, String> outputMapDecls = new HashMap<Integer, String>();
+			for (Iterator iter = outputDeclsAndTargetHostTypes.keySet().iterator(); iter.hasNext(); ) {
+				ASTNode outputVar = (ASTNode) iter.next(); 
+				TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes.get(outputVar);
+				String declFirstLine;
+				if (isTypeAccess) {
+					/* <package name (default: "(default package)")>.<type name> */
+					declFirstLine = (outputTargetHostType.packageName() != "" 
+							? outputTargetHostType.packageName() 
+							: "(default package)" ) + "." + outputTargetHostType.name();
+				} else {
+					String declString = outputVar.toString();
+					declFirstLine = ( declString.indexOf("\n") == -1 ? declString
+							: declString.substring(0, declString.indexOf("\n")) + " ... }" );
+				}
+				outputMapDecls.put(outputVar.featureID(), declFirstLine);
 			}
 			Feature fromFeature = listFeatures.get(fromFeatureID);
 			/* list of set of target features */
@@ -374,17 +488,61 @@ aspect ExtendedTypeCheck {
 					sb.append(" optionale Ziele ");
 					sb.append("(es kann eine valide Auswahl geben, "
 							+ "in der alle diese Ziele nicht vorhanden sind):\n");
-					sb.append("Feature ");
-					sb.append(fromFeature.getName());
-					sb.append(" zielt ");
-					sb.append(targetStructure);
-					sb.append(" folgender Features:\n");
-					for (int toFeatureID : toFeatureIDs) {
-						sb.append(listFeatures.get(toFeatureID).getName());
-						sb.append(":\t");
-						String decl = mapDecls.get(toFeatureID);
-						sb.append(decl);
-						sb.append("\n");
+					if (state == FIRST_ROUND) {
+						sb.append("Feature ");
+						sb.append(fromFeature.getName());
+						sb.append(" zielt ");
+						sb.append(targetStructure);
+						sb.append(" folgender Features:\n");
+						for (int toFeatureID : mapDecls.keySet()) {				
+							String decl = mapDecls.get(toFeatureID);
+							sb.append(decl);
+							sb.append("   :   ");
+							sb.append(listFeatures.get(toFeatureID).getName());					
+							sb.append("\n");
+						}
+					} else {
+						if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+							sb.append("Die Klasse ");
+						} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+							sb.append("Das Interface ");
+						}
+						sb.append(sourceHostType.name() + " des Features ");
+						sb.append(fromFeature.getName());
+						sb.append(" greift:\n");
+						for (int toFeatureID : mapDecls.keySet()) {
+							sb.append("- im Feature ");
+							sb.append(listFeatures.get(toFeatureID).getName());
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append(" als Unterklasse der Klasse ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append(" als Implementierung des Interfaces ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append(" als Sub-Interface des Interfaces ");
+							}
+							sb.append(mapDecls.get(toFeatureID));						
+							sb.append(" " + targetStructure + "\n     ");
+							sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator().next()));
+							if (state == CLASS_EXTENDS_CLASS) {
+								sb.append("\n   der Klasse ");
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+								sb.append("\n   des Interfaces ");
+							}
+							sb.append(mapDecls.get(toFeatureID) + " zu.\n");
+						}
+						sb.append("Es kann eine valide Auswahl geben, in der die Features ");
+						int i = mapDecls.keySet().size();
+						int j = 1;
+						for (int toFeatureID : mapDecls.keySet()) {
+							sb.append(listFeatures.get(toFeatureID).getName());
+							if ((j + 1) < i) {
+								sb.append(", ");
+							} else if ((j + 1) == i) {
+								sb.append(" und ");
+							}
+							j++;
+						}
+						sb.append(" alle nicht vorhanden sind.");
 					}
 					if (isTypeAccess) {
 						typeError(sbtei.toString(), sb.toString());
@@ -482,10 +640,8 @@ aspect ExtendedTypeCheck {
 										}
 										/* check for SPL errors */
 										addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-												"mittels nicht immer vorhandener extends-Information "
-														+ targetStructure + " im Typ "
-														+ targetHostType.name().toString(), false,
-												sourceHostType, true);
+												targetStructure, false,
+												sourceHostType, true, CLASS_EXTENDS_CLASS, outputDeclsAndTargetHostTypes);
 									}
 								}
 							}
@@ -512,10 +668,8 @@ aspect ExtendedTypeCheck {
 							if (!(featuresWithImplementInfo.contains(fromFeatureID))) {
 								/* check for SPL errors */
 								addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-										"mittels nicht immer vorhandener implements-Information "
-												+ targetStructure + " im Typ "
-												+ targetHostType.name().toString(), false,
-										sourceHostType, true);
+										targetStructure, false,
+										sourceHostType, true, CLASS_IMPLEMENTS_INTERFACE, outputDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -552,10 +706,8 @@ aspect ExtendedTypeCheck {
 							if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
 								/* check for SPL errors */
 								addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-										"mittels nicht immer vorhandener extends-Information "
-												+ targetStructure + " im Typ "
-												+ targetHostType.name().toString(), false,
-										sourceHostType, true);
+										targetStructure, false,
+										sourceHostType, true, INTERFACE_EXTENDS_INTERFACE, outputDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -576,7 +728,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf das Feld", false,
-					hostType(), false);
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
 		}
 	}
 
@@ -613,7 +765,7 @@ aspect ExtendedTypeCheck {
 			s.append(" auf die Methode");
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false);
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
 		} else {
 			/* get all methods with the same signature as the needed method
 			 * in this type */
@@ -626,7 +778,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf die Methode",
-					false, hostType(), false);
+					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
 		}
 	}
 
@@ -685,6 +837,6 @@ aspect ExtendedTypeCheck {
 		}
 		/* check for SPL errors */
 		addSplErrors(featureID(), declsAndTargetHostTypes, "auf den Konstruktor",
-				false, hostType(), false);
+				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
 	}
 }
