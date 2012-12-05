@@ -15,10 +15,14 @@ public class TypeErrorInfo {
 	/* source file names and line numbers of accesses of a certain type */
 	private HashSet<String> accessSourceInfo = new HashSet<String>();
 	
+	/* is the access going to intern (access without a dot)? */
+	private boolean isUndottedAccess;
+	
 	public TypeErrorInfo(SimpleSet decls, 
-			HashSet<String> accessSourceInfo) {
+			HashSet<String> accessSourceInfo, boolean isUndottedAccess) {
 		this.decls = decls;
 		this.accessSourceInfo = accessSourceInfo;
+		this.isUndottedAccess = isUndottedAccess;
 	}
 
 	public SimpleSet getDecls() {
@@ -35,5 +39,13 @@ public class TypeErrorInfo {
 
 	public void setAccessSourceInfo(HashSet<String> accessSourceInfo) {
 		this.accessSourceInfo = accessSourceInfo;
+	}
+
+	public boolean isUndottedAccess() {
+		return isUndottedAccess;
+	}
+
+	public void setUndottedAccess(boolean isUndottedAccess) {
+		this.isUndottedAccess = isUndottedAccess;
 	}
 }

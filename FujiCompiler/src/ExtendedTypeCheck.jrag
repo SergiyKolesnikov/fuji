@@ -148,7 +148,8 @@ aspect ExtendedTypeCheck {
 								  declsAndTargetHostType.put((ASTNode) iter.next(), targetHostType);
 								}
 								/* check for SPL errors */
-								addSplErrors(i, declsAndTargetHostType, "auf den Typ", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType);
+								addSplErrors(i, declsAndTargetHostType, "auf den Typ", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
+										innerTypeAndInfo.get(targetHostType).isUndottedAccess());
 							}
 						}
 					}
@@ -231,7 +232,8 @@ aspect ExtendedTypeCheck {
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
-			boolean secondRoundDone, int state, HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes) {
+			boolean secondRoundDone, int state, HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
+			boolean isUndottedAccess) {
 		FeatureModel model = getFeatureModel();
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
@@ -621,28 +623,16 @@ aspect ExtendedTypeCheck {
 							/* is the extends info of this targetHostType missing
 							 * in this fromFeature? */
 							if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-								/* error only if different packages and protected modifier */
-								if (!(sourceHostType.packageName().equals(targetHostType.packageName()))) {
-									boolean isProtected = false;
-									for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
-										if (decl instanceof FieldDeclaration) {
-											isProtected |= ((FieldDeclaration) decl).getModifiers().isProtected();
-										} else if (decl instanceof MethodDecl) {
-											isProtected |= ((MethodDecl) decl).getModifiers().isProtected();
-										} else {
-											isProtected |= targetHostType.getModifiers().isProtected();
-										}
+								/* error only if internal access */
+								if (isUndottedAccess) {
+									HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+									for (Access ac : accesses) {
+										accessesAndTargetHostTypes.put(ac, ac.hostType());
 									}
-									if (isProtected) {
-										HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-										for (Access ac : accesses) {
-											accessesAndTargetHostTypes.put(ac, ac.hostType());
-										}
-										/* check for SPL errors */
-										addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-												targetStructure, false,
-												sourceHostType, true, CLASS_EXTENDS_CLASS, outputDeclsAndTargetHostTypes);
-									}
+									/* check for SPL errors */
+									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
+											targetStructure, false,
+											sourceHostType, true, CLASS_EXTENDS_CLASS, outputDeclsAndTargetHostTypes, isUndottedAccess);
 								}
 							}
 						}
@@ -666,10 +656,13 @@ aspect ExtendedTypeCheck {
 							}
 							/* is the implements info missing in this fromFeature? */
 							if (!(featuresWithImplementInfo.contains(fromFeatureID))) {
-								/* check for SPL errors */
-								addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-										targetStructure, false,
-										sourceHostType, true, CLASS_IMPLEMENTS_INTERFACE, outputDeclsAndTargetHostTypes);
+								/* error only if internal access */
+								if (isUndottedAccess) {
+									/* check for SPL errors */
+									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
+											targetStructure, false,
+											sourceHostType, true, CLASS_IMPLEMENTS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess);
+								}
 							}
 						}
 					}
@@ -704,10 +697,13 @@ aspect ExtendedTypeCheck {
 							/* is the extends info of this targetHostType missing
 							 * in this fromFeature? */
 							if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-								/* check for SPL errors */
-								addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-										targetStructure, false,
-										sourceHostType, true, INTERFACE_EXTENDS_INTERFACE, outputDeclsAndTargetHostTypes);
+								/* error only if internal access */
+								if (isUndottedAccess) {
+									/* check for SPL errors */
+									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
+											targetStructure, false,
+											sourceHostType, true, INTERFACE_EXTENDS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess);
+								}
 							}
 						}
 					}
@@ -728,7 +724,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf das Feld", false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()));
 		}
 	}
 
@@ -765,7 +761,7 @@ aspect ExtendedTypeCheck {
 			s.append(" auf die Methode");
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()));
 		} else {
 			/* get all methods with the same signature as the needed method
 			 * in this type */
@@ -778,7 +774,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf die Methode",
-					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
+					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()));
 		}
 	}
 
@@ -809,7 +805,7 @@ aspect ExtendedTypeCheck {
 				}
 				TypeErrorInfo tei = innerTypeAndInfo.get(decl().hostType());
 				if (tei == null) {
-					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>());
+					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), !(hasPrevExpr()));
 				} else {
 					for (Iterator iter = tei.getDecls().iterator(); iter.hasNext(); ) {
 						listDecls.add((ConstructorDecl) iter.next());
@@ -837,6 +833,6 @@ aspect ExtendedTypeCheck {
 		}
 		/* check for SPL errors */
 		addSplErrors(featureID(), declsAndTargetHostTypes, "auf den Konstruktor",
-				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes);
+				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()));
 	}
 }
