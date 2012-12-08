@@ -1,8 +1,7 @@
 package basic;
 
 public class B {
-	protected static int i = 42;
-	protected void bar() {
-		/* ... */
-	}
+	public static int i = 42;
+	public void bar() {}
+	public static void foobar() {}
 }
