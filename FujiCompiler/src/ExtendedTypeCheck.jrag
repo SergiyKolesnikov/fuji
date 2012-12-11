@@ -837,9 +837,43 @@ aspect ExtendedTypeCheck {
 				BodyDecl decl = (BodyDecl) iter.next();
 				declsAndTargetHostTypes.put(decl, decl.hostType());
 			}
+			TypeDecl narrowType = hostType();
+			boolean isThisAccess = false;
+			if (hasPrevExpr()) {
+				Expr expr = prevExpr();
+				narrowType = expr.type();
+				isThisAccess = (expr instanceof ThisAccess);
+				if (expr instanceof VarAccess) {
+					VarAccess varAc = (VarAccess) expr;
+					if (varAc.decl() instanceof VariableDeclaration) {
+						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
+						if (vd.hasInit()) {
+							narrowType = vd.getInit().type();
+						} /* else: TODO */
+					} else if (varAc.decl() instanceof FieldDeclaration) {
+						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
+						if (fd.hasInit()) {
+							narrowType = fd.getInit().type();
+						}
+					}
+				} else if (expr instanceof TypeAccess) {
+					TypeAccess typeAc = (TypeAccess) expr;
+					narrowType = typeAc.type();
+				} else if (expr instanceof ClassInstanceExpr) {
+					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
+					narrowType = cie.type();
+				} else if (expr instanceof ParExpr) {
+					ParExpr parExpr = (ParExpr) expr;
+					narrowType = parExpr.type();
+					if (parExpr.getExpr() instanceof CastExpr) {
+						CastExpr ce = (CastExpr) parExpr.getExpr();
+						narrowType = ce.getExpr().type();
+					}
+				}
+			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf das Feld", false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType());
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess), narrowType);
 		}
 	}
 
@@ -896,10 +930,10 @@ aspect ExtendedTypeCheck {
 				if (expr instanceof VarAccess) {
 					VarAccess varAc = (VarAccess) expr;
 					if (varAc.decl() instanceof VariableDeclaration) {
-					VariableDeclaration vd = (VariableDeclaration) varAc.decl();
-					if (vd.hasInit()) {
-						narrowType = vd.getInit().type();
-					} /* else: TODO */
+						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
+						if (vd.hasInit()) {
+							narrowType = vd.getInit().type();
+						} /* else: TODO */
 					} else if (varAc.decl() instanceof FieldDeclaration) {
 						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
 						if (fd.hasInit()) {
@@ -924,55 +958,6 @@ aspect ExtendedTypeCheck {
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "auf die Methode",
 					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess), narrowType);
-//			/* DEBUG */
-//			FeatureModel model = getFeatureModel();
-//			/* get features */
-//			ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-//			listFeatures.addAll(model.getConcreteFeatures());
-//			MethodDecl decl = (MethodDecl) declsAndTargetHostTypes.keySet().iterator().next();
-//			System.out.println("method access: Feature: " + listFeatures.get(featureID()).getName() + ", HostType: " + hostType().name() + ", decl: " 
-//			  + decl.signature() + ", targetHostType: " + declsAndTargetHostTypes.get(decl).name()
-//			  + ", prevExprType: " + prevExpr().type().name() + ", prevExprClass: " + prevExpr().getClass());
-//			/* /DEBUG */
-//			/* TEST */
-//			if (hasPrevExpr()) {
-//				Expr expr = prevExpr();
-//				TypeDecl narrowType = expr.type();
-//				if (expr instanceof VarAccess) {
-//					VarAccess varAc = (VarAccess) expr;
-//					if (varAc.decl() instanceof VariableDeclaration) {
-//					VariableDeclaration vd = (VariableDeclaration) varAc.decl();
-//					if (vd.hasInit()) {
-//						narrowType = vd.getInit().type();
-//						System.out.println("VariableDeclaration: " + narrowType.name());
-//					} /* else: TODO */
-//					} else if (varAc.decl() instanceof FieldDeclaration) {
-//						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
-//						if (fd.hasInit()) {
-//							narrowType = fd.getInit().type();
-//							System.out.println("FieldDeclaration: " + narrowType.name());
-//						}
-//					}
-//				} else if (expr instanceof TypeAccess) {
-//					TypeAccess typeAc = (TypeAccess) expr;
-//					narrowType = typeAc.type();
-//					System.out.println("TypeAccess: " + narrowType.name());
-//				} else if (expr instanceof ClassInstanceExpr) {
-//					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
-//					narrowType = cie.type();
-//					System.out.println("ClassInstanceExpr: " + narrowType.name());
-//				} else if (expr instanceof ParExpr) {
-//					ParExpr parExpr = (ParExpr) expr;
-//					narrowType = parExpr.type();
-//					System.out.println("ParExpr: " + narrowType.name());
-//					if (parExpr.getExpr() instanceof CastExpr) {
-//						CastExpr ce = (CastExpr) parExpr.getExpr();
-//						narrowType = ce.getExpr().type();
-//						System.out.println("CastExpr: " + narrowType.name());
-//					}
-//				}
-//			}
-//			/* /TEST */
 		}
 	}
 
@@ -1002,8 +987,13 @@ aspect ExtendedTypeCheck {
 					}
 				}
 				TypeErrorInfo tei = innerTypeAndInfo.get(decl().hostType());
+				boolean isThisAccess = false;
+				if (hasPrevExpr()) {
+					Expr expr = prevExpr();
+					isThisAccess = (expr instanceof ThisAccess);
+				}
 				if (tei == null) {
-					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), !(hasPrevExpr()));
+					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), (!(hasPrevExpr()) || isThisAccess));
 				} else {
 					for (Iterator iter = tei.getDecls().iterator(); iter.hasNext(); ) {
 						listDecls.add((ConstructorDecl) iter.next());
@@ -1029,8 +1019,61 @@ aspect ExtendedTypeCheck {
 				}
 			}
 		}
+		boolean isThisAccess = false;
+		if (hasPrevExpr()) {
+			Expr expr = prevExpr();
+			isThisAccess = (expr instanceof ThisAccess);
+		}
 		/* check for SPL errors */
 		addSplErrors(featureID(), declsAndTargetHostTypes, "auf den Konstruktor",
-				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType());
+				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess), decl().hostType());
+	}
+	
+	public void FieldDeclaration.splTypeCheck() {
+		System.out.println("FieldDeclaration");
+  	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+  	if (hasInit()) {
+  		if (getInit() instanceof ClassInstanceExpr) {
+  			TypeDecl sourceType = getInit().type();
+  			TypeDecl targetType = type();
+  			if (!(sourceType.equals(targetType))) {
+  				declsAndTargetHostTypes.put(getInit(), targetType);
+  				/* check for SPL errors */
+  				addSplErrors(featureID(), declsAndTargetHostTypes, "auf eine Instanz",
+  						false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, false, sourceType);
+  			}
+  		}
+  	}
+  }
+	
+	public void VariableDeclaration.splTypeCheck() {
+		System.out.println("VariableDeclaration");
+  	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+  	if (hasInit()) {
+  		if (getInit() instanceof ClassInstanceExpr) {
+  			TypeDecl sourceType = getInit().type();
+  			TypeDecl targetType = type();
+  			if (!(sourceType.equals(targetType))) {
+  				declsAndTargetHostTypes.put(getInit(), targetType);
+  				/* check for SPL errors */
+  				addSplErrors(featureID(), declsAndTargetHostTypes, "auf eine Instanz",
+  						false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, false, sourceType);
+  			}
+  		}
+  	}
+  }
+	
+	public void AssignSimpleExpr.splTypeCheck() {
+		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+		if (getSource() instanceof ClassInstanceExpr) {
+			TypeDecl sourceType = getSource().type();
+			TypeDecl targetType = getDest().type();
+			if (!(sourceType.equals(targetType))) {
+				declsAndTargetHostTypes.put(getSource(), targetType);
+				/* check for SPL errors */
+				addSplErrors(featureID(), declsAndTargetHostTypes, "auf eine Instanz",
+						false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, false, sourceType);
+			}
+		}
 	}
 }
