@@ -1169,17 +1169,22 @@ aspect ExtendedTypeCheck {
 			if (!(accessHostTypes.isEmpty())) {
 				if (accessHostTypes.contains(topType)) {
 					/* direct super type */
-					superTypes.add(topType)
+					superTypes.add(topType);
 					paths.put(bottomType, superTypes);
 				} else {
+					boolean nextStepOK = false;
 					for (TypeDecl td : accessHostTypes) {
 						/* recursive step */
 						HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
 						if (!(nextStep.isEmpty())) {
+							nextStepOK = true;
 							paths.putAll(nextStep);
-							/* add beginning of path */
-							paths.put(bottomType, td);
+							superTypes.add(td);
 						}
+					}
+					if (nextStepOK) {
+						/* add beginning of path */
+						paths.put(bottomType, superTypes);
 					}
 				}		
 			}
