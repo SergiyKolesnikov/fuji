@@ -1030,7 +1030,6 @@ aspect ExtendedTypeCheck {
 	}
 	
 	public void FieldDeclaration.splTypeCheck() {
-		System.out.println("FieldDeclaration");
   	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
   	if (hasInit()) {
   		if (getInit() instanceof ClassInstanceExpr) {
@@ -1047,7 +1046,6 @@ aspect ExtendedTypeCheck {
   }
 	
 	public void VariableDeclaration.splTypeCheck() {
-		System.out.println("VariableDeclaration");
   	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
   	if (hasInit()) {
   		if (getInit() instanceof ClassInstanceExpr) {
@@ -1075,5 +1073,117 @@ aspect ExtendedTypeCheck {
 						false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, false, sourceType);
 			}
 		}
+	}
+	
+	public boolean TypeDecl.isInTypeHierarchy(TypeDecl topType) {
+		boolean isInTypeHierarchy = false;
+		if (this.equals(topType)) {
+			/* relation is reflexive */
+			isInTypeHierarchy = true;
+		} else {
+			HashSet<Access> accesses = new HashSet<Access>();
+			if (this instanceof ClassDecl) {
+				ClassDecl cd = (ClassDecl) this;
+				/* get extends information */
+				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
+					accesses.addAll(cd.getPreservedSuperClassAccess());
+				}
+				if (cd.hasSuperClassAccess()) {
+					accesses.add(cd.getSuperClassAccess());
+				}
+				/* get implements information */
+				if (cd.getNumImplements() != 0) {
+					for (Access ac : cd.getImplementsList()) {
+						accesses.add(ac);
+					}
+				}
+			} else if (this instanceof InterfaceDecl) {
+				InterfaceDecl id = (InterfaceDecl) this;
+				/* get extends information*/
+				if (id.getNumSuperInterfaceId() != 0) {
+					for (Access ac : id.getSuperInterfaceIdList()) {
+						accesses.add(ac);
+					}
+				}
+			}
+			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
+			if (!(accesses.isEmpty())) {
+				for (Access ac : accesses) {
+					accessHostTypes.add(ac.hostType());
+				}
+			}
+			if (!(accessHostTypes.isEmpty())) {
+				if (accessHostTypes.contains(topType)) {
+					/* found in this step */
+					isInTypeHierarchy = true;
+				} else {
+					for (TypeDecl td : accessHostTypes) {
+						/* recursive step */
+						isInTypeHierarchy |= td.isInTypeHierarchy(topType);
+					}
+				}		
+			}
+		}
+		return isInTypeHierarchy;
+	}
+	
+	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
+		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
+		HashSet<TypeDecl> superTypes = new HashSet<TypeDecl>();
+		if (bottomType.equals(topType)) {
+			/* relation is reflexive, neccessary ? */
+			superTypes.add(topType);
+			paths.put(bottomType, superTypes);
+		} else {
+			HashSet<Access> accesses = new HashSet<Access>();
+			if (bottomType instanceof ClassDecl) {
+				ClassDecl cd = (ClassDecl) bottomType;
+				/* get extends information */
+				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
+					accesses.addAll(cd.getPreservedSuperClassAccess());
+				}
+				if (cd.hasSuperClassAccess()) {
+					accesses.add(cd.getSuperClassAccess());
+				}
+				/* get implements information */
+				if (cd.getNumImplements() != 0) {
+					for (Access ac : cd.getImplementsList()) {
+						accesses.add(ac);
+					}
+				}
+			} else if (bottomType instanceof InterfaceDecl) {
+				InterfaceDecl id = (InterfaceDecl) bottomType;
+				/* get extends information */
+				if (id.getNumSuperInterfaceId() != 0) {
+					for (Access ac : id.getSuperInterfaceIdList()) {
+						accesses.add(ac);
+					}
+				}
+			}
+			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
+			if (!(accesses.isEmpty())) {
+				for (Access ac : accesses) {
+					accessHostTypes.add(ac.hostType());
+				}
+			}
+			if (!(accessHostTypes.isEmpty())) {
+				if (accessHostTypes.contains(topType)) {
+					/* direct super type */
+					superTypes.add(topType)
+					paths.put(bottomType, superTypes);
+				} else {
+					for (TypeDecl td : accessHostTypes) {
+						/* recursive step */
+						HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
+						if (!(nextStep.isEmpty())) {
+							paths.putAll(nextStep);
+							/* add beginning of path */
+							paths.put(bottomType, td);
+						}
+					}
+				}		
+			}
+		}
+		return paths;
 	}
 }
