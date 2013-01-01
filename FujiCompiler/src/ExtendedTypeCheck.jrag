@@ -232,7 +232,8 @@ aspect ExtendedTypeCheck {
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
-			boolean secondRoundDone, int state, HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
+			boolean secondRoundDone, int state,
+			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
 			boolean isUndottedAccess, TypeDecl narrowType) {
 		FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -242,16 +243,20 @@ aspect ExtendedTypeCheck {
 		listFeatures.addAll(model.getConcreteFeatures());
 		/* get targetHostTypes */
 		HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
-		for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter.hasNext(); ) {
-			TypeDecl targetHostType = declsAndTargetHostTypes.get((ASTNode) iter.next());
+		for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter
+				.hasNext();) {
+			TypeDecl targetHostType = declsAndTargetHostTypes.get((ASTNode) iter
+					.next());
 			targetHostTypes.add(targetHostType);
 		}
 		/* just one target */
 		if (declsAndTargetHostTypes.keySet().size() == 1) {
 			ASTNode decl = declsAndTargetHostTypes.keySet().iterator().next();
 			int toFeatureID = decl.featureID();
-			TypeDecl targetHostType = (TypeDecl) declsAndTargetHostTypes.get(decl).iterator().next();
-			ASTNode outputDecl = outputDeclsAndTargetHostTypes.keySet().iterator().next();
+			TypeDecl targetHostType = (TypeDecl) declsAndTargetHostTypes.get(decl)
+					.iterator().next();
+			ASTNode outputDecl = outputDeclsAndTargetHostTypes.keySet().iterator()
+					.next();
 			String outputDeclString = outputDecl.toString();
 			if (decl instanceof ConstructorDecl) {
 				ConstructorDecl cd = (ConstructorDecl) decl;
@@ -261,16 +266,17 @@ aspect ExtendedTypeCheck {
 					outputDeclString = s.toString() + cd.name() + "()";
 				}
 			}
-			TypeDecl outputTargetHostType = (TypeDecl) outputDeclsAndTargetHostTypes.get(outputDecl).iterator().next();
+			TypeDecl outputTargetHostType = (TypeDecl) outputDeclsAndTargetHostTypes
+					.get(outputDecl).iterator().next();
 			String declFirstLine;
 			if (isTypeAccess) {
 				/* <package name (default:"(default package)")>.<type name> */
-				declFirstLine = ( targetHostType.packageName() != "" 
-						? targetHostType.packageName() 
-						: "(default package)" ) + "." + targetHostType.name();
+				declFirstLine = (targetHostType.packageName() != "" ? targetHostType
+						.packageName() : "(default package)") + "." + targetHostType.name();
 			} else {
-				declFirstLine = ( outputDeclString.indexOf("\n") == -1 ? outputDeclString
-						: outputDeclString.substring(0, outputDeclString.indexOf("\n")) + " ... }" );
+				declFirstLine = (outputDeclString.indexOf("\n") == -1 ? outputDeclString
+						: outputDeclString.substring(0, outputDeclString.indexOf("\n"))
+								+ " ... }");
 			}
 			/* both features present? */
 			if ((fromFeatureID != -1) && (toFeatureID != -1)) {
@@ -278,19 +284,24 @@ aspect ExtendedTypeCheck {
 				if (fromFeatureID != toFeatureID) {
 					Feature fromFeature = listFeatures.get(fromFeatureID);
 					Feature toFeature = listFeatures.get(toFeatureID);
-					/* for TypeAccess: list all source file names and line numbers, where a
-					 * TypeAccess to a specific type takes place */
+					/*
+					 * for TypeAccess: list all source file names and line numbers, where
+					 * a TypeAccess to a specific type takes place
+					 */
 					StringBuilder sbtei = new StringBuilder();
 					if (isTypeAccess) {
-						TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(sourceHostType).get(targetHostType);
+						TypeErrorInfo tei = typeAccesses.get(fromFeatureID)
+								.get(sourceHostType).get(targetHostType);
 						for (String s : tei.getAccessSourceInfo()) {
 							sbtei.append(s);
 							sbtei.append("\n");
 						}
 						sbtei.setLength(sbtei.length() - 1);
 					}
-					/* fromFeature and toFeature cannot both occur in a valid product 
-					 * never-dep -> error */
+					/*
+					 * fromFeature and toFeature cannot both occur in a valid product
+					 * never-dep -> error
+					 */
 					if (never(dep, fromFeature, toFeature)) {
 						StringBuilder sb = new StringBuilder();
 						sb.append("never-Beziehung:");
@@ -305,7 +316,8 @@ aspect ExtendedTypeCheck {
 							sb.append(toFeature.getName());
 							sb.append(" zu.\n");
 						} else {
-							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+							if ((state == CLASS_EXTENDS_CLASS)
+									|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
 								sb.append("\nDie Klasse ");
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 								sb.append("\nDas Interface ");
@@ -325,12 +337,14 @@ aspect ExtendedTypeCheck {
 							sb.append(declFirstLine);
 							if (state == CLASS_EXTENDS_CLASS) {
 								sb.append("\nder Klasse ");
-							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
+									|| (state == INTERFACE_EXTENDS_INTERFACE)) {
 								sb.append("\ndes Interfaces ");
 							}
 							sb.append(outputTargetHostType.name() + " zu.\n");
 							sb.append("Die Information, dass ");
-							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+							if ((state == CLASS_EXTENDS_CLASS)
+									|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
 								sb.append("die Klasse ");
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 								sb.append("das Interface ");
@@ -360,8 +374,10 @@ aspect ExtendedTypeCheck {
 							error(sb.toString());
 						}
 					}
-					/* toFeature can, but doesn't have to occur in a valid product
-					 * maybe-dep -> error */
+					/*
+					 * toFeature can, but doesn't have to occur in a valid product
+					 * maybe-dep -> error
+					 */
 					if (maybe(dep, fromFeature, toFeature)) {
 						StringBuilder sb = new StringBuilder();
 						sb.append("maybe-Beziehung:");
@@ -376,7 +392,8 @@ aspect ExtendedTypeCheck {
 							sb.append(toFeature.getName());
 							sb.append(" zu.\n");
 						} else {
-							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+							if ((state == CLASS_EXTENDS_CLASS)
+									|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
 								sb.append("\nDie Klasse ");
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 								sb.append("\nDas Interface ");
@@ -396,12 +413,14 @@ aspect ExtendedTypeCheck {
 							sb.append(declFirstLine);
 							if (state == CLASS_EXTENDS_CLASS) {
 								sb.append("\nder Klasse ");
-							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
+									|| (state == INTERFACE_EXTENDS_INTERFACE)) {
 								sb.append("\ndes Interfaces ");
 							}
 							sb.append(outputTargetHostType.name() + " zu.\n");
 							sb.append("Die Information, dass ");
-							if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+							if ((state == CLASS_EXTENDS_CLASS)
+									|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
 								sb.append("die Klasse ");
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 								sb.append("das Interface ");
@@ -432,18 +451,20 @@ aspect ExtendedTypeCheck {
 			}
 			/* more than one target */
 		} else if (declsAndTargetHostTypes.keySet().size() > 1) {
-			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();	
+			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
 			HashMap<Integer, String> mapDecls = new HashMap<Integer, String>();
-			for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter.hasNext(); ) {
+			for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter
+					.hasNext();) {
 				ASTNode var = (ASTNode) iter.next();
 				toFeatureIDs.add(var.featureID());
 				TypeDecl targetHostType = declsAndTargetHostTypes.get(var);
 				String declFirstLine;
 				if (isTypeAccess) {
 					/* <package name (default: "(default package)")>.<type name> */
-					declFirstLine = (targetHostType.packageName() != "" 
-							? targetHostType.packageName() 
-							: "(default package)" ) + "." + targetHostType.name();
+					declFirstLine = (targetHostType.packageName() != "" ? targetHostType
+							.packageName() : "(default package)")
+							+ "."
+							+ targetHostType.name();
 				} else {
 					String declString = var.toString();
 					if (var instanceof ConstructorDecl) {
@@ -454,21 +475,23 @@ aspect ExtendedTypeCheck {
 							declString = s.toString() + cd.name() + "()";
 						}
 					}
-					declFirstLine = ( declString.indexOf("\n") == -1 ? declString
-							: declString.substring(0, declString.indexOf("\n")) + " ... }" );
+					declFirstLine = (declString.indexOf("\n") == -1 ? declString
+							: declString.substring(0, declString.indexOf("\n")) + " ... }");
 				}
 				mapDecls.put(var.featureID(), declFirstLine);
 			}
 			HashMap<Integer, String> outputMapDecls = new HashMap<Integer, String>();
-			for (Iterator iter = outputDeclsAndTargetHostTypes.keySet().iterator(); iter.hasNext(); ) {
-				ASTNode outputVar = (ASTNode) iter.next(); 
-				TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes.get(outputVar);
+			for (Iterator iter = outputDeclsAndTargetHostTypes.keySet().iterator(); iter
+					.hasNext();) {
+				ASTNode outputVar = (ASTNode) iter.next();
+				TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes
+						.get(outputVar);
 				String declFirstLine;
 				if (isTypeAccess) {
 					/* <package name (default: "(default package)")>.<type name> */
-					declFirstLine = (outputTargetHostType.packageName() != "" 
-							? outputTargetHostType.packageName() 
-							: "(default package)" ) + "." + outputTargetHostType.name();
+					declFirstLine = (outputTargetHostType.packageName() != "" ? outputTargetHostType
+							.packageName() : "(default package)")
+							+ "." + outputTargetHostType.name();
 				} else {
 					String declString = outputVar.toString();
 					if (outputVar instanceof ConstructorDecl) {
@@ -479,8 +502,8 @@ aspect ExtendedTypeCheck {
 							declString = sb.toString() + cd.name() + "()";
 						}
 					}
-					declFirstLine = ( declString.indexOf("\n") == -1 ? declString
-							: declString.substring(0, declString.indexOf("\n")) + " ... }" );
+					declFirstLine = (declString.indexOf("\n") == -1 ? declString
+							: declString.substring(0, declString.indexOf("\n")) + " ... }");
 				}
 				outputMapDecls.put(outputVar.featureID(), declFirstLine);
 			}
@@ -493,11 +516,14 @@ aspect ExtendedTypeCheck {
 				toFeatureSet.add(toFeature);
 				toFeaturesList.add(toFeatureSet);
 			}
-			/* for TypeAccess: list all source file names and line numbers, where a
-			 * TypeAccess to a specific type takes place */
+			/*
+			 * for TypeAccess: list all source file names and line numbers, where a
+			 * TypeAccess to a specific type takes place
+			 */
 			StringBuilder sbtei = new StringBuilder();
 			if (isTypeAccess) {
-				TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(sourceHostType).get(targetHostTypes.iterator().next());
+				TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(sourceHostType)
+						.get(targetHostTypes.iterator().next());
 				for (String s : tei.getAccessSourceInfo()) {
 					sbtei.append(s);
 					sbtei.append("\n");
@@ -520,15 +546,16 @@ aspect ExtendedTypeCheck {
 						sb.append(" zielt ");
 						sb.append(targetStructure);
 						sb.append(" folgender Features:\n");
-						for (int toFeatureID : mapDecls.keySet()) {				
+						for (int toFeatureID : mapDecls.keySet()) {
 							String decl = mapDecls.get(toFeatureID);
 							sb.append(decl);
 							sb.append("   :   ");
-							sb.append(listFeatures.get(toFeatureID).getName());					
+							sb.append(listFeatures.get(toFeatureID).getName());
 							sb.append("\n");
 						}
 					} else {
-						if ((state == CLASS_EXTENDS_CLASS) || (state == CLASS_IMPLEMENTS_INTERFACE)) {
+						if ((state == CLASS_EXTENDS_CLASS)
+								|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
 							sb.append("Die Klasse ");
 						} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 							sb.append("Das Interface ");
@@ -546,12 +573,14 @@ aspect ExtendedTypeCheck {
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 								sb.append(" als Sub-Interface des Interfaces ");
 							}
-							sb.append(mapDecls.get(toFeatureID));						
+							sb.append(mapDecls.get(toFeatureID));
 							sb.append(" " + targetStructure + "\n     ");
-							sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator().next()));
+							sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
+									.next()));
 							if (state == CLASS_EXTENDS_CLASS) {
 								sb.append("\n   der Klasse ");
-							} else if ((state == CLASS_IMPLEMENTS_INTERFACE) || (state == INTERFACE_EXTENDS_INTERFACE)) {
+							} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
+									|| (state == INTERFACE_EXTENDS_INTERFACE)) {
 								sb.append("\n   des Interfaces ");
 							}
 							sb.append(mapDecls.get(toFeatureID) + " zu.\n");
@@ -571,11 +600,15 @@ aspect ExtendedTypeCheck {
 						sb.append(" alle nicht vorhanden sind.\n");
 						sb.append("Somit kann es sein, dass die Information, dass ");
 						if (state == CLASS_EXTENDS_CLASS) {
-							sb.append("die Klasse " + sourceHostType.name()  + " eine Unterklasse der oben genannten Klasse(n) ist, ");
+							sb.append("die Klasse " + sourceHostType.name()
+									+ " eine Unterklasse der oben genannten Klasse(n) ist, ");
 						} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
-							sb.append("die Klasse " + sourceHostType.name()  + " das/die oben genannte(n) Interface(s) implementiert, ");
+							sb.append("die Klasse " + sourceHostType.name()
+									+ " das/die oben genannte(n) Interface(s) implementiert, ");
 						} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-							sb.append("das Interface " + sourceHostType.name()  + " ein Sub-Interface des/der oben genannten Interfaces ist, ");
+							sb.append("das Interface "
+									+ sourceHostType.name()
+									+ " ein Sub-Interface des/der oben genannten Interfaces ist, ");
 						}
 						sb.append("insgesamt nicht zur Verfuegung steht.\n");
 					}
@@ -591,13 +624,18 @@ aspect ExtendedTypeCheck {
 		}
 		if (!(secondRoundDone)) {
 			/* second Round */
-
 			/*
 			 * bekannt: - eindeutiges Ziel (d.h. eine toFeatureID), d.h. nur eine
 			 * Implementierung des Typs, im dem sich das Ziel befindet - Quell- und
 			 * Ziel-Feature sind beide vorhanden - Quell- und Ziel-Feature sind
 			 * unterschiedlich
 			 */
+			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+			for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter
+					.hasNext();) {
+				ASTNode var = (ASTNode) iter.next();
+				toFeatureIDs.add(var.featureID());
+			}
 			/*
 			 * in jeweiliger Liste (extends, implements, throws) herausfinden, in
 			 * welchem Feature Information fehlt (unter der Bedingung, dass in den
@@ -619,210 +657,290 @@ aspect ExtendedTypeCheck {
 			 * Quellfeatures in maybe-, never-, bzw. bei mehreren Ziele in
 			 * mayBeMissing-Beziehung steht
 			 */
-			
 			if (!(isUndottedAccess)) {
-				/* no more interest in accessing host type, get narrow type */			
+				/* no more interest in accessing host type, get narrow type */
 				sourceHostType = narrowType;
 			}
-
-			/* access from a class: check extends and implements */
-			if (sourceHostType instanceof ClassDecl) {
-				ClassDecl sc = (ClassDecl) sourceHostType;
-				/* get all features of this class */
-				HashSet<Integer> allFeatures = new HashSet<Integer>();
-				for (BodyDecl bd : sc.getBodyDecls()) {
-					allFeatures.add(bd.featureID());
-				}
-				for (TypeDecl targetHostType : targetHostTypes) {
-					/* access to a class */
-					if (targetHostType instanceof ClassDecl) {
-						/* get all features with extends info of this targetHostType */
-						HashSet<Access> accesses = new HashSet<Access>();
-						if (!(sc.getPreservedSuperClassAccess().isEmpty())) {
-							for (Access ac : sc.getPreservedSuperClassAccess()) {
-								if (ac.type().equals(targetHostType)) {
-									/* remember featureID of this feature */
-									accesses.add(ac);
-								}
-							}
-						}
-						if (sc.hasSuperClassAccess()) {
-							if (sc.getSuperClassAccess().type().equals(targetHostType)) {
-								/* remember featureID of this feature */
-								accesses.add(sc.getSuperClassAccess());
-							}
-						}
-						/* if there is extends info of this targetHostType */
-						if (!(accesses.isEmpty())) {
-							HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
-							for (Access ac : accesses) {
-								featuresWithExtendInfo.add(ac.featureID());
-							}					
-							/* if this is an internal access, i.e. field/method/type 
-							 * should be accessible from within this class/interface,
-							 * check for missing extends information based on this feature
-							 * and sourceHostType */
-							if (isUndottedAccess) {														
-								/* is the extends info of this targetHostType missing
-								 * in this fromFeature? */
-								if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-									HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-									for (Access ac : accesses) {
-										accessesAndTargetHostTypes.put(ac, ac.hostType());
-									}
-									/* check for SPL errors */
-									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-											targetStructure, false,
-											sourceHostType, true, CLASS_EXTENDS_CLASS, outputDeclsAndTargetHostTypes, isUndottedAccess, sourceHostType);
-								} 
-							} else {
-								/* external access: start from all features of the 
-								 * needed narrow type that are in an always relation with 
-								 * the accessing feature (other errors are checked for
-								 * in the first round). */
-								HashSet<Integer> alwaysIDs = new HashSet<Integer>();
-								for (int featureID : allFeatures) {							
-									if (always(dep, listFeatures.get(fromFeatureID), listFeatures.get(featureID))) {
-										alwaysIDs.add(featureID);
-									}
-								}
-								/* for all these features: check if the extends info is missing 
-								 * in this feature */
-								for (int featureID : alwaysIDs) {
-									if (!(featuresWithExtendInfo.contains(featureID))) {
-										HashMap<ASTNode, TypeDecl> narrowTypeAccessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-										for (Access ac : accesses) {
-											narrowTypeAccessesAndTargetHostTypes.put(ac, ac.hostType());
-										}
-										/* check for SPL errors, narrow type */
-										addSplErrors(featureID, narrowTypeAccessesAndTargetHostTypes,
-												targetStructure, false,
-												narrowType, true, CLASS_EXTENDS_CLASS, outputDeclsAndTargetHostTypes, isUndottedAccess, narrowType);
-									}
-								}
-							}						
+			for (TypeDecl top : targetHostTypes) {
+				/* fromFeature present and no access to a standard type */
+				if (fromFeatureID != -1 && !(toFeatureIDs.contains(-1))) {
+					/* access to different host type */
+					if (!(sourceHostType.equals(top))) {
+						HashMap<TypeDecl, HashSet<TypeDecl>> paths = getTypeHierarchyPaths(
+								sourceHostType, top);
+						if (!(paths.isEmpty())) {
+							for (TypeDecl nextTd : paths.get(sourceHostType)) {
+								splErrorCheckAccessToSuperType(sourceHostType, nextTd, top, paths, 
+										fromFeatureID, targetStructure, outputDeclsAndTargetHostTypes,
+										isUndottedAccess, narrowType);
+							}							
 						}
 					}
-					/* access to interface */
-					if (targetHostType instanceof InterfaceDecl) {
-						/* get all features with implements info of this targetHostType */
-						HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-						if (sc.getNumImplements() != 0) {
-							for (Access ac : sc.getImplementsList()) {
-								if (ac.type().equals(targetHostType)) {
-									accessesAndTargetHostTypes.put(ac, ac.hostType());
-								}
+				}
+			}
+		}
+	}
+	
+	public void ASTNode.splErrorCheckAccessToSuperType(TypeDecl currentSourceHostType, 
+  		TypeDecl td, TypeDecl top, HashMap<TypeDecl, HashSet<TypeDecl>> paths, 
+  		int fromFeatureID, String targetStructure, 
+  		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
+  		boolean isUndottedAccess, TypeDecl narrowType) {
+  	FeatureModel model = getFeatureModel();
+		/* get dependencies from feature model */
+		FeatureDependencies dep = new FeatureDependencies(model);
+		/* get features */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		listFeatures.addAll(model.getConcreteFeatures());
+		/* access from a class: check extends and implements */
+		if (currentSourceHostType instanceof ClassDecl) {
+			ClassDecl sc = (ClassDecl) currentSourceHostType;
+			/* get all features of this class */
+			HashSet<Integer> allFeatures = new HashSet<Integer>();
+			for (BodyDecl bd : sc.getBodyDecls()) {
+				allFeatures.add(bd.featureID());
+			}
+			/* access to a class */
+			if (td instanceof ClassDecl) {
+				/* get all features with extends info of this targetHostType */
+				HashSet<Access> accesses = new HashSet<Access>();
+				if (!(sc.getPreservedSuperClassAccess().isEmpty())) {
+					for (Access ac : sc.getPreservedSuperClassAccess()) {
+						if (ac.type().equals(td)) {
+							/* remember featureID of this feature */
+							accesses.add(ac);
+						}
+					}
+				}
+				if (sc.hasSuperClassAccess()) {
+					if (sc.getSuperClassAccess().type().equals(td)) {
+						/* remember featureID of this feature */
+						accesses.add(sc.getSuperClassAccess());
+					}
+				}
+				/* if there is extends info of this targetHostType */
+				if (!(accesses.isEmpty())) {
+					HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
+					for (Access ac : accesses) {
+						featuresWithExtendInfo.add(ac.featureID());
+					}
+					/*
+					 * if this is an internal access, i.e. field/method/type
+					 * should be accessible from within this class/interface,
+					 * check for missing extends information based on this
+					 * feature and sourceHostType
+					 */
+					if (isUndottedAccess) {
+						/*
+						 * is the extends info of this targetHostType missing in
+						 * this fromFeature?
+						 */
+						if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
+							HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+							for (Access ac : accesses) {
+								accessesAndTargetHostTypes.put(ac, ac.hostType());
+							}
+							/* check for SPL errors */
+							addSplErrors(fromFeatureID,
+									accessesAndTargetHostTypes, targetStructure,
+									false, currentSourceHostType, true,
+									CLASS_EXTENDS_CLASS,
+									outputDeclsAndTargetHostTypes, isUndottedAccess,
+									currentSourceHostType);
+						}
+					} else {
+						/*
+						 * external access: start from all features of the
+						 * needed narrow type that are in an always relation
+						 * with the accessing feature (other errors are checked
+						 * for in the first round).
+						 */
+						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						for (int featureID : allFeatures) {
+							if (always(dep, listFeatures.get(fromFeatureID),
+									listFeatures.get(featureID))) {
+								alwaysIDs.add(featureID);
 							}
 						}
-						/* if there are features that implement the targetHostType */
-						if (!(accessesAndTargetHostTypes.keySet().isEmpty())) {
-							HashSet<Integer> featuresWithImplementInfo = new HashSet<Integer>();
-							for (ASTNode ac : accessesAndTargetHostTypes.keySet()) {
-								featuresWithImplementInfo.add(ac.featureID());
-							}
-							/* if this is an internal access, i.e. field/method/type 
-							 * should be accessible from within this class/interface,
-							 * check for missing implements information based on this feature
-							 * and sourceHostType */
-							if (isUndottedAccess) {														
-								/* is the implements info of this targetHostType missing
-								 * in this fromFeature? */
-								if (!(featuresWithImplementInfo.contains(fromFeatureID))) {
-									/* check for SPL errors */
-									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-											targetStructure, false,
-											sourceHostType, true, CLASS_IMPLEMENTS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess, sourceHostType);
-								} 
-							} else {
-								/* external access: start from all features of the 
-								 * needed narrow type that are in an always relation with 
-								 * the accessing feature (other errors are checked for
-								 * in the first round). */
-								HashSet<Integer> alwaysIDs = new HashSet<Integer>();
-								for (int featureID : allFeatures) {							
-									if (always(dep, listFeatures.get(fromFeatureID), listFeatures.get(featureID))) {
-										alwaysIDs.add(featureID);
-									}
+						/*
+						 * for all these features: check if the extends info is
+						 * missing in this feature
+						 */
+						for (int featureID : alwaysIDs) {
+							if (!(featuresWithExtendInfo.contains(featureID))) {
+								HashMap<ASTNode, TypeDecl> narrowTypeAccessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+								for (Access ac : accesses) {
+									narrowTypeAccessesAndTargetHostTypes.put(ac,
+											ac.hostType());
 								}
-								/* for all these features: check if the implements info is missing 
-								 * in this feature */
-								for (int featureID : alwaysIDs) {
-									if (!(featuresWithImplementInfo.contains(featureID))) {
-										/* check for SPL errors, narrow type */
-										addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-												targetStructure, false,
-												narrowType, true, CLASS_IMPLEMENTS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess, narrowType);
-									}
-								}
+								/* check for SPL errors, narrow type */
+								addSplErrors(featureID,
+										narrowTypeAccessesAndTargetHostTypes,
+										targetStructure, false, narrowType, true,
+										CLASS_EXTENDS_CLASS,
+										outputDeclsAndTargetHostTypes,
+										isUndottedAccess, narrowType);
 							}
 						}
 					}
 				}
 			}
-			/* access from an interface: check extends */
-			if (sourceHostType instanceof InterfaceDecl) {
-				for (TypeDecl targetHostType : targetHostTypes) {
-					if (targetHostType instanceof InterfaceDecl) {
-						InterfaceDecl si = (InterfaceDecl) sourceHostType;
-						/* get all features of this interface */
-						HashSet<Integer> allFeatures = new HashSet<Integer>();
-						for (BodyDecl bd : si.getBodyDecls()) {
-							allFeatures.add(bd.featureID());
+			/* access to interface */
+			if (td instanceof InterfaceDecl) {
+				/*
+				 * get all features with implements info of this
+				 * targetHostType
+				 */
+				HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+				if (sc.getNumImplements() != 0) {
+					for (Access ac : sc.getImplementsList()) {
+						if (ac.type().equals(td)) {
+							accessesAndTargetHostTypes.put(ac, ac.hostType());
 						}
-						/* get all feature with extends info of this targetHostType */
-						HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-						if (si.getNumSuperInterfaceId() != 0) {
-							for (Access ac : si.getSuperInterfaceIdList()) {
-								if (ac.type().equals(targetHostType)) {
-									/* remember featureID of this feature */
-									accessesAndTargetHostTypes.put(ac, ac.hostType());
-								}
+					}
+				}
+				/* if there are features that implement the targetHostType */
+				if (!(accessesAndTargetHostTypes.keySet().isEmpty())) {
+					HashSet<Integer> featuresWithImplementInfo = new HashSet<Integer>();
+					for (ASTNode ac : accessesAndTargetHostTypes.keySet()) {
+						featuresWithImplementInfo.add(ac.featureID());
+					}
+					/*
+					 * if this is an internal access, i.e. field/method/type
+					 * should be accessible from within this class/interface,
+					 * check for missing implements information based on this
+					 * feature and sourceHostType
+					 */
+					if (isUndottedAccess) {
+						/*
+						 * is the implements info of this targetHostType missing
+						 * in this fromFeature?
+						 */
+						if (!(featuresWithImplementInfo.contains(fromFeatureID))) {
+							/* check for SPL errors */
+							addSplErrors(fromFeatureID,
+									accessesAndTargetHostTypes, targetStructure,
+									false, currentSourceHostType, true,
+									CLASS_IMPLEMENTS_INTERFACE,
+									outputDeclsAndTargetHostTypes, isUndottedAccess,
+									currentSourceHostType);
+						}
+					} else {
+						/*
+						 * external access: start from all features of the
+						 * needed narrow type that are in an always relation
+						 * with the accessing feature (other errors are checked
+						 * for in the first round).
+						 */
+						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						for (int featureID : allFeatures) {
+							if (always(dep, listFeatures.get(fromFeatureID),
+									listFeatures.get(featureID))) {
+								alwaysIDs.add(featureID);
 							}
 						}
-						/* if there is extends info of this targetHostType */
-						if (!(accessesAndTargetHostTypes.keySet().isEmpty())) {
-							HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
-							for (ASTNode ac : accessesAndTargetHostTypes.keySet()) {
-								featuresWithExtendInfo.add(ac.featureID());
-							}
-							/* if this is an internal access, i.e. field/method/type 
-							 * should be accessible from within this class/interface,
-							 * check for missing extends information based on this feature
-							 * and sourceHostType */
-							if (isUndottedAccess) {														
-								/* is the extends info of this targetHostType missing
-								 * in this fromFeature? */
-								if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
-									/* check for SPL errors */
-									addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-											targetStructure, false,
-											sourceHostType, true, INTERFACE_EXTENDS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess, sourceHostType);
-								} 
-							} else {
-								/* external access: start from all features of the 
-								 * needed narrow type that are in an always relation with 
-								 * the accessing feature (other errors are checked for
-								 * in the first round). */
-								HashSet<Integer> alwaysIDs = new HashSet<Integer>();
-								for (int featureID : allFeatures) {							
-									if (always(dep, listFeatures.get(fromFeatureID), listFeatures.get(featureID))) {
-										alwaysIDs.add(featureID);
-									}
-								}
-								/* for all these features: check if the extends info is missing 
-								 * in this feature */
-								for (int featureID : alwaysIDs) {
-									if (!(featuresWithExtendInfo.contains(featureID))) {
-										/* check for SPL errors, narrow type */
-										addSplErrors(fromFeatureID, accessesAndTargetHostTypes,
-												targetStructure, false,
-												narrowType, true, INTERFACE_EXTENDS_INTERFACE, outputDeclsAndTargetHostTypes, isUndottedAccess, narrowType);
-									}
-								}
+						/*
+						 * for all these features: check if the implements info
+						 * is missing in this feature
+						 */
+						for (int featureID : alwaysIDs) {
+							if (!(featuresWithImplementInfo.contains(featureID))) {
+								/* check for SPL errors, narrow type */
+								addSplErrors(fromFeatureID,
+										accessesAndTargetHostTypes, targetStructure,
+										false, narrowType, true,
+										CLASS_IMPLEMENTS_INTERFACE,
+										outputDeclsAndTargetHostTypes,
+										isUndottedAccess, narrowType);
 							}
 						}
 					}
 				}
+			}
+		}
+		/* access from an interface: check extends */
+		if (currentSourceHostType instanceof InterfaceDecl) {
+			if (td instanceof InterfaceDecl) {
+				InterfaceDecl si = (InterfaceDecl) currentSourceHostType;
+				/* get all features of this interface */
+				HashSet<Integer> allFeatures = new HashSet<Integer>();
+				for (BodyDecl bd : si.getBodyDecls()) {
+					allFeatures.add(bd.featureID());
+				}
+				/* get all feature with extends info of this targetHostType */
+				HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+				if (si.getNumSuperInterfaceId() != 0) {
+					for (Access ac : si.getSuperInterfaceIdList()) {
+						if (ac.type().equals(td)) {
+							/* remember featureID of this feature */
+							accessesAndTargetHostTypes.put(ac, ac.hostType());
+						}
+					}
+				}
+				/* if there is extends info of this targetHostType */
+				if (!(accessesAndTargetHostTypes.keySet().isEmpty())) {
+					HashSet<Integer> featuresWithExtendInfo = new HashSet<Integer>();
+					for (ASTNode ac : accessesAndTargetHostTypes.keySet()) {
+						featuresWithExtendInfo.add(ac.featureID());
+					}
+					/*
+					 * if this is an internal access, i.e. field/method/type
+					 * should be accessible from within this class/interface,
+					 * check for missing extends information based on this
+					 * feature and sourceHostType
+					 */
+					if (isUndottedAccess) {
+						/*
+						 * is the extends info of this targetHostType missing in
+						 * this fromFeature?
+						 */
+						if (!(featuresWithExtendInfo.contains(fromFeatureID))) {
+							/* check for SPL errors */
+							addSplErrors(fromFeatureID,
+									accessesAndTargetHostTypes, targetStructure,
+									false, currentSourceHostType, true,
+									INTERFACE_EXTENDS_INTERFACE,
+									outputDeclsAndTargetHostTypes, isUndottedAccess,
+									currentSourceHostType);
+						}
+					} else {
+						/*
+						 * external access: start from all features of the
+						 * needed narrow type that are in an always relation
+						 * with the accessing feature (other errors are checked
+						 * for in the first round).
+						 */
+						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						for (int featureID : allFeatures) {
+							if (always(dep, listFeatures.get(fromFeatureID),
+									listFeatures.get(featureID))) {
+								alwaysIDs.add(featureID);
+							}
+						}
+						/*
+						 * for all these features: check if the extends info is
+						 * missing in this feature
+						 */
+						for (int featureID : alwaysIDs) {
+							if (!(featuresWithExtendInfo.contains(featureID))) {
+								/* check for SPL errors, narrow type */
+								addSplErrors(fromFeatureID,
+										accessesAndTargetHostTypes, targetStructure,
+										false, narrowType, true,
+										INTERFACE_EXTENDS_INTERFACE,
+										outputDeclsAndTargetHostTypes,
+										isUndottedAccess, narrowType);
+							}
+						}
+					}
+				}
+			}
+		}
+		if (!(td.equals(top))) {
+			for (TypeDecl nextTd : paths.get(currentSourceHostType)) {
+				splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
+						targetStructure, outputDeclsAndTargetHostTypes, isUndottedAccess,
+						narrowType);
 			}
 		}
 	}
@@ -1109,7 +1227,10 @@ aspect ExtendedTypeCheck {
 			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
 			if (!(accesses.isEmpty())) {
 				for (Access ac : accesses) {
-					accessHostTypes.add(ac.hostType());
+					if (ac instanceof TypeAccess) {
+						TypeAccess tac = (TypeAccess) ac;
+						accessHostTypes.add(tac.decl().hostType());
+					}
 				}
 			}
 			if (!(accessHostTypes.isEmpty())) {
@@ -1163,7 +1284,10 @@ aspect ExtendedTypeCheck {
 			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
 			if (!(accesses.isEmpty())) {
 				for (Access ac : accesses) {
-					accessHostTypes.add(ac.hostType());
+					if (ac instanceof TypeAccess) {
+						TypeAccess tac = (TypeAccess) ac;
+						accessHostTypes.add(tac.decl().hostType());
+					}
 				}
 			}
 			if (!(accessHostTypes.isEmpty())) {
