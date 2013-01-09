@@ -237,7 +237,7 @@ aspect ExtendedTypeCheck {
 
 	/* /copy_&_modify */
 
-	/* foo */
+	/* */
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
@@ -460,119 +460,129 @@ aspect ExtendedTypeCheck {
 				}
 				outputMapDecls.put(outputVar.featureID(), declFirstLine);
 			}
-			Feature fromFeature = listFeatures.get(fromFeatureID);
-			/* list of set of target features */
-			ArrayList<Set<Feature>> toFeaturesList = new ArrayList<Set<Feature>>();
-			for (int toFeatureID : toFeatureIDs) {
-				Feature toFeature = listFeatures.get(toFeatureID);
-				HashSet<Feature> toFeatureSet = new HashSet<Feature>();
-				toFeatureSet.add(toFeature);
-				toFeaturesList.add(toFeatureSet);
-			}
-			/*
-			 * for TypeAccess: list all source file names and line numbers, where a
-			 * TypeAccess to a specific type takes place
-			 */
-			StringBuilder sbtei = new StringBuilder();
-			if (isTypeAccess) {
-				TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(sourceHostType)
-						.get(targetHostTypes.iterator().next());
-				for (String s : tei.getAccessSourceInfo()) {
-					sbtei.append(s);
-					sbtei.append("\n");
+			if (fromFeatureID != -1) {
+				Feature fromFeature = listFeatures.get(fromFeatureID);
+				/* list of set of target features */
+				ArrayList<Set<Feature>> toFeaturesList = new ArrayList<Set<Feature>>();
+				for (int toFeatureID : toFeatureIDs) {
+					if (toFeatureID != -1) {
+						Feature toFeature = listFeatures.get(toFeatureID);
+						HashSet<Feature> toFeatureSet = new HashSet<Feature>();
+						toFeatureSet.add(toFeature);
+						toFeaturesList.add(toFeatureSet);
+					}
 				}
-				sbtei.setLength(sbtei.length() - 1);
-			}
-			HashSet<Feature> accessingFeature = new HashSet<Feature>();
-			accessingFeature.add(fromFeature);
-			try {
-				/* all features optional, accessing feature set */
-				if (model.mayBeMissing(accessingFeature, toFeaturesList)) {
-					StringBuilder sb = new StringBuilder();
-					sb.append(toFeatureIDs.size());
-					sb.append(" optional targets ");
-					sb.append("(there may be a valid selection ");
-					sb.append("where none of these targets is present):\n");
-					if (state == FIRST_ROUND) {
-						sb.append("Feature ");
-						sb.append(fromFeature.getName());
-						sb.append(" accesses:\n");
-						for (int toFeatureID : mapDecls.keySet()) {
-							sb.append("- " + targetStructure);
-							String decl = mapDecls.get(toFeatureID);
-							sb.append("\n    ");
-							sb.append(decl);
-							sb.append("\n  of feature ");
-							sb.append(listFeatures.get(toFeatureID).getName());
-							sb.append("\n");
-						}
-					} else {
-						if ((state == CLASS_EXTENDS_CLASS)
-								|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
-							sb.append("Class ");
-						} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-							sb.append("Interface ");
-						}
-						sb.append(sourceHostType.name() + " of feature ");
-						sb.append(fromFeature.getName());
-						sb.append(" accesses:\n");
-						for (int toFeatureID : mapDecls.keySet()) {
-							sb.append("- in feature ");
-							sb.append(listFeatures.get(toFeatureID).getName());
-							if (state == CLASS_EXTENDS_CLASS) {
-								sb.append(" as subclass of class ");
-							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
-								sb.append(" as implementation of interface ");
+				/*
+				 * for TypeAccess: list all source file names and line numbers, where a
+				 * TypeAccess to a specific type takes place
+				 */
+				StringBuilder sbtei = new StringBuilder();
+				if (isTypeAccess) {
+					TypeErrorInfo tei = typeAccesses.get(fromFeatureID).get(sourceHostType)
+							.get(targetHostTypes.iterator().next());
+					for (String s : tei.getAccessSourceInfo()) {
+						sbtei.append(s);
+						sbtei.append("\n");
+					}
+					sbtei.setLength(sbtei.length() - 1);
+				}
+				HashSet<Feature> accessingFeature = new HashSet<Feature>();
+				accessingFeature.add(fromFeature);
+				try {
+					/* all features optional, accessing feature set */
+					if (model.mayBeMissing(accessingFeature, toFeaturesList)) {
+						StringBuilder sb = new StringBuilder();
+						sb.append(toFeatureIDs.size());
+						sb.append(" optional targets ");
+						sb.append("(there may be a valid selection ");
+						sb.append("where none of these targets is present):\n");
+						if (state == FIRST_ROUND) {
+							sb.append("Feature ");
+							sb.append(fromFeature.getName());
+							sb.append(" accesses:\n");
+							for (int toFeatureID : mapDecls.keySet()) {
+								if (toFeatureID != -1) {
+									sb.append("- " + targetStructure);
+									String decl = mapDecls.get(toFeatureID);
+									sb.append("\n    ");
+									sb.append(decl);
+									sb.append("\n  of feature ");
+									sb.append(listFeatures.get(toFeatureID).getName());
+									sb.append("\n");
+								}
+							}
+						} else {
+							if ((state == CLASS_EXTENDS_CLASS)
+									|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
+								sb.append("Class ");
 							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-								sb.append(" as subinterface of interface ");
+								sb.append("Interface ");
 							}
-							sb.append(mapDecls.get(toFeatureID));
-							sb.append(" " + targetStructure + "\n     ");
-							sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
-									.next()));
+							sb.append(sourceHostType.name() + " of feature ");
+							sb.append(fromFeature.getName());
+							sb.append(" accesses:\n");
+							for (int toFeatureID : mapDecls.keySet()) {
+								if (toFeatureID != -1) {
+									sb.append("- in feature ");
+									sb.append(listFeatures.get(toFeatureID).getName());
+									if (state == CLASS_EXTENDS_CLASS) {
+										sb.append(" as subclass of class ");
+									} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+										sb.append(" as implementation of interface ");
+									} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+										sb.append(" as subinterface of interface ");
+									}
+									sb.append(mapDecls.get(toFeatureID));
+									sb.append(" " + targetStructure + "\n     ");
+									sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
+											.next()));
+									if (state == CLASS_EXTENDS_CLASS) {
+										sb.append("\n   of class ");
+									} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
+											|| (state == INTERFACE_EXTENDS_INTERFACE)) {
+										sb.append("\n   of interface ");
+									}
+									sb.append(mapDecls.get(toFeatureID) + ".\n");
+								}
+							}
+							sb.append("There may be a valid selection where none of the features ");
+							int i = mapDecls.keySet().size();
+							int j = 1;
+							for (int toFeatureID : mapDecls.keySet()) {
+								if (toFeatureID != -1) {
+									sb.append(listFeatures.get(toFeatureID).getName());
+									if ((j + 1) < i) {
+										sb.append(", ");
+									} else if ((j + 1) == i) {
+										sb.append(" and ");
+									}
+									j++;
+								}
+							}
+							sb.append(" is present.\n");
+							sb.append("So it may be that the information that ");
 							if (state == CLASS_EXTENDS_CLASS) {
-								sb.append("\n   of class ");
-							} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
-									|| (state == INTERFACE_EXTENDS_INTERFACE)) {
-								sb.append("\n   of interface ");
+								sb.append("class " + sourceHostType.name()
+										+ " extends class(es) above ");
+							} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
+								sb.append("class " + sourceHostType.name()
+										+ " implements above interface(s) ");
+							} else if (state == INTERFACE_EXTENDS_INTERFACE) {
+								sb.append("interface "
+										+ sourceHostType.name()
+										+ " extends interface(s) above ");
 							}
-							sb.append(mapDecls.get(toFeatureID) + ".\n");
+							sb.append("is not present at all.\n");
 						}
-						sb.append("There may be a valid selection where none of the features ");
-						int i = mapDecls.keySet().size();
-						int j = 1;
-						for (int toFeatureID : mapDecls.keySet()) {
-							sb.append(listFeatures.get(toFeatureID).getName());
-							if ((j + 1) < i) {
-								sb.append(", ");
-							} else if ((j + 1) == i) {
-								sb.append(" and ");
-							}
-							j++;
+						if (isTypeAccess) {
+							typeError(sbtei.toString(), sb.toString());
+						} else {
+							error(sb.toString());
 						}
-						sb.append(" is present.\n");
-						sb.append("So it may be that the information that ");
-						if (state == CLASS_EXTENDS_CLASS) {
-							sb.append("class " + sourceHostType.name()
-									+ " extends class(es) above ");
-						} else if (state == CLASS_IMPLEMENTS_INTERFACE) {
-							sb.append("class " + sourceHostType.name()
-									+ " implements above interface(s) ");
-						} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-							sb.append("interface "
-									+ sourceHostType.name()
-									+ " extends interface(s) above ");
-						}
-						sb.append("is not present at all.\n");
 					}
-					if (isTypeAccess) {
-						typeError(sbtei.toString(), sb.toString());
-					} else {
-						error(sb.toString());
-					}
+				} catch (TimeoutException e) {
+					e.printStackTrace();
 				}
-			} catch (TimeoutException e) {
-				e.printStackTrace();
 			}
 		}
 		if (!(secondRoundDone)) {
