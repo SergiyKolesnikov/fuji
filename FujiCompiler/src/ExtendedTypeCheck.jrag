@@ -12,33 +12,6 @@
  * add guidsl.jar (FM-Test 03)
  * add org.sat4j.core.jar (FM-Test 03)
  * to Fujis's build-path
- * 
- * TODO: rewrite
- * This aspect extends the JastAddJ's type check:
- * (VarAccess.splTypeCheck())
- * - checks, if one feature tries to access a field of a second feature 
- *   that is optional -> error, if not explicitly stated as a constraint
- *   in the feature model
- * - same for two mutual exclusive fields
- * - when two or more features provide an implementation for a type and 
- *   all of them are optional, then it would be possible, that no implementation
- *   of the type is present. 
- * (MethodAccess.splTypeCheck())
- * - checks, if one feature tries to access a method of a second feature
- *   that is optional -> error, if not explicitly stated as a constraint
- *   in the feature model
- * - same for two mutual exclusive fields
- * - when two or more features provide an implementation for a type and 
- *   all of them are optional, then it would be possible, that no implementation
- *   of the type is present.
- * (TypeAccess.splTypeCheck())
- * - collect all type accesses and check, if all required types are present
- *   in at least one feature each
- *   - types, classes, interfaces, Generics, (try, catch, throw)
- *   - Cast, Constructor,
- *   - 4 types of inner classes (static, member, local, anonymous)
- * (ClassInstanceExpr.splTypeCheck())
- * - ...
  */
 
 import de.ovgu.featureide.fm.core.FeatureModel;
@@ -69,7 +42,7 @@ aspect ExtendedTypeCheck {
 	/* collect all TypeAccesses in a Map 
 	 * format: 
 	 * map: (fromFeatureID, map: (sourceHostType, map: (targetHostType, TypeErrorInfo)))
-	 * (decls: accesses to constructors of this type 
+	 * (TypeErrorInfo decls: accesses to constructors of this type 
    * and source file name and line number of these type accesses) */
 	protected static HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> ASTNode.typeAccesses =
 	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
@@ -141,7 +114,7 @@ aspect ExtendedTypeCheck {
 					for (TypeDecl sourceHostType : typesAndInfo.keySet()) {
 						HashMap<TypeDecl, TypeErrorInfo> innerTypeAndInfo = typesAndInfo.get(sourceHostType);
 						if (!(innerTypeAndInfo.keySet().isEmpty())) {
-							/* for all targetHostTypes needed by this feature */
+							/* for all targetHostTypes needed by this sourceHostType in this feature */
 							for (TypeDecl targetHostType : innerTypeAndInfo.keySet()) {
 								/* get type accesses to contructors of the needed type */
 								SimpleSet decls = innerTypeAndInfo.get(targetHostType).getDecls();
@@ -258,12 +231,14 @@ aspect ExtendedTypeCheck {
 					.next());
 			targetHostTypes.add(targetHostType);
 		}
-		/* just one target */
+		/* just one target (i.e. one decl) */
 		if (declsAndTargetHostTypes.keySet().size() == 1) {
+			/* get this decl */
 			ASTNode decl = declsAndTargetHostTypes.keySet().iterator().next();
+			/* get featureID of target */
 			int toFeatureID = decl.featureID();
-			TypeDecl targetHostType = (TypeDecl) declsAndTargetHostTypes.get(decl)
-					.iterator().next();
+			/* get host type of target */
+			TypeDecl targetHostType = declsAndTargetHostTypes.get(decl);
 			ASTNode outputDecl = outputDeclsAndTargetHostTypes.keySet().iterator()
 					.next();
 			String outputDeclString = outputDecl.toString();
@@ -275,8 +250,8 @@ aspect ExtendedTypeCheck {
 					outputDeclString = s.toString() + cd.name() + "()";
 				}
 			}
-			TypeDecl outputTargetHostType = (TypeDecl) outputDeclsAndTargetHostTypes
-					.get(outputDecl).iterator().next();
+			TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes
+					.get(outputDecl);
 			String declFirstLine;
 			if (isTypeAccess) {
 				/* <package name (default:"(default package)")>.<type name> */
@@ -293,11 +268,11 @@ aspect ExtendedTypeCheck {
 				if (fromFeatureID != toFeatureID) {
 					Feature fromFeature = listFeatures.get(fromFeatureID);
 					Feature toFeature = listFeatures.get(toFeatureID);
+					StringBuilder sbtei = new StringBuilder();
 					/*
 					 * for TypeAccess: list all source file names and line numbers, where
 					 * a TypeAccess to a specific type takes place
 					 */
-					StringBuilder sbtei = new StringBuilder();
 					if (isTypeAccess) {
 						TypeErrorInfo tei = typeAccesses.get(fromFeatureID)
 								.get(sourceHostType).get(targetHostType);
@@ -307,15 +282,15 @@ aspect ExtendedTypeCheck {
 						}
 						sbtei.setLength(sbtei.length() - 1);
 					}					
-					StringBuilder sb = new StringBuilder();					
+					StringBuilder sb = new StringBuilder();
+					/* fromFeature and toFeature cannot both occur in a valid product
+					 * never-dep -> error */
 					if (never(dep, fromFeature, toFeature)) {		
 						sb.append("NEVER dependency:");
-						/* fromFeature and toFeature cannot both occur in a valid product
-						 * never-dep -> error */
-					}	else if (maybe(dep, fromFeature, toFeature)) {					
-						/* toFeature can, but doesn't have to occur in a valid product
-						 * maybe-dep -> error */					
-							sb.append("MAYBE dependency:");
+				  /* toFeature can, but doesn't have to occur in a valid product
+					 * maybe-dep -> error */
+					}	else if (maybe(dep, fromFeature, toFeature)) {									
+					  sb.append("MAYBE dependency:");
 					}	
 					if (never(dep, fromFeature, toFeature) 
 							|| maybe(dep, fromFeature, toFeature)) {
@@ -346,11 +321,15 @@ aspect ExtendedTypeCheck {
 								sb.append(" accesses as subinterface of interface ");
 							}
 							sb.append(outputTargetHostType.name() + " ");
-							if (state == CLASS_EXTENDS_CLASS) {
-								sb.append("the instance");
-							} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
-									|| (state == INTERFACE_EXTENDS_INTERFACE)) {
-								sb.append("the implementation");
+							if (isTypeAccess) {
+								if (state == CLASS_EXTENDS_CLASS) {
+									sb.append("the instance");
+								} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
+										|| (state == INTERFACE_EXTENDS_INTERFACE)) {
+									sb.append("the implementation");
+								}
+							} else {
+								sb.append(targetStructure);
 							}
 							sb.append("\n  ");
 							sb.append(declFirstLine);
@@ -879,6 +858,7 @@ aspect ExtendedTypeCheck {
 		}
 		if (!(td.equals(top))) {
 			for (TypeDecl nextTd : paths.get(currentSourceHostType)) {
+				/* recursive call */
 				splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
 						targetStructure, outputDeclsAndTargetHostTypes, isUndottedAccess,
 						narrowType);
@@ -891,6 +871,7 @@ aspect ExtendedTypeCheck {
 
 	/* */
 	public void VarAccess.splTypeCheck() {
+		/* from java.ast: VarAccess : Access ::= <ID:String>; */
 		/* is the VarAccess a FieldAccess? */
 		if (isFieldAccess()) {
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
@@ -942,6 +923,7 @@ aspect ExtendedTypeCheck {
 
 	/* */
 	public void MethodAccess.splTypeCheck() {
+		/* from java.ast: MethodAccess : Access ::= <ID:String> Arg:Expr*; */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		/* original-check: if the target method is named "original",
 		 * then in this type (in another feature) 
@@ -1027,6 +1009,7 @@ aspect ExtendedTypeCheck {
 
 	/* */
 	public void TypeAccess.splTypeCheck() {
+		/* from java.ast: TypeAccess : Access ::= <Package:String> <ID:String>; */
 		/* collect all TypeAccesses: source feature, type, decl(s), source file(s),
 		 * line number(s) */
 		int fromFeatureID = featureID();
@@ -1076,6 +1059,8 @@ aspect ExtendedTypeCheck {
 
 	/* */
 	public void ClassInstanceExpr.splTypeCheck() {
+		/* from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; */
+		/* TODO: durch ConstructorAccess ersetzen? */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		/* get all constructors with the same signature in this type */
 		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
@@ -1097,6 +1082,7 @@ aspect ExtendedTypeCheck {
 	
 	/* */
 	public void FieldDeclaration.splTypeCheck() {
+		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
   	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
   	if (hasInit()) {
   		if (getInit() instanceof ClassInstanceExpr) {
@@ -1114,6 +1100,7 @@ aspect ExtendedTypeCheck {
 	
 	/* */
 	public void VariableDeclaration.splTypeCheck() {
+		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
   	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
   	if (hasInit()) {
   		if (getInit() instanceof ClassInstanceExpr) {
@@ -1131,6 +1118,7 @@ aspect ExtendedTypeCheck {
 	
 	/* */
 	public void AssignSimpleExpr.splTypeCheck() {
+		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		if (getSource() instanceof ClassInstanceExpr) {
 			TypeDecl sourceType = getSource().type();
@@ -1146,8 +1134,8 @@ aspect ExtendedTypeCheck {
 	
 	/* handle up- and downcasts */
 	public void CastExpr.splTypeCheck() {
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		/* from java.ast: CastExpr : Expr ::= TypeAccess:Access Expr; */
+		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
   	Access ac = getTypeAccess();
   	if (ac instanceof TypeAccess) {
   		TypeAccess ta = (TypeAccess) ac;		  		
@@ -1226,7 +1214,9 @@ aspect ExtendedTypeCheck {
 		return isInTypeHierarchy;
 	}
 	
-	/* */
+	/* list the paths in the type hierarchy from bottomType to topType 
+	 * returns an empty may, if there are no paths 
+	 * key points to all supertypes of this type */
 	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
 		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
 		HashSet<TypeDecl> superTypes = new HashSet<TypeDecl>();
@@ -1238,24 +1228,24 @@ aspect ExtendedTypeCheck {
 			HashSet<Access> accesses = new HashSet<Access>();
 			if (bottomType instanceof ClassDecl) {
 				ClassDecl cd = (ClassDecl) bottomType;
-				/* get extends information */
+				/* get extends information (Class) */
 				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
 					accesses.addAll(cd.getPreservedSuperClassAccess());
 				}
 				if (cd.hasSuperClassAccess()) {
 					accesses.add(cd.getSuperClassAccess());
 				}
-				/* get implements information */
+				/* get implements information (Class) */
 				if (cd.getNumImplements() != 0) {
 					for (Access ac : cd.getImplementsList()) {
 						accesses.add(ac);
 					}
 				}
 			} else if (bottomType instanceof InterfaceDecl) {
-				InterfaceDecl id = (InterfaceDecl) bottomType;
-				/* get extends information */
-				if (id.getNumSuperInterfaceId() != 0) {
-					for (Access ac : id.getSuperInterfaceIdList()) {
+				InterfaceDecl ifd = (InterfaceDecl) bottomType;
+				/* get extends information (Interface) */
+				if (ifd.getNumSuperInterfaceId() != 0) {
+					for (Access ac : ifd.getSuperInterfaceIdList()) {
 						accesses.add(ac);
 					}
 				}
@@ -1274,21 +1264,22 @@ aspect ExtendedTypeCheck {
 					/* direct super type */
 					superTypes.add(topType);
 					paths.put(bottomType, superTypes);
-				} else {
-					boolean nextStepOK = false;
-					for (TypeDecl td : accessHostTypes) {
-						/* recursive step */
-						HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
-						if (!(nextStep.isEmpty())) {
-							nextStepOK = true;
-							paths.putAll(nextStep);
-							superTypes.add(td);
-						}
+					/* search for other paths to topType */
+					accessHostTypes.remove(topType);
+				}
+				boolean nextStepOK = false;
+				for (TypeDecl td : accessHostTypes) {
+					/* recursive step */
+					HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
+					if (!(nextStep.isEmpty())) {
+						nextStepOK = true;
+						paths.putAll(nextStep);
+						superTypes.add(td);
 					}
-					if (nextStepOK) {
-						/* add beginning of path */
-						paths.put(bottomType, superTypes);
-					}
+				}
+				if (nextStepOK) {
+					/* add beginning of path */
+					paths.put(bottomType, superTypes);
 				}		
 			}
 		}
