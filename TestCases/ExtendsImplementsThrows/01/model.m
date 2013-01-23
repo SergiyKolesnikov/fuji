@@ -1,1 +1,1 @@
-TestCase : Base FeatureA [FeatureB] [FeatureC] FeatureE :: _TestCase ;
+TestCase : Base FeatureA [FeatureB] FeatureE :: _TestCase ;
