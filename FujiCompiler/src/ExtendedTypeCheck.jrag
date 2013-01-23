@@ -26,114 +26,6 @@ import fuji.TypeErrorInfo;
 
 aspect ExtendedTypeCheck {
 
-	/* the feature model */
-	protected static FeatureModel ASTNode.featureModel;
-
-	/* get the feature model */
-	public FeatureModel ASTNode.getFeatureModel() {
-		return featureModel;
-	}
-
-	/* set the feature model */
-	public void ASTNode.setFeatureModel(FeatureModel model) {	
-		featureModel = model;
-	}
-
-	/* collect all TypeAccesses in a Map 
-	 * format: 
-	 * map: (fromFeatureID, map: (sourceHostType, map: (targetHostType, TypeErrorInfo)))
-	 * (TypeErrorInfo decls: accesses to constructors of this type 
-   * and source file name and line number of these type accesses) */
-	protected static HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> ASTNode.typeAccesses =
-	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
-
-	/* for type accesses */
-	protected ArrayList Program.errors = new ArrayList();
-
-	/* for type accesses */
-	protected ArrayList Program.warnings = new ArrayList();
-	
-	/* for addSplError: 
-	 * secondRound: relation of sourceHostType and targetHostType */
-	protected static final int ASTNode.FIRST_ROUND = 0;
-	protected static final int ASTNode.CLASS_EXTENDS_CLASS = 1;
-	protected static final int ASTNode.CLASS_IMPLEMENTS_INTERFACE = 2;
-	protected static final int ASTNode.INTERFACE_EXTENDS_INTERFACE = 3;
-
-	/* report a type error
-	 * correct line number and file name */
-	public void ASTNode.typeError(String accessSourceInfo, String msg) {
-		ASTNode node = this;
-		while(node != null && !(node instanceof Program))
-			node = node.getParent();
-		Program pr = (Program) node;
-		pr.errors.add(new Problem(accessSourceInfo, msg, 
-				Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
-	}
-
-	/* line numbers included in fileName */
-	public Problem.Problem(String fileName, String message, Severity severity, Kind kind) {
-		this(fileName, message);
-		this.kind = kind;
-		this.severity = severity;
-	}
-
-	/* (fromFeature ALWAYS toFeature) due to feature model */
-	protected boolean ASTNode.always(FeatureDependencies dep, 
-			Feature fromFeature, 
-			Feature toFeature) {		  	  
-		return dep.always(fromFeature).contains(toFeature);
-	}
-
-	/* (fromFeature NEVER toFeature) due to feature model */
-	protected boolean ASTNode.never(FeatureDependencies dep,
-			Feature fromFeature,
-			Feature toFeature) {
-		return dep.never(fromFeature).contains(toFeature);
-	}
-
-	/* (fromFeature MAYBE toFeature) due to feature model */
-	protected boolean ASTNode.maybe(FeatureDependencies dep,
-			Feature fromFeature,
-			Feature toFeature) {
-		return dep.maybe(fromFeature).contains(toFeature);
-	}
-
-	/* collect Type Errors */
-	public void ASTNode.collectSplTypeErrors() {
-		/* get features */
-		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-		listFeatures.addAll(featureModel.getConcreteFeatures());
-		/* for all fromFeatureIDs that need types */
-		for (int i : typeAccesses.keySet()) {
-			Feature fromFeature = listFeatures.get(i);
-			if (!(typeAccesses.get(i).isEmpty())) {
-				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(i);
-				if (!(typesAndInfo.keySet().isEmpty())) {
-					/* for all sourceHostTypes where a type is needed in this feature */
-					for (TypeDecl sourceHostType : typesAndInfo.keySet()) {
-						HashMap<TypeDecl, TypeErrorInfo> innerTypeAndInfo = typesAndInfo.get(sourceHostType);
-						if (!(innerTypeAndInfo.keySet().isEmpty())) {
-							/* for all targetHostTypes needed by this sourceHostType in this feature */
-							for (TypeDecl targetHostType : innerTypeAndInfo.keySet()) {
-								/* get type accesses to contructors of the needed type */
-								SimpleSet decls = innerTypeAndInfo.get(targetHostType).getDecls();
-								/* wrap together type accesses and the needed type */
-								HashMap<ASTNode, TypeDecl> declsAndTargetHostType = new HashMap<ASTNode, TypeDecl>();
-								for (Iterator iter = decls.iterator(); iter.hasNext(); ) {
-								  declsAndTargetHostType.put((ASTNode) iter.next(), targetHostType);
-								}
-								/* check for SPL errors */
-								addSplErrors(i, declsAndTargetHostType, "the type", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
-										innerTypeAndInfo.get(targetHostType).isUndottedAccess(), sourceHostType);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	/* copied from ErrorCheck.jrag and modified: added "spl" or "Spl" 
 	 * in front of method names or in method names
 	 * added: FeatureModel in ASTNode
@@ -209,7 +101,50 @@ aspect ExtendedTypeCheck {
 	}
 
 	/* /copy_&_modify */
+	
+	/* --- */
 
+	/* the feature model */
+	protected static FeatureModel ASTNode.featureModel;
+
+	/* get the feature model */
+	public FeatureModel ASTNode.getFeatureModel() {
+		return featureModel;
+	}
+
+	/* set the feature model */
+	public void ASTNode.setFeatureModel(FeatureModel model) {	
+		featureModel = model;
+	}
+	
+	/* (fromFeature ALWAYS toFeature) due to feature model */
+	protected boolean ASTNode.always(FeatureDependencies dep, 
+			Feature fromFeature, 
+			Feature toFeature) {		  	  
+		return dep.always(fromFeature).contains(toFeature);
+	}
+
+	/* (fromFeature NEVER toFeature) due to feature model */
+	protected boolean ASTNode.never(FeatureDependencies dep,
+			Feature fromFeature,
+			Feature toFeature) {
+		return dep.never(fromFeature).contains(toFeature);
+	}
+
+	/* (fromFeature MAYBE toFeature) due to feature model */
+	protected boolean ASTNode.maybe(FeatureDependencies dep,
+			Feature fromFeature,
+			Feature toFeature) {
+		return dep.maybe(fromFeature).contains(toFeature);
+	}
+	
+	/* for addSplError: 
+	 * secondRound: relation of sourceHostType and targetHostType */
+	protected static final int ASTNode.FIRST_ROUND = 0;
+	protected static final int ASTNode.CLASS_EXTENDS_CLASS = 1;
+	protected static final int ASTNode.CLASS_IMPLEMENTS_INTERFACE = 2;
+	protected static final int ASTNode.INTERFACE_EXTENDS_INTERFACE = 3;
+	
 	/* */
 	public void ASTNode.addSplErrors(int fromFeatureID,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
@@ -872,6 +807,204 @@ aspect ExtendedTypeCheck {
 			}
 		}
 	}
+	
+	/* is this type (= bottom) in the type hierarchy beneath 
+	 * another type (= top) */
+	public boolean TypeDecl.isInTypeHierarchy(TypeDecl topType) {
+		boolean isInTypeHierarchy = false;
+		if (this.equals(topType)) {
+			/* relation is reflexive, TODO necessary ? */
+			isInTypeHierarchy = true;
+		} else {
+			HashSet<Access> accesses = new HashSet<Access>();
+			if (this instanceof ClassDecl) {
+				ClassDecl cd = (ClassDecl) this;
+				/* get extends information */
+				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
+					accesses.addAll(cd.getPreservedSuperClassAccess());
+				}
+				if (cd.hasSuperClassAccess()) {
+					accesses.add(cd.getSuperClassAccess());
+				}
+				/* get implements information */
+				if (cd.getNumImplements() != 0) {
+					for (Access ac : cd.getImplementsList()) {
+						accesses.add(ac);
+					}
+				}
+			} else if (this instanceof InterfaceDecl) {
+				InterfaceDecl id = (InterfaceDecl) this;
+				/* get extends information*/
+				if (id.getNumSuperInterfaceId() != 0) {
+					for (Access ac : id.getSuperInterfaceIdList()) {
+						accesses.add(ac);
+					}
+				}
+			}
+			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
+			if (!(accesses.isEmpty())) {
+				for (Access ac : accesses) {
+					if (ac instanceof TypeAccess) {
+						TypeAccess tac = (TypeAccess) ac;
+						accessHostTypes.add(tac.decl().hostType());
+					}
+				}
+			}
+			if (!(accessHostTypes.isEmpty())) {
+				if (accessHostTypes.contains(topType)) {
+					/* found in this step */
+					isInTypeHierarchy = true;
+				} else {
+					for (TypeDecl td : accessHostTypes) {
+						/* recursive step */
+						isInTypeHierarchy |= td.isInTypeHierarchy(topType);
+					}
+				}		
+			}
+		}
+		return isInTypeHierarchy;
+	}
+	
+	/* list the paths in the type hierarchy from bottomType to topType 
+	 * returns an empty may, if there are no paths 
+	 * key points to all supertypes of this type */
+	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
+		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
+		HashSet<TypeDecl> superTypes = new HashSet<TypeDecl>();
+		if (bottomType.equals(topType)) {
+			/* relation is reflexive, TODO: neccessary ? */
+			superTypes.add(topType);
+			paths.put(bottomType, superTypes);
+		} else {
+			HashSet<Access> accesses = new HashSet<Access>();
+			if (bottomType instanceof ClassDecl) {
+				ClassDecl cd = (ClassDecl) bottomType;
+				/* get extends information (Class) */
+				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
+					accesses.addAll(cd.getPreservedSuperClassAccess());
+				}
+				if (cd.hasSuperClassAccess()) {
+					accesses.add(cd.getSuperClassAccess());
+				}
+				/* get implements information (Class) */
+				if (cd.getNumImplements() != 0) {
+					for (Access ac : cd.getImplementsList()) {
+						accesses.add(ac);
+					}
+				}
+			} else if (bottomType instanceof InterfaceDecl) {
+				InterfaceDecl ifd = (InterfaceDecl) bottomType;
+				/* get extends information (Interface) */
+				if (ifd.getNumSuperInterfaceId() != 0) {
+					for (Access ac : ifd.getSuperInterfaceIdList()) {
+						accesses.add(ac);
+					}
+				}
+			}
+			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
+			if (!(accesses.isEmpty())) {
+				for (Access ac : accesses) {
+					if (ac instanceof TypeAccess) {
+						TypeAccess tac = (TypeAccess) ac;
+						accessHostTypes.add(tac.decl().hostType());
+					}
+				}
+			}
+			if (!(accessHostTypes.isEmpty())) {
+				if (accessHostTypes.contains(topType)) {
+					/* direct super type */
+					superTypes.add(topType);
+					paths.put(bottomType, superTypes);
+					/* search for other paths to topType */
+					accessHostTypes.remove(topType);
+				}
+				boolean nextStepOK = false;
+				for (TypeDecl td : accessHostTypes) {
+					/* recursive step */
+					HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
+					if (!(nextStep.isEmpty())) {
+						nextStepOK = true;
+						paths.putAll(nextStep);
+						superTypes.add(td);
+					}
+				}
+				if (nextStepOK) {
+					/* add beginning of path */
+					paths.put(bottomType, superTypes);
+				}		
+			}
+		}
+		return paths;
+	}
+	
+	/* --- */
+	
+	/* collect all TypeAccesses in a Map 
+	 * format: 
+	 * map: (fromFeatureID, map: (sourceHostType, map: (targetHostType, TypeErrorInfo)))
+	 * (TypeErrorInfo decls: accesses to constructors of this type 
+   * and source file name and line number of these type accesses) */
+	protected static HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> ASTNode.typeAccesses =
+	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
+
+	/* for type accesses */
+	protected ArrayList Program.errors = new ArrayList();
+
+	/* for type accesses */
+	protected ArrayList Program.warnings = new ArrayList();
+	
+	/* report a type error
+	 * correct line number and file name */
+	public void ASTNode.typeError(String accessSourceInfo, String msg) {
+		ASTNode node = this;
+		while(node != null && !(node instanceof Program))
+			node = node.getParent();
+		Program pr = (Program) node;
+		pr.errors.add(new Problem(accessSourceInfo, msg, 
+				Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
+	}
+
+	/* line numbers included in fileName */
+	public Problem.Problem(String fileName, String message, Severity severity, Kind kind) {
+		this(fileName, message);
+		this.kind = kind;
+		this.severity = severity;
+	}
+	
+	/* collect Type Errors */
+	public void ASTNode.collectSplTypeErrors() {
+		/* get features */
+		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+		listFeatures.addAll(featureModel.getConcreteFeatures());
+		/* for all fromFeatureIDs that need types */
+		for (int i : typeAccesses.keySet()) {
+			Feature fromFeature = listFeatures.get(i);
+			if (!(typeAccesses.get(i).isEmpty())) {
+				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(i);
+				if (!(typesAndInfo.keySet().isEmpty())) {
+					/* for all sourceHostTypes where a type is needed in this feature */
+					for (TypeDecl sourceHostType : typesAndInfo.keySet()) {
+						HashMap<TypeDecl, TypeErrorInfo> innerTypeAndInfo = typesAndInfo.get(sourceHostType);
+						if (!(innerTypeAndInfo.keySet().isEmpty())) {
+							/* for all targetHostTypes needed by this sourceHostType in this feature */
+							for (TypeDecl targetHostType : innerTypeAndInfo.keySet()) {
+								/* get type accesses to contructors of the needed type */
+								SimpleSet decls = innerTypeAndInfo.get(targetHostType).getDecls();
+								/* wrap together type accesses and the needed type */
+								HashMap<ASTNode, TypeDecl> declsAndTargetHostType = new HashMap<ASTNode, TypeDecl>();
+								for (Iterator iter = decls.iterator(); iter.hasNext(); ) {
+								  declsAndTargetHostType.put((ASTNode) iter.next(), targetHostType);
+								}
+								/* check for SPL errors */
+								addSplErrors(i, declsAndTargetHostType, "the type", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
+										innerTypeAndInfo.get(targetHostType).isUndottedAccess(), sourceHostType);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	/* */
 	public void ASTNode.splTypeCheck() { }
@@ -1182,132 +1315,4 @@ aspect ExtendedTypeCheck {
 		/* TODO */
 	}
 	
-	/* is this type (= bottom) in the type hierarchy beneath 
-	 * another type (= top) */
-	public boolean TypeDecl.isInTypeHierarchy(TypeDecl topType) {
-		boolean isInTypeHierarchy = false;
-		if (this.equals(topType)) {
-			/* relation is reflexive, TODO necessary ? */
-			isInTypeHierarchy = true;
-		} else {
-			HashSet<Access> accesses = new HashSet<Access>();
-			if (this instanceof ClassDecl) {
-				ClassDecl cd = (ClassDecl) this;
-				/* get extends information */
-				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
-					accesses.addAll(cd.getPreservedSuperClassAccess());
-				}
-				if (cd.hasSuperClassAccess()) {
-					accesses.add(cd.getSuperClassAccess());
-				}
-				/* get implements information */
-				if (cd.getNumImplements() != 0) {
-					for (Access ac : cd.getImplementsList()) {
-						accesses.add(ac);
-					}
-				}
-			} else if (this instanceof InterfaceDecl) {
-				InterfaceDecl id = (InterfaceDecl) this;
-				/* get extends information*/
-				if (id.getNumSuperInterfaceId() != 0) {
-					for (Access ac : id.getSuperInterfaceIdList()) {
-						accesses.add(ac);
-					}
-				}
-			}
-			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
-			if (!(accesses.isEmpty())) {
-				for (Access ac : accesses) {
-					if (ac instanceof TypeAccess) {
-						TypeAccess tac = (TypeAccess) ac;
-						accessHostTypes.add(tac.decl().hostType());
-					}
-				}
-			}
-			if (!(accessHostTypes.isEmpty())) {
-				if (accessHostTypes.contains(topType)) {
-					/* found in this step */
-					isInTypeHierarchy = true;
-				} else {
-					for (TypeDecl td : accessHostTypes) {
-						/* recursive step */
-						isInTypeHierarchy |= td.isInTypeHierarchy(topType);
-					}
-				}		
-			}
-		}
-		return isInTypeHierarchy;
-	}
-	
-	/* list the paths in the type hierarchy from bottomType to topType 
-	 * returns an empty may, if there are no paths 
-	 * key points to all supertypes of this type */
-	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
-		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
-		HashSet<TypeDecl> superTypes = new HashSet<TypeDecl>();
-		if (bottomType.equals(topType)) {
-			/* relation is reflexive, TODO: neccessary ? */
-			superTypes.add(topType);
-			paths.put(bottomType, superTypes);
-		} else {
-			HashSet<Access> accesses = new HashSet<Access>();
-			if (bottomType instanceof ClassDecl) {
-				ClassDecl cd = (ClassDecl) bottomType;
-				/* get extends information (Class) */
-				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
-					accesses.addAll(cd.getPreservedSuperClassAccess());
-				}
-				if (cd.hasSuperClassAccess()) {
-					accesses.add(cd.getSuperClassAccess());
-				}
-				/* get implements information (Class) */
-				if (cd.getNumImplements() != 0) {
-					for (Access ac : cd.getImplementsList()) {
-						accesses.add(ac);
-					}
-				}
-			} else if (bottomType instanceof InterfaceDecl) {
-				InterfaceDecl ifd = (InterfaceDecl) bottomType;
-				/* get extends information (Interface) */
-				if (ifd.getNumSuperInterfaceId() != 0) {
-					for (Access ac : ifd.getSuperInterfaceIdList()) {
-						accesses.add(ac);
-					}
-				}
-			}
-			HashSet<TypeDecl> accessHostTypes = new HashSet<TypeDecl>();
-			if (!(accesses.isEmpty())) {
-				for (Access ac : accesses) {
-					if (ac instanceof TypeAccess) {
-						TypeAccess tac = (TypeAccess) ac;
-						accessHostTypes.add(tac.decl().hostType());
-					}
-				}
-			}
-			if (!(accessHostTypes.isEmpty())) {
-				if (accessHostTypes.contains(topType)) {
-					/* direct super type */
-					superTypes.add(topType);
-					paths.put(bottomType, superTypes);
-					/* search for other paths to topType */
-					accessHostTypes.remove(topType);
-				}
-				boolean nextStepOK = false;
-				for (TypeDecl td : accessHostTypes) {
-					/* recursive step */
-					HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
-					if (!(nextStep.isEmpty())) {
-						nextStepOK = true;
-						paths.putAll(nextStep);
-						superTypes.add(td);
-					}
-				}
-				if (nextStepOK) {
-					/* add beginning of path */
-					paths.put(bottomType, superTypes);
-				}		
-			}
-		}
-		return paths;
-	}
 }
