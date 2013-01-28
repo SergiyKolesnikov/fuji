@@ -866,7 +866,7 @@ aspect ExtendedTypeCheck {
 	}
 	
 	/* list the paths in the type hierarchy from bottomType to topType 
-	 * returns an empty may, if there are no paths 
+	 * returns an empty map, if there are no paths, 
 	 * key points to all supertypes of this type */
 	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
 		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
@@ -1098,6 +1098,25 @@ aspect ExtendedTypeCheck {
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, s.toString(), false,
 					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType());
+			/* check, if types of arguments fit the method declaration 
+			 * (i.e. check, if the information that the type of an argument is 
+			 * a subtype of the expected parameter is always available due to 
+			 * the feature model) */
+			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+				if (decl instanceof MethodDecl) {
+					MethodDecl md = (MethodDecl) decl;
+					for (int i = 0; i < getNumArg(); i++) {
+						/* different type of argument and parameter */
+						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
+							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+							typeDeclsAndTargetHostTypes.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
+							/* check for SPL errors */
+			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument to parameter type", false, hostType(), 
+			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+						}
+					}
+				}
+			}
 		} else {
 			/* get all methods with the same signature as the needed method
 			 * in this type */
@@ -1146,6 +1165,25 @@ aspect ExtendedTypeCheck {
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the method",
 					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess), narrowType);
+			/* check, if types of arguments fit the method declaration 
+			 * (i.e. check, if the information that the type of an argument is 
+			 * a subtype of the expected parameter is always available due to 
+			 * the feature model) */
+			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+				if (decl instanceof MethodDecl) {
+					MethodDecl md = (MethodDecl) decl;
+					for (int i = 0; i < getNumArg(); i++) {
+						/* different type of argument and parameter */
+						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
+							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+							typeDeclsAndTargetHostTypes.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
+							/* check for SPL errors */
+			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument to parameter type", false, hostType(), 
+			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -1268,7 +1306,7 @@ aspect ExtendedTypeCheck {
 		 * (so there could be a valid feature selection where the information 
 		 * of this subtype relation is not present) */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* class instance (new keyword) */
+		/* class instance ("new" keyword) */
 		if (getSource() instanceof ClassInstanceExpr) {
 			/* from java.ast: 
 			 * ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; 
@@ -1297,14 +1335,14 @@ aspect ExtendedTypeCheck {
   			 * the TypeAccess side => upcast */
   			declsAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
   			/* check for SPL errors */
-  			addSplErrors(featureID(), declsAndTargetHostTypes, "the type", true, hostType(), 
+  			addSplErrors(featureID(), declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
   					false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type());
   		} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
   			/* TypeAccess side of CastExpr is in type hierarchy beneath 
   			 * the Expr side => downcast */
   			declsAndTargetHostTypes.put(getExpr().type(), getExpr().type().hostType());
   			/* check for SPL errors */
-  			addSplErrors(featureID(), declsAndTargetHostTypes, "the type", true, hostType(), 
+  			addSplErrors(featureID(), declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
   					false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl());
   		}
   	}
