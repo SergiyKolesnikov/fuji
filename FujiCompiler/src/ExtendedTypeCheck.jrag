@@ -151,8 +151,7 @@ aspect ExtendedTypeCheck {
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
 			boolean secondRoundDone, int state,
 			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-			boolean isUndottedAccess, TypeDecl narrowType, TypeDecl accessingType,
-			String overrideSourceFileAndLineNumber) {
+			boolean isUndottedAccess, TypeDecl narrowType, TypeDecl accessingType) {
 		/* get the feature model */
 		FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -323,8 +322,6 @@ aspect ExtendedTypeCheck {
 					if (never || maybe) {
 						if (isTypeAccess) {
 							typeError(sbtei.toString(), sb.toString());
-						} else if (!(overrideSourceFileAndLineNumber.isEmpty())) {
-							typeError(overrideSourceFileAndLineNumber, sb.toString());
 						} else {
 							error(sb.toString());
 						}
@@ -518,8 +515,6 @@ aspect ExtendedTypeCheck {
 						}
 						if (isTypeAccess) {
 							typeError(sbtei.toString(), sb.toString());
-						} else if (!(overrideSourceFileAndLineNumber.isEmpty())) {
-							typeError(overrideSourceFileAndLineNumber, sb.toString());
 						} else {
 							error(sb.toString());
 						}
@@ -563,7 +558,7 @@ aspect ExtendedTypeCheck {
 								 * over <nextTd> (super types of bottom) */
 								splErrorCheckAccessToSuperType(sourceHostType, nextTd, top, paths, 
 										fromFeatureID, targetStructure, outputDeclsAndTargetHostTypes,
-										isUndottedAccess, narrowType, accessingType, overrideSourceFileAndLineNumber);
+										isUndottedAccess, narrowType, accessingType);
 							}							
 						}
 					}
@@ -577,8 +572,7 @@ aspect ExtendedTypeCheck {
   		TypeDecl td, TypeDecl top, HashMap<TypeDecl, HashSet<TypeDecl>> paths, 
   		int fromFeatureID, String targetStructure, 
   		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-  		boolean isUndottedAccess, TypeDecl narrowType, TypeDecl accessingType,
-  		String overrideSourceFileAndLineNumber) {
+  		boolean isUndottedAccess, TypeDecl narrowType, TypeDecl accessingType) {
 		/* get the feature model */
   	FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -638,7 +632,7 @@ aspect ExtendedTypeCheck {
 									false, currentSourceHostType, true,
 									CLASS_EXTENDS_CLASS,
 									outputDeclsAndTargetHostTypes, isUndottedAccess,
-									currentSourceHostType, accessingType, overrideSourceFileAndLineNumber);
+									currentSourceHostType, accessingType);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -670,7 +664,7 @@ aspect ExtendedTypeCheck {
 										targetStructure, false, currentSourceHostType, true,
 										CLASS_EXTENDS_CLASS,
 										nextTdAndTargetHostTypes,
-										isUndottedAccess, narrowType, accessingType, overrideSourceFileAndLineNumber);
+										isUndottedAccess, narrowType, accessingType);
 							}
 						}
 					}
@@ -708,7 +702,7 @@ aspect ExtendedTypeCheck {
 									false, currentSourceHostType, true,
 									CLASS_IMPLEMENTS_INTERFACE,
 									outputDeclsAndTargetHostTypes, isUndottedAccess,
-									currentSourceHostType, accessingType, overrideSourceFileAndLineNumber);
+									currentSourceHostType, accessingType);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -735,7 +729,7 @@ aspect ExtendedTypeCheck {
 										false, currentSourceHostType, true,
 										CLASS_IMPLEMENTS_INTERFACE,
 										nextTdAndTargetHostTypes,
-										isUndottedAccess, narrowType, accessingType, overrideSourceFileAndLineNumber);
+										isUndottedAccess, narrowType, accessingType);
 							}
 						}
 					}
@@ -783,7 +777,7 @@ aspect ExtendedTypeCheck {
 									false, currentSourceHostType, true,
 									INTERFACE_EXTENDS_INTERFACE,
 									outputDeclsAndTargetHostTypes, isUndottedAccess,
-									currentSourceHostType, accessingType, overrideSourceFileAndLineNumber);
+									currentSourceHostType, accessingType);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -810,7 +804,7 @@ aspect ExtendedTypeCheck {
 										false, currentSourceHostType, true,
 										INTERFACE_EXTENDS_INTERFACE,
 										nextTdAndTargetHostTypes,
-										isUndottedAccess, narrowType, accessingType, overrideSourceFileAndLineNumber);
+										isUndottedAccess, narrowType, accessingType);
 							}
 						}
 					}
@@ -825,7 +819,7 @@ aspect ExtendedTypeCheck {
 				/* recursive call */
 				splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
 						targetStructure, outputDeclsAndTargetHostTypes, isUndottedAccess,
-						narrowType, accessingType, overrideSourceFileAndLineNumber);
+						narrowType, accessingType);
 			}
 		}
 	}
@@ -1019,7 +1013,7 @@ aspect ExtendedTypeCheck {
 								}
 								/* check for SPL errors */
 								addSplErrors(i, declsAndTargetHostType, "the type", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
-										innerTypeAndInfo.get(targetHostType).isUndottedAccess(), sourceHostType, sourceHostType, "");
+										innerTypeAndInfo.get(targetHostType).isUndottedAccess(), sourceHostType, sourceHostType);
 							}
 						}
 					}
@@ -1080,7 +1074,7 @@ aspect ExtendedTypeCheck {
 			/* /TODO */
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the field", false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType, "");
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType);
 		}
 	}
 
@@ -1119,7 +1113,7 @@ aspect ExtendedTypeCheck {
 			s.append("\nmethod");
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType(), hostType(), "");
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType(), hostType());
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1134,7 +1128,7 @@ aspect ExtendedTypeCheck {
 							typeDeclsAndTargetHostTypes.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
 							/* check for SPL errors */
 			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument to parameter type", false, hostType(), 
-			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type(), "");
+			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type());
 						}
 					}
 				}
@@ -1186,7 +1180,7 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the method",
-					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType, "");
+					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType);
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1201,7 +1195,7 @@ aspect ExtendedTypeCheck {
 							typeDeclsAndTargetHostTypes.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
 							/* check for SPL errors */
 			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument to parameter type", false, hostType(), 
-			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type(), "");
+			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type());
 						}
 					}
 				}
@@ -1285,7 +1279,7 @@ aspect ExtendedTypeCheck {
 		addSplErrors(featureID(), declsAndTargetHostTypes, "the constructor",
 				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
 				(!(hasPrevExpr()) || isThisAccess || isSuperAccess), 
-				decl().hostType(), decl().hostType(), "");
+				decl().hostType(), decl().hostType());
 	}
 	
 	/* */
@@ -1304,7 +1298,7 @@ aspect ExtendedTypeCheck {
   				outputDeclsAndTargetHostTypes.put(targetType, targetType);
   				/* check for SPL errors */
   				addSplErrors(featureID(), declsAndTargetHostTypes, "(by an implicit cast) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType, "");
+  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType);
   			}
   		}
   	}
@@ -1326,7 +1320,7 @@ aspect ExtendedTypeCheck {
   				outputDeclsAndTargetHostTypes.put(targetType, targetType);
   				/* check for SPL errors */
   				addSplErrors(featureID(), declsAndTargetHostTypes, "(by an implicit cast) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType, "");
+  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType);
   			}
   		}
   	}
@@ -1356,7 +1350,7 @@ aspect ExtendedTypeCheck {
 				outputDeclsAndTargetHostTypes.put(targetType, targetType);
 				/* check for SPL errors */
 				addSplErrors(featureID(), declsAndTargetHostTypes, "(by an implicit cast) the type",
-						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType, "");
+						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, sourceType);
 			}
 		}
 	}
@@ -1374,14 +1368,14 @@ aspect ExtendedTypeCheck {
   			declsAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
   			/* check for SPL errors */
   			addSplErrors(featureID(), declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  					false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type(), getExpr().type(), "");
+  					false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type(), getExpr().type());
   		} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
   			/* TypeAccess side of CastExpr is in type hierarchy beneath 
   			 * the Expr side => downcast */
   			declsAndTargetHostTypes.put(getExpr().type(), getExpr().type().hostType());
   			/* check for SPL errors */
   			addSplErrors(featureID(), declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  					false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), ta.decl(), "");
+  					false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), ta.decl());
   		}
   	}
   }
@@ -1403,7 +1397,7 @@ aspect ExtendedTypeCheck {
 			/* check for SPL errors */
 			/* override sourceFile and LineNumber */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the super constructor", false, hostType(), 
-					false, FIRST_ROUND, declsAndTargetHostTypes, false, hostType(), hostType(), ""); //sourceFile() + ":" + lineNumber());
+					false, FIRST_ROUND, declsAndTargetHostTypes, false, hostType(), hostType());
 		}
 	}
 	
