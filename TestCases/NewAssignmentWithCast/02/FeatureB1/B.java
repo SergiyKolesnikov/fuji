@@ -1,3 +1,3 @@
-public class B extends C {
+public class B implements C {
 	
 }
