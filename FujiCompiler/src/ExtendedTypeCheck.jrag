@@ -1035,14 +1035,9 @@ aspect ExtendedTypeCheck {
 				BodyDecl decl = (BodyDecl) iter.next();
 				declsAndTargetHostTypes.put(decl, decl.hostType());
 			}
-			/* TODO: narrow-Type-Ermittlung mittels prevExpr ersetzbar? */
 			TypeDecl narrowType = hostType();
-			boolean isThisAccess = false;
-			boolean isSuperAccess = false;
-			if (hasPrevExpr()) {
-				Expr expr = prevExpr();
-				isThisAccess = (expr instanceof ThisAccess);
-				isSuperAccess = (expr instanceof SuperAccess);
+			if (isQualified()) {
+				Expr expr = qualifier();
 				if (expr instanceof VarAccess) {
 					VarAccess varAc = (VarAccess) expr;
 					if (varAc.decl() instanceof VariableDeclaration) {
@@ -1071,10 +1066,11 @@ aspect ExtendedTypeCheck {
 					}
 				}
 			}
-			/* /TODO */
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the field", false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType);
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+					narrowType, narrowType);
 		}
 	}
 
@@ -1113,7 +1109,7 @@ aspect ExtendedTypeCheck {
 			s.append("\nmethod");
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(hasPrevExpr()), hostType(), hostType());
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType(), hostType());
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1144,12 +1140,8 @@ aspect ExtendedTypeCheck {
 				}
 			}
 			TypeDecl narrowType = hostType();
-			boolean isThisAccess = false;
-			boolean isSuperAccess = false;
-			if (hasPrevExpr()) {
-				Expr expr = prevExpr();
-				isThisAccess = (expr instanceof ThisAccess);
-				isSuperAccess = (expr instanceof SuperAccess);
+			if (isQualified()) {
+				Expr expr = qualifier();
 				if (expr instanceof VarAccess) {
 					VarAccess varAc = (VarAccess) expr;
 					if (varAc.decl() instanceof VariableDeclaration) {
@@ -1180,7 +1172,9 @@ aspect ExtendedTypeCheck {
 			}
 			/* check for SPL errors */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the method",
-					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, (!(hasPrevExpr()) || isThisAccess || isSuperAccess), narrowType, narrowType);
+					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+					narrowType, narrowType);
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1194,7 +1188,7 @@ aspect ExtendedTypeCheck {
 							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 							typeDeclsAndTargetHostTypes.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
 							/* check for SPL errors */
-			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument to parameter type", false, hostType(), 
+			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument type to parameter type", false, hostType(), 
 			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type());
 						}
 					}
@@ -1231,15 +1225,9 @@ aspect ExtendedTypeCheck {
 					}
 				}
 				TypeErrorInfo tei = innerTypeAndInfo.get(decl().hostType());
-				boolean isThisAccess = false;
-				boolean isSuperAccess = false;
-				if (hasPrevExpr()) {
-					Expr expr = prevExpr();
-					isThisAccess = (expr instanceof ThisAccess);
-					isSuperAccess = (expr instanceof SuperAccess);
-				}
 				if (tei == null) {
-					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), (!(hasPrevExpr()) || isThisAccess || isSuperAccess));
+					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), 
+							(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()));
 				} else {
 					for (Iterator iter = tei.getDecls().iterator(); iter.hasNext(); ) {
 						listDecls.add((ConstructorDecl) iter.next());
@@ -1258,7 +1246,6 @@ aspect ExtendedTypeCheck {
 	/* */
 	public void ClassInstanceExpr.splTypeCheck() {
 		/* from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; */
-		/* TODO: durch ConstructorAccess ersetzen? */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		/* get all constructors with the same signature in this type */
 		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
@@ -1268,19 +1255,47 @@ aspect ExtendedTypeCheck {
 				}
 			}
 		}
-		boolean isThisAccess = false;
-		boolean isSuperAccess = false;
-		if (hasPrevExpr()) {
-			Expr expr = prevExpr();
-			isThisAccess = (expr instanceof ThisAccess);
-			isSuperAccess = (expr instanceof SuperAccess);
-		}
 		/* check for SPL errors */
 		addSplErrors(featureID(), declsAndTargetHostTypes, "the constructor",
 				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
-				(!(hasPrevExpr()) || isThisAccess || isSuperAccess), 
+				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
 				decl().hostType(), decl().hostType());
+		/* check, if types of arguments fit the constructor declaration 
+		 * (i.e. check, if the information that the type of an argument is 
+		 * a subtype of the expected parameter is always available due to 
+		 * the feature model) */
+		for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+			if (decl instanceof ConstructorDecl) {
+				ConstructorDecl cd = (ConstructorDecl) decl;
+				for (int i = 0; i < getNumArg(); i++) {
+					/* different type of argument and parameter */
+					if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
+						HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+						typeDeclsAndTargetHostTypes.put(cd.getParameter(i).type(), cd.getParameter(i).type().hostType());
+						/* check for SPL errors */
+		  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument type to parameter type", false, hostType(), 
+		  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type());
+					}
+				}
+			}
+		}
 	}
+	
+//	/* not working? */
+//	public void ConstructorAccess.splTypeCheck() {
+//		/* from java.ast: ConstructorAccess : Access ::= <ID:String> Arg:Expr*; */
+//		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+//		System.out.println("ConstructorAccess");
+//		for(Iterator iter = decls().iterator(); iter.hasNext(); ) {
+//			ConstructorDecl cd = (ConstructorDecl) iter.next();
+//			declsAndTargetHostTypes.put(cd, cd.hostType());
+//		}
+//		/* check for SPL errors */
+//		addSplErrors(featureID(), declsAndTargetHostTypes, "the constructor",
+//				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+//				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+//				decl().hostType(), decl().hostType());
+//	}
 	
 	/* */
 	public void FieldDeclaration.splTypeCheck() {
@@ -1393,11 +1408,28 @@ aspect ExtendedTypeCheck {
 		}
 		/* if there are non-trivial super constructor accesses */
 		if (!(declsAndTargetHostTypes.keySet().isEmpty())) {
-			System.out.println(sourceFile() + ":" + lineNumber());
 			/* check for SPL errors */
-			/* override sourceFile and LineNumber */
 			addSplErrors(featureID(), declsAndTargetHostTypes, "the super constructor", false, hostType(), 
 					false, FIRST_ROUND, declsAndTargetHostTypes, false, hostType(), hostType());
+			/* check, if types of arguments fit the constructor declaration 
+			 * (i.e. check, if the information that the type of an argument is 
+			 * a subtype of the expected parameter is always available due to 
+			 * the feature model) */
+			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+				if (decl instanceof ConstructorDecl) {
+					ConstructorDecl cd = (ConstructorDecl) decl;
+					for (int i = 0; i < getNumArg(); i++) {
+						/* different type of argument and parameter */
+						if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
+							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+							typeDeclsAndTargetHostTypes.put(cd.getParameter(i).type(), cd.getParameter(i).type().hostType());
+							/* check for SPL errors */
+			  			addSplErrors(featureID(), typeDeclsAndTargetHostTypes, "by an implicit cast from argument type to parameter type", false, hostType(), 
+			  					false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), getArg(i).type());
+						}
+					}
+				}
+			}
 		}
 	}
 	
