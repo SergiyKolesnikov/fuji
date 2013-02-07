@@ -156,7 +156,9 @@ aspect ExtendedTypeCheck {
 			String targetStructure, boolean isTypeAccess, TypeDecl sourceHostType,
 			boolean secondRoundDone, int state,
 			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-			boolean isUnqualifiedAccess, TypeDecl narrowType) {
+			boolean isUnqualifiedAccess, TypeDecl narrowType,
+			TypeDecl accessingType,
+			HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
 		/* get the feature model */
 		FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -256,16 +258,20 @@ aspect ExtendedTypeCheck {
 						if (typeAccesses != null) {
 							HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = typeAccesses.get(fromFeatureID);
 							if (outerMap != null) {
-								HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(narrowType);
+								HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(accessingType);
 								if (innerMap != null) {
-									TypeErrorInfo tei = innerMap.get(outputTargetHostType);
-									if (tei != null) {
-										for (String s : tei.getAccessSourceInfo()) {
-											sbtei.append(s);
-											sbtei.append("\n");
+									if (accessingDeclsAndTargetHostTypes.keySet().iterator().hasNext()) {
+										TypeDecl accessingTargetHostType = accessingDeclsAndTargetHostTypes
+												.get(accessingDeclsAndTargetHostTypes.keySet().iterator().next());
+										TypeErrorInfo tei = innerMap.get(accessingTargetHostType);
+										if (tei != null) {
+											for (String s : tei.getAccessSourceInfo()) {
+												sbtei.append(s);
+												sbtei.append("\n");
+											}
+											/* remove last "\n" */
+											sbtei.setLength(sbtei.length() - 1);
 										}
-										/* remove last "\n" */
-										sbtei.setLength(sbtei.length() - 1);
 									}
 								}
 							}
@@ -483,12 +489,12 @@ aspect ExtendedTypeCheck {
 					if (typeAccesses != null) {
 						HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = typeAccesses.get(fromFeatureID);
 						if (outerMap != null) {
-							HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(narrowType);
+							HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(accessingType);
 							if (innerMap != null) {
-								if (outputDeclsAndTargetHostTypes.keySet().iterator().hasNext()) {
-									TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes
-											.get(outputDeclsAndTargetHostTypes.keySet().iterator().next());
-									TypeErrorInfo tei = innerMap.get(outputTargetHostType);
+								if (accessingDeclsAndTargetHostTypes.keySet().iterator().hasNext()) {
+									TypeDecl accessingTargetHostType = accessingDeclsAndTargetHostTypes
+											.get(accessingDeclsAndTargetHostTypes.keySet().iterator().next());
+									TypeErrorInfo tei = innerMap.get(accessingTargetHostType);
 									if (tei != null) {
 										for (String s : tei.getAccessSourceInfo()) {
 											sbtei.append(s);
@@ -636,7 +642,7 @@ aspect ExtendedTypeCheck {
 								 * over <nextTd> (super types of bottom) */
 								splErrorCheckAccessToSuperType(sourceHostType, nextTd, top, paths, 
 										fromFeatureID, contextPresentFeatures, targetStructure, outputDeclsAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType, isTypeAccess);
+										isUnqualifiedAccess, narrowType, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);
 							}							
 						}
 					}
@@ -651,7 +657,8 @@ aspect ExtendedTypeCheck {
   		TypeDecl td, TypeDecl top, HashMap<TypeDecl, HashSet<TypeDecl>> paths, 
   		int fromFeatureID, HashSet<Integer> contextPresentFeatures, String targetStructure, 
   		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-  		boolean isUnqualifiedAccess, TypeDecl narrowType, boolean isTypeAccess) {
+  		boolean isUnqualifiedAccess, TypeDecl narrowType, boolean isTypeAccess,
+  		TypeDecl accessingType, HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
 		/* get the feature model */
   	FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -715,7 +722,7 @@ aspect ExtendedTypeCheck {
 									isTypeAccess, currentSourceHostType, true,
 									CLASS_EXTENDS_CLASS,
 									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType);
+									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -750,7 +757,7 @@ aspect ExtendedTypeCheck {
 										targetStructure, isTypeAccess, currentSourceHostType, true,
 										CLASS_EXTENDS_CLASS,
 										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType);
+										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -792,7 +799,7 @@ aspect ExtendedTypeCheck {
 									isTypeAccess, currentSourceHostType, true,
 									CLASS_IMPLEMENTS_INTERFACE,
 									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType);
+									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -822,7 +829,7 @@ aspect ExtendedTypeCheck {
 										isTypeAccess, currentSourceHostType, true,
 										CLASS_IMPLEMENTS_INTERFACE,
 										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType);
+										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -874,7 +881,7 @@ aspect ExtendedTypeCheck {
 									isTypeAccess, currentSourceHostType, true,
 									INTERFACE_EXTENDS_INTERFACE,
 									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType);
+									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access: start from all features of the
@@ -904,7 +911,7 @@ aspect ExtendedTypeCheck {
 										isTypeAccess, currentSourceHostType, true,
 										INTERFACE_EXTENDS_INTERFACE,
 										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType);
+										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -920,7 +927,7 @@ aspect ExtendedTypeCheck {
 				splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
 						contextPresentFeatures,
 						targetStructure, outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-						narrowType, isTypeAccess);
+						narrowType, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);
 			}
 		}
 	}
@@ -1118,7 +1125,7 @@ aspect ExtendedTypeCheck {
 								contextPresentFeatures.add(i);
 								/* check for SPL errors */
 								addSplErrors(i, contextPresentFeatures, declsAndTargetHostType, "the type", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
-										innerTypeAndInfo.get(targetHostType).isUnqualifiedAccess(), sourceHostType);
+										innerTypeAndInfo.get(targetHostType).isUnqualifiedAccess(), sourceHostType, sourceHostType, declsAndTargetHostType);
 							}
 						}
 					}
@@ -1179,7 +1186,7 @@ aspect ExtendedTypeCheck {
 			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the field", false,
 					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
 					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-					narrowType);
+					narrowType, hostType(), declsAndTargetHostTypes);
 		}
 	}
 
@@ -1222,7 +1229,7 @@ aspect ExtendedTypeCheck {
 			contextPresentFeatures.add(featureID());
 			/* check for SPL errors */
 			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType());
+					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType(), hostType(), declsAndTargetHostTypes);
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1242,7 +1249,7 @@ aspect ExtendedTypeCheck {
 							/* check for SPL errors */
 							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
 									"by an implicit cast from argument to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
 						}					
 					}
 				}
@@ -1296,7 +1303,7 @@ aspect ExtendedTypeCheck {
 			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the method",
 					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
 					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-					narrowType);
+					narrowType, hostType(), declsAndTargetHostTypes);
 			/* check, if types of arguments fit the method declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1316,7 +1323,7 @@ aspect ExtendedTypeCheck {
 							/* check for SPL errors */
 							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
 									"by an implicit cast from argument type to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
 						}
 					}
 				}
@@ -1387,7 +1394,7 @@ aspect ExtendedTypeCheck {
 		addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the constructor",
 				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
 				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-				decl().hostType());
+				decl().hostType(), hostType(), declsAndTargetHostTypes);
 		/* check, if types of arguments fit the constructor declaration 
 		 * (i.e. check, if the information that the type of an argument is 
 		 * a subtype of the expected parameter is always available due to 
@@ -1407,7 +1414,7 @@ aspect ExtendedTypeCheck {
 						/* check for SPL errors */
 						addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
 								"by an implicit cast from argument type to parameter type", false, hostType(), 
-								false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+								false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
 					}				
 				}
 			}
@@ -1435,7 +1442,7 @@ aspect ExtendedTypeCheck {
   				/* check for SPL errors */
   				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
   						"(by an implicit cast/in the type hierarchy) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType);
+  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
   			}
   		}
   	}
@@ -1462,7 +1469,7 @@ aspect ExtendedTypeCheck {
   				/* check for SPL errors */
   				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
   						"(by an implicit cast/in the type hierarchy) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType);
+  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
   			}
   		}
   	}
@@ -1497,7 +1504,7 @@ aspect ExtendedTypeCheck {
 				/* check for SPL errors */
 				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
 						"(by an implicit cast/in the type hierarchy) the type",
-						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType);
+						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
 			}
 		}
 	}
@@ -1525,7 +1532,7 @@ aspect ExtendedTypeCheck {
 					contextPresentFeatures.add(featureID());
   				/* check for SPL errors */
   				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  						false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type());
+  						false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type(), hostType(), declsAndTargetHostTypes);
   			} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
   				/* TypeAccess side of CastExpr is in type hierarchy beneath 
   				 * the Expr side => downcast */
@@ -1536,7 +1543,7 @@ aspect ExtendedTypeCheck {
   				contextPresentFeatures.add(featureID());
   				/* check for SPL errors */
   				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  						false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl());
+  						false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), hostType(), declsAndTargetHostTypes);
   			}
   		}
   	}
@@ -1564,10 +1571,10 @@ aspect ExtendedTypeCheck {
 			 * accessing feature is trivially set */
 			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
 			contextPresentFeatures.add(featureID());
-			/* check for SPL errors */
+			/* check for SPL errors: this is an unqualified access */
 			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
 					"the super constructor", false, hostType(), 
-					false, FIRST_ROUND, declsAndTargetHostTypes, false, hostType());
+					false, FIRST_ROUND, declsAndTargetHostTypes, true, hostType(), hostType(), declsAndTargetHostTypes);
 			/* check, if types of arguments fit the constructor declaration 
 			 * (i.e. check, if the information that the type of an argument is 
 			 * a subtype of the expected parameter is always available due to 
@@ -1587,7 +1594,7 @@ aspect ExtendedTypeCheck {
 							/* check for SPL errors */
 							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
 									"by an implicit cast from argument type to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type());
+									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
 						}						
 					}
 				}
