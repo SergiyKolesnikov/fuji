@@ -989,9 +989,9 @@ aspect ExtendedTypeCheck {
 		return isInTypeHierarchy;
 	}
 	
-	/* list the paths in the type hierarchy from bottomType to topType 
-	 * returns an empty map if there are no paths, 
-	 * key points to all supertypes of this type */
+	/* list the paths in the type hierarchy from bottomType to topType; 
+	 * returns an empty map if there are no paths; 
+	 * the key points to all supertypes of this type */
 	public HashMap<TypeDecl, HashSet<TypeDecl>> ASTNode.getTypeHierarchyPaths(TypeDecl bottomType, TypeDecl topType) {
 		HashMap<TypeDecl, HashSet<TypeDecl>> paths = new HashMap<TypeDecl, HashSet<TypeDecl>>();
 		HashSet<TypeDecl> superTypes = new HashSet<TypeDecl>();
@@ -1036,26 +1036,25 @@ aspect ExtendedTypeCheck {
 			}
 			if (!(accessHostTypes.isEmpty())) {
 				if (accessHostTypes.contains(topType)) {
-					/* direct super type */
+					/* direct super type found, stop here */
 					superTypes.add(topType);
 					paths.put(bottomType, superTypes);
-					/* search for other paths to topType */
-					accessHostTypes.remove(topType);
-				}
-				boolean nextStepOK = false;
-				for (TypeDecl td : accessHostTypes) {
-					/* recursive step */
-					HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
-					if (!(nextStep.isEmpty())) {
-						nextStepOK = true;
-						paths.putAll(nextStep);
-						superTypes.add(td);
+				} else {
+					boolean nextStepOK = false;
+					for (TypeDecl td : accessHostTypes) {
+						/* recursive step */
+						HashMap<TypeDecl, HashSet<TypeDecl>> nextStep = getTypeHierarchyPaths(td, topType);
+						if (!(nextStep.isEmpty())) {
+							nextStepOK = true;
+							paths.putAll(nextStep);
+							superTypes.add(td);
+						}
+					}
+					if (nextStepOK) {
+						/* add beginning of path */
+						paths.put(bottomType, superTypes);
 					}
 				}
-				if (nextStepOK) {
-					/* add beginning of path */
-					paths.put(bottomType, superTypes);
-				}		
 			}
 		}
 		return paths;
