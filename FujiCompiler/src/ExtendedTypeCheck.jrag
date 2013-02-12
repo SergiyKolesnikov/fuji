@@ -1147,7 +1147,7 @@ aspect ExtendedTypeCheck {
 	/* placeholder */
 	public void ASTNode.splTypeCheck() { }
 
-	/* TODO: Kommentar schreiben */
+	/* Field Accesses */
 	public void VarAccess.splTypeCheck() {
 		/* from java.ast: VarAccess : Access ::= <ID:String>; */
 		/* is the VarAccess a FieldAccess? */
@@ -1200,7 +1200,7 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	/* TODO: Kommentar schreiben */
+	/* Method Accesses */
 	public void MethodAccess.splTypeCheck() {
 		/* from java.ast: MethodAccess : Access ::= <ID:String> Arg:Expr*; */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
@@ -1341,7 +1341,7 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	/* TODO: Kommentar schreiben */
+	/* Type Accesses */
 	public void TypeAccess.splTypeCheck() {
 		/* from java.ast: TypeAccess : Access ::= <Package:String> <ID:String>; */
 		/* collect all TypeAccesses: source feature, type, decl(s), source file(s),
@@ -1384,7 +1384,8 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	/* TODO: Kommentar schreiben */
+	/* Class Instance Expr, keyword new
+	 * Constructor Access does not work properly (?) */
 	public void ClassInstanceExpr.splTypeCheck() {
 		/* from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
@@ -1431,7 +1432,7 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
-	/* TODO: Kommentar schreiben */
+	/* Declaration of Field with implicit up- or downcast */
 	public void FieldDeclaration.splTypeCheck() {
 		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
 		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
@@ -1458,7 +1459,7 @@ aspect ExtendedTypeCheck {
   	}
   }
 	
-	/* TODO: Kommentar schreiben */
+	/* Declaration of Variable with implicit up- or downcast */
 	public void VariableDeclaration.splTypeCheck() {
 		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
 		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
@@ -1485,7 +1486,8 @@ aspect ExtendedTypeCheck {
   	}
   }
 	
-	/* TODO: Kommentar schreiben */
+	/* Simple Assignment where the right side is an Expr with new keyword,
+	 * implicit up- or downcast */
 	public void AssignSimpleExpr.splTypeCheck() {
 		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
 		/* report a type error, if a new class instance is implicitly casted to a
@@ -1559,8 +1561,7 @@ aspect ExtendedTypeCheck {
   	}
   }
 	
-	/* experimental type check:
-	 * sourceFile and lineNumber for output are incorrect */
+	/* Super Constructor Access (also implicit in Default Constructor) */
 	public void SuperConstructorAccess.splTypeCheck() {
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		/* do not consider trivial super constructor accesses 
