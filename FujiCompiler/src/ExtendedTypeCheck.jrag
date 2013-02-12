@@ -554,7 +554,12 @@ aspect ExtendedTypeCheck {
 								} else if (state == INTERFACE_EXTENDS_INTERFACE) {
 									sb.append(" as subinterface of interface ");
 								}
-								sb.append(mapDecls.get(toFeatureID));
+								if (isTypeAccess) {
+									sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
+											.next()));
+								} else {
+									sb.append(mapDecls.get(toFeatureID));
+								}
 								sb.append(" " + targetStructure + "\n     ");
 								sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
 										.next()));
@@ -564,7 +569,13 @@ aspect ExtendedTypeCheck {
 										|| (state == INTERFACE_EXTENDS_INTERFACE)) {
 									sb.append("\n   of interface ");
 								}
-								sb.append(mapDecls.get(toFeatureID) + ".\n");
+								if (isTypeAccess) {
+									sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
+											.next()));
+								} else {
+									sb.append(mapDecls.get(toFeatureID));
+								}
+								sb.append(".\n");
 							}
 						}
 						sb.append("There may be a valid selection where none of the features ");
@@ -1221,7 +1232,7 @@ aspect ExtendedTypeCheck {
 			}
 			s.append(")");
 			s.append("\n  in method\n    " + context + "\n  of type " + methodHost());
-			s.append("\nmethod");
+			s.append("\n  method");
 			/* set of selected features for mayBeMissing-Check (second round), 
 			 * accessing feature is trivially set */
 			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
