@@ -29,8 +29,6 @@ import AST.CompilationUnit;
 import AST.ComposingVisitor;
 import AST.Program;
 
-import java.lang.management.*;
-
 /**
  * The main fuji class. Manages all the work.
  * 
@@ -45,36 +43,26 @@ public class Main implements CompositionContext {
 	private boolean generateClassFiles = true;
 	private Collection<String> processedCUs = new ArrayList<String>();
 
-	/* Feature-Model */
+	/* Feature-Model for typechecker */
 	private static FeatureModel model = new FeatureModel();
-
-	/* Benchmark */
-	private static long startCpuTimeNano = 0L;
-	private static long taskCpuTimeNano = 0L;
 
 	/**
 	 * Starts fuji and processes exceptions.
 	 * 
 	 * @param args
-	 *            command line arguments.
+	 *          command line arguments.
 	 */
 	public static void main(String[] args) {
 		try {
-			/* Benchmark: measure time needed to construct the AST */
-			startCpuTimeNano = getCpuTime();
 			new Main(args, null);
 		} catch (WrongArgumentException e) {
 			printError(e.getMessage());
-			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (ParseException e) {
 			printError(e.getMessage());
-			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (IOException e) {
 			printError(e.getMessage());
-			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (FeatureDirNotFoundException e) {
 			printError(e.getMessage());
-			System.out.println("BENCHMARK INCOMPLETE");
 		} catch (SyntacticErrorException e) {
 			printError(e.getMessage());
 		} catch (SemanticErrorException e) {
@@ -83,22 +71,18 @@ public class Main implements CompositionContext {
 			System.err.println(e.getMessage());
 		} catch (CompositionErrorException e) {
 			printError(e.getMessage() + "\n");
-			System.out.println("BENCHMARK INCOMPLETE");
 		}
-		/* Benchmark: time needed to check for errors */
-		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
-		System.out.println("(spl) error check: " + (taskCpuTimeNano/1000000) + " ms");
 	}
 
 	/**
 	 * Default constructor. Manages all the fuji's work.
 	 * 
 	 * @param args
-	 *            command line args.
+	 *          command line args.
 	 * @param featuresList
-	 *            list of features to be composed. The order of features in this
-	 *            list specifies the order of composition of the corresponding
-	 *            feature modules.
+	 *          list of features to be composed. The order of features in this
+	 *          list specifies the order of composition of the corresponding
+	 *          feature modules.
 	 * 
 	 * @throws WrongArgumentException
 	 * @throws ParseException
@@ -108,28 +92,27 @@ public class Main implements CompositionContext {
 	 * @throws SemanticErrorException
 	 * @throws CompilerWarningException
 	 */
+	@SuppressWarnings("rawtypes")
 	public Main(String[] args, List<String> featuresList)
 			throws WrongArgumentException, ParseException, IOException,
 			FeatureDirNotFoundException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
+
 		/*
-		 * The flag controls the construction of the SPL structure
-		 * representation. If true, only one dependency graph containing all the
-		 * groups will be created. The interrelations between the role groups
-		 * are disregarded.
+		 * The flag controls the construction of the SPL structure representation.
+		 * If true, only one dependency graph containing all the groups will be
+		 * created. The interrelations between the role groups are disregarded.
 		 * 
-		 * TODO: remove the whole thing with dependency graph generation because
-		 * it is not needed.
+		 * TODO: remove the whole thing with dependency graph generation because it
+		 * is not needed.
 		 */
 		boolean useSingleDependencyGraph = true;
 
-		/* = Fuji-features-file */
+		/* = Fuji-features-file for typechecker */
 		ArrayList<Feature> features = new ArrayList<Feature>();
 		List<String> featureNames = new ArrayList<String>();
 
-		@SuppressWarnings("unchecked")
 		Collection errors = new ArrayList();
-		@SuppressWarnings("unchecked")
 		Collection warnings = new ArrayList();
 
 		/* Initialize options and parse the command line. */
@@ -138,31 +121,30 @@ public class Main implements CompositionContext {
 
 		/* help, version */
 		if (cmd.hasOption(HELP)) {
-			new HelpFormatter()
-					.printHelp(72, toolName(), "", options, "", true);
+			new HelpFormatter().printHelp(72, toolName(), "", options, "", true);
 			return;
 		} else if (cmd.hasOption(VERSION)) {
-			System.out.println(toolName() + " v." + version() + " "
-					+ projectURL());
+			System.out.println(toolName() + " v." + version() + " " + projectURL());
 			return;
 		}
 
 		/* Check compatibility of command-line options. */
 		if ((cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS))
 				&& cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+
 			/*
 			 * Intros/Refs calculation ComposingVisitorRSF and ASTS calculation
 			 * requires ComposingVisitorNormal
 			 */
-			throw new WrongArgumentException("Incompatible options:"
-					+ EXT_INTROS + "/" + EXT_REFS + "and"
-					+ EXT_MEASURE_ASTS_SOURCE + "\n");
+
+			throw new WrongArgumentException("Incompatible options:" + EXT_INTROS
+					+ "/" + EXT_REFS + "and" + EXT_MEASURE_ASTS_SOURCE + "\n");
 		}
 
 		/*
 		 * Check the features file or feature model file in GUIDSL format
 		 * (typechecker mode) argument. If in programmatic mode features file
-		 * argument can be omitted. TODO: edit comment
+		 * argument can be omitted.
 		 */
 		String featuresFileOrFeatureModelFilePathname = null;
 		if (((cmd.getArgList().size() == 0) && !cmd.hasOption(PROG_MODE))
@@ -192,8 +174,8 @@ public class Main implements CompositionContext {
 			composingVisitor = new AST.ComposingVisitorNormal();
 		}
 
-		String basedir = cmd.getOptionValue(BASEDIR,
-				System.getProperty("user.dir"));
+		String basedir = cmd
+				.getOptionValue(BASEDIR, System.getProperty("user.dir"));
 
 		/*
 		 * Decide where the features list or the feature model file comes from.
@@ -202,8 +184,7 @@ public class Main implements CompositionContext {
 
 			if (cmd.hasOption(TYPECHECKER)) {
 				/* read in feature model */
-				File guidsl_file = new File(
-						featuresFileOrFeatureModelFilePathname);
+				File guidsl_file = new File(featuresFileOrFeatureModelFilePathname);
 				GuidslReader reader = new GuidslReader(model);
 				try {
 					reader.readFromFile(guidsl_file);
@@ -219,32 +200,22 @@ public class Main implements CompositionContext {
 					featureNames.add(f.getName());
 				}
 
-				spl = new SPLStructure(basedir, featureNames,
-						useSingleDependencyGraph);
+				spl = new SPLStructure(basedir, featureNames, useSingleDependencyGraph);
 			} else {
 				/* Use features file */
-				spl = new SPLStructure(basedir,
-						featuresFileOrFeatureModelFilePathname,
+				spl = new SPLStructure(basedir, featuresFileOrFeatureModelFilePathname,
 						useSingleDependencyGraph);
 			}
 
 		} else {
+
 			/*
-			 * Take the features list from the parameter supplied to the
-			 * constructor.
+			 * Take the features list from the parameter supplied to the constructor.
 			 */
-			spl = new SPLStructure(basedir, featuresList,
-					useSingleDependencyGraph);
+			spl = new SPLStructure(basedir, featuresList, useSingleDependencyGraph);
 		}
 
 		backboneCompilerArgs = constructBackboneCompilerArgs();
-
-		/* Benchmark: time needed to construct the AST */
-		taskCpuTimeNano = getCpuTime() - startCpuTimeNano;
-		System.out.println("construct AST:     " + (taskCpuTimeNano/1000000) + " ms");
-
-		/* Benchmark: measure time needed to check for errors */
-		startCpuTimeNano = getCpuTime();
 
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
@@ -289,11 +260,8 @@ public class Main implements CompositionContext {
 				.withArgName("path")
 				.withDescription(
 						"Specify where to find user class files and "
-								+ "annotation processors").withLongOpt("cp")
-				.create(CLASSPATH));
-		ops.addOption(OptionBuilder
-				.hasArg()
-				.withArgName("directory")
+								+ "annotation processors").withLongOpt("cp").create(CLASSPATH));
+		ops.addOption(OptionBuilder.hasArg().withArgName("directory")
 				.withDescription("Specify where to place generated class files")
 				.create(D));
 		ops.addOption(OptionBuilder.hasArg().withArgName("dirs")
@@ -301,22 +269,22 @@ public class Main implements CompositionContext {
 				.create(EXTDIRS));
 		ops.addOption(OptionBuilder.withDescription(
 				"Print a synopsis of standard options").create(HELP));
-		ops.addOption(OptionBuilder.withDescription("Generate no warnings")
-				.create(NOWARN));
+		ops.addOption(OptionBuilder.withDescription("Generate no warnings").create(
+				NOWARN));
 		ops.addOption(OptionBuilder.hasArg().withArgName("path")
 				.withDescription("Specify where to find input source files")
 				.create(SOURCEPATH));
-		ops.addOption(OptionBuilder.withDescription("Version information")
-				.create(VERSION));
+		ops.addOption(OptionBuilder.withDescription("Version information").create(
+				VERSION));
 		ops.addOption(OptionBuilder.hasArg().withArgName("directory")
 				.withDescription("Specyfy where to find feature modules")
 				.create(BASEDIR));
 		ops.addOption(OptionBuilder.withDescription("Pring access statistics")
 				.create(EXT_ACCESSCOUNT));
-		ops.addOption(OptionBuilder.withDescription(
-				"Print introduces relations").create(EXT_INTROS));
-		ops.addOption(OptionBuilder.withDescription("Print ref relations")
-				.create(EXT_REFS));
+		ops.addOption(OptionBuilder.withDescription("Print introduces relations")
+				.create(EXT_INTROS));
+		ops.addOption(OptionBuilder.withDescription("Print ref relations").create(
+				EXT_REFS));
 		ops.addOption(OptionBuilder
 				.hasArg()
 				.withArgName("directory")
@@ -327,8 +295,8 @@ public class Main implements CompositionContext {
 		ops.addOption(OptionBuilder.withDescription(
 				"Instantiate fuji in programmatic mode.  This "
 						+ "mode is used to control fuji from "
-						+ "another program and not by using command-line.")
-				.create(PROG_MODE));
+						+ "another program and not by using command-line.").create(
+				PROG_MODE));
 		ops.addOption(OptionBuilder.withDescription(
 				"Instantiate fuji in typechecker mode. A file containing "
 						+ "the feature module is expected instead of the file "
@@ -358,13 +326,13 @@ public class Main implements CompositionContext {
 			String d = cmd.getOptionValue(D);
 
 			/*
-			 * If the destination directory for generated class files is set,
-			 * add it to the class path.
+			 * If the destination directory for generated class files is set, add it
+			 * to the class path.
 			 * 
 			 * Reason: if class A uses class B and B was composed and compiled
-			 * already, the composed and compiled class from the -d directory
-			 * will be retrieved for A compilation and not some incomplete base
-			 * or refinement class.
+			 * already, the composed and compiled class from the -d directory will be
+			 * retrieved for A compilation and not some incomplete base or refinement
+			 * class.
 			 * 
 			 * NOTE: It is not default javac behaviour.
 			 */
@@ -409,23 +377,22 @@ public class Main implements CompositionContext {
 	 * @throws SemanticErrorException
 	 * @throws CompilerWarningException
 	 */
+	@SuppressWarnings("rawtypes")
 	public void processAST(Composition composition) throws IOException,
-			WrongArgumentException, SyntacticErrorException,
-			SemanticErrorException, CompilerWarningException {
-
+			WrongArgumentException, SyntacticErrorException, SemanticErrorException,
+			CompilerWarningException {
 		Iterator<Program> astIter = composition.getASTIterator();
 
 		/* Process the ASTs according to the user specified options. */
-		@SuppressWarnings("unchecked")
+		Program ast = null;
 		Collection errors = new ArrayList();
-		@SuppressWarnings("unchecked")
 		Collection warnings = new ArrayList();
 		while (astIter.hasNext()) {
-			Program ast = astIter.next();
+			ast = astIter.next();
 			@SuppressWarnings("unchecked")
-			Iterator iter = ast.compilationUnitIterator();
+			Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
 			while (iter.hasNext()) {
-				CompilationUnit cu = (CompilationUnit) iter.next();
+				CompilationUnit cu = iter.next();
 				if (cu.fromSource()) {
 					processCU(cu, errors, warnings);
 				}
@@ -445,19 +412,23 @@ public class Main implements CompositionContext {
 			}
 			throw new CompilerWarningException(message.toString());
 		}
+
+		/* Do analysis on the whole AST. */
+		if (cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+			System.out.println(ast.measureASTSSource());
+		}
 	}
 
 	/**
 	 * Process a CompilationUnit according to the user options. And remember
 	 * processed CUs.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private void processCU(CompilationUnit cu, Collection errors,
 			Collection warnings) throws IOException, WrongArgumentException,
 			SyntacticErrorException {
 
-		if (cmd.hasOption(EXT_INTROS)
-				&& spl.isBaseRoleSourcefile(cu.pathName())
+		if (cmd.hasOption(EXT_INTROS) && spl.isBaseRoleSourcefile(cu.pathName())
 				&& !processedCUs.contains(cu.pathName())) {
 
 			cu.printIntros(spl.getFeatureModulePathnames());
@@ -467,16 +438,14 @@ public class Main implements CompositionContext {
 
 			cu.printRefs(spl.getFeatureModulePathnames());
 		}
-
 		if (generateClassFiles) {
 
 			/*
-			 * Check for syntactical errors. (They have been checked in
-			 * SPLStructure before while creating dependency graphs.
+			 * Check for syntactical errors. (They have been checked in SPLStructure
+			 * before while creating dependency graphs.
 			 * 
-			 * TODO: collect syntactical errors for _all_ CUs before
-			 * composition. See also bug revealed by
-			 * ReportParseError2Compile.test
+			 * TODO: collect syntactical errors for _all_ CUs before composition. See
+			 * also bug revealed by ReportParseError2Compile.test
 			 */
 			Collection parseErrors = cu.parseErrors();
 			if (!parseErrors.isEmpty()) {
@@ -491,22 +460,21 @@ public class Main implements CompositionContext {
 			 * Check for static semantic errors.
 			 */
 			cu.errorCheck(errors, warnings);
+			if (errors.isEmpty()) {
 
-			// if (errors.isEmpty()) {
-			//
-			// /*
-			// * Write source code for the compilation unit. This must be done
-			// * before cu.transformation() is called.
-			// */
-			// if (cmd.hasOption(SRC) && cu.fromRole()) {
-			// generateSourcefile(cmd.getOptionValue(SRC), cu);
-			// }
-			// if (cmd.hasOption(EXT_ACCESSCOUNT)) {
-			// // TODO
-			// }
-			// // cu.transformation(); // BENCHMARK
-			// // cu.generateClassfile(); // BENCHMARK
-			// }
+				/*
+				 * Write source code for the compilation unit. This must be done before
+				 * cu.transformation() is called.
+				 */
+				if (cmd.hasOption(SRC) && cu.fromRole()) {
+					generateSourcefile(cmd.getOptionValue(SRC), cu);
+				}
+				if (cmd.hasOption(EXT_ACCESSCOUNT)) {
+					// TODO
+				}
+				cu.transformation();
+				cu.generateClassfile();
+			}
 		}
 
 		processedCUs.add(cu.pathName());
@@ -529,10 +497,9 @@ public class Main implements CompositionContext {
 		if (!spl.getBasedirPathname().contains(destinationDir)) {
 			cu.generateSourcefile(destinationDir);
 		} else {
-			throw new WrongArgumentException(
-					"Destination directory for generated ("
-							+ destinationDir
-							+ ") source files coincide with a feature module directory.");
+			throw new WrongArgumentException("Destination directory for generated ("
+					+ destinationDir
+					+ ") source files coincide with a feature module directory.");
 		}
 	}
 
@@ -543,8 +510,8 @@ public class Main implements CompositionContext {
 	 * @return compiler arguments (options).
 	 */
 	public String[] getBackboneCompilerArgs() {
-		return backboneCompilerArgs.toArray(new String[backboneCompilerArgs
-				.size()]);
+		return backboneCompilerArgs
+				.toArray(new String[backboneCompilerArgs.size()]);
 	}
 
 	/**
@@ -570,11 +537,10 @@ public class Main implements CompositionContext {
 	 * A factory method for Composition objects.
 	 * 
 	 * @param compContext
-	 *            a CompositionContext to initialize the Composition instance
-	 *            with.
+	 *          a CompositionContext to initialize the Composition instance with.
 	 * 
-	 * @return a instance of Composition object initialized with the
-	 *         corresponding composition context.
+	 * @return a instance of Composition object initialized with the corresponding
+	 *         composition context.
 	 */
 	public Composition getComposition(CompositionContext compContext) {
 		return new Composition(compContext);
@@ -595,7 +561,7 @@ public class Main implements CompositionContext {
 		public static final String SOURCEPATH = "sourcepath"; //
 		public static final String VERSION = "version";
 
-		/* Not JastAddJ options. */
+		/* Fuji-specific options. */
 		public static final String BASEDIR = "basedir";
 		public static final String EXT_ACCESSCOUNT = "fopStatistic"; //
 		public static final String EXT_INTROS = "fopIntroduces"; //
@@ -622,34 +588,6 @@ public class Main implements CompositionContext {
 	}
 
 	private static String version() {
-		return "2012-09-26"; /* TYPECHECKER */
-	}
-
-	/*
-	 * for benchmarks: http://nadeausoftware.com/
-	 * articles/2008/03/java_tip_how_get_cpu_and_user_time_benchmarking
-	 * #TimingasinglethreadedtaskusingCPUsystemandusertime
-	 */
-
-	/** Get CPU time in nanoseconds. */
-	public static long getCpuTime() {
-		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-		return bean.isCurrentThreadCpuTimeSupported() ? bean
-				.getCurrentThreadCpuTime() : 0L;
-	}
-
-	/** Get user time in nanoseconds. */
-	public static long getUserTime() {
-		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-		return bean.isCurrentThreadCpuTimeSupported() ? bean
-				.getCurrentThreadUserTime() : 0L;
-	}
-
-	/** Get system time in nanoseconds. */
-	public static long getSystemTime() {
-		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-		return bean.isCurrentThreadCpuTimeSupported() ? (bean
-				.getCurrentThreadCpuTime() - bean.getCurrentThreadUserTime())
-				: 0L;
+		return "2012-03-26";
 	}
 }
