@@ -201,7 +201,7 @@ public class Main implements CompositionContext {
 		if (featuresFileOrFeatureModelFilePathname != null) {
 
 			if (cmd.hasOption(TYPECHECKER)) {
-				/* lese FM ein */
+				/* read in feature model */
 				File guidsl_file = new File(
 						featuresFileOrFeatureModelFilePathname);
 				GuidslReader reader = new GuidslReader(model);
