@@ -1,21 +1,27 @@
 #!/bin/bash
 
-(( CpuTimeAll=0 ))
-(( CpuTimeCurrent=0 ))
+(( CpuTimeCompositionAll=0 ))
+(( CpuTimeTypeCheckAll=0 ))
+(( CpuTimeCompositionCurrent=0 ))
+(( CpuTimeTypeCheckCurrent=0 ))
 
 for variantdir in $1/products/Variant*
 do
   for configfile in $variantdir/Variant*.config
   do
-    (( CpuTimeCurrent=0 ))
-    CpuTimeCurrent=`java -jar fuji.jar \
+    (( CpuTimeCompositionCurrent=0 ))
+    (( CpuTimeTypeCheckCurrent=0 ))
+    java -jar fuji.jar \
          -basedir $1/features \
          $configfile \
-         2> $variantdir/out.txt`
-    echo "$configfile done. cpu time: $((CpuTimeCurrent/1000000)) milliseconds."
-    (( CpuTimeAll+=CpuTimeCurrent ))
+         > cputimecurrent.txt \
+         2> $variantdir/out.txt
+    CpuTimeCompositionCurrent=$(grep "AST" cputimecurrent.txt | egrep -o "[0-9]+")
+    CpuTimeTypeCheckCurrent=$(grep "check" cputimecurrent.txt | egrep -o "[0-9]+") 
+    echo "$configfile done. AST: $((CpuTimeCompositionCurrent)) ms, error check: $((CpuTimeTypeCheckCurrent)) ms."
+    (( CpuTimeCompositionAll+=CpuTimeCompositionCurrent ))
+    (( CpuTimeTypeCheckAll+=CpuTimeTypeCheckCurrent ))
   done
 done
-(( CpuTimeAllMilliseconds=CpuTimeAll/1000000 ))
-echo "cpu time:   $CpuTimeAll nanoseconds"
-echo "          = $((CpuTimeAllMilliseconds/60000))m$(((CpuTimeAllMilliseconds%60000)/1000)).$(((CpuTimeAllMilliseconds%60000)%1000))s"
+echo "construct AST: $((CpuTimeCompositionAll)) ms"
+echo "error check:   $((CpuTimeTypeCheckAll)) ms"

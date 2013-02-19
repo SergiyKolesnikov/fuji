@@ -1,0 +1,29 @@
+#!/bin/bash
+
+(( CpuTimeCompositionAll=0 ))
+(( CpuTimeTypeCheckAll=0 ))
+(( CpuTimeCompositionCurrent=0 ))
+(( CpuTimeTypeCheckCurrent=0 ))
+
+for variantdir in $1/products/Variant*
+do
+  for variantmodel in $variantdir/Variant*.model
+  do
+    (( CpuTimeCompositionCurrent=0 ))
+    (( CpuTimeTypeCheckCurrent=0 ))
+    java -jar fuji.jar \
+         -fopRefs \
+         -typechecker \
+         -basedir $1/features \
+         $variantmodel \
+         > $variantdir/timetypechecker.txt \
+         2> $variantdir/outtypechecker.txt
+    CpuTimeCompositionCurrent=$(grep "AST" $variantdir/timetypechecker.txt | egrep -o "[0-9]+")
+    CpuTimeTypeCheckCurrent=$(grep "check" $variantdir/timetypechecker.txt | egrep -o "[0-9]+") 
+    echo "$variantmodel done. AST: $((CpuTimeCompositionCurrent)) ms, spl error check: $((CpuTimeTypeCheckCurrent)) ms."
+    (( CpuTimeCompositionAll+=CpuTimeCompositionCurrent ))
+    (( CpuTimeTypeCheckAll+=CpuTimeTypeCheckCurrent ))
+  done
+done
+echo "construct AST:   $((CpuTimeCompositionAll)) ms"
+echo "spl error check: $((CpuTimeTypeCheckAll)) ms"
