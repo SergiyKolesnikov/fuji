@@ -1,0 +1,31 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/MethodAccess/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the method
+  public static int getValue() { ... }
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/MethodAccess/02/FeatureA/A.java:6:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/MethodAccess/02/FeatureA/A.java:7:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the method
+  public int getValue2() { ... }
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/MethodAccess/02/FeatureA/A.java:6
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/MethodAccess/02/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+
