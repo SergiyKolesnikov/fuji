@@ -8,11 +8,11 @@ ok='\033[0;32m'
 reset='\033[0m'
 
 echoFailed() {
-echo -ne $failed"$1"$reset
+  echo -ne $failed"$1"$reset
 }
 
 echoOK() {
-echo -ne $ok"$1"$reset
+  echo -ne $ok"$1"$reset
 }
 
 # For all numbered folders in this folder:

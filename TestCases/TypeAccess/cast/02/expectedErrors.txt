@@ -1,0 +1,30 @@
+Errors:
+
+/TypeAccess/cast/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses by a cast the type
+  public C()
+of feature FeatureC.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
+
+/TypeAccess/cast/02/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the super constructor
+  public C()
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+
+/TypeAccess/cast/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).C
+of feature FeatureC.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
+
+/TypeAccess/cast/02/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+

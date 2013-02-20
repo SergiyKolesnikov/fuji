@@ -3,4 +3,4 @@ Alt  : FeatureA | FeatureC :: _Alt ;
 
 %%
 
-not FeatureA iff FeatureC ;
+FeatureA implies FeatureC ;
