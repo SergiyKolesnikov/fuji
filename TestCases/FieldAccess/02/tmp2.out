@@ -1,0 +1,31 @@
+Errors:
+
+/FieldAccess/02/FeatureA/A.java:3,19:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the field
+  public static int j = 23;
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:6:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:7,16:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the field
+  public int k = 42;
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:3
+/FieldAccess/02/FeatureA/A.java:6:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+

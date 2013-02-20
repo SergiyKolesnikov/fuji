@@ -16,7 +16,7 @@ echo -ne $ok"$1"$reset
 }
 
 # For all numbered folders in this folder:
-for Dir in $(find . -type d -d 1 -name "[0-9][0-9]*"); do
+for Dir in $(basename $(find . -type d -d 1 -name "[0-9][0-9]*")); do
 
   # 01. Model with errors
   # ---------------------
@@ -37,9 +37,9 @@ for Dir in $(find . -type d -d 1 -name "[0-9][0-9]*"); do
   # Compare the cleaned output of the test case with the expected output.
   OK=`diff "$Dir/tmp2.out" "$Dir/expectedErrors.txt"`
   if [ "$OK" == "" ]; then
-    echoOK "$Dir - model with errors: OK\t"
+    echoOK "$CURRENTFOLDER/$Dir - model with errors: OK\t"
   else
-    echoFailed "$Dir - model with errors: FAILED\n"
+    echoFailed "$CURRENTFOLDER/$Dir - model with errors: FAILED\n"
     echo "$OK"
   fi
 
@@ -55,8 +55,8 @@ for Dir in $(find . -type d -d 1 -name "[0-9][0-9]*"); do
 
   # Test if file is empty
   if [ ! -s $Dir/tmp3.out ]; then
-    echoOK "$Dir - corrected model: OK\n"
+    echoOK "$CURRENTFOLDER/$Dir - corrected model: OK\n"
   else
-    echoFailed "$Dir - corrected model: FAILED, check $Dir/tmp3.out for errors\n"
+    echoFailed "$CURRENTFOLDER/$Dir - corrected model: FAILED, check $Dir/tmp3.out for errors\n"
   fi
 done
