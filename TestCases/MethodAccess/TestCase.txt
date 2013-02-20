@@ -1,9 +1,11 @@
 MethodAccess:
+-------------
 
 Erklaerung:
 -----------
 
-Zugriff von FeatureA auf eine Methode des FeatureB. 
+Zugriff von FeatureA auf eine Methode des FeatureB.
+(einmal statisch und einmal nicht-statisch) 
 
 
 SubCases:
