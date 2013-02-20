@@ -30,7 +30,6 @@ for Dir in $(basename $(find . -type d -d 1 -name "[0-9][0-9]*")); do
 
   # Clean output -> start path with "/$CurrentFolderName" 
   # sed "s/^\/.*\(\/[^\/.]*\/[^\/.]*\/[^\/.]*\/[^\/.]*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
-  # PWD=`PWD`
   CURRENTFOLDER=`basename $PWD`
   sed "s/^.*\(\/$CURRENTFOLDER\/.*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
 
