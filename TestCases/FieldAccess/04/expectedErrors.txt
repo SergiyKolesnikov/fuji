@@ -1,0 +1,82 @@
+Errors:
+
+/FieldAccess/04/FeatureA/A.java:4,15:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the field
+    public static int j = 23;
+  of feature FeatureB
+- the field
+    public static int j = 23;
+  of feature FeatureB2
+- the field
+    public static int j = 5;
+  of feature FeatureB3
+
+/FieldAccess/04/FeatureD/D.java:4,15:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureD accesses:
+- the field
+    public static int j = 23;
+  of feature FeatureB
+- the field
+    public static int j = 23;
+  of feature FeatureB2
+- the field
+    public static int j = 5;
+  of feature FeatureB3
+
+/FieldAccess/04/FeatureD/D.java:7,15:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureD accesses:
+- the field
+    public static int j = 23;
+  of feature FeatureB
+- the field
+    public static int j = 23;
+  of feature FeatureB2
+- the field
+    public static int j = 5;
+  of feature FeatureB3
+
+/FieldAccess/04/FeatureD/D.java:10,15:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureD accesses:
+- the field
+    public static int jj = 5;
+  of feature FeatureB
+- the field
+    public static int jj = 5;
+  of feature FeatureB2
+- the field
+    public static int jj = 23;
+  of feature FeatureB3
+
+/FieldAccess/04/FeatureA/A.java:4:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+- the type
+    (default package).B
+  of feature FeatureB3
+
+/FieldAccess/04/FeatureD/D.java:7
+/FieldAccess/04/FeatureD/D.java:4
+/FieldAccess/04/FeatureD/D.java:10:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureD accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+- the type
+    (default package).B
+  of feature FeatureB3
+

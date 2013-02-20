@@ -1,0 +1,43 @@
+Errors:
+
+/FieldAccess/03/FeatureA/A.java:3,19:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the field
+    public static int j = 23;
+  of feature FeatureB
+- the field
+    public static int j = 23;
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:6:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the constructor
+    public B()
+  of feature FeatureB
+- the constructor
+    public B()
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:7,16:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the field
+    public int k = 42;
+  of feature FeatureB
+- the field
+    public int k = 42;
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:6
+/FieldAccess/03/FeatureA/A.java:3:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+

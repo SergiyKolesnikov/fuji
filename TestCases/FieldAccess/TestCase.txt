@@ -4,7 +4,8 @@ FieldAccess:
 Erklaerung:
 -----------
 
-Zugriff von FeatureA auf ein Feld des FeatureB. 
+Zugriff von FeatureA auf ein Feld des FeatureB.
+(einmal statisch und einmal nicht-statisch) 
 
 
 SubCases:

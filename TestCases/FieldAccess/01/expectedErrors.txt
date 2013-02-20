@@ -1,0 +1,31 @@
+Errors:
+
+/FieldAccess/01/FeatureA/A.java:3,19:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the field
+  public static int j = 23;
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/FieldAccess/01/FeatureA/A.java:6:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/FieldAccess/01/FeatureA/A.java:7,16:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the field
+  public int k = 42;
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/FieldAccess/01/FeatureA/A.java:6
+/FieldAccess/01/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+
