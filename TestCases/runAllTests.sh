@@ -3,8 +3,15 @@
 
 # for all folders: call runTests.sh
 
-TESTCASES="ExtendsImplements \
-           FieldAccess"
+#TESTCASES="ExtendsImplements
+TESTCASES="\
+           FieldAccess \
+           MethodAccess"
+#           MethodInSupertypeAccess \
+#           NewAssignmentWithCast \
+#           ParameterCast \
+#           SuperAndSuperContructorAccess \
+#           TypeAccess"
 
 for TESTCASE in $TESTCASES; do
   echo "Testing $TESTCASE ..."
