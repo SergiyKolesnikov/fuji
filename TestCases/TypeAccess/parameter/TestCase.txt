@@ -19,8 +19,4 @@ model-ok:
 
 03: 
 model:    
-model-ok: 
-
-04: 
-model:    
-model-ok: 
+model-ok:
