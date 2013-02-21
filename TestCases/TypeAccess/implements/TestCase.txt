@@ -29,25 +29,3 @@ model:    Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
 model-ok: Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
           %%
           not FeatureI iff FeatureI2 ;
-
-04: komplexes Beispiel:
-(FeatureA2 implementiert die gleichen Typen wie FeatureA.)
-
-        I;interface;foo()
-          ^         ^
-          |         |
-     implements implements
-          |         |
-          A         D
-          ^
-          |
-      ----^----
-      |       |
-   extends extends
-      |       |
-      B       C
-      
-model:    Base : FeatureI [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;
-model-ok: Base : FeatureI [FeatureA] [FeatureA2] FeatureB FeatureC FeatureD :: _Base ;
-          %%
-          not FeatureA iff FeatureA2 ;

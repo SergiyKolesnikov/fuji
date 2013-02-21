@@ -1,0 +1,16 @@
+Errors:
+
+/TypeAccess/extends/01/FeatureA/A.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the super constructor
+  public B()
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/TypeAccess/extends/01/FeatureA/A.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
