@@ -1,6 +1,6 @@
 Errors:
 
-/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the constructor
@@ -10,7 +10,7 @@ Feature FeatureA accesses:
     public B()
   of feature FeatureB2
 
-/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the constructor
@@ -20,7 +20,7 @@ Feature FeatureA accesses:
     Inner()
   of feature FeatureB2
 
-/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the method
@@ -30,23 +30,23 @@ Feature FeatureA accesses:
     void bar() { ... }
   of feature FeatureB2
 
-/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB2
 
-/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB2
 

@@ -1,0 +1,94 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureA/tmp/A.java:5,22:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA accesses the field
+  public static int i = 42;
+which is accessible via class B.
+Class A of feature FeatureB extends class B.
+The information that class A extends class B is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureA/tmp/A.java:6:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureB extends class B.
+The information that class A extends class B is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureA/tmp/A.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureB extends class B.
+The information that class A extends class B is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:6:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the constructor
+    public A()
+  of feature FeatureA
+- the constructor
+    public A()
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:8:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the constructor
+    public A()
+  of feature FeatureA
+- the constructor
+    public A()
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:11:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the constructor
+    public A()
+  of feature FeatureA
+- the constructor
+    public A()
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:12:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the constructor
+    public A()
+  of feature FeatureA
+- the constructor
+    public A()
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:13:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the constructor
+    public A()
+  of feature FeatureA
+- the constructor
+    public A()
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:14
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:12
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:13
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:11
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:6
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:8:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureE accesses:
+- the type
+    tmp.A
+  of feature FeatureA
+- the type
+    tmp.A
+  of feature FeatureB
+

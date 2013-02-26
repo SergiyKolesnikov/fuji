@@ -1,0 +1,38 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the method
+  public static C bar() { ... }
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureB/B.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureB accesses the constructor
+  public C()
+of feature FeatureC.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).C
+of feature FeatureC.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureB/B.java:2
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/return/02/FeatureB/B.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+

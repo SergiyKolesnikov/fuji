@@ -1,0 +1,22 @@
+Errors:
+
+/TypeAccess/extends/03/FeatureA/A.java:1:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the super constructor
+    public B()
+  of feature FeatureB
+- the super constructor
+    public B()
+  of feature FeatureB2
+
+/TypeAccess/extends/03/FeatureA/A.java:1:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+

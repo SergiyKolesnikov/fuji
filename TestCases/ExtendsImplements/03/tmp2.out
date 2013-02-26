@@ -1,0 +1,11 @@
+Errors:
+
+/ExtendsImplements/03/FeatureB/A.java:3,30:
+  Semantic Error: MAYBE dependency:
+Interface B of feature FeatureB accesses the field
+  public static final int K = 23;
+which is accessible via interface C.
+Interface B of feature FeatureD extends interface C.
+The information that interface B extends interface C is only present in feature FeatureD.
+Feature FeatureD may not be present in every valid selection.
+

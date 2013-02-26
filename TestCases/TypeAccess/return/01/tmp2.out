@@ -1,0 +1,24 @@
+Errors:
+
+/TypeAccess/return/01/FeatureB/B.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the constructor
+  public C()
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+
+/TypeAccess/return/01/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+
+/TypeAccess/return/01/FeatureB/B.java:3
+/TypeAccess/return/01/FeatureB/B.java:2:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+

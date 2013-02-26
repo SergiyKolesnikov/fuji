@@ -1,0 +1,33 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/03/FeatureB/B.java:3:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureB accesses:
+- the constructor
+    public E() { ... }
+  of feature FeatureE
+- the constructor
+    public E() { ... }
+  of feature FeatureE2
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/03/FeatureA/A.java:5:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).E
+  of feature FeatureE
+- the type
+    (default package).E
+  of feature FeatureE2
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/03/FeatureB/B.java:3
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/03/FeatureB/B.java:2:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature FeatureB accesses:
+- the type
+    (default package).E
+  of feature FeatureE
+- the type
+    (default package).E
+  of feature FeatureE2
+

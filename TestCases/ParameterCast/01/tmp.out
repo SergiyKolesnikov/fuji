@@ -1,0 +1,38 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ParameterCast/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA1 extends class B.
+The information that class A extends class B is only present in feature FeatureA1.
+Feature FeatureA1 may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ParameterCast/01/FeatureX/X.java:6:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA1 extends class B.
+The information that class A extends class B is only present in feature FeatureA1.
+Feature FeatureA1 may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ParameterCast/01/FeatureY/Y.java:7:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA1 extends class B.
+The information that class A extends class B is only present in feature FeatureA1.
+Feature FeatureA1 may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ParameterCast/01/FeatureY/Y.java:8:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA1 extends class B.
+The information that class A extends class B is only present in feature FeatureA1.
+Feature FeatureA1 may not be present in every valid selection.
+

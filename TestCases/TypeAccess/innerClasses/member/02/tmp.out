@@ -1,0 +1,37 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  Inner()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the method
+  void bar() { ... }
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/02/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/member/02/FeatureA/A.java:4:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).Inner
+  of feature FeatureB
+
