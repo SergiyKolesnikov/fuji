@@ -7,5 +7,5 @@ java -jar fuji.jar \
      -fopRefs \
      -typechecker \
      $1/model.m \
-     2> $1/typecheckerout.txt
+     2> $1/typecheckerout3.txt
 echo "Typechecker for $1 done."

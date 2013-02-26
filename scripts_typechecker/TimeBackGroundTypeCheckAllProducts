@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# cf. http://www.softpanorama.org/Tools/tee.shtml#Examples
+
+(((time ./TypeCheckAllProducts $1 | tee stdout.txt) 3>&1 1>&2 2>&3 |tee stderr.txt) 3>&1 1>&2 2>&3) 1>$1/TypeCheckAllProductsTime.txt 2>$1/TypeCheckAllProductsTimeTime.txt &

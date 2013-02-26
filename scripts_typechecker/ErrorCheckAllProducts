@@ -15,7 +15,7 @@ do
          -basedir $1/features \
          $configfile \
          > cputimecurrent.txt \
-         2> $variantdir/out.txt
+         2> $variantdir/out3.txt
     CpuTimeCompositionCurrent=$(grep "AST" cputimecurrent.txt | egrep -o "[0-9]+")
     CpuTimeTypeCheckCurrent=$(grep "check" cputimecurrent.txt | egrep -o "[0-9]+") 
     echo "$configfile done. AST: $((CpuTimeCompositionCurrent)) ms, error check: $((CpuTimeTypeCheckCurrent)) ms."
