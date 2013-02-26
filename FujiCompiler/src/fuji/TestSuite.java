@@ -18,9 +18,9 @@ public class TestSuite {
 
 	private static Main fuji;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static Collection errors = new ArrayList();
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static Collection warnings = new ArrayList();
 
 	/* Feature-Model */
