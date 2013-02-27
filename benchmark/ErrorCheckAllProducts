@@ -1,0 +1,27 @@
+#!/bin/bash
+
+(( CpuTimeCompositionAll=0 ))
+(( CpuTimeTypeCheckAll=0 ))
+(( CpuTimeCompositionCurrent=0 ))
+(( CpuTimeTypeCheckCurrent=0 ))
+
+for variantdir in $1/products/Variant*
+do
+  for configfile in $variantdir/Variant*.config
+  do
+    (( CpuTimeCompositionCurrent=0 ))
+    (( CpuTimeTypeCheckCurrent=0 ))
+    java -jar fuji.jar \
+         -basedir $1/features \
+         $configfile \
+         > cputimecurrent.txt \
+         2> $variantdir/out3.txt
+    CpuTimeCompositionCurrent=$(grep "AST" cputimecurrent.txt | egrep -o "[0-9]+")
+    CpuTimeTypeCheckCurrent=$(grep "check" cputimecurrent.txt | egrep -o "[0-9]+") 
+    echo "$configfile done. AST: $((CpuTimeCompositionCurrent)) ms, error check: $((CpuTimeTypeCheckCurrent)) ms."
+    (( CpuTimeCompositionAll+=CpuTimeCompositionCurrent ))
+    (( CpuTimeTypeCheckAll+=CpuTimeTypeCheckCurrent ))
+  done
+done
+echo "construct AST: $((CpuTimeCompositionAll)) ms"
+echo "error check:   $((CpuTimeTypeCheckAll)) ms"

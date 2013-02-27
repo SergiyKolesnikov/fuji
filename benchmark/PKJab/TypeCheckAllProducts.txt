@@ -1,0 +1,54 @@
+PKJab/products/Variant0001/Variant0001.model done. AST: 140 ms, spl error check: 5200 ms.
+PKJab/products/Variant0002/Variant0002.model done. AST: 150 ms, spl error check: 6120 ms.
+PKJab/products/Variant0003/Variant0003.model done. AST: 160 ms, spl error check: 7930 ms.
+PKJab/products/Variant0004/Variant0004.model done. AST: 140 ms, spl error check: 5970 ms.
+PKJab/products/Variant0005/Variant0005.model done. AST: 150 ms, spl error check: 7760 ms.
+PKJab/products/Variant0006/Variant0006.model done. AST: 150 ms, spl error check: 10360 ms.
+PKJab/products/Variant0007/Variant0007.model done. AST: 150 ms, spl error check: 6020 ms.
+PKJab/products/Variant0008/Variant0008.model done. AST: 150 ms, spl error check: 7690 ms.
+PKJab/products/Variant0009/Variant0009.model done. AST: 170 ms, spl error check: 10280 ms.
+PKJab/products/Variant0010/Variant0010.model done. AST: 150 ms, spl error check: 7600 ms.
+PKJab/products/Variant0011/Variant0011.model done. AST: 150 ms, spl error check: 10200 ms.
+PKJab/products/Variant0012/Variant0012.model done. AST: 150 ms, spl error check: 13640 ms.
+PKJab/products/Variant0013/Variant0013.model done. AST: 140 ms, spl error check: 5210 ms.
+PKJab/products/Variant0014/Variant0014.model done. AST: 160 ms, spl error check: 6090 ms.
+PKJab/products/Variant0015/Variant0015.model done. AST: 160 ms, spl error check: 6110 ms.
+PKJab/products/Variant0016/Variant0016.model done. AST: 150 ms, spl error check: 7760 ms.
+PKJab/products/Variant0017/Variant0017.model done. AST: 160 ms, spl error check: 7920 ms.
+PKJab/products/Variant0018/Variant0018.model done. AST: 160 ms, spl error check: 10160 ms.
+PKJab/products/Variant0019/Variant0019.model done. AST: 150 ms, spl error check: 5960 ms.
+PKJab/products/Variant0020/Variant0020.model done. AST: 160 ms, spl error check: 7530 ms.
+PKJab/products/Variant0021/Variant0021.model done. AST: 150 ms, spl error check: 7720 ms.
+PKJab/products/Variant0022/Variant0022.model done. AST: 160 ms, spl error check: 10100 ms.
+PKJab/products/Variant0023/Variant0023.model done. AST: 150 ms, spl error check: 10410 ms.
+PKJab/products/Variant0024/Variant0024.model done. AST: 170 ms, spl error check: 13680 ms.
+PKJab/products/Variant0025/Variant0025.model done. AST: 150 ms, spl error check: 6000 ms.
+PKJab/products/Variant0026/Variant0026.model done. AST: 150 ms, spl error check: 7570 ms.
+PKJab/products/Variant0027/Variant0027.model done. AST: 160 ms, spl error check: 7720 ms.
+PKJab/products/Variant0028/Variant0028.model done. AST: 150 ms, spl error check: 10080 ms.
+PKJab/products/Variant0029/Variant0029.model done. AST: 160 ms, spl error check: 10410 ms.
+PKJab/products/Variant0030/Variant0030.model done. AST: 170 ms, spl error check: 13600 ms.
+PKJab/products/Variant0031/Variant0031.model done. AST: 150 ms, spl error check: 7580 ms.
+PKJab/products/Variant0032/Variant0032.model done. AST: 140 ms, spl error check: 10000 ms.
+PKJab/products/Variant0033/Variant0033.model done. AST: 160 ms, spl error check: 10190 ms.
+PKJab/products/Variant0034/Variant0034.model done. AST: 170 ms, spl error check: 13430 ms.
+PKJab/products/Variant0035/Variant0035.model done. AST: 170 ms, spl error check: 13670 ms.
+PKJab/products/Variant0036/Variant0036.model done. AST: 170 ms, spl error check: 18270 ms.
+PKJab/products/Variant0037/Variant0037.model done. AST: 160 ms, spl error check: 6390 ms.
+PKJab/products/Variant0038/Variant0038.model done. AST: 150 ms, spl error check: 8140 ms.
+PKJab/products/Variant0039/Variant0039.model done. AST: 160 ms, spl error check: 10650 ms.
+PKJab/products/Variant0040/Variant0040.model done. AST: 150 ms, spl error check: 7870 ms.
+PKJab/products/Variant0041/Variant0041.model done. AST: 150 ms, spl error check: 10630 ms.
+PKJab/products/Variant0042/Variant0042.model done. AST: 150 ms, spl error check: 14290 ms.
+PKJab/products/Variant0043/Variant0043.model done. AST: 150 ms, spl error check: 7990 ms.
+PKJab/products/Variant0044/Variant0044.model done. AST: 150 ms, spl error check: 10580 ms.
+PKJab/products/Variant0045/Variant0045.model done. AST: 150 ms, spl error check: 14250 ms.
+PKJab/products/Variant0046/Variant0046.model done. AST: 150 ms, spl error check: 10520 ms.
+PKJab/products/Variant0047/Variant0047.model done. AST: 160 ms, spl error check: 14110 ms.
+PKJab/products/Variant0048/Variant0048.model done. AST: 170 ms, spl error check: 19280 ms.
+construct AST:   7430 ms
+spl error check: 460640 ms
+
+real	17m13.105s
+user	16m53.507s
+sys	0m19.041s

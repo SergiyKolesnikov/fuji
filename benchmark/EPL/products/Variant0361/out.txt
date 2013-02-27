@@ -1,0 +1,11 @@
+Errors:
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Plus
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: can not instantiate tmp.Plus no matching constructor found in tmp.Plus
+/home/lutz/Benchmark/EPL/features/Eval_Neg/tmp/Neg.java:5:
+  Semantic Error: no method named eval() in tmp.Exp matches.
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: no field named x
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: no field named y

@@ -1,0 +1,212 @@
+Errors:
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:14:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:17:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:21:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:24:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:7:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:10:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:15:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:20:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:65:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:68:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:71:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:74:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:10:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:21:
+  Semantic Error: maybe-Beziehung:
+Feature Image greift auf die Methode
+  protected void explodieren() { ... }
+des Features explodieren zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:31:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/Image/Wall.java:9:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Image zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/fuer_PC/Maler.java:345,17:
+  Semantic Error: maybe-Beziehung:
+Feature fuer_PC greift auf das Feld
+  protected Toolkit tk = Toolkit.getDefaultToolkit();
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:349:
+  Semantic Error: maybe-Beziehung:
+Feature fuer_Handy greift auf die Methode
+  public static Image scale(Image src, int width, int height) { ... }
+des Features Handy zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:13,42:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected int infoWidth;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:31,42:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected int infoWidth;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:37,40:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected int infoWidth;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:38,29:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected JFrame frame;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:41,4:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected JFrame frame;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:42,4:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected JFrame frame;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:43,4:
+  Semantic Error: maybe-Beziehung:
+Feature Re_fuer_PC greift auf das Feld
+  protected JFrame frame;
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature IMG_tool zielt auf die Methode folgender Features:
+fuer_Handy:	public void drawImage(String imageFileName, int x, int y) { ... }
+fuer_PC:	public void drawImage(String imageFileName, int x, int y) { ... }
+
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature TankWar greift auf den Typ
+  (default package).MIDlet
+des Features PC zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:31:
+  Semantic Error: never-Beziehung:
+Feature Handy greift auf den Typ
+  (default package).MIDlet
+des Features PC zu.
+Handy und PC können aber nicht beide gleichzeitig in einer validen Auswahl vorkommen.
+

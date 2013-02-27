@@ -1,0 +1,3 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/Beschleunigung/Tool.java:8:
+  Semantic Error: no method named _$_init_$_3_$_(TankManager, int, int, int, int, int, int, int, int) in Tool matches. However, there is a method _$_init_$_3_$_(TankManager, int, int, int)

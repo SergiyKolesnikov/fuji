@@ -1,0 +1,3 @@
+construct AST:     200 ms
+(spl) error check: 12070 ms
+Typechecker for EPL done.

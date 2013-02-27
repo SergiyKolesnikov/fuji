@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="ZipMe">
+				<feature mandatory="true" name="Base"/>
+				<and abstract="true" mandatory="true" name="Compression">
+					<feature mandatory="true" name="Compress"/>
+					<feature name="GZIP"/>
+				</and>
+				<feature name="Extract"/>
+				<feature name="ArchiveCheck"/>
+				<and abstract="true" mandatory="true" name="Checksum">
+					<feature name="CRC"/>
+					<feature name="Adler32Checksum"/>
+				</and>
+				<and abstract="true" name="Derivatives">
+					<feature name="DerivativeCompressAdler32Checksum"/>
+					<feature name="DerivativeCompressCRC"/>
+					<feature name="DerivativeCompressGZIP"/>
+					<feature name="DerivativeCompressGZIPCRC"/>
+					<feature name="DerivativeExtractCRC"/>
+					<feature name="DerivativeGZIPCRC"/>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>GZIP</var>
+					<var>CRC</var>
+				</imp>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Compress</var>
+						<var>Adler32Checksum</var>
+					</conj>
+					<var>DerivativeCompressAdler32Checksum</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Compress</var>
+						<var>CRC</var>
+					</conj>
+					<var>DerivativeCompressCRC</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Compress</var>
+						<var>GZIP</var>
+					</conj>
+					<var>DerivativeCompressGZIP</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Compress</var>
+						<conj>
+							<var>GZIP</var>
+							<var>CRC</var>
+						</conj>
+					</conj>
+					<var>DerivativeCompressGZIPCRC</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Extract</var>
+						<var>CRC</var>
+					</conj>
+					<var>DerivativeExtractCRC</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>GZIP</var>
+						<var>CRC</var>
+					</conj>
+					<var>DerivativeGZIPCRC</var>
+				</eq>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

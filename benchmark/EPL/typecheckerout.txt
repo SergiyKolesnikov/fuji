@@ -1,0 +1,137 @@
+Errors:
+
+/home/lutz/Benchmark/EPL/features/Eval_Neg/tmp/Neg.java:5,13:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Neg greift auf das Feld
+  Exp x;
+des Features Neg zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval_Neg/tmp/Neg.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Neg greift auf die Methode
+  int eval();
+des Features Eval zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Neg_ToString/tmp/Neg.java:5,20:
+  Semantic Error: maybe-Beziehung:
+Feature Neg_ToString greift auf das Feld
+  Exp x;
+des Features Neg zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5,12:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Plus greift auf das Feld
+  Exp x;
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Plus greift auf die Methode
+  int eval();
+des Features Eval zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5,23:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Plus greift auf das Feld
+  Exp y;
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature Eval_Plus greift auf die Methode
+  int eval();
+des Features Eval zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: maybe-Beziehung:
+Feature Plus_ToString greift auf das Feld
+  Exp x;
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: maybe-Beziehung:
+Feature Plus_ToString greift auf das Feld
+  Exp y;
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature Eval greift auf den Konstruktor
+  Neg(Exp x) { ... }
+des Features Neg zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:9:
+  Semantic Error: maybe-Beziehung:
+Feature Eval greift auf den Konstruktor
+  Plus(Exp x, Exp y) { ... }
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: maybe-Beziehung:
+Feature Eval greift auf den Konstruktor
+  Neg(Exp x) { ... }
+des Features Neg zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: maybe-Beziehung:
+Feature Eval greift auf den Konstruktor
+  Plus(Exp x, Exp y) { ... }
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature ToString greift auf den Konstruktor
+  Neg(Exp x) { ... }
+des Features Neg zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: maybe-Beziehung:
+Feature ToString greift auf den Konstruktor
+  Plus(Exp x, Exp y) { ... }
+des Features Plus zu.
+Das Ziel-Feature ist aber nicht in jeder moeglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:9
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: 3 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Eval zielt auf den Typ folgender Features:
+Eval_Plus:	tmp.Plus
+Plus_ToString:	tmp.Plus
+Plus:	tmp.Plus
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:7
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: 3 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature Eval zielt auf den Typ folgender Features:
+Eval_Neg:	tmp.Neg
+Neg_ToString:	tmp.Neg
+Neg:	tmp.Neg
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: 3 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature ToString zielt auf den Typ folgender Features:
+Eval_Plus:	tmp.Plus
+Plus_ToString:	tmp.Plus
+Plus:	tmp.Plus
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:7:
+  Semantic Error: 3 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature ToString zielt auf den Typ folgender Features:
+Eval_Neg:	tmp.Neg
+Neg_ToString:	tmp.Neg
+Neg:	tmp.Neg
+

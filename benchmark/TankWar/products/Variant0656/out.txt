@@ -1,0 +1,55 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/PC/Maler.java:5,12:
+  Semantic Error: no visible type named Hashtable
+/home/lutz/Benchmark/TankWar/features/PC/Maler.java:5,35:
+  Semantic Error: no visible type named Hashtable
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:12,41:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:12,56:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:341,42:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:341,57:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:348:
+  Semantic Error: no method named createImage(java.lang.String) in java.awt.Image matches.
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:349:
+  Semantic Error: no method named scale(java.awt.Image, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:5,10:
+  Semantic Error: no field named objectType
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,53:
+  Semantic Error: no field named y_Koordinate

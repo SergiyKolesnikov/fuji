@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Graph">
+				<feature mandatory="true" name="BasicGraph"/>
+				<feature name="Recursive"/>
+				<feature name="Weight"/>
+				<feature name="Color"/>
+				<feature name="PrintHeader"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments>
+			<c> assumed model (all features optional except base feature)</c>
+		</comments>
+		<featureOrder userDefined="false"/>
+	</featureModel>

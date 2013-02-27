@@ -1,0 +1,387 @@
+Errors:
+/home/lutz/Benchmark/GUIDSL/features/kernel/kernelConstants.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/kernelConstants.java:49,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:75:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:75,39:
+  Semantic Error: no visible type named FixDosWriter
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:105:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:105,47:
+  Semantic Error: no visible type named FixDosOutputStream
+/home/lutz/Benchmark/GUIDSL/features/kernel/PositionalArg.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:4,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:5,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:7,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:12,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:141,23:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:144,23:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:252,29:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dmain/Main.java:147:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/dmain/Main.java:147,39:
+  Semantic Error: no visible type named FixDosOutputStream
+/home/lutz/Benchmark/GUIDSL/features/dmain/Main.java:159,28:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dmain/Main.java:160,33:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/Main.java:11,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/Main.java:14,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/propgs/Main.java:11,11:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/formgs/Main.java:14,11:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/Main.java:12,11:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/modelopts/Main.java:63,16:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/modelopts/Main.java:88,14:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstToken.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstOptNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstOptToken.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/FatalError.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstListNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstListNode.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dmain/AstListNode.java:6,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/CommandLineArg.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Utility.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:172,32:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:399,55:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:694,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:698,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:703,16:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:708,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:712,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:713,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:717,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:721,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:726,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:731,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:738,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:745,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:749,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:754,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:758,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstTokenInterface.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstCursor.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstCursor.java:348,29:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Switch.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/ArgList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/IExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BNot.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Strlit.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/TermList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/ExprList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/ExprStmt.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/ExprStmt.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ExprStmt.java:6,5:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BAnd.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/GPattern.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BChoose1.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Pats.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/GTerm.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BImplies.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/GProd.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/OExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/ConsStmt.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Bvar.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Bvar.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:10,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/ESList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Opt.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BIff.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Prods.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/EStmt.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/NExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Vars.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/TermName.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/GProduction.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/SimplePattern.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/MainModel.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Pat.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Paren.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Avar.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Optid.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/EExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/BOr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Opts.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/AExpr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Expr.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Expr.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Expr.java:6,5:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Model.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Var.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/Cons.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/dgram/OptTerm.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/production.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/production.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/production.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/production.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/production.java:60,38:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/formgs/production.java:45,17:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/formgs/production.java:67,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/formgs/production.java:71,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/production.java:109,11:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/term.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/term.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/term.java:20,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/term.java:6,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/pattern.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/pattern.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/pattern.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/pattern.java:16,12:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/gObj.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/gObj.java:6,8:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/gObj.java:13,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/grammar.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/guigs/grammar.java:10,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/variable.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/variable.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/variable.java:25,8:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/variable.java:44,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/gspec/variable.java:70,17:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/cnfFormat/variable.java:48,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:6,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:75,8:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:91,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:103,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:112,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:127,8:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/enterGspec.java:151,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/fillFPtable.java:5,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/fillgs/fillFPtable.java:40,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/propgs/propcons.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/propgs/propcons.java:63,8:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/printgs/print.java:2,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/printgs/print.java:53,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/printgs/print.java:56,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/bexpr/bterm.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/bterm.java:8,10:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/bexpr/node.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/node.java:6,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/node.java:10,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/node.java:14,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/bexpr/or.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/bexpr/and.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/bexpr/not.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/cnfClause.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/cterm.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/clauselist/cterm.java:27,7:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/output/outeqns.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/output/outeqns.java:35,12:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/dparse/dparser.java:16,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:10,8:
+  Semantic Error: no visible type named org.sat4j.minisat.SolverFactory
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:11,8:
+  Semantic Error: no visible type named org.sat4j.minisat.core.SolverStats
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:12,8:
+  Semantic Error: org.sat4j.reader not found
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:13,8:
+  Semantic Error: no visible type named org.sat4j.specs.ContradictionException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:14,8:
+  Semantic Error: no visible type named org.sat4j.specs.ISolver
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:15,8:
+  Semantic Error: no visible type named org.sat4j.specs.TimeoutException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:37,4:
+  Semantic Error: no visible type named ISolver
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:38,4:
+  Semantic Error: no visible type named InstanceReader
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:39,4:
+  Semantic Error: no visible type named DimacsReader
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:43,16:
+  Semantic Error: SolverFactory not found
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:45:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:45,20:
+  Semantic Error: no visible type named InstanceReader
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:46:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:46,21:
+  Semantic Error: no visible type named DimacsReader
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:57,16:
+  Semantic Error: no visible type named ContradictionException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:59,16:
+  Semantic Error: no visible type named TimeoutException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:62,16:
+  Semantic Error: no visible type named ParseFormatException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:83:
+  Semantic Error: the exception java.io.FileNotFoundException is not thrown in the body of the try statement
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:87:
+  Semantic Error: the exception java.io.IOException is not thrown in the body of the try statement
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:91:
+  Semantic Error: the exception @primitive.Unknown is not thrown in the body of the try statement
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:91,16:
+  Semantic Error: no visible type named ContradictionException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:93:
+  Semantic Error: the exception @primitive.Unknown is not thrown in the body of the try statement
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:93,16:
+  Semantic Error: no visible type named TimeoutException
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:96:
+  Semantic Error: the exception @primitive.Unknown is not thrown in the body of the try statement
+/home/lutz/Benchmark/GUIDSL/features/solver/SATSolver.java:96,16:
+  Semantic Error: no visible type named ParseFormatException
+/home/lutz/Benchmark/GUIDSL/features/cnfFormat/cnfModel.java:1,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/cnfFormat/cnfModel.java:29,13:
+  Semantic Error: Util not found

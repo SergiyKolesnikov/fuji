@@ -1,0 +1,604 @@
+Errors:
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:5:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public not(node t) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public iff(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- by an implicit cast from argument type to parameter type
+    node()
+  of feature cnfFormat
+- by an implicit cast from argument type to parameter type
+    node()
+  of feature cubeInterface
+- by an implicit cast from argument type to parameter type
+    public abstract String cnf2String();
+  of feature bexpr
+- by an implicit cast from argument type to parameter type
+    void reduce(ArrayList terms) { ... }
+  of feature clauselist
+- by an implicit cast from argument type to parameter type
+    node()
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public bterm(String n) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:6:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public and(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:16:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public onlyone(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:7:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public implies(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:9:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the method
+  static variable find(String name) { ... }
+of feature cnfFormat.
+Feature cnfFormat may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:12:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public bterm(String n) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:6:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public iff(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:6:
+  Semantic Error: MAYBE dependency:
+Feature eharvest accesses the constructor
+  public or(node l, node r) { ... }
+of feature bexpr.
+Feature bexpr may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/clauselist/bterm.java:6:
+  Semantic Error: MAYBE dependency:
+Feature clauselist accesses the method
+  static variable find(String name) { ... }
+of feature cnfFormat.
+Feature cnfFormat may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:135:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  public ModelDebuggerGui(JFrame owner, String AppTitle, boolean modal) { ... }
+of feature cnfFormat.
+Feature cnfFormat may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:265:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the method
+  public static void setGui() { ... }
+of feature guiext.
+Feature guiext may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:283:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  resetal()
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:288:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  saveconfigal(Gui g) { ... }
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:293:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  saveequat(Gui g) { ... }
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:298:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  openconfigal(Gui g, javax.swing.filechooser.FileFilter f) { ... }
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:303:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  openconfigal(Gui g, javax.swing.filechooser.FileFilter f) { ... }
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:331:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  public ModelDebuggerGui(JFrame owner, String AppTitle, boolean modal) { ... }
+of feature cnfFormat.
+Feature cnfFormat may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:336:
+  Semantic Error: MAYBE dependency:
+Feature guigs accesses the constructor
+  helpfileal(Gui g) { ... }
+of feature guilisteners.
+Feature guilisteners may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/guilisteners/saveequat.java:43:
+  Semantic Error: MAYBE dependency:
+Feature guilisteners accesses the constructor
+  outeqns(File fl) { ... }
+of feature output.
+Feature output may not be present in every valid selection.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Paren.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/EStmt.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/EStmt.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ESList.java:21
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ESList.java:12:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:6:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).iff
+  of feature cubeInterface
+- the type
+    (default package).iff
+  of feature bexpr
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Expr.java:5:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:16:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).onlyone
+  of feature cubeInterface
+- the type
+    (default package).onlyone
+  of feature bexpr
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:6
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:12:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:6:
+  Semantic Error: 4 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).or
+  of feature cnfFormat
+- the type
+    (default package).or
+  of feature cubeInterface
+- the type
+    (default package).or
+  of feature bexpr
+- the type
+    (default package).or
+  of feature clauselist
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:5:
+  Semantic Error: 4 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).not
+  of feature cnfFormat
+- the type
+    (default package).not
+  of feature cubeInterface
+- the type
+    (default package).not
+  of feature bexpr
+- the type
+    (default package).not
+  of feature clauselist
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).iff
+  of feature cubeInterface
+- the type
+    (default package).iff
+  of feature bexpr
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: 4 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).bterm
+  of feature cnfFormat
+- the type
+    (default package).bterm
+  of feature cubeInterface
+- the type
+    (default package).bterm
+  of feature bexpr
+- the type
+    (default package).bterm
+  of feature clauselist
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:12
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:6:
+  Semantic Error: 4 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).and
+  of feature cnfFormat
+- the type
+    (default package).and
+  of feature cubeInterface
+- the type
+    (default package).and
+  of feature bexpr
+- the type
+    (default package).and
+  of feature clauselist
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:3:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:12:
+  Semantic Error: 4 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).bterm
+  of feature cnfFormat
+- the type
+    (default package).bterm
+  of feature cubeInterface
+- the type
+    (default package).bterm
+  of feature bexpr
+- the type
+    (default package).bterm
+  of feature clauselist
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:5:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ExprStmt.java:5:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:7:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).implies
+  of feature cubeInterface
+- the type
+    (default package).implies
+  of feature bexpr
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:4:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature eharvest accesses:
+- the type
+    (default package).node
+  of feature cnfFormat
+- the type
+    (default package).node
+  of feature cubeInterface
+- the type
+    (default package).node
+  of feature bexpr
+- the type
+    (default package).node
+  of feature clauselist
+- the type
+    (default package).node
+  of feature ltms
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:135:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).ModelDebuggerGui
+  of feature cnfFormat
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:331:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).ModelDebuggerGui
+  of feature cnfFormat
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:283:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).resetal
+  of feature guilisteners
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:265:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).ActionList
+  of feature guiext
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:288:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).saveconfigal
+  of feature guilisteners
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:336:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).helpfileal
+  of feature guilisteners
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:293:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).saveequat
+  of feature guilisteners
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:303
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:298:
+  Semantic Error: 1 optional target:
+Feature guigs accesses:
+- the type
+    (default package).openconfigal
+  of feature guilisteners
+
+/home/lutz/Benchmark/GUIDSL/features/guilisteners/saveequat.java:43:
+  Semantic Error: 1 optional target:
+Feature guilisteners accesses:
+- the type
+    (default package).outeqns
+  of feature output
+

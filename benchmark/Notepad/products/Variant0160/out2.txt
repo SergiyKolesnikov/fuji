@@ -1,0 +1,3 @@
+/home/lutz/Benchmark/Notepad/features/Base/Notepad.java:101:
+  WARNING: show() in java.awt.Window has been deprecated
+

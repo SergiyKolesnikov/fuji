@@ -1,0 +1,107 @@
+Errors:
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,11:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the field
+  private String _remoteServerIpAddress;
+of feature Replication.
+Feature Replication may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the constructor
+  public ClientPublisher(OldNetwork network, String serverIpAddress, int serverPort) throws IOException { ... }
+of feature Replication.
+Feature Replication may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the method
+  private OldNetwork network() { ... }
+of feature Replication.
+Feature Replication may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,102:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the field
+  private String _remoteServerIpAddress;
+of feature Replication.
+Feature Replication may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,125:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the field
+  private int _remoteServerPort;
+of feature Replication.
+Feature Replication may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the constructor
+  public CentralPublisher(Clock clock, TransactionCensor censor, Journal journal) { ... }
+of feature Censor.
+Feature Censor may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the method
+  private TransactionCensor censor(GenericSnapshotManager snapshotManager) { ... }
+of feature Censor.
+Feature Censor may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the constructor
+  public PersistentJournal(PrevaylerDirectory directory, long journalSizeThresholdInBytes, long journalAgeThresholdInMillis, String journalSuffix, Monitor monitor) throws IOException { ... }
+of feature Monitor.
+Feature Monitor may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: MAYBE dependency:
+Feature Snapshot accesses the method
+  private Monitor monitor() { ... }
+of feature Monitor.
+Feature Monitor may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:12:
+  Semantic Error: MAYBE dependency:
+Feature Censor accesses the method
+  public PrevalentSystemGuard recoveredPrevalentSystem() { ... }
+of feature Snapshot.
+Feature Snapshot may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:13:
+  Semantic Error: MAYBE dependency:
+Feature Censor accesses the method
+  public Serializer primarySerializer() { ... }
+of feature Snapshot.
+Feature Snapshot may not be present in every valid selection.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/PrevaylerFactory.java:6:
+  Semantic Error: 1 optional target:
+Feature Censor accesses:
+- the type
+    org.prevayler.implementation.snapshot.GenericSnapshotManager
+  of feature Snapshot
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:11:
+  Semantic Error: 1 optional target:
+Feature Censor accesses:
+- the type
+    org.prevayler.implementation.snapshot.GenericSnapshotManager
+  of feature Snapshot
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: 1 optional target:
+Feature Snapshot accesses:
+- the type
+    org.prevayler.implementation.replication.ClientPublisher
+  of feature Replication
+
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:262:
+  Semantic Error: 1 optional target:
+Feature base accesses:
+- the type
+    org.prevayler.implementation.snapshot.GenericSnapshotManager
+  of feature Snapshot
+

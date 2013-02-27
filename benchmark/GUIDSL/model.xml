@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="GUIDSL">
+				<feature mandatory="true" name="kernel"/>
+				<feature mandatory="true" name="genbali"/>
+				<feature mandatory="true" name="dgram"/>
+				<feature name="dmain"/>
+				<feature name="swingutils"/>
+				<feature name="gspec"/>
+				<feature name="fillgs"/>
+				<feature name="eharvest"/>
+				<feature name="propgs"/>
+				<feature name="printgs"/>
+				<feature name="bexpr"/>
+				<feature name="formgs"/>
+				<feature name="clauselist"/>
+				<feature name="ltms"/>
+				<feature name="reasons"/>
+				<feature name="guigs"/>
+				<feature name="guiext"/>
+				<feature name="guilisteners"/>
+				<feature name="output"/>
+				<feature name="dparse"/>
+				<feature name="solver"/>
+				<feature name="cnfFormat"/>
+				<feature name="modelopts"/>
+				<feature name="tool"/>
+				<feature name="ordergs"/>
+				<feature name="cubeInterface"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>cubeInterface</var>
+					<var>ordergs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>ordergs</var>
+					<var>tool</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>tool</var>
+					<var>modelopts</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>modelopts</var>
+					<var>cnfFormat</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>cnfFormat</var>
+					<var>solver</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>solver</var>
+					<var>dparse</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>dparse</var>
+					<var>output</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>output</var>
+					<var>guilisteners</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>guilisteners</var>
+					<var>guiext</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>guiext</var>
+					<var>guigs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>guigs</var>
+					<var>reasons</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>reasons</var>
+					<var>ltms</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>ltms</var>
+					<var>clauselist</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>clauselist</var>
+					<var>formgs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>formgs</var>
+					<var>bexpr</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>bexpr</var>
+					<var>printgs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>printgs</var>
+					<var>propgs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>propgs</var>
+					<var>eharvest</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>eharvest</var>
+					<var>fillgs</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>fillgs</var>
+					<var>gspec</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>gspec</var>
+					<var>swingutils</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>swingutils</var>
+					<var>dmain</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>dmain</var>
+					<var>dgram</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments>
+			<c> assumed model (all features optional except first three features an</c>
+			<c>                stack behavior: see below</c>
+			<c> stack behavoir: feature list grows from top to bottom</c>
+		</comments>
+		<featureOrder userDefined="false"/>
+	</featureModel>

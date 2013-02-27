@@ -1,0 +1,5 @@
+Errors:
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: factory not found
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: menuBar not found

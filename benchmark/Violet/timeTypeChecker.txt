@@ -1,0 +1,3 @@
+construct AST:     360 ms
+(spl) error check: 14391660 ms
+Typechecker for Violet done.

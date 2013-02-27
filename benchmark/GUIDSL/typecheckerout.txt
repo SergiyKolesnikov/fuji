@@ -1,0 +1,285 @@
+Errors:
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public not(node t) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public iff(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public bterm(String n) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:6:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public and(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:16:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public onlyone(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public implies(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:9:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf die Methode
+  static variable find(String name) { ... }
+des Features cnfFormat zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:12:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public bterm(String n) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:6:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public iff(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:6:
+  Semantic Error: maybe-Beziehung:
+Feature eharvest greift auf den Konstruktor
+  public or(node l, node r) { ... }
+des Features bexpr zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/clauselist/bterm.java:6:
+  Semantic Error: maybe-Beziehung:
+Feature clauselist greift auf die Methode
+  static variable find(String name) { ... }
+des Features cnfFormat zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:135:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  public ModelDebuggerGui(JFrame owner, String AppTitle, boolean modal) { ... }
+des Features cnfFormat zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:265:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf die Methode
+  public static void setGui() { ... }
+des Features guiext zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:283:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  resetal() { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:288:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  saveconfigal(Gui g) { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:293:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  saveequat(Gui g) { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:298:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  openconfigal(Gui g, javax.swing.filechooser.FileFilter f) { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:303:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  openconfigal(Gui g, javax.swing.filechooser.FileFilter f) { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:331:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  public ModelDebuggerGui(JFrame owner, String AppTitle, boolean modal) { ... }
+des Features cnfFormat zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:336:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Konstruktor
+  helpfileal(Gui g) { ... }
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guilisteners/saveequat.java:43:
+  Semantic Error: maybe-Beziehung:
+Feature guilisteners greift auf den Konstruktor
+  outeqns(File fl) { ... }
+des Features output zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:16:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cubeInterface:	(default package).onlyone
+bexpr:	(default package).onlyone
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:12
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Expr.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ESList.java:12
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ESList.java:21
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/ExprStmt.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/EStmt.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:12
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/EStmt.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:6
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BChoose1.java:5
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:3
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:4
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Paren.java:3:
+  Semantic Error: 5 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cnfFormat:	(default package).node
+cubeInterface:	(default package).node
+bexpr:	(default package).node
+clauselist:	(default package).node
+ltms:	(default package).node
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BAnd.java:6:
+  Semantic Error: 4 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cnfFormat:	(default package).and
+cubeInterface:	(default package).and
+bexpr:	(default package).and
+clauselist:	(default package).and
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BIff.java:6
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cubeInterface:	(default package).iff
+bexpr:	(default package).iff
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BOr.java:6:
+  Semantic Error: 4 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cnfFormat:	(default package).or
+cubeInterface:	(default package).or
+bexpr:	(default package).or
+clauselist:	(default package).or
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/VarDef.java:13
+/home/lutz/Benchmark/GUIDSL/features/eharvest/Bvar.java:12:
+  Semantic Error: 4 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cnfFormat:	(default package).bterm
+cubeInterface:	(default package).bterm
+bexpr:	(default package).bterm
+clauselist:	(default package).bterm
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BNot.java:5:
+  Semantic Error: 4 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cnfFormat:	(default package).not
+cubeInterface:	(default package).not
+bexpr:	(default package).not
+clauselist:	(default package).not
+
+/home/lutz/Benchmark/GUIDSL/features/eharvest/BImplies.java:7:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature eharvest zielt auf den Typ folgender Features:
+cubeInterface:	(default package).implies
+bexpr:	(default package).implies
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:303
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:298:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).openconfigal
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:293:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).saveequat
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:135
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:331:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).ModelDebuggerGui
+des Features cnfFormat zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:336:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).helpfileal
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:283:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).resetal
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:288:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).saveconfigal
+des Features guilisteners zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guigs/Gui.java:265:
+  Semantic Error: maybe-Beziehung:
+Feature guigs greift auf den Typ
+  (default package).ActionList
+des Features guiext zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/GUIDSL/features/guilisteners/saveequat.java:43:
+  Semantic Error: maybe-Beziehung:
+Feature guilisteners greift auf den Typ
+  (default package).outeqns
+des Features output zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+

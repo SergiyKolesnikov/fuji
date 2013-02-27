@@ -1,0 +1,30 @@
+ZipMe/products/Variant0001/Variant0001.model done. AST: 130 ms, spl error check: 3310 ms.
+ZipMe/products/Variant0002/Variant0002.model done. AST: 150 ms, spl error check: 4280 ms.
+ZipMe/products/Variant0003/Variant0003.model done. AST: 140 ms, spl error check: 4090 ms.
+ZipMe/products/Variant0004/Variant0004.model done. AST: 140 ms, spl error check: 5950 ms.
+ZipMe/products/Variant0005/Variant0005.model done. AST: 130 ms, spl error check: 3270 ms.
+ZipMe/products/Variant0006/Variant0006.model done. AST: 130 ms, spl error check: 5700 ms.
+ZipMe/products/Variant0007/Variant0007.model done. AST: 140 ms, spl error check: 5580 ms.
+ZipMe/products/Variant0008/Variant0008.model done. AST: 140 ms, spl error check: 10890 ms.
+ZipMe/products/Variant0009/Variant0009.model done. AST: 140 ms, spl error check: 20840 ms.
+ZipMe/products/Variant0010/Variant0010.model done. AST: 150 ms, spl error check: 37440 ms.
+ZipMe/products/Variant0011/Variant0011.model done. AST: 140 ms, spl error check: 4290 ms.
+ZipMe/products/Variant0012/Variant0012.model done. AST: 140 ms, spl error check: 8450 ms.
+ZipMe/products/Variant0013/Variant0013.model done. AST: 130 ms, spl error check: 11630 ms.
+ZipMe/products/Variant0014/Variant0014.model done. AST: 150 ms, spl error check: 22160 ms.
+ZipMe/products/Variant0015/Variant0015.model done. AST: 140 ms, spl error check: 39970 ms.
+ZipMe/products/Variant0016/Variant0016.model done. AST: 160 ms, spl error check: 67010 ms.
+ZipMe/products/Variant0017/Variant0017.model done. AST: 130 ms, spl error check: 4050 ms.
+ZipMe/products/Variant0018/Variant0018.model done. AST: 140 ms, spl error check: 7880 ms.
+ZipMe/products/Variant0019/Variant0019.model done. AST: 140 ms, spl error check: 7880 ms.
+ZipMe/products/Variant0020/Variant0020.model done. AST: 140 ms, spl error check: 14910 ms.
+ZipMe/products/Variant0021/Variant0021.model done. AST: 150 ms, spl error check: 28200 ms.
+ZipMe/products/Variant0022/Variant0022.model done. AST: 160 ms, spl error check: 47820 ms.
+ZipMe/products/Variant0023/Variant0023.model done. AST: 140 ms, spl error check: 6010 ms.
+ZipMe/products/Variant0024/Variant0024.model done. AST: 130 ms, spl error check: 11760 ms.
+construct AST:   3380 ms
+spl error check: 383370 ms
+
+real	9m9.153s
+user	9m1.898s
+sys	0m7.240s

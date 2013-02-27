@@ -1,0 +1,573 @@
+Errors:
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: maybe-Beziehung:
+Feature HelpMenu greift auf das Feld
+  protected ResourceFactory factory;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature HelpMenu greift auf die Methode
+  public JMenu createMenu(String prefix) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: maybe-Beziehung:
+Feature HelpMenu greift auf das Feld
+  protected JMenuBar menuBar;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:6,20:
+  Semantic Error: maybe-Beziehung:
+Feature WindowMenu greift auf das Feld
+  protected ResourceFactory factory;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:6:
+  Semantic Error: maybe-Beziehung:
+Feature WindowMenu greift auf die Methode
+  public JMenu createMenu(String prefix) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:7,7:
+  Semantic Error: maybe-Beziehung:
+Feature WindowMenu greift auf das Feld
+  protected JMenuBar menuBar;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: maybe-Beziehung:
+Feature ViewMenu greift auf das Feld
+  protected ResourceFactory factory;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature ViewMenu greift auf die Methode
+  public JMenu createMenu(String prefix) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: maybe-Beziehung:
+Feature ViewMenu greift auf das Feld
+  protected JMenuBar menuBar;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: maybe-Beziehung:
+Feature EditMenu greift auf das Feld
+  protected ResourceFactory factory;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: maybe-Beziehung:
+Feature EditMenu greift auf die Methode
+  public JMenu createMenu(String prefix) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: maybe-Beziehung:
+Feature EditMenu greift auf das Feld
+  protected JMenuBar menuBar;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:19,7:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  protected JMenu newMenu;
+des Features NewFile zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:19:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public JMenuItem createMenuItem(String prefix, ActionListener listener) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:26:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Konstruktor
+  public GraphFrame(Graph aGraph) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:28:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  protected void addInternalFrame(final JInternalFrame iframe) { ... }
+des Features InternalFrame zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Konstruktor
+  public ResourceFactory(ResourceBundle bundle) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8,42:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  protected ResourceBundle appResources;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:8,18:
+  Semantic Error: maybe-Beziehung:
+Feature FileMenu greift auf das Feld
+  protected ResourceFactory factory;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:8:
+  Semantic Error: maybe-Beziehung:
+Feature FileMenu greift auf die Methode
+  public JMenu createMenu(String prefix) { ... }
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:9,7:
+  Semantic Error: maybe-Beziehung:
+Feature FileMenu greift auf das Feld
+  protected JMenuBar menuBar;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/InternalFrame/com/horstmann/violet/framework/EditorFrame.java:38:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature InternalFrame zielt auf die Methode folgender Features:
+MenuResources:	protected void setTitle() { ... }
+SetTitle:	protected void setTitle() { ... }
+
+/home/lutz/Benchmark/Violet/features/InternalFrame/com/horstmann/violet/framework/EditorFrame.java:42:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature InternalFrame zielt auf die Methode folgender Features:
+MenuResources:	protected void setTitle() { ... }
+SetTitle:	protected void setTitle() { ... }
+
+/home/lutz/Benchmark/Violet/features/ExtensionFilter/com/horstmann/violet/framework/EditorFrame.java:9,28:
+  Semantic Error: maybe-Beziehung:
+Feature ExtensionFilter greift auf das Feld
+  protected ResourceBundle appResources;
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:54:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Konstruktor
+  public PointNode() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:55:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void translate(double dx, double dy) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:56:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  void connect(Node aStart, Node anEnd);
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:57:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public boolean addEdge(Edge e, Point2D p1, Point2D p2) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Node getStart();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void removeNode(Node n) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Node getEnd();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:73:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void snap(Rectangle2D r) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:115:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void draw(Graphics2D g2) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:38,29:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  public static final BentStyle STRAIGHT = new BentStyle();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public ArrayList getPath(Rectangle2D start, Rectangle2D end) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getStart() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Rectangle2D getBounds();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:55:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getEnd() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:55:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Rectangle2D getBounds();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:49:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getStart() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:49:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Rectangle2D getBounds();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:50:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getEnd() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:50:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Rectangle2D getBounds();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:51:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Konstruktor
+  public Direction(double dx, double dy) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getStart() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Point2D getConnectionPoint(Direction d);
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Node getEnd() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  Point2D getConnectionPoint(Direction d);
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Direction turn(double angle) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:49,29:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  public static final LineStyle SOLID = new LineStyle();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:50,34:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  public static final ArrowHead NONE = new ArrowHead();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:51,32:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf das Feld
+  public static final ArrowHead NONE = new ArrowHead();
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:138:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Stroke getStroke() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:141:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void draw(Graphics2D g2, Point2D p, Point2D q) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:143:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void draw(Graphics2D g2, Point2D p, Point2D q) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:234:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:294:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:296:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:40:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Object clone() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:51:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void translate(double dx, double dy) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:71:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public void snap(Rectangle2D r) { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:77:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public double getX() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:78:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public double getY() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/ShapeEdge.java:60:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf die Methode
+  public Line2D getConnectionPoints() { ... }
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:58
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:45
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:38
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:50:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.BentStyle
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:69
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:65:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.Grid
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:27
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:69
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:60
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:65:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.Graph
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:54:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.PointNode
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:330
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:67
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:61
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:49:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.LineStyle
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:51
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:74:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.Direction
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:261
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:201
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:79
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:168
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:50
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:51
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:332
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:91
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:73
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:331
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:85:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.ArrowHead
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:26:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.GraphFrame
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/ShapeEdge.java:39:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.AbstractEdge
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:5:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.ResourceFactory
+des Features MenuResources zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:36:
+  Semantic Error: maybe-Beziehung:
+Feature DiagramSupport greift auf den Typ
+  com.horstmann.violet.framework.AbstractNode
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/Read/com/horstmann/violet/framework/EditorFrame.java:15
+/home/lutz/Benchmark/Violet/features/Read/com/horstmann/violet/framework/EditorFrame.java:10:
+  Semantic Error: maybe-Beziehung:
+Feature Read greift auf den Typ
+  com.horstmann.violet.framework.Graph
+des Features GraphUtility zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/FileService.java:77
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/FileService.java:65
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/JFileChooserService.java:46
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/JFileChooserService.java:27:
+  Semantic Error: maybe-Beziehung:
+Feature FileUtility greift auf den Typ
+  com.horstmann.violet.framework.ExtensionFilter
+des Features ExtensionFilter zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/BentStyle.java:33
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/ArrowHead.java:33
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/LineStyle.java:31:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature GraphUtility zielt auf den Typ folgender Features:
+SaveAs:	com.horstmann.violet.framework.SerializableEnumeration
+FileUtility:	com.horstmann.violet.framework.SerializableEnumeration
+

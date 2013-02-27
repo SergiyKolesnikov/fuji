@@ -1,0 +1,15 @@
+Errors:
+/home/lutz/Benchmark/Sudoku/features/Solver/Field.java:52:
+  Semantic Error: no method named original() in Field matches.
+/home/lutz/Benchmark/Sudoku/features/Undo/BoardManager.java:5,14:
+  Semantic Error: history not found
+/home/lutz/Benchmark/Sudoku/features/Undo/BoardManager.java:6,29:
+  Semantic Error: history not found
+/home/lutz/Benchmark/Sudoku/features/Solver/BoardManager.java:113:
+  Semantic Error: no method named clone() in Board matches. However, there is a method clone()
+/home/lutz/Benchmark/Sudoku/features/Solver/BoardManager.java:128:
+  Semantic Error: statement is unreachable
+/home/lutz/Benchmark/Sudoku/features/Solver/Guesser.java:27:
+  Semantic Error: no method named clone() in Board matches. However, there is a method clone()
+/home/lutz/Benchmark/Sudoku/features/Solver/Guesser.java:32:
+  Semantic Error: statement is unreachable

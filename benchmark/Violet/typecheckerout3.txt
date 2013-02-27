@@ -1,0 +1,713 @@
+Errors:
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: MAYBE dependency:
+Feature HelpMenu accesses the field
+  protected ResourceFactory factory;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: MAYBE dependency:
+Feature HelpMenu accesses the method
+  public JMenu createMenu(String prefix) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: MAYBE dependency:
+Feature HelpMenu accesses the field
+  protected JMenuBar menuBar;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:6,20:
+  Semantic Error: MAYBE dependency:
+Feature WindowMenu accesses the field
+  protected ResourceFactory factory;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:6:
+  Semantic Error: MAYBE dependency:
+Feature WindowMenu accesses the method
+  public JMenu createMenu(String prefix) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:7,7:
+  Semantic Error: MAYBE dependency:
+Feature WindowMenu accesses the field
+  protected JMenuBar menuBar;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: MAYBE dependency:
+Feature ViewMenu accesses the field
+  protected ResourceFactory factory;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: MAYBE dependency:
+Feature ViewMenu accesses the method
+  public JMenu createMenu(String prefix) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: MAYBE dependency:
+Feature ViewMenu accesses the field
+  protected JMenuBar menuBar;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:7,18:
+  Semantic Error: MAYBE dependency:
+Feature EditMenu accesses the field
+  protected ResourceFactory factory;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:7:
+  Semantic Error: MAYBE dependency:
+Feature EditMenu accesses the method
+  public JMenu createMenu(String prefix) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/EditMenu/com/horstmann/violet/framework/EditorFrame.java:8,7:
+  Semantic Error: MAYBE dependency:
+Feature EditMenu accesses the field
+  protected JMenuBar menuBar;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:19,7:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  protected JMenu newMenu;
+of feature NewFile.
+Feature NewFile may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:19:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public JMenuItem createMenuItem(String prefix, ActionListener listener) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:26:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the constructor
+  public GraphFrame(Graph aGraph) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:28:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  protected void addInternalFrame(final JInternalFrame iframe) { ... }
+of feature InternalFrame.
+Feature InternalFrame may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the constructor
+  public ResourceFactory(ResourceBundle bundle) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8,42:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  protected ResourceBundle appResources;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:8,18:
+  Semantic Error: MAYBE dependency:
+Feature FileMenu accesses the field
+  protected ResourceFactory factory;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:8:
+  Semantic Error: MAYBE dependency:
+Feature FileMenu accesses the method
+  public JMenu createMenu(String prefix) { ... }
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/FileMenu/com/horstmann/violet/framework/EditorFrame.java:9,7:
+  Semantic Error: MAYBE dependency:
+Feature FileMenu accesses the field
+  protected JMenuBar menuBar;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/InternalFrame/com/horstmann/violet/framework/EditorFrame.java:38:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature InternalFrame accesses:
+- the method
+    protected void setTitle() { ... }
+  of feature SetTitle
+- the method
+    protected void setTitle() { ... }
+  of feature MenuResources
+
+/home/lutz/Benchmark/Violet/features/InternalFrame/com/horstmann/violet/framework/EditorFrame.java:42:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature InternalFrame accesses:
+- the method
+    protected void setTitle() { ... }
+  of feature SetTitle
+- the method
+    protected void setTitle() { ... }
+  of feature MenuResources
+
+/home/lutz/Benchmark/Violet/features/ExtensionFilter/com/horstmann/violet/framework/EditorFrame.java:9,28:
+  Semantic Error: MAYBE dependency:
+Feature ExtensionFilter accesses the field
+  protected ResourceBundle appResources;
+of feature MenuResources.
+Feature MenuResources may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:54:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the constructor
+  public PointNode() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:55:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void translate(double dx, double dy) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:56:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  void connect(Node aStart, Node anEnd);
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:56:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- by an implicit cast from argument type to parameter type
+    void layout(Graph g, Graphics2D g2, Grid grid);
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:56:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- by an implicit cast from argument type to parameter type
+    void layout(Graph g, Graphics2D g2, Grid grid);
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:57:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public boolean addEdge(Edge e, Point2D p1, Point2D p2) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Node getStart();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void removeNode(Node n) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:62:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Node getEnd();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:73:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void snap(Rectangle2D r) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:115:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void draw(Graphics2D g2) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:38,29:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  public static final BentStyle STRAIGHT = new BentStyle();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public ArrayList getPath(Rectangle2D start, Rectangle2D end) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getStart() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:54:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Rectangle2D getBounds();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:55:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getEnd() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:55:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Rectangle2D getBounds();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:49:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getStart() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:49:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Rectangle2D getBounds();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:50:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getEnd() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:50:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Rectangle2D getBounds();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:51:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the constructor
+  public Direction(double dx, double dy) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getStart() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Point2D getConnectionPoint(Direction d);
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Node getEnd() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  Point2D getConnectionPoint(Direction d);
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:53:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Direction turn(double angle) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:49,29:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  public static final LineStyle SOLID = new LineStyle();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:50,34:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  public static final ArrowHead NONE = new ArrowHead();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:51,32:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the field
+  public static final ArrowHead NONE = new ArrowHead();
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:138:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Stroke getStroke() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:141:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void draw(Graphics2D g2, Point2D p, Point2D q) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:143:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void draw(Graphics2D g2, Point2D p, Point2D q) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:148:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- by an implicit cast from argument type to parameter type
+    public static final ArrowHead DIAMOND = new ArrowHead();
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:234:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:279:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- by an implicit cast from argument type to parameter type
+    public static final ArrowHead DIAMOND = new ArrowHead();
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:294:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:296:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public GeneralPath getPath(Point2D p, Point2D q) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:40:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Object clone() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:51:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void translate(double dx, double dy) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:71:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public void snap(Rectangle2D r) { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:77:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public double getX() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:78:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public double getY() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:37:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the super constructor
+  public AbstractNode() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/ShapeEdge.java:60:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the method
+  public Line2D getConnectionPoints() { ... }
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/ShapeEdge.java:40:
+  Semantic Error: MAYBE dependency:
+Feature DiagramSupport accesses the super constructor
+  AbstractEdge()
+of feature GraphUtility.
+Feature GraphUtility may not be present in every valid selection.
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/LineStyle.java:33:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the super constructor
+    public SerializableEnumeration()
+  of feature SaveAs
+- the super constructor
+    public SerializableEnumeration()
+  of feature FileUtility
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/ArrowHead.java:35:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the super constructor
+    public SerializableEnumeration()
+  of feature SaveAs
+- the super constructor
+    public SerializableEnumeration()
+  of feature FileUtility
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/BentStyle.java:35:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the super constructor
+    public SerializableEnumeration()
+  of feature SaveAs
+- the super constructor
+    public SerializableEnumeration()
+  of feature FileUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:52
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:60:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Edge
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:65:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Grid
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:54:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.PointNode
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:60
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteNode.java:65:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Graph
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:58
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:45
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:38
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/ClassRelationshipEdge.java:50:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.BentStyle
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:27:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Graph
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:26:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.GraphFrame
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/ShapeEdge.java:39:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.AbstractEdge
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:330
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:67
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:61
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:49:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.LineStyle
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:261
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:201
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:79
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:168
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:50
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:51
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:332
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:91
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:73
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:331
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/SegmentedLineEdge.java:85:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.ArrowHead
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/NoteEdge.java:51:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Direction
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:69:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Grid
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:74:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Direction
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:36:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.AbstractNode
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/RectangularNode.java:69:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.Graph
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:8
+/home/lutz/Benchmark/Violet/features/DiagramSupport/com/horstmann/violet/framework/EditorFrame.java:5:
+  Semantic Error: 1 optional target:
+Feature DiagramSupport accesses:
+- the type
+    com.horstmann.violet.framework.ResourceFactory
+  of feature MenuResources
+
+/home/lutz/Benchmark/Violet/features/Read/com/horstmann/violet/framework/EditorFrame.java:15
+/home/lutz/Benchmark/Violet/features/Read/com/horstmann/violet/framework/EditorFrame.java:10:
+  Semantic Error: 1 optional target:
+Feature Read accesses:
+- the type
+    com.horstmann.violet.framework.Graph
+  of feature GraphUtility
+
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/FileService.java:77
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/FileService.java:65:
+  Semantic Error: 1 optional target:
+Feature FileUtility accesses:
+- the type
+    com.horstmann.violet.framework.ExtensionFilter
+  of feature ExtensionFilter
+
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/JFileChooserService.java:46
+/home/lutz/Benchmark/Violet/features/FileUtility/com/horstmann/violet/framework/JFileChooserService.java:27:
+  Semantic Error: 1 optional target:
+Feature FileUtility accesses:
+- the type
+    com.horstmann.violet.framework.ExtensionFilter
+  of feature ExtensionFilter
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/LineStyle.java:31:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature SaveAs
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature FileUtility
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/ArrowHead.java:33:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature SaveAs
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature FileUtility
+
+/home/lutz/Benchmark/Violet/features/GraphUtility/com/horstmann/violet/BentStyle.java:33:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature GraphUtility accesses:
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature SaveAs
+- the type
+    com.horstmann.violet.framework.SerializableEnumeration
+  of feature FileUtility
+

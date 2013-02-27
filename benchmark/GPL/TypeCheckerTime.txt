@@ -1,0 +1,3 @@
+construct AST:     260 ms
+(spl) error check: 1942330 ms
+Typechecker for GPL done.

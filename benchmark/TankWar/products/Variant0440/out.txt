@@ -1,0 +1,69 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:14:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:17:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:21:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:24:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:15:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:20:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:65:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:68:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:71:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:74:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:31:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Wall.java:9:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:5,10:
+  Semantic Error: no field named objectType
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,53:
+  Semantic Error: no field named y_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,4:
+  Semantic Error: tankManager.maler not found
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,39:
+  Semantic Error: no field named x_Koordinate
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,53:
+  Semantic Error: no field named y_Koordinate

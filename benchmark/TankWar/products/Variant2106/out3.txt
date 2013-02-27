@@ -1,0 +1,19 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/PC/Maler.java:5,12:
+  Semantic Error: no visible type named Hashtable
+/home/lutz/Benchmark/TankWar/features/PC/Maler.java:5,35:
+  Semantic Error: no visible type named Hashtable
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:12,41:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:12,56:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:341,42:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:341,57:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:348:
+  Semantic Error: no method named createImage(java.lang.String) in java.awt.Image matches.
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:349:
+  Semantic Error: no method named scale(java.awt.Image, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Beschleunigung/Tool.java:8:
+  Semantic Error: no method named _$_init_$_3_$_(TankManager, int, int, int, int, int, int, int, int) in Tool matches. However, there is a method _$_init_$_3_$_(TankManager, int, int, int)

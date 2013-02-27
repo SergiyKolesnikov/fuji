@@ -1,0 +1,25 @@
+Errors:
+/home/lutz/Benchmark/Sudoku/features/Generator/Board.java:28:
+  Semantic Error: no method named trySetField(Structure, int, int, Field) in Board matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/GenerateSudokuListener.java:28:
+  Semantic Error: no method named setBusy(boolean) in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/GenerateSudokuListener.java:31:
+  Semantic Error: no method named setBusy(boolean) in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:37:
+  Semantic Error: no method named getRemainingPos() in Field matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:42:
+  Semantic Error: no method named trySetFieldPrivate(Structure, int, int, Field) in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:45:
+  Semantic Error: no method named undo() in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:49:
+  Semantic Error: no method named undo() in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:66:
+  Semantic Error: no method named solve(Board) in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:66:
+  Semantic Error: no method named clone() in Board matches. However, there is a method clone()
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:72:
+  Semantic Error: no method named solve(Board) in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:72:
+  Semantic Error: no method named clone() in Board matches. However, there is a method clone()
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:79:
+  Semantic Error: the exception java.lang.CloneNotSupportedException is not thrown in the body of the try statement

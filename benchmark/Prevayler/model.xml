@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<alt abstract="true" mandatory="true" name="SPL">
+				<and abstract="true" mandatory="true" name="PrevaylerSPL">
+					<feature name="Censor"/>
+					<feature name="GZip"/>
+					<feature name="Monitor"/>
+					<feature name="Replication"/>
+					<feature name="Snapshot"/>
+					<feature mandatory="true" name="base"/>
+				</and>
+			</alt>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

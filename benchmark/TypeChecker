@@ -1,0 +1,11 @@
+#!/bin/bash
+
+(( CpuTime=0 ))
+
+java -jar fuji.jar \
+     -basedir $1/features \
+     -fopRefs \
+     -typechecker \
+     $1/model.m \
+     2> $1/typecheckerout3.txt
+echo "Typechecker for $1 done."

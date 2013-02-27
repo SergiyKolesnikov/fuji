@@ -1,0 +1,22 @@
+Graph/products/Variant0001/Variant0001.model done. AST: 120 ms, spl error check: 950 ms.
+Graph/products/Variant0002/Variant0002.model done. AST: 120 ms, spl error check: 1160 ms.
+Graph/products/Variant0003/Variant0003.model done. AST: 120 ms, spl error check: 1090 ms.
+Graph/products/Variant0004/Variant0004.model done. AST: 120 ms, spl error check: 1310 ms.
+Graph/products/Variant0005/Variant0005.model done. AST: 130 ms, spl error check: 1120 ms.
+Graph/products/Variant0006/Variant0006.model done. AST: 120 ms, spl error check: 1280 ms.
+Graph/products/Variant0007/Variant0007.model done. AST: 120 ms, spl error check: 1250 ms.
+Graph/products/Variant0008/Variant0008.model done. AST: 130 ms, spl error check: 1580 ms.
+Graph/products/Variant0009/Variant0009.model done. AST: 120 ms, spl error check: 1100 ms.
+Graph/products/Variant0010/Variant0010.model done. AST: 130 ms, spl error check: 1240 ms.
+Graph/products/Variant0011/Variant0011.model done. AST: 130 ms, spl error check: 1220 ms.
+Graph/products/Variant0012/Variant0012.model done. AST: 120 ms, spl error check: 1530 ms.
+Graph/products/Variant0013/Variant0013.model done. AST: 120 ms, spl error check: 1200 ms.
+Graph/products/Variant0014/Variant0014.model done. AST: 130 ms, spl error check: 1460 ms.
+Graph/products/Variant0015/Variant0015.model done. AST: 120 ms, spl error check: 1420 ms.
+Graph/products/Variant0016/Variant0016.model done. AST: 120 ms, spl error check: 1750 ms.
+construct AST:   1970 ms
+spl error check: 20660 ms
+
+real	0m49.541s
+user	0m47.683s
+sys	0m1.708s

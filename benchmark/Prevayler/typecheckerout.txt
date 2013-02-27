@@ -1,0 +1,101 @@
+Errors:
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,11:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf das Feld
+  private String _remoteServerIpAddress;
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf den Konstruktor
+  public ClientPublisher(OldNetwork network, String serverIpAddress, int serverPort) throws IOException { ... }
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf die Methode
+  private OldNetwork network() { ... }
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,102:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf das Feld
+  private String _remoteServerIpAddress;
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,125:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf das Feld
+  private int _remoteServerPort;
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf den Konstruktor
+  public CentralPublisher(Clock clock, TransactionCensor censor, Journal journal) { ... }
+des Features Censor zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf die Methode
+  private TransactionCensor censor(GenericSnapshotManager snapshotManager) { ... }
+des Features Censor zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf den Konstruktor
+  public PersistentJournal(PrevaylerDirectory directory, long journalSizeThresholdInBytes, long journalAgeThresholdInMillis, String journalSuffix, Monitor monitor) throws IOException { ... }
+des Features Monitor zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf die Methode
+  private Monitor monitor() { ... }
+des Features Monitor zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:12:
+  Semantic Error: maybe-Beziehung:
+Feature Censor greift auf die Methode
+  public PrevalentSystemGuard recoveredPrevalentSystem() { ... }
+des Features Snapshot zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:13:
+  Semantic Error: maybe-Beziehung:
+Feature Censor greift auf die Methode
+  public Serializer primarySerializer() { ... }
+des Features Snapshot zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/PrevaylerFactory.java:6
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:11:
+  Semantic Error: maybe-Beziehung:
+Feature Censor greift auf den Typ
+  org.prevayler.implementation.snapshot.GenericSnapshotManager
+des Features Snapshot zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: maybe-Beziehung:
+Feature Snapshot greift auf den Typ
+  org.prevayler.implementation.replication.ClientPublisher
+des Features Replication zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:262:
+  Semantic Error: maybe-Beziehung:
+Feature base greift auf den Typ
+  org.prevayler.implementation.snapshot.GenericSnapshotManager
+des Features Snapshot zu.
+Das Ziel-Feature ist aber nicht in jeder möglichen validen Auswahl vorhanden.
+

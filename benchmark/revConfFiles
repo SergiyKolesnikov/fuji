@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for variantdir in $1/products/Variant*
+do
+  for configfile in $variantdir/Variant*.config
+  do
+    tac $configfile > tmp
+    cat tmp > $configfile
+    rm tmp
+    echo "$configfile reversed." 
+  done
+done

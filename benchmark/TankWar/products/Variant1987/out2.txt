@@ -1,0 +1,45 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:14:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:17:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:21:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:24:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:15:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:20:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:65:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:68:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:71:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:74:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:31:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Wall.java:9:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Beschleunigung/Tool.java:8:
+  Semantic Error: no method named _$_init_$_3_$_(TankManager, int, int, int, int, int, int, int, int) in Tool matches. However, there is a method _$_init_$_3_$_(TankManager, int, int, int)
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.

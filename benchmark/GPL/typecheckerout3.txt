@@ -1,0 +1,225 @@
+Errors:
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:6,36:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature DirectedWithNeighbors
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:8,15:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature DirectedWithNeighbors
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:14,29:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature DirectedWithNeighbors
+- the field
+    public LinkedList adjacentNeighbors;
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:16:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- with original-call
+    original(GPL.Neighbor)
+  in method
+    adjustAdorns(GPL.Neighbor)
+  of type GPL.Vertex
+method
+    public void adjustAdorns(Neighbor sourceNeighbor) { ... }
+  of feature DirectedWithNeighbors
+- with original-call
+    original(GPL.Neighbor)
+  in method
+    adjustAdorns(GPL.Neighbor)
+  of type GPL.Vertex
+method
+    public void adjustAdorns(Neighbor sourceNeighbor) { ... }
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedOnlyVertices/GPL/Vertex.java:28:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedOnlyVertices accesses:
+- with original-call
+    original(GPL.Vertex, int)
+  in method
+    adjustAdorns(GPL.Vertex, int)
+  of type GPL.Vertex
+method
+    public void adjustAdorns(Vertex the_vertex, int index) { ... }
+  of feature DirectedOnlyVertices
+- with original-call
+    original(GPL.Vertex, int)
+  in method
+    adjustAdorns(GPL.Vertex, int)
+  of type GPL.Vertex
+method
+    public void adjustAdorns(Vertex the_vertex, int index) { ... }
+  of feature UndirectedOnlyVertices
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:14:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- with original-call
+    original(GPL.Vertex, GPL.Neighbor)
+  in method
+    addEdge(GPL.Vertex, GPL.Neighbor)
+  of type GPL.Graph
+method
+    public void addEdge(Vertex start, Neighbor theNeighbor) { ... }
+  of feature DirectedWithNeighbors
+- with original-call
+    original(GPL.Vertex, GPL.Neighbor)
+  in method
+    addEdge(GPL.Vertex, GPL.Neighbor)
+  of type GPL.Graph
+method
+    public void addEdge(Vertex start, Neighbor theNeighbor) { ... }
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:22,38:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- the field
+    public Vertex neighbor;
+  of feature DirectedWithNeighbors
+- the field
+    public Vertex neighbor;
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:10:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithEdges accesses:
+- the method
+    public void EdgeConstructor(Vertex the_start, Vertex the_end) { ... }
+  of feature UndirectedWithEdges
+- the method
+    public void EdgeConstructor(Vertex the_start, Vertex the_end) { ... }
+  of feature DirectedWithEdges
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:22:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithEdges accesses:
+- with original-call
+    original(GPL.EdgeIfc)
+  in method
+    adjustAdorns(GPL.EdgeIfc)
+  of type GPL.Edge
+method
+    public void adjustAdorns(EdgeIfc the_edge) { ... }
+  of feature UndirectedWithEdges
+- with original-call
+    original(GPL.EdgeIfc)
+  in method
+    adjustAdorns(GPL.EdgeIfc)
+  of type GPL.Edge
+method
+    public void adjustAdorns(EdgeIfc the_edge) { ... }
+  of feature DirectedWithEdges
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:37:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithEdges accesses:
+- with original-call
+    original()
+  in method
+    display()
+  of type GPL.Edge
+method
+    public void display() { ... }
+  of feature UndirectedWithEdges
+- with original-call
+    original()
+  in method
+    display()
+  of type GPL.Edge
+method
+    public void display() { ... }
+  of feature DirectedWithEdges
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:5:
+  Semantic Error: 5 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithEdges accesses:
+- the super constructor
+    public Neighbor(Vertex theNeighbor) { ... }
+  of feature DirectedWithNeighbors
+- the super constructor
+    public Neighbor(Vertex theNeighbor) { ... }
+  of feature UndirectedWithNeighbors
+- the super constructor
+    public Neighbor() { ... }
+  of feature UndirectedWithEdges
+- the super constructor
+    public Neighbor(Vertex theNeighbor, int theWeight) { ... }
+  of feature WeightedWithNeighbors
+- the super constructor
+    public Neighbor() { ... }
+  of feature DirectedWithEdges
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:5:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class Edge of feature WeightedWithEdges accesses:
+- in feature UndirectedWithEdges as subclass of class Neighbor the super constructor
+     public Neighbor(Vertex theNeighbor) { ... }
+   of class Neighbor.
+- in feature DirectedWithEdges as subclass of class Neighbor the super constructor
+     public Neighbor(Vertex theNeighbor) { ... }
+   of class Neighbor.
+There may be a valid selection where none of the features UndirectedWithEdges and DirectedWithEdges is present.
+So it may be that the information that class Edge (transitively) extends the class(es) above is not present at all.
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:16:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- the method
+    public void NeighborConstructor(Vertex theNeighbor) { ... }
+  of feature DirectedWithNeighbors
+- the method
+    public void NeighborConstructor(Vertex theNeighbor) { ... }
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:23:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature WeightedWithNeighbors accesses:
+- with original-call
+    original()
+  in method
+    display()
+  of type GPL.Neighbor
+method
+    public void display() { ... }
+  of feature DirectedWithNeighbors
+- with original-call
+    original()
+  in method
+    display()
+  of type GPL.Neighbor
+method
+    public void display() { ... }
+  of feature UndirectedWithNeighbors
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:20:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class Edge of feature WeightedWithEdges accesses:
+- in feature UndirectedWithEdges as implementation of interface GPL.Edge the type
+     GPL.EdgeIfc
+   of interface GPL.Edge.
+- in feature DirectedWithEdges as implementation of interface GPL.Edge the type
+     GPL.EdgeIfc
+   of interface GPL.Edge.
+There may be a valid selection where none of the features UndirectedWithEdges and DirectedWithEdges is present.
+So it may be that the information that class Edge (transitively) implements the interface(s) above is not present at all.
+

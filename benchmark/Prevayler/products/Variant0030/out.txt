@@ -1,0 +1,413 @@
+Errors:
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/Prevayler.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/Clock.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/Transaction.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/Query.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/SureTransactionWithQuery.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:19,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:229,13:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:243,2:
+  Semantic Error: no visible type named MethodObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:255,15:
+  Semantic Error: ReturnHack not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:255,26:
+  Semantic Error: no field named returnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:257,15:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:74:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:74,33:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:75:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:75,23:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:273,2:
+  Semantic Error: no visible type named MethodObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:280,15:
+  Semantic Error: ReturnHack not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:280,26:
+  Semantic Error: no field named returnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:282,15:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:289:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/PrevaylerFactory.java:289,17:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:95,37:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:96:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:96,25:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:46,59:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:47,33:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:48:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:48,23:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/PrevaylerFactory.java:51,13:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/PrevaylerFactory.java:32:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/PrevaylerFactory.java:32,55:
+  Semantic Error: no visible type named ReturnObject
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/TransactionWithQuery.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo1/NumberStorageTransaction.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo1/Main.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo1/PrimeCalculator.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo1/NumberKeeper.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/TransactionTestRun.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/Main.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/TransactionConnection.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/ScalabilityTestSubject.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/QueryTestRun.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/Record.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/ScalabilityTestRun.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/RecordIterator.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/QueryConnection.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCScalabilityConnection.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCQueryConnection.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCTransactionSubject.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCQuerySubject.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCScalabilitySubject.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/jdbc/JDBCTransactionConnection.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/AllRecordsReplacement.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/TestTransaction.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/QuerySystem.java:10,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevaylerScalabilitySubject.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevaylerTransactionConnection.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevaylerTransactionSubject.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevaylerQuerySubject.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/ScalabilitySystem.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevalenceTest.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/PrevaylerQueryConnection.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/scalability/prevayler/TransactionSystem.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/Main.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/MainTransient.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/TransferFrame.java:10,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/AccountEditFrame.java:18,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/RobustAction.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/NewAccountFrame.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/AccountFrame.java:14,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/BankFrame.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:7,8:
+  Semantic Error: net.sourceforge.javamatch.engine not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:8,8:
+  Semantic Error: net.sourceforge.javamatch.query not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:11,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:66,7:
+  Semantic Error: no visible type named MatchEngine
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:66,35:
+  Semantic Error: no visible type named MatchEngine
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:67,7:
+  Semantic Error: no visible type named QuerySet
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:67,26:
+  Semantic Error: no visible type named QuerySet
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:68:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:68,30:
+  Semantic Error: no visible type named Maximum
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:69:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:69,30:
+  Semantic Error: no visible type named Maximum
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:70,7:
+  Semantic Error: no visible type named MatchResult
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:72,9:
+  Semantic Error: no visible type named ResultItem
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:72,35:
+  Semantic Error: no visible type named ResultItem
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/MatchFrame.java:82,13:
+  Semantic Error: no visible type named MatchException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/gui/AllAccountsFrame.java:9,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/BankListener.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/AccountEntry.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/Bank.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/Account.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/AccountListener.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/AccountCreation.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/AccountTransaction.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/HolderChange.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/AccountDeletion.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/Withdrawal.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/Transfer.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/BankTransaction.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/demos/demo2/business/transactions/Deposit.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/Cool.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/FileManager.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/Chunk.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/DurableInputStream.java:10,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/FileLocker.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/DurableOutputStream.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/StopWatch.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/DeepCopier.java:10,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/Guided.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/Turn.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/Chunking.java:12,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/ObjectInputStreamWithClassLoader.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/JavaSerializer.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:2,8:
+  Semantic Error: no visible type named com.skaringa.javaxml.DeserializerException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:3,8:
+  Semantic Error: no visible type named com.skaringa.javaxml.NoImplementationException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:4,8:
+  Semantic Error: no visible type named com.skaringa.javaxml.ObjectTransformer
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:5,8:
+  Semantic Error: no visible type named com.skaringa.javaxml.ObjectTransformerFactory
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:6,8:
+  Semantic Error: no visible type named com.skaringa.javaxml.SerializerException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:12,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:33,13:
+  Semantic Error: no visible type named SerializerException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:41,13:
+  Semantic Error: no visible type named DeserializerException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:45,13:
+  Semantic Error: no visible type named ObjectTransformer
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:47,14:
+  Semantic Error: ObjectTransformerFactory not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/SkaringaSerializer.java:49,13:
+  Semantic Error: no visible type named NoImplementationException
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:2,8:
+  Semantic Error: no visible type named com.thoughtworks.xstream.XStream
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:44,11:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:45,13:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:58,13:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/XStreamSerializer.java:59,16:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/foundation/serialization/Serializer.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/Capsule.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/TransactionCapsule.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/PrevaylerImpl.java:11,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/TransactionGuide.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/TransactionWithQueryCapsule.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/PrevalentSystemGuard.java:11,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/TransactionTimestamp.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/PrevaylerDirectory.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/clock/PausableClock.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/clock/BrokenClock.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/clock/MachineClock.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/publishing/CentralPublisher.java:11,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/publishing/POBox.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/publishing/TransactionSubscriber.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/publishing/AbstractPublisher.java:7,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/publishing/TransactionPublisher.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/journal/PersistentJournal.java:13,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/journal/TransientJournal.java:8,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/base/org/prevayler/implementation/journal/Journal.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainSkaringa.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainXStream.java:2,8:
+  Semantic Error: no visible type named com.thoughtworks.xstream.XStream
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainXStream.java:9,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainXStream.java:16,17:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainXStream.java:17,9:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/demos/demo2/MainXStream.java:17,29:
+  Semantic Error: no visible type named XStream
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/implementation/snapshot/GenericSnapshotManager.java:14,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Snapshot/org/prevayler/implementation/snapshot/NullSnapshotManager.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/demos/demo2/MainReplicaServer.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/demos/demo2/MainReplica.java:5,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkSessionId.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/SessionsManager.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/BaseNetworkImpl.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/ObjectSocket.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornServerReceiverImpl.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/Network.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/ObjectReceiver.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkServerObjectReceiverImpl.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornNetworkImpl.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/ObjectServerSocketImpl.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkClientObjectReceiverImpl.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornNetwork.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkImpl.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/Service.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkServerObjectReceiver.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/NetworkReceiverFactory.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/OldNetwork.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornNetworkProxy.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/ObjectSocketImpl.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/OldNetworkImpl.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornNetworkClientConnector.java:2,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/StubbornClientReceiverImpl.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/ObjectServerSocket.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/foundation/network/SessionsManagerImpl.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/implementation/replication/ServerConnection.java:9,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/implementation/replication/ClientPublisher.java:12,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Replication/org/prevayler/implementation/replication/ServerListener.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/SimpleMonitor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:2,8:
+  Semantic Error: no visible type named org.apache.log4j.Level
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:3,8:
+  Semantic Error: no visible type named org.apache.log4j.Logger
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:4,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:12,15:
+  Semantic Error: Level not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:12,21:
+  Semantic Error: no field named INFO
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:15,15:
+  Semantic Error: Level not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:15,21:
+  Semantic Error: no field named ERROR
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:20,11:
+  Semantic Error: no visible type named Logger
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:21,12:
+  Semantic Error: Logger not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Log4jMonitor.java:23,36:
+  Semantic Error: no visible type named Level
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/LoggingMonitor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/Monitor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Monitor/org/prevayler/foundation/monitor/NullMonitor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/LiberalTransactionCensor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/StrictTransactionCensor.java:6,8:
+  Semantic Error: de.ovgu.cide.jakutil not found
+/home/lutz/Benchmark/Prevayler/features/Censor/org/prevayler/implementation/publishing/censorship/TransactionCensor.java:3,8:
+  Semantic Error: de.ovgu.cide.jakutil not found

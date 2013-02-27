@@ -1,0 +1,80 @@
+Errors:
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:6,36:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt auf das Feld folgender Features:
+DirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+UndirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:8,15:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt auf das Feld folgender Features:
+DirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+UndirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:14,29:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt auf das Feld folgender Features:
+DirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+UndirectedWithNeighbors:	public LinkedList adjacentNeighbors;
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:16:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt mittels des original-Aufrufs
+  original(GPL.Neighbor) in der Methode adjustAdorns(GPL.Neighbor) des Typs GPL.Vertex auf die Methode folgender Features:
+DirectedWithNeighbors:	public void adjustAdorns(Neighbor sourceNeighbor) { ... }
+UndirectedWithNeighbors:	public void adjustAdorns(Neighbor sourceNeighbor) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedOnlyVertices/GPL/Vertex.java:28:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedOnlyVertices zielt mittels des original-Aufrufs
+  original(GPL.Vertex, int) in der Methode adjustAdorns(GPL.Vertex, int) des Typs GPL.Vertex auf die Methode folgender Features:
+DirectedOnlyVertices:	public void adjustAdorns(Vertex the_vertex, int index) { ... }
+UndirectedOnlyVertices:	public void adjustAdorns(Vertex the_vertex, int index) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:14:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt mittels des original-Aufrufs
+  original(GPL.Vertex, GPL.Neighbor) in der Methode addEdge(GPL.Vertex, GPL.Neighbor) des Typs GPL.Graph auf die Methode folgender Features:
+DirectedWithNeighbors:	public void addEdge(Vertex start, Neighbor theNeighbor) { ... }
+UndirectedWithNeighbors:	public void addEdge(Vertex start, Neighbor theNeighbor) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:22,38:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt auf das Feld folgender Features:
+DirectedWithNeighbors:	public Vertex neighbor;
+UndirectedWithNeighbors:	public Vertex neighbor;
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:10:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithEdges zielt auf die Methode folgender Features:
+UndirectedWithEdges:	public void EdgeConstructor(Vertex the_start, Vertex the_end) { ... }
+DirectedWithEdges:	public void EdgeConstructor(Vertex the_start, Vertex the_end) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:22:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithEdges zielt mittels des original-Aufrufs
+  original(GPL.EdgeIfc) in der Methode adjustAdorns(GPL.EdgeIfc) des Typs GPL.Edge auf die Methode folgender Features:
+UndirectedWithEdges:	public void adjustAdorns(EdgeIfc the_edge) { ... }
+DirectedWithEdges:	public void adjustAdorns(EdgeIfc the_edge) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:37:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithEdges zielt mittels des original-Aufrufs
+  original() in der Methode display() des Typs GPL.Edge auf die Methode folgender Features:
+UndirectedWithEdges:	public void display() { ... }
+DirectedWithEdges:	public void display() { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:16:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt auf die Methode folgender Features:
+DirectedWithNeighbors:	public void NeighborConstructor(Vertex theNeighbor) { ... }
+UndirectedWithNeighbors:	public void NeighborConstructor(Vertex theNeighbor) { ... }
+
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:23:
+  Semantic Error: 2 optionale Ziele (es kann eine valide Auswahl geben, in der alle diese Ziele nicht vorhanden sind):
+Feature WeightedWithNeighbors zielt mittels des original-Aufrufs
+  original() in der Methode display() des Typs GPL.Neighbor auf die Methode folgender Features:
+DirectedWithNeighbors:	public void display() { ... }
+UndirectedWithNeighbors:	public void display() { ... }
+

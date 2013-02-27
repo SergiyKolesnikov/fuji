@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="ExpressionProblem">
+				<and abstract="true" name="Derivatives">
+					<feature name="Eval_Neg"/>
+					<feature name="Eval_Plus"/>
+					<feature name="Eval_Numbers"/>
+					<feature name="Neg_ToString"/>
+					<feature name="Plus_ToString"/>
+					<feature name="Numbers_ToString"/>
+				</and>
+				<and abstract="true" mandatory="true" name="Operations">
+					<feature name="Eval"/>
+					<feature name="ToString"/>
+				</and>
+				<and abstract="true" mandatory="true" name="Structures">
+					<feature name="Neg"/>
+					<feature name="Plus"/>
+					<feature mandatory="true" name="Numbers"/>
+				</and>
+				<feature mandatory="true" name="base"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<conj>
+						<var>Numbers</var>
+						<var>ToString</var>
+					</conj>
+					<var>Numbers_ToString</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Plus</var>
+						<var>ToString</var>
+					</conj>
+					<var>Plus_ToString</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Neg</var>
+						<var>ToString</var>
+					</conj>
+					<var>Neg_ToString</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Eval</var>
+						<var>Numbers</var>
+					</conj>
+					<var>Eval_Numbers</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Eval</var>
+						<var>Plus</var>
+					</conj>
+					<var>Eval_Plus</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Eval</var>
+						<var>Neg</var>
+					</conj>
+					<var>Eval_Neg</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

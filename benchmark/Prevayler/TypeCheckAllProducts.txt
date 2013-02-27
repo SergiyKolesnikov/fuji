@@ -1,0 +1,38 @@
+Prevayler/products/Variant0001/Variant0001.model done. AST: 170 ms, spl error check: 4990 ms.
+Prevayler/products/Variant0002/Variant0002.model done. AST: 160 ms, spl error check: 5770 ms.
+Prevayler/products/Variant0003/Variant0003.model done. AST: 160 ms, spl error check: 5770 ms.
+Prevayler/products/Variant0004/Variant0004.model done. AST: 160 ms, spl error check: 6420 ms.
+Prevayler/products/Variant0005/Variant0005.model done. AST: 160 ms, spl error check: 5820 ms.
+Prevayler/products/Variant0006/Variant0006.model done. AST: 160 ms, spl error check: 6610 ms.
+Prevayler/products/Variant0007/Variant0007.model done. AST: 160 ms, spl error check: 6500 ms.
+Prevayler/products/Variant0008/Variant0008.model done. AST: 170 ms, spl error check: 8280 ms.
+Prevayler/products/Variant0009/Variant0009.model done. AST: 160 ms, spl error check: 6380 ms.
+Prevayler/products/Variant0010/Variant0010.model done. AST: 160 ms, spl error check: 7230 ms.
+Prevayler/products/Variant0011/Variant0011.model done. AST: 160 ms, spl error check: 7250 ms.
+Prevayler/products/Variant0012/Variant0012.model done. AST: 180 ms, spl error check: 9300 ms.
+Prevayler/products/Variant0013/Variant0013.model done. AST: 170 ms, spl error check: 7340 ms.
+Prevayler/products/Variant0014/Variant0014.model done. AST: 170 ms, spl error check: 9310 ms.
+Prevayler/products/Variant0015/Variant0015.model done. AST: 160 ms, spl error check: 9400 ms.
+Prevayler/products/Variant0016/Variant0016.model done. AST: 180 ms, spl error check: 12220 ms.
+Prevayler/products/Variant0017/Variant0017.model done. AST: 160 ms, spl error check: 6130 ms.
+Prevayler/products/Variant0018/Variant0018.model done. AST: 170 ms, spl error check: 6770 ms.
+Prevayler/products/Variant0019/Variant0019.model done. AST: 150 ms, spl error check: 6750 ms.
+Prevayler/products/Variant0020/Variant0020.model done. AST: 160 ms, spl error check: 9190 ms.
+Prevayler/products/Variant0021/Variant0021.model done. AST: 150 ms, spl error check: 7120 ms.
+Prevayler/products/Variant0022/Variant0022.model done. AST: 160 ms, spl error check: 9130 ms.
+Prevayler/products/Variant0023/Variant0023.model done. AST: 170 ms, spl error check: 8630 ms.
+Prevayler/products/Variant0024/Variant0024.model done. AST: 170 ms, spl error check: 11310 ms.
+Prevayler/products/Variant0025/Variant0025.model done. AST: 180 ms, spl error check: 7350 ms.
+Prevayler/products/Variant0026/Variant0026.model done. AST: 170 ms, spl error check: 9540 ms.
+Prevayler/products/Variant0027/Variant0027.model done. AST: 170 ms, spl error check: 9580 ms.
+Prevayler/products/Variant0028/Variant0028.model done. AST: 170 ms, spl error check: 12850 ms.
+Prevayler/products/Variant0029/Variant0029.model done. AST: 160 ms, spl error check: 10140 ms.
+Prevayler/products/Variant0030/Variant0030.model done. AST: 180 ms, spl error check: 12800 ms.
+Prevayler/products/Variant0031/Variant0031.model done. AST: 170 ms, spl error check: 12910 ms.
+Prevayler/products/Variant0032/Variant0032.model done. AST: 170 ms, spl error check: 17090 ms.
+construct AST:   5300 ms
+spl error check: 275880 ms
+
+real	12m46.925s
+user	12m32.479s
+sys	0m14.321s

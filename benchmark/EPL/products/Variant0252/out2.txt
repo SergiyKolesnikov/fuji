@@ -1,0 +1,5 @@
+Errors:
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9,11:
+  Semantic Error: no visible type named Plus

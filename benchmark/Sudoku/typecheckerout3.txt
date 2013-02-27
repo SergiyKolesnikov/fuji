@@ -1,0 +1,126 @@
+Errors:
+
+/home/lutz/Benchmark/Sudoku/features/Generator/Board.java:28:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public boolean trySetField(Structure str, int strIndex, int element, Field f) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Solver/Field.java:52:
+  Semantic Error: MAYBE dependency:
+Feature Solver accesses with original-call
+    original()
+  in method
+    clone()
+  of type Field
+method
+  public Object clone() throws CloneNotSupportedException { ... }
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Undo/BoardManager.java:5,14:
+  Semantic Error: MAYBE dependency:
+Feature Undo accesses the field
+  protected Stack history;
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Undo/BoardManager.java:6,29:
+  Semantic Error: MAYBE dependency:
+Feature Undo accesses the field
+  protected Stack history;
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Solver/BoardManager.java:29:
+  Semantic Error: MAYBE dependency:
+Feature Solver accesses the method
+  public void undo() { ... }
+of feature Undo.
+Feature Undo may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Solver/BoardManager.java:113:
+  Semantic Error: MAYBE dependency:
+Feature Solver accesses the method
+  public Object clone() throws CloneNotSupportedException { ... }
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Solver/Guesser.java:27:
+  Semantic Error: MAYBE dependency:
+Feature Solver accesses the method
+  public Object clone() throws CloneNotSupportedException { ... }
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/GenerateSudokuListener.java:28:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  protected void setBusy(boolean busy) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/GenerateSudokuListener.java:31:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  protected void setBusy(boolean busy) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:37:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public List getRemainingPos() { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:42:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  protected boolean trySetFieldPrivate(Structure structure, int structNr, int element, Field f) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:45:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public void undo() { ... }
+of feature Undo.
+Feature Undo may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:49:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public void undo() { ... }
+of feature Undo.
+Feature Undo may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:66:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  protected List solve(Board board) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:66:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public Object clone() throws CloneNotSupportedException { ... }
+of feature States.
+Feature States may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:72:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  protected List solve(Board board) { ... }
+of feature Solver.
+Feature Solver may not be present in every valid selection.
+
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:72:
+  Semantic Error: MAYBE dependency:
+Feature Generator accesses the method
+  public Object clone() throws CloneNotSupportedException { ... }
+of feature States.
+Feature States may not be present in every valid selection.
+

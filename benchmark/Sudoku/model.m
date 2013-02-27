@@ -1,0 +1,3 @@
+// assumed model (all features optional except base feature)
+Sudoku : Base [States] [Undo] [Color] [Solver] [Generator] [Extended] :: _Sudoku ;
+

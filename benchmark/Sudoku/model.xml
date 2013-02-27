@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Sudoku">
+				<feature mandatory="true" name="Base"/>
+				<feature name="States"/>
+				<feature name="Undo"/>
+				<feature name="Color"/>
+				<feature name="Solver"/>
+				<feature name="Generator"/>
+				<feature name="Extended"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments>
+			<c> assumed model (all features optional except base feature)</c>
+		</comments>
+		<featureOrder userDefined="false"/>
+	</featureModel>

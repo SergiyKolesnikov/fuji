@@ -1,0 +1,70 @@
+Sudoku/products/Variant0001/Variant0001.model done. AST: 120 ms, spl error check: 2360 ms.
+Sudoku/products/Variant0002/Variant0002.model done. AST: 120 ms, spl error check: 2670 ms.
+Sudoku/products/Variant0003/Variant0003.model done. AST: 120 ms, spl error check: 2590 ms.
+Sudoku/products/Variant0004/Variant0004.model done. AST: 130 ms, spl error check: 3040 ms.
+Sudoku/products/Variant0005/Variant0005.model done. AST: 120 ms, spl error check: 2630 ms.
+Sudoku/products/Variant0006/Variant0006.model done. AST: 120 ms, spl error check: 3050 ms.
+Sudoku/products/Variant0007/Variant0007.model done. AST: 130 ms, spl error check: 2850 ms.
+Sudoku/products/Variant0008/Variant0008.model done. AST: 120 ms, spl error check: 3550 ms.
+Sudoku/products/Variant0009/Variant0009.model done. AST: 130 ms, spl error check: 3070 ms.
+Sudoku/products/Variant0010/Variant0010.model done. AST: 120 ms, spl error check: 3670 ms.
+Sudoku/products/Variant0011/Variant0011.model done. AST: 140 ms, spl error check: 3480 ms.
+Sudoku/products/Variant0012/Variant0012.model done. AST: 130 ms, spl error check: 4320 ms.
+Sudoku/products/Variant0013/Variant0013.model done. AST: 140 ms, spl error check: 3490 ms.
+Sudoku/products/Variant0014/Variant0014.model done. AST: 120 ms, spl error check: 4340 ms.
+Sudoku/products/Variant0015/Variant0015.model done. AST: 130 ms, spl error check: 4130 ms.
+Sudoku/products/Variant0016/Variant0016.model done. AST: 130 ms, spl error check: 5230 ms.
+Sudoku/products/Variant0017/Variant0017.model done. AST: 120 ms, spl error check: 2630 ms.
+Sudoku/products/Variant0018/Variant0018.model done. AST: 120 ms, spl error check: 3170 ms.
+Sudoku/products/Variant0019/Variant0019.model done. AST: 120 ms, spl error check: 2940 ms.
+Sudoku/products/Variant0020/Variant0020.model done. AST: 140 ms, spl error check: 3690 ms.
+Sudoku/products/Variant0021/Variant0021.model done. AST: 130 ms, spl error check: 2940 ms.
+Sudoku/products/Variant0022/Variant0022.model done. AST: 120 ms, spl error check: 3700 ms.
+Sudoku/products/Variant0023/Variant0023.model done. AST: 140 ms, spl error check: 3390 ms.
+Sudoku/products/Variant0024/Variant0024.model done. AST: 140 ms, spl error check: 4340 ms.
+Sudoku/products/Variant0025/Variant0025.model done. AST: 130 ms, spl error check: 3560 ms.
+Sudoku/products/Variant0026/Variant0026.model done. AST: 130 ms, spl error check: 4480 ms.
+Sudoku/products/Variant0027/Variant0027.model done. AST: 130 ms, spl error check: 4180 ms.
+Sudoku/products/Variant0028/Variant0028.model done. AST: 130 ms, spl error check: 5380 ms.
+Sudoku/products/Variant0029/Variant0029.model done. AST: 130 ms, spl error check: 4190 ms.
+Sudoku/products/Variant0030/Variant0030.model done. AST: 140 ms, spl error check: 5410 ms.
+Sudoku/products/Variant0031/Variant0031.model done. AST: 140 ms, spl error check: 5070 ms.
+Sudoku/products/Variant0032/Variant0032.model done. AST: 140 ms, spl error check: 6710 ms.
+Sudoku/products/Variant0033/Variant0033.model done. AST: 120 ms, spl error check: 2630 ms.
+Sudoku/products/Variant0034/Variant0034.model done. AST: 120 ms, spl error check: 3070 ms.
+Sudoku/products/Variant0035/Variant0035.model done. AST: 130 ms, spl error check: 2820 ms.
+Sudoku/products/Variant0036/Variant0036.model done. AST: 120 ms, spl error check: 3560 ms.
+Sudoku/products/Variant0037/Variant0037.model done. AST: 120 ms, spl error check: 2900 ms.
+Sudoku/products/Variant0038/Variant0038.model done. AST: 130 ms, spl error check: 3570 ms.
+Sudoku/products/Variant0039/Variant0039.model done. AST: 130 ms, spl error check: 3320 ms.
+Sudoku/products/Variant0040/Variant0040.model done. AST: 140 ms, spl error check: 4210 ms.
+Sudoku/products/Variant0041/Variant0041.model done. AST: 130 ms, spl error check: 3520 ms.
+Sudoku/products/Variant0042/Variant0042.model done. AST: 130 ms, spl error check: 4320 ms.
+Sudoku/products/Variant0043/Variant0043.model done. AST: 130 ms, spl error check: 4090 ms.
+Sudoku/products/Variant0044/Variant0044.model done. AST: 140 ms, spl error check: 5240 ms.
+Sudoku/products/Variant0045/Variant0045.model done. AST: 130 ms, spl error check: 4120 ms.
+Sudoku/products/Variant0046/Variant0046.model done. AST: 140 ms, spl error check: 5230 ms.
+Sudoku/products/Variant0047/Variant0047.model done. AST: 120 ms, spl error check: 4950 ms.
+Sudoku/products/Variant0048/Variant0048.model done. AST: 140 ms, spl error check: 6620 ms.
+Sudoku/products/Variant0049/Variant0049.model done. AST: 140 ms, spl error check: 2980 ms.
+Sudoku/products/Variant0050/Variant0050.model done. AST: 130 ms, spl error check: 3690 ms.
+Sudoku/products/Variant0051/Variant0051.model done. AST: 130 ms, spl error check: 3440 ms.
+Sudoku/products/Variant0052/Variant0052.model done. AST: 130 ms, spl error check: 4370 ms.
+Sudoku/products/Variant0053/Variant0053.model done. AST: 120 ms, spl error check: 3520 ms.
+Sudoku/products/Variant0054/Variant0054.model done. AST: 130 ms, spl error check: 4440 ms.
+Sudoku/products/Variant0055/Variant0055.model done. AST: 140 ms, spl error check: 4070 ms.
+Sudoku/products/Variant0056/Variant0056.model done. AST: 140 ms, spl error check: 5420 ms.
+Sudoku/products/Variant0057/Variant0057.model done. AST: 130 ms, spl error check: 4230 ms.
+Sudoku/products/Variant0058/Variant0058.model done. AST: 140 ms, spl error check: 5390 ms.
+Sudoku/products/Variant0059/Variant0059.model done. AST: 140 ms, spl error check: 5120 ms.
+Sudoku/products/Variant0060/Variant0060.model done. AST: 130 ms, spl error check: 6730 ms.
+Sudoku/products/Variant0061/Variant0061.model done. AST: 140 ms, spl error check: 5130 ms.
+Sudoku/products/Variant0062/Variant0062.model done. AST: 140 ms, spl error check: 6780 ms.
+Sudoku/products/Variant0063/Variant0063.model done. AST: 130 ms, spl error check: 6340 ms.
+Sudoku/products/Variant0064/Variant0064.model done. AST: 140 ms, spl error check: 8710 ms.
+construct AST:   8340 ms
+spl error check: 264780 ms
+
+real	11m34.902s
+user	11m18.022s
+sys	0m16.809s

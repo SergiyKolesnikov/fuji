@@ -1,0 +1,7 @@
+Errors:
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: no field named x
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: no field named y
+/home/lutz/Benchmark/EPL/features/Neg_ToString/tmp/Neg.java:5,20:
+  Semantic Error: no field named x

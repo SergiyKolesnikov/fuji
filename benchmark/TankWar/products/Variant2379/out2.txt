@@ -1,0 +1,209 @@
+Errors:
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:14:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:17:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:21:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:24:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:2,8:
+  Semantic Error: no visible type named javax.microedition.midlet.MIDlet
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:3,8:
+  Semantic Error: no visible type named javax.microedition.midlet.MIDletStateChangeException
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:5,34:
+  Semantic Error: no visible type named MIDlet
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:60:
+  Semantic Error: no method named repaint() in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/TankManager.java:15,35:
+  Semantic Error: no visible type named MIDletStateChangeException
+/home/lutz/Benchmark/TankWar/features/Handy/TankManager.java:21:
+  Semantic Error: no method named notifyDestroyed() in TankManager matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:15:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:20:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:65:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:68:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:71:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:74:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:31:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Image/Wall.java:9:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:3,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Image
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:9,15:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:9:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:12,47:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:20,47:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Option.java:20,58:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:4,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:5,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Font
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:6,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:14,15:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:20,12:
+  Semantic Error: no visible type named Font
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:28,25:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:105,33:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:138,33:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:138,44:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:214,28:
+  Semantic Error: no visible type named Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:217,56:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:217,65:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:217,71:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:217,80:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:226,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:227,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:230,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:231,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:234,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:235,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:238,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:239,49:
+  Semantic Error: Font not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:250,133:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:250,142:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:250,148:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:250,157:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:275,242:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:275,251:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:275,257:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:275,266:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:277,241:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:277,250:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:277,256:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Menu.java:277,265:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:3,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Command
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:4,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.CommandListener
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:5,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Displayable
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:7,36:
+  Semantic Error: no visible type named CommandListener
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:77,31:
+  Semantic Error: no visible type named Command
+/home/lutz/Benchmark/TankWar/features/Handy/KeyMonitor.java:77,45:
+  Semantic Error: no visible type named Displayable
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:3,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Canvas
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:4,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Display
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:5,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:6,8:
+  Semantic Error: no visible type named javax.microedition.midlet.MIDlet
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:7,8:
+  Semantic Error: no visible type named javax.microedition.lcdui.Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:11,28:
+  Semantic Error: no visible type named Canvas
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:15,5:
+  Semantic Error: no visible type named Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:16,15:
+  Semantic Error: no visible type named Display
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:31,15:
+  Semantic Error: Display not found
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:31,35:
+  Semantic Error: no visible type named MIDlet
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:33:
+  Semantic Error: no method named setFullScreenMode(boolean) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:35:
+  Semantic Error: no method named setCommandListener(KeyMonitor) in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:67,26:
+  Semantic Error: no visible type named Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:70:
+  Semantic Error: no method named getWidth() in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:70:
+  Semantic Error: no method named getHeight() in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:78,23:
+  Semantic Error: no visible type named Graphics
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:83,38:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:83,47:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:83,53:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:83,62:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:88,43:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:88,52:
+  Semantic Error: no field named TOP
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:88,58:
+  Semantic Error: Graphics not found
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:88,67:
+  Semantic Error: no field named LEFT
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:95:
+  Semantic Error: no method named getWidth() in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:100:
+  Semantic Error: no method named getWidth() in Maler matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:337,12:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:338,9:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:340:
+  Semantic Error: The method unknown() can not be qualified by a package name.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:340:
+  Semantic Error: no method named createImage(java.lang.String) in Unknown matches.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:341:
+  Semantic Error: the exception java.io.IOException is not thrown in the body of the try statement
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:350,19:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:350,31:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:365,9:
+  Semantic Error: no visible type named Image
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:365:
+  Semantic Error: The method unknown() can not be qualified by a package name.
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:365:
+  Semantic Error: no method named createRGBImage(int[], int, int, boolean) in Unknown matches.
+/home/lutz/Benchmark/TankWar/features/Beschleunigung/Tool.java:8:
+  Semantic Error: no method named _$_init_$_3_$_(TankManager, int, int, int, int, int, int, int, int) in Tool matches. However, there is a method _$_init_$_3_$_(TankManager, int, int, int)

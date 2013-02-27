@@ -1,0 +1,7 @@
+Errors:
+/home/lutz/Benchmark/Sudoku/features/Solver/BoardManager.java:29:
+  Semantic Error: no method named undo() in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:45:
+  Semantic Error: no method named undo() in BoardManager matches.
+/home/lutz/Benchmark/Sudoku/features/Generator/SudokuGenerator.java:49:
+  Semantic Error: no method named undo() in BoardManager matches.

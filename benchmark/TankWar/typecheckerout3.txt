@@ -1,0 +1,567 @@
+Errors:
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:14:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:17:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:21:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Missile.java:24:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:42:
+  Semantic Error: MAYBE dependency:
+Feature TankWar accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Handy/TankManager.java:5:
+  Semantic Error: NEVER dependency:
+Feature Handy accesses the super constructor
+  public MIDlet()
+of feature PC.
+Features Handy and PC cannot both be present in a valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Tools/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Tools accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Beschleunigung/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Beschleunigung accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/einfrieren/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature einfrieren accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Bombe/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Bombe accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Energie/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Energie accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Feuerkraft/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Feuerkraft accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Mars/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Mars accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/explodieren/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature explodieren accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Record/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Record accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Sound_fuer_pc/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Sound_fuer_pc accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Sound_fuer_Handy/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Sound_fuer_Handy accesses the super constructor
+  public MIDlet()
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:7:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:10:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:15:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:20:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:65:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:68:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:71:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Tank.java:74:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:10:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:21:
+  Semantic Error: MAYBE dependency:
+Feature Image accesses the method
+  protected void explodieren() { ... }
+of feature explodieren.
+Feature explodieren may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Image/ExplodierenEffekt.java:31:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/Image/Wall.java:9:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Image accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/fuer_PC/Maler.java:345,17:
+  Semantic Error: MAYBE dependency:
+Feature fuer_PC accesses the field
+  protected Toolkit tk = Toolkit.getDefaultToolkit();
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/fuer_Handy/Maler.java:349:
+  Semantic Error: MAYBE dependency:
+Feature fuer_Handy accesses the method
+  public static Image scale(Image src, int width, int height) { ... }
+of feature Handy.
+Feature Handy may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:13,42:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected int infoWidth;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:31,42:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected int infoWidth;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:37,40:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected int infoWidth;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:38,29:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected JFrame frame;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:41,4:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected JFrame frame;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:42,4:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected JFrame frame;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Re_fuer_PC/Maler.java:43,4:
+  Semantic Error: MAYBE dependency:
+Feature Re_fuer_PC accesses the field
+  protected JFrame frame;
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:5,10:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int objectType;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:7,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:10,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:13,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:16,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:19,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,4:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected TankManager tankManager;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature IMG_tool accesses:
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_Handy
+- the method
+    public void drawImage(String imageFileName, int x, int y) { ... }
+  of feature fuer_PC
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,39:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int x_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:22,53:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the field
+  protected int y_Koordinate;
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/IMG_tool/Tool.java:2:
+  Semantic Error: MAYBE dependency:
+Class Tool of feature IMG_tool accesses the super constructor
+  public GameObject(TankManager tankManager, int x_Koordinate, int y_Koordinate, int colorR, int colorG, int colorB, int objWidth, int objHeight, int objectType) { ... }
+which is accessible via class GameObject.
+Class Tool of feature Tools extends class GameObject.
+The information that class Tool extends class GameObject is only present in feature Tools.
+Feature Tools may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/TankWar/TankManager.java:5:
+  Semantic Error: MAYBE dependency:
+Feature TankWar accesses the type
+  (default package).MIDlet
+of feature PC.
+Feature PC may not be present in every valid selection.
+
+/home/lutz/Benchmark/TankWar/features/Handy/Maler.java:31:
+  Semantic Error: NEVER dependency:
+Feature Handy accesses the type
+  (default package).MIDlet
+of feature PC.
+Features Handy and PC cannot both be present in a valid selection.
+

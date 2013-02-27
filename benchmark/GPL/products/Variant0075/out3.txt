@@ -1,0 +1,23 @@
+Errors:
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:6,36:
+  Semantic Error: .adjacentNeighbors not found
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:8,15:
+  Semantic Error: .adjacentNeighbors not found
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:14,29:
+  Semantic Error: adjacentNeighbors not found
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Vertex.java:16:
+  Semantic Error: no method named original(GPL.Neighbor) in GPL.Vertex matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:14:
+  Semantic Error: no method named original(GPL.Vertex, GPL.Neighbor) in GPL.Graph matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Graph.java:22,38:
+  Semantic Error: no field named neighbor
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:16:
+  Semantic Error: no method named NeighborConstructor(GPL.Vertex) in GPL.Neighbor matches. However, there is a method NeighborConstructor(GPL.Vertex, int)
+/home/lutz/Benchmark/GPL/features/WeightedWithNeighbors/GPL/Neighbor.java:23:
+  Semantic Error: no method named original() in GPL.Neighbor matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:10:
+  Semantic Error: no method named EdgeConstructor(GPL.Vertex, GPL.Vertex) in GPL.Edge matches. However, there is a method EdgeConstructor(GPL.Vertex, GPL.Vertex, int)
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:22:
+  Semantic Error: no method named original(GPL.EdgeIfc) in GPL.Edge matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:37:
+  Semantic Error: no method named original() in GPL.Edge matches.

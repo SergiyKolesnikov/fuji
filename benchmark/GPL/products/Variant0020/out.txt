@@ -1,0 +1,9 @@
+Errors:
+/home/lutz/Benchmark/GPL/features/WeightedOnlyVertices/GPL/Vertex.java:28:
+  Semantic Error: no method named original(GPL.Vertex, int) in GPL.Vertex matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:10:
+  Semantic Error: no method named EdgeConstructor(GPL.Vertex, GPL.Vertex) in GPL.Edge matches. However, there is a method EdgeConstructor(GPL.Vertex, GPL.Vertex, int)
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:22:
+  Semantic Error: no method named original(GPL.EdgeIfc) in GPL.Edge matches.
+/home/lutz/Benchmark/GPL/features/WeightedWithEdges/GPL/Edge.java:37:
+  Semantic Error: no method named original() in GPL.Edge matches.

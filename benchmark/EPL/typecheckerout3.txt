@@ -1,0 +1,206 @@
+Errors:
+
+/home/lutz/Benchmark/EPL/features/Eval_Neg/tmp/Neg.java:5,13:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Neg accesses the field
+  Exp x;
+of feature Neg.
+Feature Neg may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval_Neg/tmp/Neg.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Neg accesses the method
+  int eval();
+of feature Eval.
+Feature Eval may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Neg_ToString/tmp/Neg.java:5,20:
+  Semantic Error: MAYBE dependency:
+Feature Neg_ToString accesses the field
+  Exp x;
+of feature Neg.
+Feature Neg may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5,12:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Plus accesses the field
+  Exp x;
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Plus accesses the method
+  int eval();
+of feature Eval.
+Feature Eval may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5,23:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Plus accesses the field
+  Exp y;
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: MAYBE dependency:
+Feature Eval_Plus accesses the method
+  int eval();
+of feature Eval.
+Feature Eval may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: MAYBE dependency:
+Feature Plus_ToString accesses the field
+  Exp x;
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: MAYBE dependency:
+Feature Plus_ToString accesses the field
+  Exp y;
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:7:
+  Semantic Error: MAYBE dependency:
+Feature Eval accesses the constructor
+  Neg(Exp x) { ... }
+of feature Neg.
+Feature Neg may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:9:
+  Semantic Error: MAYBE dependency:
+Feature Eval accesses the constructor
+  Plus(Exp x, Exp y) { ... }
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: MAYBE dependency:
+Feature Eval accesses the constructor
+  Neg(Exp x) { ... }
+of feature Neg.
+Feature Neg may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: MAYBE dependency:
+Feature Eval accesses the constructor
+  Plus(Exp x, Exp y) { ... }
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:7:
+  Semantic Error: MAYBE dependency:
+Feature ToString accesses the constructor
+  Neg(Exp x) { ... }
+of feature Neg.
+Feature Neg may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: MAYBE dependency:
+Feature ToString accesses the constructor
+  Plus(Exp x, Exp y) { ... }
+of feature Plus.
+Feature Plus may not be present in every valid selection.
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:9
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature Eval accesses:
+- the type
+    tmp.Plus
+  of feature Eval_Plus
+- the type
+    tmp.Plus
+  of feature Plus_ToString
+- the type
+    tmp.Plus
+  of feature Plus
+
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:7
+/home/lutz/Benchmark/EPL/features/Eval/tmp/Test.java:11:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature Eval accesses:
+- the type
+    tmp.Neg
+  of feature Eval_Neg
+- the type
+    tmp.Neg
+  of feature Neg_ToString
+- the type
+    tmp.Neg
+  of feature Neg
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:9:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature ToString accesses:
+- the type
+    tmp.Plus
+  of feature Eval_Plus
+- the type
+    tmp.Plus
+  of feature Plus_ToString
+- the type
+    tmp.Plus
+  of feature Plus
+
+/home/lutz/Benchmark/EPL/features/ToString/tmp/Test.java:7:
+  Semantic Error: 3 optional targets (there may be a valid selection where none of these targets is present):
+Feature ToString accesses:
+- the type
+    tmp.Neg
+  of feature Eval_Neg
+- the type
+    tmp.Neg
+  of feature Neg_ToString
+- the type
+    tmp.Neg
+  of feature Neg
+
+/home/lutz/Benchmark/EPL/features/Neg/tmp/Neg.java:5
+/home/lutz/Benchmark/EPL/features/Neg/tmp/Neg.java:4
+/home/lutz/Benchmark/EPL/features/Neg/tmp/Neg.java:3:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Neg accesses:
+- the type
+    tmp.Exp
+  of feature Eval
+- the type
+    tmp.Exp
+  of feature ToString
+
+/home/lutz/Benchmark/EPL/features/Plus/tmp/Plus.java:5
+/home/lutz/Benchmark/EPL/features/Plus/tmp/Plus.java:4
+/home/lutz/Benchmark/EPL/features/Plus/tmp/Plus.java:3
+/home/lutz/Benchmark/EPL/features/Plus/tmp/Plus.java:6:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Plus accesses:
+- the type
+    tmp.Exp
+  of feature Eval
+- the type
+    tmp.Exp
+  of feature ToString
+
+/home/lutz/Benchmark/EPL/features/Numbers/tmp/Num.java:3:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature Numbers accesses:
+- the type
+    tmp.Exp
+  of feature Eval
+- the type
+    tmp.Exp
+  of feature ToString
+
+/home/lutz/Benchmark/EPL/features/base/tmp/Test.java:4:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Feature base accesses:
+- the type
+    tmp.Exp
+  of feature Eval
+- the type
+    tmp.Exp
+  of feature ToString
+

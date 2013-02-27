@@ -1,0 +1,89 @@
+Errors:
+/home/lutz/Benchmark/GUIDSL/features/kernel/kernelConstants.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/kernelConstants.java:49,13:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:75:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:75,39:
+  Semantic Error: no visible type named FixDosWriter
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:105:
+  Semantic Error: can not instantiate Unknown no matching constructor found in Unknown
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstProperties.java:105,47:
+  Semantic Error: no visible type named FixDosOutputStream
+/home/lutz/Benchmark/GUIDSL/features/kernel/PositionalArg.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:141,23:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:144,23:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:220,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Main.java:252,29:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstList.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstToken.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstOptNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstOptToken.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/FatalError.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstListNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/CommandLineArg.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Utility.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:172,32:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:399,55:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:694,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:698,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:703,16:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:708,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:712,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:713,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:717,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:721,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:726,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:731,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:738,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:745,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:749,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:754,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstNode.java:758,9:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstTokenInterface.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstCursor.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/AstCursor.java:348,29:
+  Semantic Error: Util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/Switch.java:3,8:
+  Semantic Error: Jakarta.util not found
+/home/lutz/Benchmark/GUIDSL/features/kernel/ArgList.java:3,8:
+  Semantic Error: Jakarta.util not found
