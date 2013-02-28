@@ -1,3 +1,5 @@
-public class A implements B {
-	
+public class A {
+	public int foo() {
+		System.out.println("foo: " + I);
+	}
 }
