@@ -27,9 +27,9 @@ Class A of feature FeatureB extends class B.
 The information that class A extends class B is only present in feature FeatureB.
 Feature FeatureB may not be present in every valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:6:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:6:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the constructor
     public A()
   of feature FeatureA
@@ -37,9 +37,9 @@ Feature FeatureE accesses:
     public A()
   of feature FeatureB
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:8:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:8:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the constructor
     public A()
   of feature FeatureA
@@ -47,9 +47,9 @@ Feature FeatureE accesses:
     public A()
   of feature FeatureB
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:11:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:11:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the constructor
     public A()
   of feature FeatureA
@@ -57,9 +57,9 @@ Feature FeatureE accesses:
     public A()
   of feature FeatureB
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:12:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:12:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the constructor
     public A()
   of feature FeatureA
@@ -67,9 +67,9 @@ Feature FeatureE accesses:
     public A()
   of feature FeatureB
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:13:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:13:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the constructor
     public A()
   of feature FeatureA
@@ -77,14 +77,14 @@ Feature FeatureE accesses:
     public A()
   of feature FeatureB
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:14
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:12
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:13
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:11
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:6
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureE/tmp/C.java:8:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:14
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:12
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:13
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:6
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:8
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/ExtendsImplements/01/FeatureC/tmp/C.java:11:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
-Feature FeatureE accesses:
+Feature FeatureC accesses:
 - the type
     tmp.A
   of feature FeatureA
