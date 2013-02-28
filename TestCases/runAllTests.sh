@@ -3,14 +3,23 @@
 
 # for all folders: call runTests.sh
 
-TESTCASES="ExtendsImplements \
-           FieldAccess \
+TESTCASES="FieldAccess \
            MethodAccess \
-           MethodInSupertypeAccess \
-           NewAssignmentWithCast \
-           ParameterCast \
-           SuperAndSuperConstructorAccess \
-           TypeAccess"
+           TypeAccess \
+           OptInfoCyclic \
+           OptInfoExtends \
+           OptInfoExtends2Steps \
+           OptInfoImplements \
+           OptInfoImplements2Steps \
+           OptInfoMethodInSupertypeAccess \
+           OptInfoMethodInSupertypeAccess2Steps \
+           OptInfoNewAssignmentWithCast \
+           OptInfoNewAssignmentWithCast2Steps \
+           OptInfoParameterCast \
+           OptInfoParameterCast2Steps \
+           OptInfoParameterCastOriginal \
+           OptInfoSuperAndSuperConstructorAccess \
+           OptInfoUpAndDownCast"
 
 for TESTCASE in $TESTCASES; do
   echo "Testing $TESTCASE ..."
