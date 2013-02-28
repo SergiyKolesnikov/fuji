@@ -12,6 +12,5 @@ public class C {
 		(new A()).bar();
 		((B) new A()).bar();
 		A.foobar();
-		// System.out.println(A.i);
 	}
 }
