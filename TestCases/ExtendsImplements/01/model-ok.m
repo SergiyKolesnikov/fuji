@@ -1,5 +1,5 @@
-TestCase : Base [FeatureA] [FeatureB] FeatureC :: _TestCase ;
+Base : FeatureA [FeatureA2] FeatureB FeatureC :: _Base ;
 
 %%
 
-FeatureC implies FeatureB ;
+FeatureC implies FeatureA2 ;
