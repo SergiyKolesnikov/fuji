@@ -1,0 +1,29 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoUpAndDownCast/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoUpAndDownCast/01/FeatureC/C.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by a cast the type
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoUpAndDownCast/01/FeatureC/C.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by a cast the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+

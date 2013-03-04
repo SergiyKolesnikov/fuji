@@ -1,0 +1,146 @@
+Errors:
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureA2/A.java:3,22:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the field
+     public static int i = 42;
+   of class B.
+- in feature FeatureAA as subclass of class B the field
+     public static int i = 42;
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureA2/A.java:4:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureA2/A.java:1:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the super constructor
+     public B()
+   of class B.
+- in feature FeatureAA as subclass of class B the super constructor
+     public B()
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:2:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:4:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:5:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:6:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:7:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:8:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:9:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B by a cast the type
+     public B()
+   of class B.
+- in feature FeatureAA as subclass of class B by a cast the type
+     public B()
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:9:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void bar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureC/C.java:10:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public static void foobar() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public static void foobar() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
+
