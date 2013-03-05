@@ -1,6 +1,6 @@
 public class A {
     private static void foo() {
-        int i = B.j;
+      int i = B.j;
     }
     private void bar() {
     	B b = new B();

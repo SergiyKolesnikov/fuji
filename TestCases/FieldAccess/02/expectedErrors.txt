@@ -1,6 +1,6 @@
 Errors:
 
-/FieldAccess/02/FeatureA/A.java:3,19:
+/FieldAccess/02/FeatureA/A.java:3,17:
   Semantic Error: NEVER dependency:
 Feature FeatureA accesses the field
   public static int j = 23;
