@@ -3,7 +3,7 @@ Errors:
 /TypeAccess/cast/01/FeatureA/A.java:4:
   Semantic Error: MAYBE dependency:
 Feature FeatureA accesses by a cast the type
-  public C()
+  public class C { ... }
 of feature FeatureC.
 Feature FeatureC may not be present in every valid selection.
 

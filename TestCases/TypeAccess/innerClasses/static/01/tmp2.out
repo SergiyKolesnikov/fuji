@@ -11,13 +11,13 @@ Feature FeatureB may not be present in every valid selection.
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB
 
 /TypeAccess/innerClasses/static/01/FeatureA/A.java:3:
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB
 

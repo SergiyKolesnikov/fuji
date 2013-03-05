@@ -36,7 +36,7 @@ for Dir in $(basename $(find . -type d -d 1 -name "[0-9][0-9]*")); do
   # Compare the cleaned output of the test case with the expected output.
   OK=`diff "$Dir/tmp2.out" "$Dir/expectedErrors.txt"`
   if [ "$OK" == "" ]; then
-    echoOK "$CURRENTFOLDER/$Dir - model with errors: OK\t"
+    echoOK "$CURRENTFOLDER/$Dir - model with errors: OK   \t"
   else
     echoFailed "$CURRENTFOLDER/$Dir - model with errors: FAILED\n"
     echo "$OK"

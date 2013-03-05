@@ -165,7 +165,7 @@ Feature FeatureB may not be present in every valid selection.
 /OptInfoExtends2Steps/01/FeatureD/D.java:9:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses by a cast the type
-  public C()
+  public class C { ... }
 which is accessible via class B.
 Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
@@ -174,7 +174,7 @@ Feature FeatureA may not be present in every valid selection.
 /OptInfoExtends2Steps/01/FeatureD/D.java:9:
   Semantic Error: MAYBE dependency:
 Class B of feature FeatureB2 accesses by a cast the type
-  public C()
+  public class C { ... }
 which is accessible via class C.
 Class B of feature FeatureB extends class C.
 The information that class B extends class C is only present in feature FeatureB.

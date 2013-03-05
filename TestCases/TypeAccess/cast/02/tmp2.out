@@ -3,7 +3,7 @@ Errors:
 /TypeAccess/cast/02/FeatureA/A.java:4:
   Semantic Error: NEVER dependency:
 Feature FeatureA accesses by a cast the type
-  public C()
+  public class C { ... }
 of feature FeatureC.
 Features FeatureA and FeatureC cannot both be present in a valid selection.
 
