@@ -1542,9 +1542,12 @@ aspect ExtendedTypeCheck {
 					 * accessing feature is trivially set */
 					HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
 					contextPresentFeatures.add(featureID());
+					/* type access for output */
+					HashMap<ASTNode, TypeDecl> typeDeclAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+					typeDeclAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
   				/* check for SPL errors */
   				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  						false, FIRST_ROUND, declsAndTargetHostTypes, false, getExpr().type(), hostType(), declsAndTargetHostTypes);
+  						false, FIRST_ROUND, typeDeclAndTargetHostTypes, false, getExpr().type(), hostType(), typeDeclAndTargetHostTypes);
   			} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
   				/* TypeAccess side of CastExpr is in type hierarchy beneath 
   				 * the Expr side => downcast */
