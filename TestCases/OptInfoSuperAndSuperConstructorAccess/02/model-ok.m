@@ -1,6 +1,6 @@
-Base : Alt FeatureB FeatureZ :: _Base ;
+Base : Alt FeatureB :: _Base ;
 Alt : FeatureA | FeatureA2 :: _Alt ;
 
 %%
 
-FeatureZ implies FeatureA ;
+FeatureA2 implies FeatureA ;

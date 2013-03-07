@@ -1,2 +1,2 @@
-Base : Alt FeatureB FeatureZ :: _Base ;
+Base : Alt FeatureB :: _Base ;
 Alt : FeatureA | FeatureA2 :: _Alt ;
