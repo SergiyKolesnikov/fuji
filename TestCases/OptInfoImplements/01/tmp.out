@@ -1,6 +1,6 @@
 Errors:
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoImplements/01/FeatureA2/A.java:3,32:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoImplements/01/FeatureA2/A.java:3,10:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses the field
   public static final int I = 42;

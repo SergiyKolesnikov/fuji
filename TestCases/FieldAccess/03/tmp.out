@@ -1,6 +1,6 @@
 Errors:
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/FieldAccess/03/FeatureA/A.java:3,19:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/FieldAccess/03/FeatureA/A.java:3,17:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the field

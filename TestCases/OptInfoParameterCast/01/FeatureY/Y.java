@@ -1,10 +1,7 @@
 public class Y {
-	public Y(B b) {
-		
-	}
+	public Y(B b) { }
 	public void bar() {
-		X x = new X();
+		X x = new X(new A());
 		x.foo(new A());
-		X x2 = new X(new A());
 	}
 }

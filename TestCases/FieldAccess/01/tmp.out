@@ -1,6 +1,6 @@
 Errors:
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/FieldAccess/01/FeatureA/A.java:3,19:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/FieldAccess/01/FeatureA/A.java:3,17:
   Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the field
   public static int j = 23;
