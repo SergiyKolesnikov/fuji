@@ -1,6 +1,6 @@
 Errors:
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureA2/A.java:3,22:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends/03/FeatureA2/A.java:2,24:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Class A of feature FeatureA2 accesses:
 - in feature FeatureA as subclass of class B the field

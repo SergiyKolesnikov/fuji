@@ -1,18 +1,18 @@
 Errors:
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/local/02/FeatureA/A.java:3:
-  Semantic Error: NEVER dependency:
+  Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the constructor
   public B()
 of feature FeatureB.
-Features FeatureA and FeatureB cannot both be present in a valid selection.
+Feature FeatureB may not be present in every valid selection.
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/local/02/FeatureA/A.java:3:
-  Semantic Error: NEVER dependency:
+  Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the method
   public void bar() { ... }
 of feature FeatureB.
-Features FeatureA and FeatureB cannot both be present in a valid selection.
+Feature FeatureB may not be present in every valid selection.
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/local/02/FeatureB/B.java:3:
   Semantic Error: NEVER dependency:

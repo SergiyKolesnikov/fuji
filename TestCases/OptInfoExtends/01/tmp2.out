@@ -1,6 +1,6 @@
 Errors:
 
-/OptInfoExtends/01/FeatureA2/A.java:3,22:
+/OptInfoExtends/01/FeatureA2/A.java:2,24:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses the field
   public static int i = 42;

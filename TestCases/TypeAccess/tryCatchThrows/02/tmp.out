@@ -1,11 +1,11 @@
 Errors:
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
-  Semantic Error: NEVER dependency:
+  Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the method
   public static void bar() throws E { ... }
 of feature FeatureB.
-Features FeatureA and FeatureB cannot both be present in a valid selection.
+Feature FeatureB may not be present in every valid selection.
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureB/B.java:3:
   Semantic Error: NEVER dependency:

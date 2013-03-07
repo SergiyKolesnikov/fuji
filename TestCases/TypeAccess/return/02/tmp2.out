@@ -1,11 +1,11 @@
 Errors:
 
 /TypeAccess/return/02/FeatureA/A.java:3:
-  Semantic Error: NEVER dependency:
+  Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the method
   public static C bar() { ... }
 of feature FeatureB.
-Features FeatureA and FeatureB cannot both be present in a valid selection.
+Feature FeatureB may not be present in every valid selection.
 
 /TypeAccess/return/02/FeatureB/B.java:3:
   Semantic Error: NEVER dependency:
@@ -15,11 +15,11 @@ of feature FeatureC.
 Features FeatureB and FeatureC cannot both be present in a valid selection.
 
 /TypeAccess/return/02/FeatureA/A.java:3:
-  Semantic Error: NEVER dependency:
+  Semantic Error: MAYBE dependency:
 Feature FeatureA accesses the type
   (default package).C
 of feature FeatureC.
-Features FeatureA and FeatureC cannot both be present in a valid selection.
+Feature FeatureC may not be present in every valid selection.
 
 /TypeAccess/return/02/FeatureA/A.java:3:
   Semantic Error: 1 optional target:
