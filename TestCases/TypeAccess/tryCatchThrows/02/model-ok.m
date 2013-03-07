@@ -1,4 +1,5 @@
-Base : FeatureA | FeatureB | FeatureE :: _Base ;
+Base : FeatureA Alt :: _Base ;
+Alt : FeatureB | FeatureE :: _Alt ;
 
 %%
 

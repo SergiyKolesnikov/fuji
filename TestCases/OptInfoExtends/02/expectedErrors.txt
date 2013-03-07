@@ -1,6 +1,6 @@
 Errors:
 
-/OptInfoExtends/02/FeatureA2/A.java:3,22:
+/OptInfoExtends/02/FeatureA2/A.java:2,24:
   Semantic Error: NEVER dependency:
 Class A of feature FeatureA2 accesses the field
   public static int i = 42;
