@@ -11,13 +11,13 @@ Features FeatureA and FeatureB cannot both be present in a valid selection.
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/static/02/FeatureA/A.java:3:
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB
 

@@ -1,6 +1,6 @@
 Errors:
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends2Steps/02/FeatureA2/A.java:3,22:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends2Steps/02/FeatureA2/A.java:2,24:
   Semantic Error: NEVER dependency:
 Class A of feature FeatureA2 accesses the field
   public static int i = 42;
@@ -9,7 +9,7 @@ Class A of feature FeatureA extends class C.
 The information that class A extends class C is only present in feature FeatureA.
 Features FeatureA2 and FeatureA cannot both be present in a valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends2Steps/02/FeatureA2/A.java:3,22:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoExtends2Steps/02/FeatureA2/A.java:2,24:
   Semantic Error: MAYBE dependency:
 Class B of feature FeatureA2 accesses the field
   public static int i = 42;

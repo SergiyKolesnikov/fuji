@@ -1,3 +1,3 @@
-public interface C {
+public class C {
 	
 }

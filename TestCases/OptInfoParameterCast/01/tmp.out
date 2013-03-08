@@ -9,7 +9,7 @@ Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
 Feature FeatureA may not be present in every valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureX/X.java:6:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureX/X.java:3:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
   public B()
@@ -18,7 +18,7 @@ Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
 Feature FeatureA may not be present in every valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureY/Y.java:7:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureY/Y.java:4:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
   public B()
@@ -27,7 +27,7 @@ Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
 Feature FeatureA may not be present in every valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureY/Y.java:8:
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/OptInfoParameterCast/01/FeatureY/Y.java:5:
   Semantic Error: MAYBE dependency:
 Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
   public B()

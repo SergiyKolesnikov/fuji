@@ -12,7 +12,7 @@ Class A of feature FeatureA2 accesses:
 There may be a valid selection where none of the features FeatureA and FeatureAA is present.
 So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
 
-/OptInfoParameterCast/03/FeatureX/X.java:6:
+/OptInfoParameterCast/03/FeatureX/X.java:3:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Class A of feature FeatureA2 accesses:
 - in feature FeatureA as subclass of class B by an implicit cast from argument type to parameter type
@@ -24,7 +24,7 @@ Class A of feature FeatureA2 accesses:
 There may be a valid selection where none of the features FeatureA and FeatureAA is present.
 So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
 
-/OptInfoParameterCast/03/FeatureY/Y.java:7:
+/OptInfoParameterCast/03/FeatureY/Y.java:4:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Class A of feature FeatureA2 accesses:
 - in feature FeatureA as subclass of class B by an implicit cast from argument type to parameter type
@@ -36,7 +36,7 @@ Class A of feature FeatureA2 accesses:
 There may be a valid selection where none of the features FeatureA and FeatureAA is present.
 So it may be that the information that class A (transitively) extends the class(es) above is not present at all.
 
-/OptInfoParameterCast/03/FeatureY/Y.java:8:
+/OptInfoParameterCast/03/FeatureY/Y.java:5:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Class A of feature FeatureA2 accesses:
 - in feature FeatureA as subclass of class B by an implicit cast from argument type to parameter type
