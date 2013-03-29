@@ -14,19 +14,19 @@ Feature FeatureB accesses the constructor
 of feature FeatureE.
 Features FeatureB and FeatureE cannot both be present in a valid selection.
 
-/TypeAccess/tryCatchThrows/02/FeatureA/A.java:5:
-  Semantic Error: 1 optional target:
-Feature FeatureA accesses:
-- the type
-    (default package).E
-  of feature FeatureE
-
 /TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
     (default package).B
   of feature FeatureB
+
+/TypeAccess/tryCatchThrows/02/FeatureA/A.java:5:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).E
+  of feature FeatureE
 
 /TypeAccess/tryCatchThrows/02/FeatureB/B.java:3
 /TypeAccess/tryCatchThrows/02/FeatureB/B.java:2:

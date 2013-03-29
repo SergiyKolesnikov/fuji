@@ -1,0 +1,52 @@
+
+
+
+
+
+
+    (default package).B
+    (default package).B
+    (default package).Inner
+    (default package).Inner
+    Inner()
+    Inner()
+    public B()
+    public B()
+    void bar() { ... }
+    void bar() { ... }
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  of feature FeatureB
+  of feature FeatureB
+  of feature FeatureB
+  of feature FeatureB
+  of feature FeatureB
+  of feature FeatureB2
+  of feature FeatureB2
+  of feature FeatureB2
+  of feature FeatureB2
+  of feature FeatureB2
+- the constructor
+- the constructor
+- the constructor
+- the constructor
+- the method
+- the method
+- the type
+- the type
+- the type
+- the type
+/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
+/TypeAccess/innerClasses/member/03/FeatureA/A.java:3:
+/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+/TypeAccess/innerClasses/member/03/FeatureA/A.java:4:
+Errors:
+Feature FeatureA accesses:
+Feature FeatureA accesses:
+Feature FeatureA accesses:
+Feature FeatureA accesses:
+Feature FeatureA accesses:

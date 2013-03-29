@@ -44,8 +44,17 @@ for Dir in $(basename $(find . -type d -d 1 -name "[0-9][0-9]*")); do
   if [ "$OK" == "" ]; then
     echoOK "  $PREVPREVFOLDER/$PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: OK  \t"
   else
-    echoFailed "  $PREVPREVFOLDER/$PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: FAILED\n"
-    echo "$OK"
+    # are the errors just in different order?
+    # sort them and compare
+    sort $Dir/tmp2.out > $Dir/tmp2Sorted.out
+    sort $Dir/expectedErrors.txt > $Dir/expectedSorted.txt
+    OKSorted=`diff "$Dir/tmp2Sorted.out" "$Dir/expectedSorted.txt"`
+    if [ "$OKSorted" == "" ]; then
+      echoOK "  $PREVPREVFOLDER/$PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: OK   \t"
+    else
+      echoFailed "  $PREVPREVFOLDER/$PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: FAILED\n"
+      echo "$OK"
+    fi
   fi
 
   # 02. Corrected model (without errors)

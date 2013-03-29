@@ -1,0 +1,38 @@
+
+
+
+
+
+
+    (default package).B
+    (default package).E
+    (default package).E
+  Semantic Error: 1 optional target:
+  Semantic Error: 1 optional target:
+  Semantic Error: 1 optional target:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: NEVER dependency:
+  of feature FeatureB
+  of feature FeatureE
+  of feature FeatureE
+  public E() { ... }
+  public static void bar() throws E { ... }
+- the type
+- the type
+- the type
+/TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
+/TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
+/TypeAccess/tryCatchThrows/02/FeatureA/A.java:5:
+/TypeAccess/tryCatchThrows/02/FeatureB/B.java:2:
+/TypeAccess/tryCatchThrows/02/FeatureB/B.java:3
+/TypeAccess/tryCatchThrows/02/FeatureB/B.java:3:
+Errors:
+Feature FeatureA accesses the method
+Feature FeatureA accesses:
+Feature FeatureA accesses:
+Feature FeatureB accesses the constructor
+Feature FeatureB accesses:
+Feature FeatureB may not be present in every valid selection.
+Features FeatureB and FeatureE cannot both be present in a valid selection.
+of feature FeatureB.
+of feature FeatureE.
