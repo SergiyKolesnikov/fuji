@@ -1166,12 +1166,12 @@ aspect ExtendedTypeCheck {
 						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
 						if (vd.hasInit()) {
 							narrowType = vd.getInit().type();
-						} /* else: TODO */
+						}
 					} else if (varAc.decl() instanceof FieldDeclaration) {
 						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
 						if (fd.hasInit()) {
 							narrowType = fd.getInit().type();
-						} /* else: TODO */
+						}
 					}
 				} else if (expr instanceof TypeAccess) {
 					TypeAccess typeAc = (TypeAccess) expr;
@@ -1432,7 +1432,7 @@ aspect ExtendedTypeCheck {
 		}
 	}
 	
-	/* Declaration of Field with implicit up- or downcast */
+	/* Declaration of Field with implicit upcast */
 	public void FieldDeclaration.splTypeCheck() {
 		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
 		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
@@ -1459,7 +1459,7 @@ aspect ExtendedTypeCheck {
   	}
   }
 	
-	/* Declaration of Variable with implicit up- or downcast */
+	/* Declaration of Variable with implicit upcast */
 	public void VariableDeclaration.splTypeCheck() {
 		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
 		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
@@ -1487,7 +1487,7 @@ aspect ExtendedTypeCheck {
   }
 	
 	/* Simple Assignment where the right side is an Expr with new keyword,
-	 * implicit up- or downcast */
+	 * implicit upcast */
 	public void AssignSimpleExpr.splTypeCheck() {
 		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
 		/* report a type error, if a new class instance is implicitly casted to a
