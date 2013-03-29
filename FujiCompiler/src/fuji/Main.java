@@ -299,7 +299,7 @@ public class Main implements CompositionContext {
 				PROG_MODE));
 		ops.addOption(OptionBuilder.withDescription(
 				"Instantiate fuji in typechecker mode. A file containing "
-						+ "the feature module is expected instead of the file "
+						+ "the feature model is expected instead of the file "
 						+ "containing a list of features.").create(TYPECHECKER));
 		ops.addOption(OptionBuilder
 				.withDescription(
