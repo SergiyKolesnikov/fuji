@@ -46,7 +46,7 @@ public class TypeErrorInfo {
 		return isUnqualifiedAccess;
 	}
 
-	public void setUndottedAccess(boolean isUnqualifiedAccess) {
+	public void setUnqualifiedAccess(boolean isUnqualifiedAccess) {
 		this.isUnqualifiedAccess = isUnqualifiedAccess;
 	}
 }
