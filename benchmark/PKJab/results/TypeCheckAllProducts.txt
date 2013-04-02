@@ -1,0 +1,4 @@
+construct AST:   7430 ms
+spl error check: 460640 ms
+user	16m53.507s
+sys	0m19.041s
