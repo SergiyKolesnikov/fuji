@@ -742,10 +742,10 @@ aspect ExtendedTypeCheck {
 						 * for in the first round). */
 						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
+//	TEST						if (always(dep, listFeatures.get(fromFeatureID),
+//	TEST								listFeatures.get(featureID))) {
 								alwaysIDs.add(featureID);
-							}
+//	TEST						}
 						}
 						/* for all these features: check if the extends info is
 						 * missing in this feature */
@@ -819,10 +819,10 @@ aspect ExtendedTypeCheck {
 						 * for in the first round). */
 						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
+//	TEST						if (always(dep, listFeatures.get(fromFeatureID),
+//	TEST								listFeatures.get(featureID))) {
 								alwaysIDs.add(featureID);
-							}
+//	TEST						}
 						}
 						/* for all these features: check if the implements info
 						 * is missing in this feature */
@@ -901,10 +901,10 @@ aspect ExtendedTypeCheck {
 						 * for in the first round). */
 						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
+// TEST							if (always(dep, listFeatures.get(fromFeatureID),
+// TEST								listFeatures.get(featureID))) {
 								alwaysIDs.add(featureID);
-							}
+// TEST							}
 						}
 						/* for all these features: check if the extends info is
 						 * missing in this feature */
