@@ -73,7 +73,7 @@
   <!-- build fuji with FOP access modifiers-->
   <target name="build-mod" depends="gen" description="build fuji with FOP access modifiers.  Run 'ant clean' if you have build fuji without access modifiers before.">
     <mkdir dir="${bin}"/>
-    <javac debug="true" nowarn="true" classpath="${bin}:${lib}/commons-cli-1.2/commons-cli-1.2.jar"
+    <javac debug="true" nowarn="true" classpath="${bin}:${lib}/commons-cli-1.2/commons-cli-1.2.jar:${lib}/equinox/org.eclipse.equinox.common_3.6.0.v20110523.jar:${lib}/featureide/de.ovgu.featureide.fm.core_2.6.1.201204272223.jar:${lib}/guidsl/guidsl.jar:${lib}/jakarta/jakarta.jar:${lib}/sat4j/org.sat4j.core.jar"
 	   srcdir="${Fuji}" destdir="${bin}" includes="**/*.java"
 	   excludes="test/**" includeAntRuntime="false" />
   </target>
