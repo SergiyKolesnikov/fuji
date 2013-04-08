@@ -1,6 +1,3 @@
-* Method and Constructor signatures does not contain parameter names anymore.
-  Adapt regression tests.
-
 * ExtIntrosRefs.jrag
   - produce constructor REFs für super() and this() 
  
