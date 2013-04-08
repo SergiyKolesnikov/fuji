@@ -4,8 +4,8 @@ public enum A {
 ;
   private String string;
   private int integer;
-  private A(String s, int i) {
+private A(String s, int i) {
     this.string = s;
     this.integer = i;
-  }
+}
 }

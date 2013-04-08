@@ -2,7 +2,7 @@ introduces F1 {package}some{type}A
 introduces F1 {package}some{type}A{constructor}A()
 introduces F1 {package}some{type}A{field}j{type}int
 introduces F1 {package}some{type}A{field}stringArray{type}java.lang.String[]
-introduces F1 {package}some{type}A{method}methodInF1(java.lang.Long l, int i){type}void
+introduces F1 {package}some{type}A{method}methodInF1(java.lang.Long, int){type}void
 introduces F1 {package}some{type}A{method}methodI(){type}some.A
 introduces F1 {package}some{type}A{method}refinedInF2(){type}void
 introduces F1 {package}some{type}I
