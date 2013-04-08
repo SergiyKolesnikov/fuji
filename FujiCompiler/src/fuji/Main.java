@@ -36,8 +36,10 @@ import AST.Program;
  */
 public class Main implements CompositionContext {
 
-	private CommandLine cmd;
+	private Options options; // available fuji command line options
+	private CommandLine cmd; // parsed command line options of fuji
 	private List<String> backboneCompilerArgs; // JastAddJ arguments
+
 	private ComposingVisitor composingVisitor;
 	private SPLStructure spl;
 	private boolean generateClassFiles = true;
@@ -53,24 +55,36 @@ public class Main implements CompositionContext {
 	 *          command line arguments.
 	 */
 	public static void main(String[] args) {
+		byte exitcode = 0;
 		try {
 			new Main(args, null);
 		} catch (WrongArgumentException e) {
 			printError(e.getMessage());
+			exitcode = 2;
 		} catch (ParseException e) {
-			printError(e.getMessage());
+			printError(e.getMessage() + "\n");
+			exitcode = 1;
 		} catch (IOException e) {
-			printError(e.getMessage());
+			printError(e.getMessage() + "\n");
+			exitcode = 1;
 		} catch (FeatureDirNotFoundException e) {
 			printError(e.getMessage());
+			exitcode = 1;
 		} catch (SyntacticErrorException e) {
 			printError(e.getMessage());
+			exitcode = 1;
 		} catch (SemanticErrorException e) {
 			printError(e.getMessage());
+			exitcode = 1;
 		} catch (CompilerWarningException e) {
 			System.err.println(e.getMessage());
 		} catch (CompositionErrorException e) {
+			exitcode = 1;
 			printError(e.getMessage() + "\n");
+		} finally {
+			if (exitcode != 0) {
+				System.exit(exitcode);
+			}
 		}
 	}
 
@@ -116,12 +130,12 @@ public class Main implements CompositionContext {
 		Collection warnings = new ArrayList();
 
 		/* Initialize options and parse the command line. */
-		Options options = initOptions();
-		cmd = new GnuParser().parse(options, args, true);
+		options = initOptions();
+		cmd = new GnuParser().parse(options, args);
 
 		/* help, version */
 		if (cmd.hasOption(HELP)) {
-			new HelpFormatter().printHelp(72, toolName(), "", options, "", true);
+			printHelp(options);
 			return;
 		} else if (cmd.hasOption(VERSION)) {
 			System.out.println(toolName() + " v." + version() + " " + projectURL());
@@ -147,11 +161,13 @@ public class Main implements CompositionContext {
 		 * argument can be omitted.
 		 */
 		String featuresFileOrFeatureModelFilePathname = null;
-		if (((cmd.getArgList().size() == 0) && !cmd.hasOption(PROG_MODE))
-				|| (cmd.getArgList().size() > 1)) {
+		if (((cmd.getArgList().size() == 0) && !cmd.hasOption(PROG_MODE))) {
 			throw new WrongArgumentException(
-					"Invalid option or no features file or feature model file "
-							+ "is specified. " + cmd.getArgList() + "\n");
+					"No features file or feature model file " + "is specified. "
+							+ cmd.getArgList() + "\n");
+		} else if (cmd.getArgList().size() > 1) {
+			throw new WrongArgumentException("Too many arguments: "
+					+ cmd.getArgList() + "\n");
 		} else if (cmd.getArgList().size() == 1) {
 			featuresFileOrFeatureModelFilePathname = cmd.getArgs()[0];
 		} else if (cmd.getArgList().size() == 0) {
@@ -577,6 +593,11 @@ public class Main implements CompositionContext {
 	private static void printError(String message) {
 		System.err.println("Errors:");
 		System.err.print(message);
+	}
+
+	private static void printHelp(Options options) {
+		new HelpFormatter().printHelp(72, toolName() + " features_file", "",
+				options, "", true);
 	}
 
 	private static String toolName() {

@@ -42,7 +42,7 @@ public class SPLStructure {
 
     private String[] classpathArg = new String[2];
     private Map<String, RoleGroup> roleGroups;
-    private List<Collection<RoleGroup>> dependencyGraphs;
+    private List<Collection<RoleGroup>> dependecyGraphs;
 
     /**
      * SPLStructure constructor.
@@ -63,7 +63,7 @@ public class SPLStructure {
             FeatureDirNotFoundException, SyntacticErrorException {
 
         basedirPathname = new File(bdPathname).getCanonicalPath();
-        featureModulePathnames = parseFeaturesFile(basedirPathname, new File(
+        featureModulePathnames = parseFeautresFile(basedirPathname, new File(
                 featuresFilePathname).getCanonicalPath());
         initSPLStructure(singleDependencyGraph);
     }
@@ -105,10 +105,10 @@ public class SPLStructure {
             for (RoleGroup rg : roleGroups.values()) {
                 graph.add(rg);
             }
-            dependencyGraphs = new ArrayList<Collection<RoleGroup>>();
-            dependencyGraphs.add(graph);
+            dependecyGraphs = new ArrayList<Collection<RoleGroup>>();
+            dependecyGraphs.add(graph);
         } else {
-            dependencyGraphs = createDependencyGraphs(roleGroups);
+            dependecyGraphs = createDependecyGraphs(roleGroups);
         }
     }
 
@@ -121,7 +121,7 @@ public class SPLStructure {
      *         groups). A graph with least nodes first.
      */
     public List<Collection<RoleGroup>> getDependencyGraphs() {
-        return Collections.unmodifiableList(dependencyGraphs);
+        return Collections.unmodifiableList(dependecyGraphs);
     }
 
     /**
@@ -208,7 +208,7 @@ public class SPLStructure {
      * @return list of strings representing canonical pathnames of project's
      *         feature directories.
      */
-    private List<String> parseFeaturesFile(String bdPathname, String ffPathname)
+    private List<String> parseFeautresFile(String bdPathname, String ffPathname)
             throws FeatureDirNotFoundException, IOException {
 
         ArrayList<String> fmPathnames = new ArrayList<String>();
@@ -232,7 +232,7 @@ public class SPLStructure {
         }
         in.close();
         if (!notDirs.isEmpty()) {
-            String message = "The following directories specified in "
+            String message = "The following directoies specified in "
                     + ffPathname
                     + " do not exist in the project's base directory:\n";
             for (String s : notDirs) {
@@ -242,7 +242,7 @@ public class SPLStructure {
         }
         if (fmPathnames.size() == 0) {
             throw new FeatureDirNotFoundException(
-                    "Feature file does not specify feature directories.");
+                    "Feature file does not specify feature direcotries.");
         }
         return fmPathnames;
     }
@@ -254,7 +254,7 @@ public class SPLStructure {
      *            canonical pathname to the SPL's root dir.
      * 
      * @param featuresList
-     *            a list of features selected in this configuration.
+     *            a list of features selected in this configureation.
      * 
      * @return list of strings representing canonical pathnames of project's
      *         feature directories.
@@ -284,7 +284,7 @@ public class SPLStructure {
             }
         }
         if (!notDirs.isEmpty()) {
-            String message = "The following directories specified in the feature list"
+            String message = "The following directoies specified in the features list"
                     + " do not exist in the project's base directory:\n";
             for (String s : notDirs) {
                 message += s + "\n";
@@ -366,7 +366,6 @@ public class SPLStructure {
                 }
             }
         }
-        // TODO: warum hier nochmal eine extra Map?
         LinkedHashMap<String, RoleGroup> returnGroups = new LinkedHashMap<String, RoleGroup>();
         for (RoleGroup rg : groups.values()) {
             returnGroups.put(rg.basePathname, rg);
@@ -384,7 +383,7 @@ public class SPLStructure {
      * @return a list of dependency graphs ordered by the number of nodes (role
      * groups). A graph with least nodes first.
      */
-    private List<Collection<RoleGroup>> createDependencyGraphs(
+    private List<Collection<RoleGroup>> createDependecyGraphs(
             Map<String, RoleGroup> rgs) throws SyntacticErrorException {
 
         calculateDependencies(rgs);
