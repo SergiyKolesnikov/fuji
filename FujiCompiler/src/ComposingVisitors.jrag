@@ -1,4 +1,3 @@
-import sun.awt.im.CompositionArea;
 import fuji.CompositionErrorException;
 
 aspect VisitorAcceptMethods {
