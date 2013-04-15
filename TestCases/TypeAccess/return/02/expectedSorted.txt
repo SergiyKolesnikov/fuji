@@ -1,0 +1,38 @@
+
+
+
+
+
+
+    (default package).B
+  (default package).C
+  (default package).C
+  Semantic Error: 1 optional target:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: NEVER dependency:
+  Semantic Error: NEVER dependency:
+  of feature FeatureB
+  public C()
+  public static C bar() { ... }
+- the type
+/TypeAccess/return/02/FeatureA/A.java:3:
+/TypeAccess/return/02/FeatureA/A.java:3:
+/TypeAccess/return/02/FeatureA/A.java:3:
+/TypeAccess/return/02/FeatureB/B.java:2
+/TypeAccess/return/02/FeatureB/B.java:3:
+/TypeAccess/return/02/FeatureB/B.java:3:
+Errors:
+Feature FeatureA accesses the method
+Feature FeatureA accesses the type
+Feature FeatureA accesses:
+Feature FeatureB accesses the constructor
+Feature FeatureB accesses the type
+Feature FeatureB may not be present in every valid selection.
+Feature FeatureC may not be present in every valid selection.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+of feature FeatureB.
+of feature FeatureC.
+of feature FeatureC.
+of feature FeatureC.

@@ -1,0 +1,37 @@
+
+
+
+
+
+
+    (default package).B
+    (default package).Inner
+  Inner()
+  Semantic Error: 1 optional target:
+  Semantic Error: 1 optional target:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  of feature FeatureB
+  of feature FeatureB
+  public B()
+  void bar() { ... }
+- the type
+- the type
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:3:
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:3:
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:4:
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:4:
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:4:
+Errors:
+Feature FeatureA accesses the constructor
+Feature FeatureA accesses the constructor
+Feature FeatureA accesses the method
+Feature FeatureA accesses:
+Feature FeatureA accesses:
+Feature FeatureB may not be present in every valid selection.
+Feature FeatureB may not be present in every valid selection.
+Feature FeatureB may not be present in every valid selection.
+of feature FeatureB.
+of feature FeatureB.
+of feature FeatureB.

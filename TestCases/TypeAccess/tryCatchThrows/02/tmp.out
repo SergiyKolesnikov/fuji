@@ -14,19 +14,19 @@ Feature FeatureB accesses the constructor
 of feature FeatureE.
 Features FeatureB and FeatureE cannot both be present in a valid selection.
 
-/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
-  Semantic Error: 1 optional target:
-Feature FeatureA accesses:
-- the type
-    (default package).B
-  of feature FeatureB
-
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureA/A.java:5:
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type
     (default package).E
   of feature FeatureE
+
+/Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureA/A.java:4:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureB/B.java:3
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/tryCatchThrows/02/FeatureB/B.java:2:

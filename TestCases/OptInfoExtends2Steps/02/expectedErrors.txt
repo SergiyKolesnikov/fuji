@@ -54,3 +54,165 @@ Class B of feature FeatureB extends class C.
 The information that class B extends class C is only present in feature FeatureB.
 Features FeatureB2 and FeatureB cannot both be present in a valid selection.
 
+/OptInfoExtends2Steps/02/FeatureD/D.java:2:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:2:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:4:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:5:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:5:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void bar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:6:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:6:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void bar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:7:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:7:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void bar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:8:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:8:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void bar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:9:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses by a cast the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:9:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses by a cast the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:9:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void bar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:9:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void bar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:10:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public static void foobar() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoExtends2Steps/02/FeatureD/D.java:10:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public static void foobar() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+

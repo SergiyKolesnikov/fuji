@@ -1,0 +1,110 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: NEVER dependency:
+  Semantic Error: NEVER dependency:
+  Semantic Error: NEVER dependency:
+  public B()
+  public class B { ... }
+  public class B { ... }
+  public class B { ... }
+  public static int i = 42;
+  public static void foobar() { ... }
+  public void bar() { ... }
+  public void bar() { ... }
+  public void bar() { ... }
+  public void bar() { ... }
+  public void bar() { ... }
+  public void bar() { ... }
+/OptInfoExtends/02/FeatureA2/A.java:1:
+/OptInfoExtends/02/FeatureA2/A.java:2,24:
+/OptInfoExtends/02/FeatureA2/A.java:4:
+/OptInfoExtends/02/FeatureC/C.java:10:
+/OptInfoExtends/02/FeatureC/C.java:2:
+/OptInfoExtends/02/FeatureC/C.java:4:
+/OptInfoExtends/02/FeatureC/C.java:5:
+/OptInfoExtends/02/FeatureC/C.java:6:
+/OptInfoExtends/02/FeatureC/C.java:7:
+/OptInfoExtends/02/FeatureC/C.java:8:
+/OptInfoExtends/02/FeatureC/C.java:9:
+/OptInfoExtends/02/FeatureC/C.java:9:
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA extends class B.
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+Class A of feature FeatureA2 accesses by a cast the type
+Class A of feature FeatureA2 accesses the field
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the method
+Class A of feature FeatureA2 accesses the super constructor
+Errors:
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Feature FeatureA may not be present in every valid selection.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+The information that class A extends class B is only present in feature FeatureA.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
+which is accessible via class B.
