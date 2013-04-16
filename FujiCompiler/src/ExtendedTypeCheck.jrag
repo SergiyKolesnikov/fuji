@@ -736,20 +736,10 @@ aspect ExtendedTypeCheck {
 									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
-						/* external access: start from all features of the
-						 * needed narrow type that are in an always relation
-						 * with the accessing feature (other errors are checked
-						 * for in the first round). */
-						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						/* external access
+						 * check if the extends info is
+						 * missing in all features */
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
-								alwaysIDs.add(featureID);
-							}
-						}
-						/* for all these features: check if the extends info is
-						 * missing in this feature */
-						for (int featureID : alwaysIDs) {
 							if (!(featuresWithExtendInfo.contains(featureID))) {
 								HashMap<ASTNode, TypeDecl> narrowTypeAccessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 								for (Access ac : accesses) {
@@ -813,20 +803,10 @@ aspect ExtendedTypeCheck {
 									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
-						/* external access: start from all features of the
-						 * needed narrow type that are in an always relation
-						 * with the accessing feature (other errors are checked
-						 * for in the first round). */
-						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						/* external access
+						 * check if the implements info
+						 * is missing in all features */
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
-								alwaysIDs.add(featureID);
-							}
-						}
-						/* for all these features: check if the implements info
-						 * is missing in this feature */
-						for (int featureID : alwaysIDs) {
 							if (!(featuresWithImplementInfo.contains(featureID))) {
 								HashMap<ASTNode, TypeDecl> nextTdAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 								nextTdAndTargetHostTypes.put(outputDeclsAndTargetHostTypes.keySet().iterator().next(), td);
@@ -895,20 +875,10 @@ aspect ExtendedTypeCheck {
 									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
 						}
 					} else {
-						/* external access: start from all features of the
-						 * needed narrow type that are in an always relation
-						 * with the accessing feature (other errors are checked
-						 * for in the first round). */
-						HashSet<Integer> alwaysIDs = new HashSet<Integer>();
+						/* external access
+						 * check if the extends info is
+						 * missing in all features */
 						for (int featureID : allFeatures) {
-							if (always(dep, listFeatures.get(fromFeatureID),
-									listFeatures.get(featureID))) {
-								alwaysIDs.add(featureID);
-							}
-						}
-						/* for all these features: check if the extends info is
-						 * missing in this feature */
-						for (int featureID : alwaysIDs) {
 							if (!(featuresWithExtendInfo.contains(featureID))) {
 								HashMap<ASTNode, TypeDecl> nextTdAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 								nextTdAndTargetHostTypes.put(outputDeclsAndTargetHostTypes.keySet().iterator().next(), td);
