@@ -37,19 +37,6 @@ aspect ExtendedTypeCheck {
 		}
 	}
 
-	public void Program.splErrorCheck(FeatureModel model, Collection collection) {
-		setFeatureModel(model);
-		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
-			CompilationUnit cu = (CompilationUnit)iter.next();
-			if(cu.fromSource()) {
-				cu.collectSplErrors();
-				collection.addAll(cu.errors);
-			}
-		}
-		collectSplTypeErrors();
-		collection.addAll(errors);
-	}
-
 	public void Program.splErrorCheck(FeatureModel model, Collection collection, Collection warn) {	
 		setFeatureModel(model);
 		for(Iterator iter = compilationUnitIterator(); iter.hasNext(); ) {
@@ -63,33 +50,6 @@ aspect ExtendedTypeCheck {
 		collectSplTypeErrors();
 		collection.addAll(errors);
 		warn.addAll(warnings);
-	}
-
-	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection collection) {
-		setFeatureModel(model);
-		collectSplErrors();
-		collection.addAll(errors);
-	}
-
-	public void CompilationUnit.splErrorCheck(FeatureModel model, Collection err, Collection warn) {		
-		setFeatureModel(model);
-		collectSplErrors();
-		err.addAll(errors);
-		warn.addAll(warnings);
-	}
-
-	public boolean Program.splErrorCheck(FeatureModel model) {		
-		Collection collection = new LinkedList();
-		splErrorCheck(model, collection);
-		if(collection.isEmpty()) {
-			return false;
-		}
-		System.out.println("SPL Errors:");
-		for(Iterator iter = collection.iterator(); iter.hasNext(); ) {
-			String s = (String)iter.next();
-			System.out.println(s);
-		}
-		return true;
 	}
 
 	/* /copy_&_modify */
@@ -1075,7 +1035,7 @@ aspect ExtendedTypeCheck {
 		this.severity = severity;
 	}
 	
-	/* collect Type Errors */
+	/* analyse collected Type Accesses */
 	public void ASTNode.collectSplTypeErrors() {
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
