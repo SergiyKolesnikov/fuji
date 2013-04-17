@@ -20,7 +20,7 @@ echoOK() {
 }
 
 # For all numbered folders in this folder:
-for Dir in $(basename $(find . -type d -d 1 -name "[0-9][0-9]*")); do
+for Dir in $(basename $(find . -depth 1 -type d -name "[0-9][0-9]*")); do
 
   # 01. Model with errors
   # ---------------------
