@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/FujiTypeChecker/FujiCompiler/src/fuji/Main.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="fuji.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-basedir /local/tmp/peter_typecheck_single_feature -fopRefs -typechecker /local/tmp/peter_typecheck_single_feature/model.model"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="FujiTypeChecker"/>
+</launchConfiguration>
