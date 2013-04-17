@@ -1,0 +1,22 @@
+
+
+
+    (default package).B
+    (default package).B
+    public B()
+    public B()
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+  of feature FeatureB
+  of feature FeatureB
+  of feature FeatureB2
+  of feature FeatureB2
+- the constructor
+- the constructor
+- the type
+- the type
+/TypeAccess/constructor/03/FeatureA/A.java:3:
+/TypeAccess/constructor/03/FeatureA/A.java:3:
+Errors:
+Feature FeatureA accesses:
+Feature FeatureA accesses:

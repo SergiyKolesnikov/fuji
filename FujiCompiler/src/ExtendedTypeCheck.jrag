@@ -1365,79 +1365,13 @@ aspect ExtendedTypeCheck {
 	/* Declaration of Field with implicit upcast */
 	public void FieldDeclaration.splTypeCheck() {
 		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
-		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
-  	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-  	HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-  	if (hasInit()) {
-  		/* class instance ("new" keyword) */
-  		if (getInit() instanceof ClassInstanceExpr) {
-  			TypeDecl sourceType = getInit().type();
-  			TypeDecl targetType = type();
-  			if (!(sourceType.equals(targetType))) {
-  				declsAndTargetHostTypes.put(getInit(), targetType);
-  				outputDeclsAndTargetHostTypes.put(targetType, targetType);
-  				/* set of selected features for mayBeMissing-Check (second round), 
-  				 * accessing feature is trivially set */
-  				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-  				contextPresentFeatures.add(featureID());
-  				/* check for SPL errors */
-  				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-  						"(by an implicit cast/in the type hierarchy) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
-  			}
-  		}
-  	}
-  }
-	
-	/* Declaration of Variable with implicit upcast */
-	public void VariableDeclaration.splTypeCheck() {
-		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
-		/* UpperType upper = new LowerType(...); [UpperType != LowerType] */
-  	HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-  	HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-  	if (hasInit()) {
-  		/* class instance ("new" keyword) */
-  		if (getInit() instanceof ClassInstanceExpr) {
-  			TypeDecl sourceType = getInit().type();
-  			TypeDecl targetType = type();
-  			if (!(sourceType.equals(targetType))) {
-  				declsAndTargetHostTypes.put(getInit(), targetType);
-  				outputDeclsAndTargetHostTypes.put(targetType, targetType);
-  				/* set of selected features for mayBeMissing-Check (second round), 
-  				 * accessing feature is trivially set */
-  				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-  				contextPresentFeatures.add(featureID());
-  				/* check for SPL errors */
-  				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-  						"(by an implicit cast/in the type hierarchy) the type",
-  						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
-  			}
-  		}
-  	}
-  }
-	
-	/* Simple Assignment where the right side is an Expr with new keyword,
-	 * implicit upcast */
-	public void AssignSimpleExpr.splTypeCheck() {
-		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
-		/* report a type error, if a new class instance is implicitly casted to a
-		 * supertype in this assignment and the information 
-		 * of this subtype relation is only available in features that 
-		 * are all optional or mutual exclusive to the selected feature 
-		 * (so there could be a valid feature selection where the information 
-		 * of this subtype relation is not present) */
 		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* class instance ("new" keyword) */
-		if (getSource() instanceof ClassInstanceExpr) {
-			/* from java.ast: 
-			 * ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; 
-			 * abstract AssignExpr : Expr ::= Dest:Expr Source:Expr; */
-			TypeDecl sourceType = getSource().type(); /* right hand side of "=" */
-			TypeDecl targetType = getDest().type();   /* left  hand side of "=" */
-			/* implicit cast */
+		if (hasInit()) {
+			TypeDecl sourceType = getInit().type();
+			TypeDecl targetType = type();
 			if (!(sourceType.equals(targetType))) {
-				declsAndTargetHostTypes.put(getSource(), targetType);
+				declsAndTargetHostTypes.put(getInit(), targetType);
 				outputDeclsAndTargetHostTypes.put(targetType, targetType);
 				/* set of selected features for mayBeMissing-Check (second round), 
 				 * accessing feature is trivially set */
@@ -1448,6 +1382,59 @@ aspect ExtendedTypeCheck {
 						"(by an implicit cast/in the type hierarchy) the type",
 						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
 			}
+		}
+	}
+	
+	/* Declaration of Variable with implicit upcast */
+	public void VariableDeclaration.splTypeCheck() {
+		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
+		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+		if (hasInit()) {
+			TypeDecl sourceType = getInit().type();
+			TypeDecl targetType = type();
+			if (!(sourceType.equals(targetType))) {
+				declsAndTargetHostTypes.put(getInit(), targetType);
+				outputDeclsAndTargetHostTypes.put(targetType, targetType);
+				/* set of selected features for mayBeMissing-Check (second round), 
+				 * accessing feature is trivially set */
+				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+				contextPresentFeatures.add(featureID());
+				/* check for SPL errors */
+				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+						"(by an implicit cast/in the type hierarchy) the type",
+						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+			}
+		}
+	}
+	
+	/* Simple Assignment with implicit upcast */
+	public void AssignSimpleExpr.splTypeCheck() {
+		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
+		/* report a type error, if a type is implicitly casted to a
+		 * supertype in this assignment and the information 
+		 * of this subtype relation is only available in features that 
+		 * are all optional or mutual exclusive to the selected feature 
+		 * (so there could be a valid feature selection where the information 
+		 * of this subtype relation is not present) */
+		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+		/* from java.ast: 
+		 * abstract AssignExpr : Expr ::= Dest:Expr Source:Expr; */
+		TypeDecl sourceType = getSource().type(); /* right hand side of "=" */
+		TypeDecl targetType = getDest().type();   /* left  hand side of "=" */
+		/* implicit cast */
+		if (!(sourceType.equals(targetType))) {
+			declsAndTargetHostTypes.put(getSource(), targetType);
+			outputDeclsAndTargetHostTypes.put(targetType, targetType);
+			/* set of selected features for mayBeMissing-Check (second round), 
+			 * accessing feature is trivially set */
+			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+			contextPresentFeatures.add(featureID());
+			/* check for SPL errors */
+			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+					"(by an implicit cast/in the type hierarchy) the type",
+					false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
 		}
 	}
 	

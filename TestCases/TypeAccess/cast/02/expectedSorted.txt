@@ -1,0 +1,30 @@
+
+
+
+
+
+  (default package).C
+  (default package).C
+  Semantic Error: MAYBE dependency:
+  Semantic Error: MAYBE dependency:
+  Semantic Error: NEVER dependency:
+  Semantic Error: NEVER dependency:
+  public C()
+  public class C { ... }
+/TypeAccess/cast/02/FeatureA/A.java:4:
+/TypeAccess/cast/02/FeatureA/A.java:4:
+/TypeAccess/cast/02/FeatureB/B.java:1:
+/TypeAccess/cast/02/FeatureB/B.java:1:
+Errors:
+Feature FeatureA accesses by a cast the type
+Feature FeatureA accesses the type
+Feature FeatureB accesses the super constructor
+Feature FeatureB accesses the type
+Feature FeatureC may not be present in every valid selection.
+Feature FeatureC may not be present in every valid selection.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
+of feature FeatureC.
+of feature FeatureC.
+of feature FeatureC.
+of feature FeatureC.

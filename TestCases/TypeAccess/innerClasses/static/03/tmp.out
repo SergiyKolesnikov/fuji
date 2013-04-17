@@ -14,19 +14,19 @@ Feature FeatureA accesses:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB
 - the type
-    (default package).Inner
+    (default package).B
   of feature FeatureB2
 
 /Users/peter_mac/Documents/Eclipse/workspace/FujiProject/TestCases/TypeAccess/innerClasses/static/03/FeatureA/A.java:3:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureA accesses:
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB
 - the type
-    (default package).B
+    (default package).Inner
   of feature FeatureB2
 
