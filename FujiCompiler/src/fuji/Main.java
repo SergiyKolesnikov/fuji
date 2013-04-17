@@ -111,7 +111,7 @@ public class Main implements CompositionContext {
 			throws WrongArgumentException, ParseException, IOException,
 			FeatureDirNotFoundException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
-
+		long startTimeNano = System.nanoTime();
 		/*
 		 * The flag controls the construction of the SPL structure representation.
 		 * If true, only one dependency graph containing all the groups will be
@@ -192,6 +192,8 @@ public class Main implements CompositionContext {
 
 		String basedir = cmd
 				.getOptionValue(BASEDIR, System.getProperty("user.dir"));
+		
+		System.out.println("Time_AST_construction_ms: " + ((System.nanoTime()-startTimeNano)/1000000));
 
 		/*
 		 * Decide where the features list or the feature model file comes from.
@@ -236,9 +238,16 @@ public class Main implements CompositionContext {
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
 			if (cmd.hasOption(TYPECHECKER)) {
+				startTimeNano = System.nanoTime();
+				
 				Iterator<Program> astIter = composition.getASTIterator();
 				Program ast = astIter.next();
 				ast.splErrorCheck(model, errors, warnings);
+				if (errors.isEmpty()) {
+					System.out.println("No type errors found.");
+				}
+				
+				System.out.println("Time_typecheck_ms: " + ((System.nanoTime()-startTimeNano)/1000000));
 			} else {
 				processAST(composition);
 			}

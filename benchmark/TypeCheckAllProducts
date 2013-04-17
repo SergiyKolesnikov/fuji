@@ -14,7 +14,7 @@ do
     java -jar fuji.jar \
          -fopRefs \
          -typechecker \
-         -basedir $1/features \
+         -basedir ../examples/$1/features \
          $variantmodel \
          > $variantdir/timetypechecker.txt \
          2> $variantdir/outtypechecker.txt
