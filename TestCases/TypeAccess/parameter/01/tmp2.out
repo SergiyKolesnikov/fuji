@@ -1,9 +1,0 @@
-Errors:
-
-/TypeAccess/parameter/01/FeatureA/A.java:2:
-  Semantic Error: MAYBE dependency:
-Feature FeatureA accesses the type
-  (default package).B
-of feature FeatureB.
-Feature FeatureB may not be present in every valid selection.
-

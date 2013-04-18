@@ -21,8 +21,8 @@ Feature FeatureA accesses the field
 of feature FeatureB.
 Features FeatureA and FeatureB cannot both be present in a valid selection.
 
-/FieldAccess/02/FeatureA/A.java:3
-/FieldAccess/02/FeatureA/A.java:6:
+/FieldAccess/02/FeatureA/A.java:6
+/FieldAccess/02/FeatureA/A.java:3:
   Semantic Error: 1 optional target:
 Feature FeatureA accesses:
 - the type

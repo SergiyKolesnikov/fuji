@@ -16,7 +16,7 @@ echo -ne $ok"$1"$reset
 }
 
 # For all numbered folders in this folder:
-for Dir in $(basename $(find . -depth 1 -type d -name "[0-9][0-9]*")); do
+for Dir in [0-9][0-9]*; do
 
 # 01. Model with errors
 # ---------------------
