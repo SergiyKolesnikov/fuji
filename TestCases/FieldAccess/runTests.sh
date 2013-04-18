@@ -39,15 +39,14 @@ for Dir in [0-9][0-9]*; do
     echoOK "$CURRENTFOLDER/$Dir - model with errors: OK   \t"
   else
     # are the errors just in different order?
-    # sort them and compare
-    sort $Dir/tmp2.out > $Dir/tmp2Sorted.out
     # last colon of file name and line number output could be in different line
     # if there is more than one line of file name and line number output 
     # -> remove last colon in line (after a number)
-    sed "s/\(^.*[0-9]\):/\1/" $Dir/tmp2Sorted.out > $Dir/tmp2Sorted.out
-    sort $Dir/expectedErrors.txt > $Dir/expectedSorted.txt
-    # -> remove last colon in line (after a number)
-    sed "s/\(^.*[0-9]\):/\1/" $Dir/expectedSorted.txt > $Dir/expectedSorted.txt
+    sed "s/\(^.*[0-9]\):/\1/" $Dir/tmp2.out > $Dir/tmp2tmp.out
+    sed "s/\(^.*[0-9]\):/\1/" $Dir/expectedErrors.txt > $Dir/expectedtmp.txt
+    # sort them and compare
+    sort $Dir/tmp2tmp.out > $Dir/tmp2Sorted.out
+    sort $Dir/expectedtmp.txt > $Dir/expectedSorted.txt
     OKSorted=`diff "$Dir/tmp2Sorted.out" "$Dir/expectedSorted.txt"`
     if [ "$OKSorted" == "" ]; then
       echoOK "$CURRENTFOLDER/$Dir - model with errors: OK   \t"
