@@ -8,6 +8,8 @@ import static fuji.Main.OptionName.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -111,7 +113,7 @@ public class Main implements CompositionContext {
 			throws WrongArgumentException, ParseException, IOException,
 			FeatureDirNotFoundException, SyntacticErrorException,
 			SemanticErrorException, CompilerWarningException {
-		long startTimeNano = System.nanoTime();
+		long startTimeNano = getCpuTime();
 		/*
 		 * The flag controls the construction of the SPL structure representation.
 		 * If true, only one dependency graph containing all the groups will be
@@ -193,7 +195,7 @@ public class Main implements CompositionContext {
 		String basedir = cmd
 				.getOptionValue(BASEDIR, System.getProperty("user.dir"));
 		
-		System.out.println("Time_AST_construction_ms: " + ((System.nanoTime()-startTimeNano)/1000000));
+		System.out.println("Time_AST_construction_ms: " + ((getCpuTime()-startTimeNano)/1000000));
 
 		/*
 		 * Decide where the features list or the feature model file comes from.
@@ -238,16 +240,18 @@ public class Main implements CompositionContext {
 		if (!cmd.hasOption(PROG_MODE)) {
 			Composition composition = new Composition(this);
 			if (cmd.hasOption(TYPECHECKER)) {
-				startTimeNano = System.nanoTime();
+				startTimeNano = getCpuTime();
 				
 				Iterator<Program> astIter = composition.getASTIterator();
 				Program ast = astIter.next();
 				ast.splErrorCheck(model, errors, warnings);
 				if (errors.isEmpty()) {
-					System.out.println("No type errors found.");
+					System.out.println("Found_Errors: 0\n" +
+							"No type errors found.");
+				} else {
+					System.out.println("Found_Errors: " + errors.size());
 				}
-				
-				System.out.println("Time_typecheck_ms: " + ((System.nanoTime()-startTimeNano)/1000000));
+				System.out.println("Time_typecheck_ms: " + ((getCpuTime()-startTimeNano)/1000000));
 			} else {
 				processAST(composition);
 			}
@@ -619,5 +623,14 @@ public class Main implements CompositionContext {
 
 	private static String version() {
 		return "2012-03-26";
+	}
+	/** Get CPU time in nanoseconds. 
+	 * Measuring CPU times in java:
+	 * http://nadeausoftware.com/articles/2008/03/java_tip_how_get_cpu_and_user_time_benchmarking
+	 */
+	public static long getCpuTime() {
+		ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+		return bean.isCurrentThreadCpuTimeSupported() ? bean
+				.getCurrentThreadCpuTime() : 0L;
 	}
 }
