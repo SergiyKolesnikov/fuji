@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import AST.Program;
@@ -53,7 +52,7 @@ public class TestSuite {
 			e.printStackTrace();
 		}
 
-		// Bereite Parameter fŸr fuji vor.
+		// Bereite Parameter fï¿½r fuji vor.
 		String[] params = {
 				"-progmode",
 				"-basedir",
@@ -71,8 +70,7 @@ public class TestSuite {
 
 		// Bekomme den AST.
 		Composition comp = fuji.getComposition(fuji);
-		Iterator<Program> astIter = comp.getASTIterator();
-		Program ast = astIter.next();
+		Program ast = comp.composeAST();
 		
 		// ast.errorCheck(errors, warnings);
 		ast.splErrorCheck(model, errors, warnings);

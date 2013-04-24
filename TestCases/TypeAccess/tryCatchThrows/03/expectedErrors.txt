@@ -20,8 +20,8 @@ Feature FeatureA accesses:
     (default package).E
   of feature FeatureE2
 
-/TypeAccess/tryCatchThrows/03/FeatureB/B.java:3
-/TypeAccess/tryCatchThrows/03/FeatureB/B.java:2:
+/TypeAccess/tryCatchThrows/03/FeatureB/B.java:2
+/TypeAccess/tryCatchThrows/03/FeatureB/B.java:3:
   Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
 Feature FeatureB accesses:
 - the type

@@ -1082,455 +1082,639 @@ aspect ExtendedTypeCheck {
 		/* from java.ast: VarAccess : Access ::= <ID:String>; */
 		/* is the VarAccess a FieldAccess? */
 		if (isFieldAccess()) {
-			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-			for (Iterator iter = decls().iterator(); iter.hasNext(); ) {
-				BodyDecl decl = (BodyDecl) iter.next();
-				declsAndTargetHostTypes.put(decl, decl.hostType());
-			}
-			TypeDecl narrowType = hostType();
-			if (isQualified()) {
-				Expr expr = qualifier();
-				if (expr instanceof VarAccess) {
-					VarAccess varAc = (VarAccess) expr;
-					if (varAc.decl() instanceof VariableDeclaration) {
-						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
-						if (vd.hasInit()) {
-							narrowType = vd.getInit().type();
-						}
-					} else if (varAc.decl() instanceof FieldDeclaration) {
-						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
-						if (fd.hasInit()) {
-							narrowType = fd.getInit().type();
-						}
-					}
-				} else if (expr instanceof TypeAccess) {
-					TypeAccess typeAc = (TypeAccess) expr;
-					narrowType = typeAc.type();
-				} else if (expr instanceof ClassInstanceExpr) {
-					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
-					narrowType = cie.type();
-				} else if (expr instanceof ParExpr) {
-					ParExpr parExpr = (ParExpr) expr;
-					narrowType = parExpr.type();
-					if (parExpr.getExpr() instanceof CastExpr) {
-						CastExpr ce = (CastExpr) parExpr.getExpr();
-						narrowType = ce.getExpr().type();
-					}
-				}
-			}
-			/* set of selected features for mayBeMissing-Check (second round), 
-			 * accessing feature is trivially set */
-			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-			contextPresentFeatures.add(featureID());
-			/* check for SPL errors */
-			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the field", false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
-					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-					narrowType, hostType(), declsAndTargetHostTypes);
+		    
+		    /* Simple type check. */
+		    /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:VarAccess.nameCheck() */
+		    if(decls().isEmpty() && (!isQualified() || !qualifier().type().isUnknown() || qualifier().isPackageAccess())) {
+		        error("no field named " + name());
+		        return;
+		    }
+		    
+		    /* Variablility-aware type check */
+		    if (getSPLStructure().hasVariability()) {
+    			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    			for (Iterator iter = decls().iterator(); iter.hasNext(); ) {
+    				BodyDecl decl = (BodyDecl) iter.next();
+    				declsAndTargetHostTypes.put(decl, decl.hostType());
+    			}
+    			TypeDecl narrowType = hostType();
+    			if (isQualified()) {
+    				Expr expr = qualifier();
+    				if (expr instanceof VarAccess) {
+    					VarAccess varAc = (VarAccess) expr;
+    					if (varAc.decl() instanceof VariableDeclaration) {
+    						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
+    						if (vd.hasInit()) {
+    							narrowType = vd.getInit().type();
+    						}
+    					} else if (varAc.decl() instanceof FieldDeclaration) {
+    						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
+    						if (fd.hasInit()) {
+    							narrowType = fd.getInit().type();
+    						}
+    					}
+    				} else if (expr instanceof TypeAccess) {
+    					TypeAccess typeAc = (TypeAccess) expr;
+    					narrowType = typeAc.type();
+    				} else if (expr instanceof ClassInstanceExpr) {
+    					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
+    					narrowType = cie.type();
+    				} else if (expr instanceof ParExpr) {
+    					ParExpr parExpr = (ParExpr) expr;
+    					narrowType = parExpr.type();
+    					if (parExpr.getExpr() instanceof CastExpr) {
+    						CastExpr ce = (CastExpr) parExpr.getExpr();
+    						narrowType = ce.getExpr().type();
+    					}
+    				}
+    			}
+    			/* set of selected features for mayBeMissing-Check (second round), 
+    			 * accessing feature is trivially set */
+    			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    			contextPresentFeatures.add(featureID());
+    			/* check for SPL errors */
+    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the field", false,
+    					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+    					narrowType, hostType(), declsAndTargetHostTypes);
+		    }
 		}
 	}
 
 	/* Method Accesses */
 	public void MethodAccess.splTypeCheck() {
-		/* from java.ast: MethodAccess : Access ::= <ID:String> Arg:Expr*; */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* original-check: if the target method is named "original",
-		 * then in this type (in another feature) 
-		 * there should be a method with the same signature as the method where
-		 * this access comes from */
-		if (name().equals("original")) {
-			/* get context, i.e. method signature of the method 
-			 * where the access comes from */
-			String context = ((MethodDecl) enclosingBodyDecl()).signature();
-			/* get all methods with the same signature in this type 
-			 * that are in another feature */
-			for (BodyDecl bd : hostType().getBodyDecls()) {
-				if (bd instanceof MethodDecl) {
-					MethodDecl md = (MethodDecl) bd;
-					if (md.signature().equals(context) && (md.featureID() != featureID())) {
-						declsAndTargetHostTypes.put(md, md.hostType());
-					}
-				}
-			}
-			StringBuffer s = new StringBuffer();
-			s.append("with original-call\n    ");
-			s.append(name());
-			s.append("(");
-			for (int i = 0; i < getNumArg(); i++) {
-				if (i != 0) { s.append(", "); }
-				s.append(getArg(i).type().typeName());
-			}
-			s.append(")");
-			s.append("\n  in method\n    " + context + "\n  of type " + methodHost());
-			s.append("\n  method");
-			/* set of selected features for mayBeMissing-Check (second round), 
-			 * accessing feature is trivially set */
-			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-			contextPresentFeatures.add(featureID());
-			/* check for SPL errors */
-			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, s.toString(), false,
-					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType(), hostType(), declsAndTargetHostTypes);
-			/* check, if types of arguments fit the method declaration 
-			 * (i.e. check, if the information that the type of an argument is 
-			 * a subtype of the expected parameter is always available due to 
-			 * the feature model) */
-			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
-				if (decl instanceof MethodDecl) {
-					MethodDecl md = (MethodDecl) decl;
-					for (int i = 0; i < getNumArg() & i < md.getNumParameter(); i++) {
-						/* different types of argument and parameter */						
-						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
-							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-							/* get all bodyDecls of this type, and thus all features 
-							 * that implement this type */
-							for (BodyDecl bd : md.getParameter(i).type().getBodyDecls()) {
-							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
-							}
-							/* check for SPL errors */
-							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-									"by an implicit cast from argument to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
-						}					
-					}
-				}
-			}
-		} else {
-			/* get all methods with the same signature as the needed method
-			 * in this type */
-			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
-				if (bd instanceof MethodDecl) {
-					if (((MethodDecl) bd).signature().equals(decl().signature())) {
-						declsAndTargetHostTypes.put(bd, bd.hostType());
-					}
-				}
-			}
-			TypeDecl narrowType = hostType();
-			if (isQualified()) {
-				Expr expr = qualifier();
-				if (expr instanceof VarAccess) {
-					VarAccess varAc = (VarAccess) expr;
-					if (varAc.decl() instanceof VariableDeclaration) {
-						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
-						if (vd.hasInit()) {
-							narrowType = vd.getInit().type();
-						} /* else: TODO */
-					} else if (varAc.decl() instanceof FieldDeclaration) {
-						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
-						if (fd.hasInit()) {
-							narrowType = fd.getInit().type();
-						}
-					}
-				} else if (expr instanceof TypeAccess) {
-					TypeAccess typeAc = (TypeAccess) expr;
-					narrowType = typeAc.type();
-				} else if (expr instanceof ClassInstanceExpr) {
-					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
-					narrowType = cie.type();
-				} else if (expr instanceof ParExpr) {
-					ParExpr parExpr = (ParExpr) expr;
-					narrowType = parExpr.type();
-					if (parExpr.getExpr() instanceof CastExpr) {
-						CastExpr ce = (CastExpr) parExpr.getExpr();
-						narrowType = ce.getExpr().type();
-					}
-				}
-			}
-			/* set of selected features for mayBeMissing-Check (second round), 
-			 * accessing feature is trivially set */
-			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-			contextPresentFeatures.add(featureID());
-			/* check for SPL errors */
-			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the method",
-					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
-					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-					narrowType, hostType(), declsAndTargetHostTypes);
-			/* check, if types of arguments fit the method declaration 
-			 * (i.e. check, if the information that the type of an argument is 
-			 * a subtype of the expected parameter is always available due to 
-			 * the feature model) */
-			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
-				if (decl instanceof MethodDecl) {
-					MethodDecl md = (MethodDecl) decl;
-					for (int i = 0; i < getNumArg() & i < md.getNumParameter(); i++) {
-						/* different types of argument and parameter */
-						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
-							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-							/* get all bodyDecls of this type, and thus all features 
-							 * that implement this type */
-							for (BodyDecl bd : md.getParameter(i).type().getBodyDecls()) {
-							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
-							}
-							/* check for SPL errors */
-							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-									"by an implicit cast from argument type to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
-						}
-					}
-				}
-			}
-		}
+	    String ORIGINAL_ACCESS = "original";
+	    
+	    /* Simle type check. */
+	    /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:MethodAccess.nameCheck() */
+	    if (name().equals(ORIGINAL_ACCESS)) {
+	        /* get context, i.e. method signature of the method 
+             * where the access comes from */
+            String context = ((MethodDecl) enclosingBodyDecl()).signature();
+            /* get all methods with the same signature in this type 
+             * that are in another feature */
+            boolean isThereOrigialTarget = false;
+            for (BodyDecl bd : hostType().getBodyDecls()) {
+                if (bd instanceof MethodDecl) {
+                    MethodDecl md = (MethodDecl) bd;
+                    if (md.signature().equals(context) && (md.featureID() != featureID())) {
+                        isThereOrigialTarget = true;
+                        break;
+                    }
+                }
+            }
+            if (!isThereOrigialTarget) {
+                error("no original-method found in " + methodHost() + ".");
+                return;
+            }
+	    } else {
+//	        boolean isDeclarationPresent = false;
+//	        for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+//	            if (bd instanceof MethodDecl) {
+//	                if (((MethodDecl) bd).signature().equals(decl().signature())) {
+//	                    isDeclarationPresent = true;
+//	                }
+//	            }
+//	        }
+	        if(decls().isEmpty() && (!isQualified() || !qualifier().isUnknown())) {
+	            StringBuffer s = new StringBuffer();
+	            s.append("no method named " + name());
+	            s.append("(");
+	            for(int i = 0; i < getNumArg(); i++) {
+	              if(i != 0)
+	                s.append(", ");
+	              s.append(getArg(i).type().typeName());
+	            }
+	            s.append(")" + " in " + methodHost() + " matches.");
+	            error(s.toString());
+	            return;
+	        }
+	    }
+	    
+	    /* Variability-aware type check. */
+	    if (getSPLStructure().hasVariability()) {
+    		/* from java.ast: MethodAccess : Access ::= <ID:String> Arg:Expr*; */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		/* original-check: if the target method is named "original",
+    		 * then in this type (in another feature) 
+    		 * there should be a method with the same signature as the method where
+    		 * this access comes from */
+    		if (name().equals(ORIGINAL_ACCESS)) {
+    			/* get context, i.e. method signature of the method 
+    			 * where the access comes from */
+    			String context = ((MethodDecl) enclosingBodyDecl()).signature();
+    			/* get all methods with the same signature in this type 
+    			 * that are in another feature */
+    			for (BodyDecl bd : hostType().getBodyDecls()) {
+    				if (bd instanceof MethodDecl) {
+    					MethodDecl md = (MethodDecl) bd;
+    					if (md.signature().equals(context) && (md.featureID() != featureID())) {
+    						declsAndTargetHostTypes.put(md, md.hostType());
+    					}
+    				}
+    			}
+    			StringBuffer s = new StringBuffer();
+    			s.append("with original-call\n    ");
+    			s.append(name());
+    			s.append("(");
+    			for (int i = 0; i < getNumArg(); i++) {
+    				if (i != 0) { s.append(", "); }
+    				s.append(getArg(i).type().typeName());
+    			}
+    			s.append(")");
+    			s.append("\n  in method\n    " + context + "\n  of type " + methodHost());
+    			s.append("\n  method");
+    			/* set of selected features for mayBeMissing-Check (second round), 
+    			 * accessing feature is trivially set */
+    			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    			contextPresentFeatures.add(featureID());
+    			/* check for SPL errors */
+    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, s.toString(), false,
+    					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType(), hostType(), declsAndTargetHostTypes);
+    			/* check, if types of arguments fit the method declaration 
+    			 * (i.e. check, if the information that the type of an argument is 
+    			 * a subtype of the expected parameter is always available due to 
+    			 * the feature model) */
+    			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+    				if (decl instanceof MethodDecl) {
+    					MethodDecl md = (MethodDecl) decl;
+    					for (int i = 0; i < getNumArg() & i < md.getNumParameter(); i++) {
+    						/* different types of argument and parameter */						
+    						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
+    							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    							/* get all bodyDecls of this type, and thus all features 
+    							 * that implement this type */
+    							for (BodyDecl bd : md.getParameter(i).type().getBodyDecls()) {
+    							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
+    							}
+    							/* check for SPL errors */
+    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"by an implicit cast from argument to parameter type", false, hostType(), 
+    									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    						}					
+    					}
+    				}
+    			}
+    		} else {
+    			/* get all methods with the same signature as the needed method
+    			 * in this type */
+    			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+    				if (bd instanceof MethodDecl) {
+    					if (((MethodDecl) bd).signature().equals(decl().signature())) {
+    						declsAndTargetHostTypes.put(bd, bd.hostType());
+    					}
+    				}
+    			}
+    			TypeDecl narrowType = hostType();
+    			if (isQualified()) {
+    				Expr expr = qualifier();
+    				if (expr instanceof VarAccess) {
+    					VarAccess varAc = (VarAccess) expr;
+    					if (varAc.decl() instanceof VariableDeclaration) {
+    						VariableDeclaration vd = (VariableDeclaration) varAc.decl();
+    						if (vd.hasInit()) {
+    							narrowType = vd.getInit().type();
+    						} /* else: TODO */
+    					} else if (varAc.decl() instanceof FieldDeclaration) {
+    						FieldDeclaration fd = (FieldDeclaration) varAc.decl();
+    						if (fd.hasInit()) {
+    							narrowType = fd.getInit().type();
+    						}
+    					}
+    				} else if (expr instanceof TypeAccess) {
+    					TypeAccess typeAc = (TypeAccess) expr;
+    					narrowType = typeAc.type();
+    				} else if (expr instanceof ClassInstanceExpr) {
+    					ClassInstanceExpr cie = (ClassInstanceExpr) expr;
+    					narrowType = cie.type();
+    				} else if (expr instanceof ParExpr) {
+    					ParExpr parExpr = (ParExpr) expr;
+    					narrowType = parExpr.type();
+    					if (parExpr.getExpr() instanceof CastExpr) {
+    						CastExpr ce = (CastExpr) parExpr.getExpr();
+    						narrowType = ce.getExpr().type();
+    					}
+    				}
+    			}
+    			/* set of selected features for mayBeMissing-Check (second round), 
+    			 * accessing feature is trivially set */
+    			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    			contextPresentFeatures.add(featureID());
+    			/* check for SPL errors */
+    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the method",
+    					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+    					narrowType, hostType(), declsAndTargetHostTypes);
+    			/* check, if types of arguments fit the method declaration 
+    			 * (i.e. check, if the information that the type of an argument is 
+    			 * a subtype of the expected parameter is always available due to 
+    			 * the feature model) */
+    			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+    				if (decl instanceof MethodDecl) {
+    					MethodDecl md = (MethodDecl) decl;
+    					for (int i = 0; i < getNumArg() & i < md.getNumParameter(); i++) {
+    						/* different types of argument and parameter */
+    						if (!((getArg(i).type()).equals((md.getParameter(i).type())))) {
+    							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    							/* get all bodyDecls of this type, and thus all features 
+    							 * that implement this type */
+    							for (BodyDecl bd : md.getParameter(i).type().getBodyDecls()) {
+    							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
+    							}
+    							/* check for SPL errors */
+    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"by an implicit cast from argument type to parameter type", false, hostType(), 
+    									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    						}
+    					}
+    				}
+    			}
+    		}
+	    }
 	}
 
 	/* Type Accesses */
 	public void TypeAccess.splTypeCheck() {
-		/* from java.ast: TypeAccess : Access ::= <Package:String> <ID:String>; */
-		/* collect all TypeAccesses: source feature, type, decl(s), source file(s),
-		 * line number(s) */
-		int fromFeatureID = featureID();
-		/* ignore importDecl */
-		if (isRaw()) {
-			/* do not collect default types */
-			if (!(fromFeatureID == -1) && !(decl().featureID() == -1) && !(hostType().featureID() == -1) && !(decl().hostType().featureID() == -1)) {
-				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(fromFeatureID);
-				if (typesAndInfo == null) {
-					typesAndInfo = new HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>();
-				}
-				HashMap<TypeDecl, TypeErrorInfo> innerTypeAndInfo = typesAndInfo.get(hostType());
-				if (innerTypeAndInfo == null) {
-					innerTypeAndInfo = new HashMap<TypeDecl, TypeErrorInfo>();
-				}
-				/* add all bodyDecls of this type 
-				 * to get the featureIDs of all features that implement this type */
-				HashSet<BodyDecl> listDecls = new HashSet<BodyDecl>();
-				for (BodyDecl bd : decl().hostType().getBodyDecls()) {
-						listDecls.add(bd);
-				}
-				TypeErrorInfo tei = innerTypeAndInfo.get(decl().hostType());
-				if (tei == null) {
-					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), 
-							(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()));
-				} else {
-					for (Iterator iter = tei.getDecls().iterator(); iter.hasNext(); ) {
-						listDecls.add((BodyDecl) iter.next());
-					}
-					tei.setDecls(new SimpleSet.SimpleSetImpl(listDecls));
-				}
-				/* save source file and line number of type access */
-				tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
-				innerTypeAndInfo.put(decl().hostType(), tei);
-				typesAndInfo.put(hostType(), innerTypeAndInfo);
-				typeAccesses.put(fromFeatureID, typesAndInfo);
-			}
-		}
+	    
+        /* Simle type check. */
+        /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:TypeAccess.nameCheck() */
+        if (this.hostType() != null) { // exclude ImportDecls
+            if(decls().isEmpty()) {
+                error("no visible type named " + typeName());
+                return;
+            }
+        }
+
+	    /* Variability-aware type check. */
+        if (getSPLStructure().hasVariability()) {
+    		/* from java.ast: TypeAccess : Access ::= <Package:String> <ID:String>; */
+    		/* collect all TypeAccesses: source feature, type, decl(s), source file(s),
+    		 * line number(s) */
+    		int fromFeatureID = featureID();
+    		/* ignore importDecl */
+    		if (isRaw()) {
+    			/* do not collect default types */
+    			if (!(fromFeatureID == -1) && !(decl().featureID() == -1) && !(hostType().featureID() == -1) && !(decl().hostType().featureID() == -1)) {
+    				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(fromFeatureID);
+    				if (typesAndInfo == null) {
+    					typesAndInfo = new HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>();
+    				}
+    				HashMap<TypeDecl, TypeErrorInfo> innerTypeAndInfo = typesAndInfo.get(hostType());
+    				if (innerTypeAndInfo == null) {
+    					innerTypeAndInfo = new HashMap<TypeDecl, TypeErrorInfo>();
+    				}
+    				/* add all bodyDecls of this type 
+    				 * to get the featureIDs of all features that implement this type */
+    				HashSet<BodyDecl> listDecls = new HashSet<BodyDecl>();
+    				for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+    						listDecls.add(bd);
+    				}
+    				TypeErrorInfo tei = innerTypeAndInfo.get(decl().hostType());
+    				if (tei == null) {
+    					tei = new TypeErrorInfo(new SimpleSet.SimpleSetImpl(listDecls), new HashSet<String>(), 
+    							(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()));
+    				} else {
+    					for (Iterator iter = tei.getDecls().iterator(); iter.hasNext(); ) {
+    						listDecls.add((BodyDecl) iter.next());
+    					}
+    					tei.setDecls(new SimpleSet.SimpleSetImpl(listDecls));
+    				}
+    				/* save source file and line number of type access */
+    				tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
+    				innerTypeAndInfo.put(decl().hostType(), tei);
+    				typesAndInfo.put(hostType(), innerTypeAndInfo);
+    				typeAccesses.put(fromFeatureID, typesAndInfo);
+    			}
+    		}
+        }
 	}
 
 	/* Class Instance Expr, keyword new
 	 * Constructor Access does not work properly (?) */
 	public void ClassInstanceExpr.splTypeCheck() {
-		/* from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* get all constructors with the same signature in this type */
-		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
-			if (bd instanceof ConstructorDecl) {
-				if (((ConstructorDecl) bd).signature().equals(decl().signature())) {
-					declsAndTargetHostTypes.put((ConstructorDecl) bd, decl().hostType());
-				}
-			}
-		}
-		/* set of selected features for mayBeMissing-Check (second round), 
-		 * accessing feature is trivially set */
-		HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-		contextPresentFeatures.add(featureID());
-		/* check for SPL errors */
-		addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the constructor",
-				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
-				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
-				decl().hostType(), hostType(), declsAndTargetHostTypes);
-		/* check, if types of arguments fit the constructor declaration 
-		 * (i.e. check, if the information that the type of an argument is 
-		 * a subtype of the expected parameter is always available due to 
-		 * the feature model) */
-		for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
-			if (decl instanceof ConstructorDecl) {
-				ConstructorDecl cd = (ConstructorDecl) decl;
-				for (int i = 0; i < getNumArg() & i < cd.getNumParameter(); i++) {
-					/* different types of argument and parameter */
-					if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
-						HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-						/* get all bodyDecls of this type, and thus all features 
-						 * that implement this type */
-						for (BodyDecl bd : cd.getParameter(i).type().getBodyDecls()) {
-						  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
-						}
-						/* check for SPL errors */
-						addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-								"by an implicit cast from argument type to parameter type", false, hostType(), 
-								false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
-					}				
-				}
-			}
-		}
+
+	    /* Simple type check. */
+        /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:ClassInstanceExpr.nameCheck() */
+	    if(decls().isEmpty()) {
+	        error("can not instantiate " + type().typeName() + " no matching constructor found in " + type().typeName());
+	        return;
+	    }
+
+	    /* Variability aware type check. */
+	    if (getSPLStructure().hasVariability()) {
+    		/* from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr* [TypeDecl]; */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		/* get all constructors with the same signature in this type */
+    		for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+    			if (bd instanceof ConstructorDecl) {
+    				if (((ConstructorDecl) bd).signature().equals(decl().signature())) {
+    					declsAndTargetHostTypes.put((ConstructorDecl) bd, decl().hostType());
+    				}
+    			}
+    		}
+    		/* set of selected features for mayBeMissing-Check (second round), 
+    		 * accessing feature is trivially set */
+    		HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    		contextPresentFeatures.add(featureID());
+    		/* check for SPL errors */
+    		addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the constructor",
+    				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
+    				decl().hostType(), hostType(), declsAndTargetHostTypes);
+    		/* check, if types of arguments fit the constructor declaration 
+    		 * (i.e. check, if the information that the type of an argument is 
+    		 * a subtype of the expected parameter is always available due to 
+    		 * the feature model) */
+    		for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+    			if (decl instanceof ConstructorDecl) {
+    				ConstructorDecl cd = (ConstructorDecl) decl;
+    				for (int i = 0; i < getNumArg() & i < cd.getNumParameter(); i++) {
+    					/* different types of argument and parameter */
+    					if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
+    						HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    						/* get all bodyDecls of this type, and thus all features 
+    						 * that implement this type */
+    						for (BodyDecl bd : cd.getParameter(i).type().getBodyDecls()) {
+    						  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
+    						}
+    						/* check for SPL errors */
+    						addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    								"by an implicit cast from argument type to parameter type", false, hostType(), 
+    								false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    					}				
+    				}
+    			}
+    		}
+	    }
 	}
+	
+	
+	/*
+	 * Casts
+	 */
 	
 	/* Declaration of Field with implicit upcast */
 	public void FieldDeclaration.splTypeCheck() {
-		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		if (hasInit()) {
-			TypeDecl sourceType = getInit().type();
-			TypeDecl targetType = type();
-			if (!(sourceType.equals(targetType))) {
-				declsAndTargetHostTypes.put(getInit(), targetType);
-				outputDeclsAndTargetHostTypes.put(targetType, targetType);
-				/* set of selected features for mayBeMissing-Check (second round), 
-				 * accessing feature is trivially set */
-				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-				contextPresentFeatures.add(featureID());
-				/* check for SPL errors */
-				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-						"(by an implicit cast/in the type hierarchy) the type",
-						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
-			}
+	    
+	    /* Simple type check. */
+	    /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:FieldDeclaration.typeCheck() */
+	    
+        /* 
+         * TODO: what if there is a simple type error, there is no an spl-type error,
+         * and not all features are mandatory.  Do simple and var-aware checks, reutrn warning if the simple check returned an error and var-aware not.
+         */
+	    if(hasInit() && !getSPLStructure().hasVariability()) {
+	        TypeDecl source = getInit().type();
+	        TypeDecl dest = type();
+	        if(!source.assignConversionTo(dest, getInit())) {
+	            error("can not assign " + name() + " of type " + dest.typeName() +
+	                    " a value of type " + source.typeName());
+	            return;
+	        }
+	    }
+	    
+	    /* Variability aware type check. */
+        if (getSPLStructure().hasVariability()) {
+    		/* from java.ast: FieldDeclaration : MemberDecl ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified FieldDecl */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		if (hasInit()) {
+    			TypeDecl sourceType = getInit().type();
+    			TypeDecl targetType = type();
+    			if (!(sourceType.equals(targetType))) {
+    				declsAndTargetHostTypes.put(getInit(), targetType);
+    				outputDeclsAndTargetHostTypes.put(targetType, targetType);
+    				/* set of selected features for mayBeMissing-Check (second round), 
+    				 * accessing feature is trivially set */
+    				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    				contextPresentFeatures.add(featureID());
+    				/* check for SPL errors */
+    				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    						"(by an implicit cast/in the type hierarchy) the type",
+    						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    			}
+    		}
 		}
 	}
 	
 	/* Declaration of Variable with implicit upcast */
 	public void VariableDeclaration.splTypeCheck() {
-		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		if (hasInit()) {
-			TypeDecl sourceType = getInit().type();
-			TypeDecl targetType = type();
-			if (!(sourceType.equals(targetType))) {
-				declsAndTargetHostTypes.put(getInit(), targetType);
-				outputDeclsAndTargetHostTypes.put(targetType, targetType);
-				/* set of selected features for mayBeMissing-Check (second round), 
-				 * accessing feature is trivially set */
-				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-				contextPresentFeatures.add(featureID());
-				/* check for SPL errors */
-				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-						"(by an implicit cast/in the type hierarchy) the type",
-						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
-			}
-		}
+
+	    /* Simple type check. */
+        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:VariableDeclaration.splTypeCheck() */
+        /* 
+	     * TODO: what if there is a simple type error, there is no an spl-type error,
+	     * and not all features are mandatory. 
+	     */
+	    if(hasInit() && !getSPLStructure().hasVariability()) {
+	        TypeDecl source = getInit().type();
+	        TypeDecl dest = type();
+	        if(!source.assignConversionTo(dest, getInit())) {
+	            error("can not assign " + name() + " of type " + dest.typeName() +
+	                    " a value of type " + source.typeName());
+	            return;
+	        }
+	    }
+	    
+	    /* Variability aware type check. */
+	    if (getSPLStructure().hasVariability()) {
+    		/* from java.ast: VariableDeclaration : Stmt ::= Modifiers TypeAccess:Access <ID:String> [Init:Expr]; // Simplified VarDeclStmt */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		if (hasInit()) {
+    			TypeDecl sourceType = getInit().type();
+    			TypeDecl targetType = type();
+    			if (!(sourceType.equals(targetType))) {
+    				declsAndTargetHostTypes.put(getInit(), targetType);
+    				outputDeclsAndTargetHostTypes.put(targetType, targetType);
+    				/* set of selected features for mayBeMissing-Check (second round), 
+    				 * accessing feature is trivially set */
+    				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    				contextPresentFeatures.add(featureID());
+    				/* check for SPL errors */
+    				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    						"(by an implicit cast/in the type hierarchy) the type",
+    						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    			}
+    		}
+	    }
 	}
 	
 	/* Simple Assignment with implicit upcast */
 	public void AssignSimpleExpr.splTypeCheck() {
-		/* from java.ast: AssignSimpleExpr : AssignExpr ; */
-		/* report a type error, if a type is implicitly casted to a
-		 * supertype in this assignment and the information 
-		 * of this subtype relation is only available in features that 
-		 * are all optional or mutual exclusive to the selected feature 
-		 * (so there could be a valid feature selection where the information 
-		 * of this subtype relation is not present) */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* from java.ast: 
-		 * abstract AssignExpr : Expr ::= Dest:Expr Source:Expr; */
-		TypeDecl sourceType = getSource().type(); /* right hand side of "=" */
-		TypeDecl targetType = getDest().type();   /* left  hand side of "=" */
-		/* implicit cast */
-		if (!(sourceType.equals(targetType))) {
-			declsAndTargetHostTypes.put(getSource(), targetType);
-			outputDeclsAndTargetHostTypes.put(targetType, targetType);
-			/* set of selected features for mayBeMissing-Check (second round), 
-			 * accessing feature is trivially set */
-			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-			contextPresentFeatures.add(featureID());
-			/* check for SPL errors */
-			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-					"(by an implicit cast/in the type hierarchy) the type",
-					false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+
+	    /* Simple type check. */
+        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:AssignSimpleExpr.splTypeCheck() */
+        /* 
+         * TODO: what if there is a simple type error, there is no an spl-type error,
+         * and not all features are mandatory. 
+         */
+	    if (!getSPLStructure().hasVariability()) {
+    	    if(!sourceType().assignConversionTo(getDest().type(), getSource()) && !sourceType().isUnknown()) {
+    	        error("can not assign " + getDest() + " of type " + getDest().type().typeName() +
+    	              " a value of type " + sourceType().typeName());
+    	    }
+	    }
+	    
+	    /* Variability aware type check. */
+        if (getSPLStructure().hasVariability()) {
+
+            /* from java.ast: AssignSimpleExpr : AssignExpr ; */
+    		/* report a type error, if a type is implicitly casted to a
+    		 * supertype in this assignment and the information 
+    		 * of this subtype relation is only available in features that 
+    		 * are all optional or mutual exclusive to the selected feature 
+    		 * (so there could be a valid feature selection where the information 
+    		 * of this subtype relation is not present) */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		/* from java.ast: 
+    		 * abstract AssignExpr : Expr ::= Dest:Expr Source:Expr; */
+    		TypeDecl sourceType = getSource().type(); /* right hand side of "=" */
+    		TypeDecl targetType = getDest().type();   /* left  hand side of "=" */
+    		/* implicit cast */
+    		if (!(sourceType.equals(targetType))) {
+    			declsAndTargetHostTypes.put(getSource(), targetType);
+    			outputDeclsAndTargetHostTypes.put(targetType, targetType);
+    			/* set of selected features for mayBeMissing-Check (second round), 
+    			 * accessing feature is trivially set */
+    			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    			contextPresentFeatures.add(featureID());
+    			/* check for SPL errors */
+    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					"(by an implicit cast/in the type hierarchy) the type",
+    					false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    		}
 		}
 	}
-	
+
 	/* handle up- and downcasts */
 	public void CastExpr.splTypeCheck() {
-		/* from java.ast: CastExpr : Expr ::= TypeAccess:Access Expr; */
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-  	Access ac = getTypeAccess();
-  	if (ac instanceof TypeAccess) {
-  		TypeAccess ta = (TypeAccess) ac;
-  		/* different types */
-  		if (!(getExpr().type().equals(ta.decl()))) {
-  			if (getExpr().type().isInTypeHierarchy(ta.decl())) {
-  				/* Expr side of CastExpr is in type hierarchy beneath 
-  				 * the TypeAccess side => upcast */
-  				/* get all bodyDecls of this type, and thus all features 
-					 * that implement this type */
-					for (BodyDecl bd : ta.decl().getBodyDecls()) {
-						declsAndTargetHostTypes.put(bd, bd.hostType());
-					}
-					/* set of selected features for mayBeMissing-Check (second round), 
-					 * accessing feature is trivially set */
-					HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-					contextPresentFeatures.add(featureID());
-					/* type access for output */
-					HashMap<ASTNode, TypeDecl> typeDeclAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-					typeDeclAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
-  				/* check for SPL errors */
-  				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  						false, FIRST_ROUND, typeDeclAndTargetHostTypes, false, getExpr().type(), hostType(), typeDeclAndTargetHostTypes);
-  			} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
-  				/* TypeAccess side of CastExpr is in type hierarchy beneath 
-  				 * the Expr side => downcast */
-  				declsAndTargetHostTypes.put(getExpr().type(), getExpr().type().hostType());
-  				/* set of selected features for mayBeMissing-Check (second round), 
-  				 * accessing feature is trivially set */
-  				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-  				contextPresentFeatures.add(featureID());
-  				/* check for SPL errors */
-  				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-  						false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), hostType(), declsAndTargetHostTypes);
-  			}
-  		}
-  	}
-  }
+	    
+	    /* Simple type check. */
+        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:CastExpr.splTypeCheck() */
+        /* 
+         * TODO: what if there is a simple type error, there is no an spl-type error,
+         * and not all features are mandatory. 
+         */
+	    if (!getSPLStructure().hasVariability()) {
+	        TypeDecl expr = getExpr().type();
+	        TypeDecl type = getTypeAccess().type();
+	        if(!expr.isUnknown()) {
+	            if(!expr.castingConversionTo(type)) {
+	                error(expr.typeName() + " can not be cast into " + type.typeName());
+	            }
+	        }
+	    }
+	    
+	    /* Variability aware type check. */
+        if (getSPLStructure().hasVariability()) {
+    
+    		/* from java.ast: CastExpr : Expr ::= TypeAccess:Access Expr; */
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		Access ac = getTypeAccess();
+    		if (ac instanceof TypeAccess) {
+    		    TypeAccess ta = (TypeAccess) ac;
+    		    /* different types */
+          		if (!(getExpr().type().equals(ta.decl()))) {
+          			if (getExpr().type().isInTypeHierarchy(ta.decl())) {
+          				/* Expr side of CastExpr is in type hierarchy beneath 
+          				 * the TypeAccess side => upcast */
+          				/* get all bodyDecls of this type, and thus all features 
+        					 * that implement this type */
+        					for (BodyDecl bd : ta.decl().getBodyDecls()) {
+        						declsAndTargetHostTypes.put(bd, bd.hostType());
+        					}
+        					/* set of selected features for mayBeMissing-Check (second round), 
+        					 * accessing feature is trivially set */
+        					HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+        					contextPresentFeatures.add(featureID());
+        					/* type access for output */
+        					HashMap<ASTNode, TypeDecl> typeDeclAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+        					typeDeclAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
+          				/* check for SPL errors */
+          				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
+          						false, FIRST_ROUND, typeDeclAndTargetHostTypes, false, getExpr().type(), hostType(), typeDeclAndTargetHostTypes);
+          			} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
+          				/* TypeAccess side of CastExpr is in type hierarchy beneath 
+          				 * the Expr side => downcast */
+          				declsAndTargetHostTypes.put(getExpr().type(), getExpr().type().hostType());
+          				/* set of selected features for mayBeMissing-Check (second round), 
+          				 * accessing feature is trivially set */
+          				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+          				contextPresentFeatures.add(featureID());
+          				/* check for SPL errors */
+          				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
+          						false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), hostType(), declsAndTargetHostTypes);
+          			}
+          		}
+      	    }
+        }
+	}
 	
 	/* Super Constructor Access (also implicit in Default Constructor) */
 	public void SuperConstructorAccess.splTypeCheck() {
-		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-		/* do not consider trivial super constructor accesses 
-		 * (i.e. class has no super class but Object) */
-		if (!(decl().hostType().name().equals("Object"))) {
-			/* get all bodyDecls of this type, and thus all features 
-			 * that implement this type */
-			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
-				if (bd instanceof ConstructorDecl) {
-					ConstructorDecl cd = (ConstructorDecl) bd;
-					declsAndTargetHostTypes.put(cd, cd.hostType());
-				}		
-			}
-		}
-		/* if there are non-trivial super constructor accesses */
-		if (!(declsAndTargetHostTypes.keySet().isEmpty())) {
-			/* set of selected features for mayBeMissing-Check (second round), 
-			 * accessing feature is trivially set */
-			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
-			contextPresentFeatures.add(featureID());
-			/* check for SPL errors: this is an unqualified access */
-			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-					"the super constructor", false, hostType(), 
-					false, FIRST_ROUND, declsAndTargetHostTypes, true, hostType(), hostType(), declsAndTargetHostTypes);
-			/* check, if types of arguments fit the constructor declaration 
-			 * (i.e. check, if the information that the type of an argument is 
-			 * a subtype of the expected parameter is always available due to 
-			 * the feature model) */
-			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
-				if (decl instanceof ConstructorDecl) {
-					ConstructorDecl cd = (ConstructorDecl) decl;
-					for (int i = 0; i < getNumArg() & i < cd.getNumParameter(); i++) {
-						/* different types of argument and parameter */
-						if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
-							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-							/* get all bodyDecls of this type, and thus all features 
-							 * that implement this type */
-							for (BodyDecl bd : cd.getParameter(i).type().getBodyDecls()) {
-							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
-							}
-							/* check for SPL errors */
-							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-									"by an implicit cast from argument type to parameter type", false, hostType(), 
-									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
-						}						
-					}
-				}
-			}
-		}
+	    
+	    /* Simple type check. */
+        /* Type check.  See */
+        /* 
+         * TODO: what if there is a simple type error, there is no an spl-type error,
+         * and not all features are mandatory. 
+         */
+        if (!getSPLStructure().hasVariability()) {
+            //TODO
+        }
+
+        /* Variability aware type check. */
+        if (getSPLStructure().hasVariability()) {
+    		HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    		/* do not consider trivial super constructor accesses 
+    		 * (i.e. class has no super class but Object) */
+    		if (!(decl().hostType().name().equals("Object"))) {
+    			/* get all bodyDecls of this type, and thus all features 
+    			 * that implement this type */
+    			for (BodyDecl bd : decl().hostType().getBodyDecls()) {
+    				if (bd instanceof ConstructorDecl) {
+    					ConstructorDecl cd = (ConstructorDecl) bd;
+    					declsAndTargetHostTypes.put(cd, cd.hostType());
+    				}		
+    			}
+    		}
+    		/* if there are non-trivial super constructor accesses */
+    		if (!(declsAndTargetHostTypes.keySet().isEmpty())) {
+    			/* set of selected features for mayBeMissing-Check (second round), 
+    			 * accessing feature is trivially set */
+    			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
+    			contextPresentFeatures.add(featureID());
+    			/* check for SPL errors: this is an unqualified access */
+    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					"the super constructor", false, hostType(), 
+    					false, FIRST_ROUND, declsAndTargetHostTypes, true, hostType(), hostType(), declsAndTargetHostTypes);
+    			/* check, if types of arguments fit the constructor declaration 
+    			 * (i.e. check, if the information that the type of an argument is 
+    			 * a subtype of the expected parameter is always available due to 
+    			 * the feature model) */
+    			for (ASTNode decl : declsAndTargetHostTypes.keySet()) {
+    				if (decl instanceof ConstructorDecl) {
+    					ConstructorDecl cd = (ConstructorDecl) decl;
+    					for (int i = 0; i < getNumArg() & i < cd.getNumParameter(); i++) {
+    						/* different types of argument and parameter */
+    						if (!((getArg(i).type()).equals((cd.getParameter(i).type())))) {
+    							HashMap<ASTNode, TypeDecl> typeDeclsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
+    							/* get all bodyDecls of this type, and thus all features 
+    							 * that implement this type */
+    							for (BodyDecl bd : cd.getParameter(i).type().getBodyDecls()) {
+    							  	typeDeclsAndTargetHostTypes.put(bd, bd.hostType());
+    							}
+    							/* check for SPL errors */
+    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"by an implicit cast from argument type to parameter type", false, hostType(), 
+    									false, FIRST_ROUND, typeDeclsAndTargetHostTypes, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    						}						
+    					}
+    				}
+    			}
+    		}
+    	}
 	}
-	
 }

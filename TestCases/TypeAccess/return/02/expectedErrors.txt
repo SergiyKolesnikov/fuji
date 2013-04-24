@@ -28,8 +28,8 @@ Feature FeatureA accesses the type
 of feature FeatureC.
 Feature FeatureC may not be present in every valid selection.
 
-/TypeAccess/return/02/FeatureB/B.java:2
-/TypeAccess/return/02/FeatureB/B.java:3:
+/TypeAccess/return/02/FeatureB/B.java:3
+/TypeAccess/return/02/FeatureB/B.java:2:
   Semantic Error: NEVER dependency:
 Feature FeatureB accesses the type
   (default package).C
