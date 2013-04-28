@@ -7,7 +7,7 @@ TESTCASES="FieldAccess \
            MethodAccess \
            TypeAccess \
            OptInfoAssignmentWithCast \
-           OptInfoCyclic \
+           OptInfoAssignmentWithCast2Steps \
            OptInfoExtends \
            OptInfoExtends2Steps \
            OptInfoImplements \
