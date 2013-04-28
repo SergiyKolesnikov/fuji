@@ -20,8 +20,8 @@ Features FeatureB2 and FeatureB cannot both be present in a valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureX/X.java:3:
   Semantic Error: MAYBE dependency:
-Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class A of feature FeatureA2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class B.
 Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
@@ -29,8 +29,8 @@ Feature FeatureA may not be present in every valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureX/X.java:3:
   Semantic Error: MAYBE dependency:
-Class B of feature FeatureB2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class B of feature FeatureB2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class C.
 Class B of feature FeatureB extends class C.
 The information that class B extends class C is only present in feature FeatureB.
@@ -38,8 +38,8 @@ Feature FeatureB may not be present in every valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureY/Y.java:4:
   Semantic Error: MAYBE dependency:
-Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class A of feature FeatureA2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class B.
 Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
@@ -47,8 +47,8 @@ Feature FeatureA may not be present in every valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureY/Y.java:4:
   Semantic Error: MAYBE dependency:
-Class B of feature FeatureB2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class B of feature FeatureB2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class C.
 Class B of feature FeatureB extends class C.
 The information that class B extends class C is only present in feature FeatureB.
@@ -56,8 +56,8 @@ Feature FeatureB may not be present in every valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureY/Y.java:5:
   Semantic Error: MAYBE dependency:
-Class A of feature FeatureA2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class A of feature FeatureA2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class B.
 Class A of feature FeatureA extends class B.
 The information that class A extends class B is only present in feature FeatureA.
@@ -65,8 +65,8 @@ Feature FeatureA may not be present in every valid selection.
 
 /OptInfoParameterCast2Steps/02/FeatureY/Y.java:5:
   Semantic Error: MAYBE dependency:
-Class B of feature FeatureB2 accesses by an implicit cast from argument type to parameter type
-  public C()
+Class B of feature FeatureB2 accesses (by an implicit cast from argument type to parameter type) the type
+  public class C { ... }
 which is accessible via class C.
 Class B of feature FeatureB extends class C.
 The information that class B extends class C is only present in feature FeatureB.
