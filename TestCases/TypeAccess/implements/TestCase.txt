@@ -1,31 +1,39 @@
-TypeAccess: implements
-------------------------
-
-Erklaerung:
------------
-
-FeatureA implementiert (implements) FeatureI.
-
-
-SubCases:
----------
-
-01: FeatureI ist optional.
-model:    Base : FeatureA [FeatureI] :: _Base ;
-model-ok: Base : FeatureA [FeatureI] :: _Base ;
-          %%
-          FeatureA implies FeatureI ;
-
-02: FeatureA und FeatureI schlieszen sich gegenseitig aus.
-(durch zusaetzliches Constraint wird FeatureA getoetet.)
-model:    Base : FeatureA | FeatureI :: _Base ;
-model-ok: Base : FeatureA | FeatureI :: _Base ;
-          %%
-          FeatureA implies FeatureI ;
-
-03: FeatureI2 implementiert die gleichen Typen wie FeatureI.
-(2 (oder mehr) optionale Ziele fuer Typzugriff)
-model:    Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
-model-ok: Base : FeatureA [FeatureI] [FeatureI2] :: _Base ;
-          %%
-          not FeatureI iff FeatureI2 ;
+\subsection[Typzugriff: implements]{Typzugriff: implements (Ordner \code{TypeAccess/implements})}
+Die Klasse \code{A} des Features \feature{FeatureA} implementiert die Methode \code{foo()} des Interfaces \code{I} des Features \feature{FeatureI}. 
+\subsubsection{Fall 01: Das Feature \feature{FeatureI} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante das benötigte Interface \code{I} nicht zur Verfügung steht, wenn das Feature \feature{FeatureI} nicht ausgewählt wurde. Dieser Fall löst eine Fehlermeldungen aus, die sich auf den Typzugriff auf den Typ \code{I} bezieht:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/implements/01/FeatureA/A.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).I
+of feature FeatureI.
+Feature FeatureI may not be present in every valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureI} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureI} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureI} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann das Interface \code{I} des Features \feature{FeatureI} nicht ausgewählt werden, wenn das Feature \feature{FeatureA} ausgewählt wird:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/implements/02/FeatureA/A.java:1:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).I
+of feature FeatureI.
+Features FeatureA and FeatureI cannot both be present in a valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureI} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureI} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA} zum einen das Feature \feature{FeatureI} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Das Interface \code{I} wird identisch in den zwei optionalen Features \feature{FeatureI} und \feature{FeatureI2} definiert.} Für die Zugriffe aus der Klasse \code{A} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass in einer Variante gar kein Ziel zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/implements/03/FeatureA/A.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).I
+  of feature FeatureI
+- the type
+    (default package).I
+  of feature FeatureI2
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureI $\iff$ FeatureI2} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar des Interfaces \code{I} ausgewählt werden.

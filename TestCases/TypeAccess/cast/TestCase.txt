@@ -1,24 +1,115 @@
-TypeAccess: Cast
-----------------
+\subsection[Typzugriff: Cast]{Typzugriff: Cast (Ordner \code{TypeAccess/cast})}
+\label{sec:TypeAccess} 
+In der Klasse \code{A} des Features \feature{FeatureA} wird eine Instanz der Klasse \code{B} des Features \feature{FeatureB} explizit nach der Klasse \code{C} des Features \feature{FeatureC} gecastet. Die Klasse \code{B} erweitert die Klasse \code{C}.
+\subsubsection{Fall 01: Das Feature \feature{FeatureC} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die benötigte Klasse \code{C} nicht zur Verfügung steht, wenn das Feature \feature{FeatureC} nicht ausgewählt wurde. Dieser Fall löst insgesamt vier Fehlermeldungen aus, wobei sich eine dieser Fehlermeldungen auf den Cast bezieht (die anderen behandeln den impliziten Zugriff auf den Konstruktor der Oberklasse im Default-Konstruktor der Klasse \code{B} und die Typzugriffe auf den Typ \code{C} in den Klassen \code{A} und \code{B}):
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/cast/01/FeatureA/A.java:4:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses by a cast the type
+  public class C { ... }
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
 
-Erklaerung:
------------
+/TypeAccess/cast/01/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the super constructor
+  public C()
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
 
-In FeatureA wird Instanz des Typs B aus FeatureB nach der Oberklasse von B,
-Typ C aus FeatureC gecastet.
+/TypeAccess/cast/01/FeatureA/A.java:4:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
 
+/TypeAccess/cast/01/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureC} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureC} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureC} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{C} des Features \feature{FeatureC} nicht ausgewählt werden, wenn das Feature \feature{FeatureA} ausgewählt wird:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/cast/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses by a cast the type
+  public class C { ... }
+of feature FeatureC.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
 
-SubCases:
----------
+/TypeAccess/cast/02/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the super constructor
+  public C()
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
 
-01: 
-model:    
-model-ok: 
+/TypeAccess/cast/02/FeatureA/A.java:4:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).C
+of feature FeatureC.
+Features FeatureA and FeatureC cannot both be present in a valid selection.
 
-02: 
-model:    
-model-ok: 
+/TypeAccess/cast/02/FeatureB/B.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Feature FeatureC may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureC} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureC} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA} zum einen das Feature \feature{FeatureC} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Die Klasse \code{C} wird identisch in den zwei optionalen Features \feature{FeatureC} und \feature{FeatureC2} definiert.} Für die Zugriffe aus der Klasse \code{A} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass in einer Variante gar kein Ziel zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/cast/03/FeatureA/A.java:4:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- by a cast the type
+    public C()
+  of feature FeatureC
+- by a cast the type
+    public C()
+  of feature FeatureC2
 
-03: 
-model:    
-model-ok:
+/TypeAccess/cast/03/FeatureB/B.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureB accesses:
+- the super constructor
+    public C()
+  of feature FeatureC
+- the super constructor
+    public C()
+  of feature FeatureC2
+
+/TypeAccess/cast/03/FeatureA/A.java:4:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).C
+  of feature FeatureC
+- the type
+    (default package).C
+  of feature FeatureC2
+
+/TypeAccess/cast/03/FeatureB/B.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureB accesses:
+- the type
+    (default package).C
+  of feature FeatureC
+- the type
+    (default package).C
+  of feature FeatureC2
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureC $\iff$ FeatureC2} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{C} ausgewählt werden.

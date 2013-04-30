@@ -1,23 +1,64 @@
-TypeAccess: Constructor
-------------------------
+\subsection[Typzugriff: Konstruktor]{Typzugriff: Konstruktor (Ordner \code{TypeAccess/constructor})}
+In der Klasse \code{A} des Features \feature{FeatureA} wird eine Instanz der Klasse \code{B} des Features \code{FeatureB} erzeugt. 
+\subsubsection{Fall 01: Das Feature \feature{FeatureB} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die benötigte Klasse \code{B} nicht zur Verfügung steht, wenn das Feature \feature{FeatureB} nicht ausgewählt wurde. Dieser Fall löst insgesamt zwei Fehlermeldungen aus, wobei sich eine dieser Fehlermeldungen auf den Zugriff auf den Konstruktor bezieht (die andere behandelt den Typzugriff auf den Typ \code{B}):
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/constructor/01/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
 
-Erklaerung:
------------
+/TypeAccess/constructor/01/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureB} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{B} des Features \feature{FeatureB} nicht ausgewählt werden, wenn das Feature \feature{FeatureA} ausgewählt wird:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/constructor/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
 
-In FeatureA 
+/TypeAccess/constructor/02/FeatureA/A.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA} zum einen das Feature \feature{FeatureB} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Die Klasse \code{B} wird identisch in den zwei optionalen Features \feature{FeatureB} und \feature{FeatureB2} definiert.} Für die Zugriffe aus der Klasse \code{A} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass in einer Variante gar kein Ziel zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/constructor/03/FeatureA/A.java:3:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the constructor
+    public B()
+  of feature FeatureB
+- the constructor
+    public B()
+  of feature FeatureB2
 
-
-SubCases:
----------
-
-01: 
-model:    
-model-ok: 
-
-02: 
-model:    
-model-ok: 
-
-03: 
-model:    
-model-ok:
+/TypeAccess/constructor/03/FeatureA/A.java:3:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureB $\iff$ FeatureB2} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{B} ausgewählt werden.
