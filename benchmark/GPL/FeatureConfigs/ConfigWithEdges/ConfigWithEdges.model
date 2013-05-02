@@ -1,2 +1,1 @@
-WithEdges_stubfix
-WithEdges
+ConfigWithEdges : WithEdges_stubfix WithEdges :: _ConfigWithEdges ;

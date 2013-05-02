@@ -1,2 +1,1 @@
-Map_stubfix
-Map
+ConfigMap : Map_stubfix Map :: _ConfigMap ;

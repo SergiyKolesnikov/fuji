@@ -1,2 +1,1 @@
-Weight_stubfix
-Weight
+ConfigWeight : Weight_stubfix Weight :: _ConfigWeight ;

@@ -1,2 +1,1 @@
-DerivativeCompressCRC_stubfix
-DerivativeCompressCRC
+ConfigDerivativeCompressCRC : DerivativeCompressCRC_stubfix DerivativeCompressCRC :: _ConfigDerivativeCompressCRC ;

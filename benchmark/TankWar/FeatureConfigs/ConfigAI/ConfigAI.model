@@ -1,2 +1,1 @@
-AI_stubfix
-AI
+ConfigAI : AI_stubfix AI :: _ConfigAI ;

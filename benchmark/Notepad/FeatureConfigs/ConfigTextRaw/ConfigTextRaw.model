@@ -1,2 +1,1 @@
-TextRaw_stubfix
-TextRaw
+ConfigTextRaw : TextRaw_stubfix TextRaw :: _ConfigTextRaw ;

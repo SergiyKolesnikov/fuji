@@ -1,2 +1,1 @@
-NewFile_stubfix
-NewFile
+ConfigNewFile : NewFile_stubfix NewFile :: _ConfigNewFile ;

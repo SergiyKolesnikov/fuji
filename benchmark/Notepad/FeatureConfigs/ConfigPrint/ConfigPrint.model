@@ -1,2 +1,1 @@
-Print_stubfix
-Print
+ConfigPrint : Print_stubfix Print :: _ConfigPrint ;

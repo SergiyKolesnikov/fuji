@@ -1,2 +1,1 @@
-BasicGraph_stubfix
-BasicGraph
+ConfigBasicGraph : BasicGraph_stubfix BasicGraph :: _ConfigBasicGraph ;

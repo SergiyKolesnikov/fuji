@@ -1,2 +1,1 @@
-genbali_stubfix
-genbali
+Configgenbali : genbali_stubfix genbali :: _Configgenbali ;

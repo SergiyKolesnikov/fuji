@@ -1,2 +1,1 @@
-Snapshot_stubfix
-Snapshot
+ConfigSnapshot : Snapshot_stubfix Snapshot :: _ConfigSnapshot ;

@@ -1,2 +1,1 @@
-reasons_stubfix
-reasons
+Configreasons : reasons_stubfix reasons :: _Configreasons ;

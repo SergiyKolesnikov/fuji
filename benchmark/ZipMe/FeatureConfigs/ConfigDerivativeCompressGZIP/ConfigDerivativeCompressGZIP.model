@@ -1,2 +1,1 @@
-DerivativeCompressGZIP_stubfix
-DerivativeCompressGZIP
+ConfigDerivativeCompressGZIP : DerivativeCompressGZIP_stubfix DerivativeCompressGZIP :: _ConfigDerivativeCompressGZIP ;

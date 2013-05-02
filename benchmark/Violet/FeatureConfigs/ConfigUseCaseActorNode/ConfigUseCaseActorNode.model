@@ -1,2 +1,1 @@
-UseCaseActorNode_stubfix
-UseCaseActorNode
+ConfigUseCaseActorNode : UseCaseActorNode_stubfix UseCaseActorNode :: _ConfigUseCaseActorNode ;

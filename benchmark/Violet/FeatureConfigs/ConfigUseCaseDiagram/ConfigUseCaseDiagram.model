@@ -1,2 +1,1 @@
-UseCaseDiagram_stubfix
-UseCaseDiagram
+ConfigUseCaseDiagram : UseCaseDiagram_stubfix UseCaseDiagram :: _ConfigUseCaseDiagram ;

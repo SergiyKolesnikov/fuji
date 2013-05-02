@@ -1,2 +1,1 @@
-M_240_stubfix
-M_240
+ConfigM_240 : M_240_stubfix M_240 :: _ConfigM_240 ;

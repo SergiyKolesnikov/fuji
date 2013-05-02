@@ -1,2 +1,1 @@
-Image_stubfix
-Image
+ConfigImage : Image_stubfix Image :: _ConfigImage ;

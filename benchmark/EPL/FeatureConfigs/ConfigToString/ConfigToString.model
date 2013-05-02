@@ -1,2 +1,1 @@
-ToString_stubfix
-ToString
+ConfigToString : ToString_stubfix ToString :: _ConfigToString ;

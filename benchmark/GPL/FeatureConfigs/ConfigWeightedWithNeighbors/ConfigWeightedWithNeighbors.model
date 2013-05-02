@@ -1,2 +1,1 @@
-WeightedWithNeighbors_stubfix
-WeightedWithNeighbors
+ConfigWeightedWithNeighbors : WeightedWithNeighbors_stubfix WeightedWithNeighbors :: _ConfigWeightedWithNeighbors ;

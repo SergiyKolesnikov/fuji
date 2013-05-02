@@ -1,2 +1,1 @@
-Connected_stubfix
-Connected
+ConfigConnected : Connected_stubfix Connected :: _ConfigConnected ;

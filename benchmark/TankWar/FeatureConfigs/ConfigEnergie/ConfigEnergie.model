@@ -1,2 +1,1 @@
-Energie_stubfix
-Energie
+ConfigEnergie : Energie_stubfix Energie :: _ConfigEnergie ;

@@ -1,2 +1,1 @@
-WeightedOnlyVertices_stubfix
-WeightedOnlyVertices
+ConfigWeightedOnlyVertices : WeightedOnlyVertices_stubfix WeightedOnlyVertices :: _ConfigWeightedOnlyVertices ;

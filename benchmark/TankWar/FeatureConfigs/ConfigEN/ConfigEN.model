@@ -1,2 +1,1 @@
-EN_stubfix
-EN
+ConfigEN : EN_stubfix EN :: _ConfigEN ;

@@ -1,2 +1,1 @@
-guiext_stubfix
-guiext
+Configguiext : guiext_stubfix guiext :: _Configguiext ;

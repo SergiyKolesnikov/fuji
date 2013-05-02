@@ -1,2 +1,1 @@
-LargerGrid_stubfix
-LargerGrid
+ConfigLargerGrid : LargerGrid_stubfix LargerGrid :: _ConfigLargerGrid ;

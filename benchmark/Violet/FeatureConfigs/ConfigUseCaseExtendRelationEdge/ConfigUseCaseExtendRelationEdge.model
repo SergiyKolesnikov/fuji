@@ -1,2 +1,1 @@
-UseCaseExtendRelationEdge_stubfix
-UseCaseExtendRelationEdge
+ConfigUseCaseExtendRelationEdge : UseCaseExtendRelationEdge_stubfix UseCaseExtendRelationEdge :: _ConfigUseCaseExtendRelationEdge ;

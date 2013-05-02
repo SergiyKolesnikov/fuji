@@ -1,2 +1,1 @@
-WeightedWithEdges_stubfix
-WeightedWithEdges
+ConfigWeightedWithEdges : WeightedWithEdges_stubfix WeightedWithEdges :: _ConfigWeightedWithEdges ;

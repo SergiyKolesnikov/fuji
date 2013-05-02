@@ -1,2 +1,1 @@
-Bombe_stubfix
-Bombe
+ConfigBombe : Bombe_stubfix Bombe :: _ConfigBombe ;

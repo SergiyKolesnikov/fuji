@@ -1,2 +1,1 @@
-PC_stubfix
-PC
+ConfigPC : PC_stubfix PC :: _ConfigPC ;

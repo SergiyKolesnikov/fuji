@@ -1,2 +1,1 @@
-Numbers_stubfix
-Numbers
+ConfigNumbers : Numbers_stubfix Numbers :: _ConfigNumbers ;

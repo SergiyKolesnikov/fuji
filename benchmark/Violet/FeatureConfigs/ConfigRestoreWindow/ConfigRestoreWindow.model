@@ -1,2 +1,1 @@
-RestoreWindow_stubfix
-RestoreWindow
+ConfigRestoreWindow : RestoreWindow_stubfix RestoreWindow :: _ConfigRestoreWindow ;

@@ -1,2 +1,1 @@
-Hard_stubfix
-Hard
+ConfigHard : Hard_stubfix Hard :: _ConfigHard ;

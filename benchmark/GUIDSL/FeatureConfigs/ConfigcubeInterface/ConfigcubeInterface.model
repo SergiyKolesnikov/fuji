@@ -1,2 +1,1 @@
-cubeInterface_stubfix
-cubeInterface
+ConfigcubeInterface : cubeInterface_stubfix cubeInterface :: _ConfigcubeInterface ;

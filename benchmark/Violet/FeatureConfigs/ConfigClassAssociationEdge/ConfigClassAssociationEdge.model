@@ -1,2 +1,1 @@
-ClassAssociationEdge_stubfix
-ClassAssociationEdge
+ConfigClassAssociationEdge : ClassAssociationEdge_stubfix ClassAssociationEdge :: _ConfigClassAssociationEdge ;

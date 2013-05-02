@@ -1,2 +1,1 @@
-Resources_stubfix
-Resources
+ConfigResources : Resources_stubfix Resources :: _ConfigResources ;

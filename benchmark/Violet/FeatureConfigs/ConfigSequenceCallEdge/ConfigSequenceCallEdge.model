@@ -1,2 +1,1 @@
-SequenceCallEdge_stubfix
-SequenceCallEdge
+ConfigSequenceCallEdge : SequenceCallEdge_stubfix SequenceCallEdge :: _ConfigSequenceCallEdge ;

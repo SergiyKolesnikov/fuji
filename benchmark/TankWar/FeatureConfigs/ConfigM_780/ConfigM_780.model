@@ -1,2 +1,1 @@
-M_780_stubfix
-M_780
+ConfigM_780 : M_780_stubfix M_780 :: _ConfigM_780 ;

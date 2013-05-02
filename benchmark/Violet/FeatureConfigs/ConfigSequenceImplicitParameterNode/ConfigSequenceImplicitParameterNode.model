@@ -1,2 +1,1 @@
-SequenceImplicitParameterNode_stubfix
-SequenceImplicitParameterNode
+ConfigSequenceImplicitParameterNode : SequenceImplicitParameterNode_stubfix SequenceImplicitParameterNode :: _ConfigSequenceImplicitParameterNode ;

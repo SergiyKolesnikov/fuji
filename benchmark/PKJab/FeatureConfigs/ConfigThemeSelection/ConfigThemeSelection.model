@@ -1,2 +1,1 @@
-ThemeSelection_stubfix
-ThemeSelection
+ConfigThemeSelection : ThemeSelection_stubfix ThemeSelection :: _ConfigThemeSelection ;

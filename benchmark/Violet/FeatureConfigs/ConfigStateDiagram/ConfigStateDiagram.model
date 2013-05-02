@@ -1,2 +1,1 @@
-StateDiagram_stubfix
-StateDiagram
+ConfigStateDiagram : StateDiagram_stubfix StateDiagram :: _ConfigStateDiagram ;

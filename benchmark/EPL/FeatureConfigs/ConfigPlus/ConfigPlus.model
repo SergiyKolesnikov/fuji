@@ -1,2 +1,1 @@
-Plus_stubfix
-Plus
+ConfigPlus : Plus_stubfix Plus :: _ConfigPlus ;

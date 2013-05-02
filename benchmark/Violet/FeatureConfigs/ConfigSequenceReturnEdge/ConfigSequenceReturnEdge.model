@@ -1,2 +1,1 @@
-SequenceReturnEdge_stubfix
-SequenceReturnEdge
+ConfigSequenceReturnEdge : SequenceReturnEdge_stubfix SequenceReturnEdge :: _ConfigSequenceReturnEdge ;

@@ -1,2 +1,1 @@
-SetTitle_stubfix
-SetTitle
+ConfigSetTitle : SetTitle_stubfix SetTitle :: _ConfigSetTitle ;

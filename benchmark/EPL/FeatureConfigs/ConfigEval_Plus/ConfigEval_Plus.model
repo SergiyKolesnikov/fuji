@@ -1,2 +1,1 @@
-Eval_Plus_stubfix
-Eval_Plus
+ConfigEval_Plus : Eval_Plus_stubfix Eval_Plus :: _ConfigEval_Plus ;

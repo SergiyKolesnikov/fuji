@@ -1,2 +1,1 @@
-OnlyVertices_stubfix
-OnlyVertices
+ConfigOnlyVertices : OnlyVertices_stubfix OnlyVertices :: _ConfigOnlyVertices ;

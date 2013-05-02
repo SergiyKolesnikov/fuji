@@ -1,2 +1,1 @@
-explodieren_stubfix
-explodieren
+Configexplodieren : explodieren_stubfix explodieren :: _Configexplodieren ;

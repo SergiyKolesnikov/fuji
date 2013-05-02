@@ -1,2 +1,1 @@
-ClassDiagram_stubfix
-ClassDiagram
+ConfigClassDiagram : ClassDiagram_stubfix ClassDiagram :: _ConfigClassDiagram ;

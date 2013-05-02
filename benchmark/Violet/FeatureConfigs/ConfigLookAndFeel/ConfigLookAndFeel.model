@@ -1,2 +1,1 @@
-LookAndFeel_stubfix
-LookAndFeel
+ConfigLookAndFeel : LookAndFeel_stubfix LookAndFeel :: _ConfigLookAndFeel ;

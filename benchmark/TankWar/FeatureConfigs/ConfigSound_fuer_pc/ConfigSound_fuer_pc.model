@@ -1,2 +1,1 @@
-Sound_fuer_pc_stubfix
-Sound_fuer_pc
+ConfigSound_fuer_pc : Sound_fuer_pc_stubfix Sound_fuer_pc :: _ConfigSound_fuer_pc ;

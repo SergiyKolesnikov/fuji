@@ -1,2 +1,1 @@
-output_stubfix
-output
+Configoutput : output_stubfix output :: _Configoutput ;

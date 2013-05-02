@@ -37,7 +37,7 @@ do
 			then
 				mkdir "$csname/FeatureConfigs/Config$feature"
 			fi
-			echo -e "${feature}_stubfix\n${feature}" > "$csname/FeatureConfigs/Config$feature/Config$feature.model"
+			echo -e "Config$feature : ${feature}_stubfix ${feature} :: _Config$feature ;" > "$csname/FeatureConfigs/Config$feature/Config$feature.model"
 		done
 	fi
 	i=$((i+1))

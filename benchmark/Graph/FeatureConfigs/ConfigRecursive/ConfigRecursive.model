@@ -1,2 +1,1 @@
-Recursive_stubfix
-Recursive
+ConfigRecursive : Recursive_stubfix Recursive :: _ConfigRecursive ;

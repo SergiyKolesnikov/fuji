@@ -1,2 +1,1 @@
-bexpr_stubfix
-bexpr
+Configbexpr : bexpr_stubfix bexpr :: _Configbexpr ;

@@ -1,2 +1,1 @@
-tool_stubfix
-tool
+Configtool : tool_stubfix tool :: _Configtool ;

@@ -1,2 +1,1 @@
-UseCaseGeneralizationEdge_stubfix
-UseCaseGeneralizationEdge
+ConfigUseCaseGeneralizationEdge : UseCaseGeneralizationEdge_stubfix UseCaseGeneralizationEdge :: _ConfigUseCaseGeneralizationEdge ;

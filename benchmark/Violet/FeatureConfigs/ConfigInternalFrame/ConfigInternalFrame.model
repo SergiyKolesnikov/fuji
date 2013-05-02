@@ -1,2 +1,1 @@
-InternalFrame_stubfix
-InternalFrame
+ConfigInternalFrame : InternalFrame_stubfix InternalFrame :: _ConfigInternalFrame ;

@@ -1,2 +1,1 @@
-solver_stubfix
-solver
+Configsolver : solver_stubfix solver :: _Configsolver ;

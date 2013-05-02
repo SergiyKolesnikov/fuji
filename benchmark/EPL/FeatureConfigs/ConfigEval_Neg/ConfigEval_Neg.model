@@ -1,2 +1,1 @@
-Eval_Neg_stubfix
-Eval_Neg
+ConfigEval_Neg : Eval_Neg_stubfix Eval_Neg :: _ConfigEval_Neg ;

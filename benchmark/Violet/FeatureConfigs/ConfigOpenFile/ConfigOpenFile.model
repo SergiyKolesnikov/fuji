@@ -1,2 +1,1 @@
-OpenFile_stubfix
-OpenFile
+ConfigOpenFile : OpenFile_stubfix OpenFile :: _ConfigOpenFile ;

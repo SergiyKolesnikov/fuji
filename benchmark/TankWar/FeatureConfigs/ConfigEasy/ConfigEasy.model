@@ -1,2 +1,1 @@
-Easy_stubfix
-Easy
+ConfigEasy : Easy_stubfix Easy :: _ConfigEasy ;

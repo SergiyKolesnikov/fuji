@@ -1,2 +1,1 @@
-ClassInheritanceEdge_stubfix
-ClassInheritanceEdge
+ConfigClassInheritanceEdge : ClassInheritanceEdge_stubfix ClassInheritanceEdge :: _ConfigClassInheritanceEdge ;

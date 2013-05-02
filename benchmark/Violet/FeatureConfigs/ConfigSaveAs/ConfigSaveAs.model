@@ -1,2 +1,1 @@
-SaveAs_stubfix
-SaveAs
+ConfigSaveAs : SaveAs_stubfix SaveAs :: _ConfigSaveAs ;

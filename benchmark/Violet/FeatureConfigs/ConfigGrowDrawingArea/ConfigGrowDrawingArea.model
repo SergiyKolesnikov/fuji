@@ -1,2 +1,1 @@
-GrowDrawingArea_stubfix
-GrowDrawingArea
+ConfigGrowDrawingArea : GrowDrawingArea_stubfix GrowDrawingArea :: _ConfigGrowDrawingArea ;

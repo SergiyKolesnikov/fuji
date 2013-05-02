@@ -1,2 +1,1 @@
-Feuerkraft_stubfix
-Feuerkraft
+ConfigFeuerkraft : Feuerkraft_stubfix Feuerkraft :: _ConfigFeuerkraft ;

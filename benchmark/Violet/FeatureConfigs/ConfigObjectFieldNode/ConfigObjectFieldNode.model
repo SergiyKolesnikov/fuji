@@ -1,2 +1,1 @@
-ObjectFieldNode_stubfix
-ObjectFieldNode
+ConfigObjectFieldNode : ObjectFieldNode_stubfix ObjectFieldNode :: _ConfigObjectFieldNode ;

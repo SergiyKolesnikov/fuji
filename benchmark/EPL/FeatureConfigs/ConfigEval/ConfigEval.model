@@ -1,2 +1,1 @@
-Eval_stubfix
-Eval
+ConfigEval : Eval_stubfix Eval :: _ConfigEval ;

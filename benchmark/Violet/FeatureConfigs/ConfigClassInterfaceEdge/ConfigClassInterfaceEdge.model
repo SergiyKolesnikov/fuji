@@ -1,2 +1,1 @@
-ClassInterfaceEdge_stubfix
-ClassInterfaceEdge
+ConfigClassInterfaceEdge : ClassInterfaceEdge_stubfix ClassInterfaceEdge :: _ConfigClassInterfaceEdge ;

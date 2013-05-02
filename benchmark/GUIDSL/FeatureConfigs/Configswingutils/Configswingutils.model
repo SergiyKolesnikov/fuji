@@ -1,2 +1,1 @@
-swingutils_stubfix
-swingutils
+Configswingutils : swingutils_stubfix swingutils :: _Configswingutils ;

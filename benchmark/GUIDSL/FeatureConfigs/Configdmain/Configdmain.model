@@ -1,2 +1,1 @@
-dmain_stubfix
-dmain
+Configdmain : dmain_stubfix dmain :: _Configdmain ;

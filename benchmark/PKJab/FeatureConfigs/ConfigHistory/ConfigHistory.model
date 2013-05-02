@@ -1,2 +1,1 @@
-History_stubfix
-History
+ConfigHistory : History_stubfix History :: _ConfigHistory ;

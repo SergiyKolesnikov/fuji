@@ -1,2 +1,1 @@
-StronglyConnected_stubfix
-StronglyConnected
+ConfigStronglyConnected : StronglyConnected_stubfix StronglyConnected :: _ConfigStronglyConnected ;

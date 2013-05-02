@@ -1,2 +1,1 @@
-ClipDrawingArea_stubfix
-ClipDrawingArea
+ConfigClipDrawingArea : ClipDrawingArea_stubfix ClipDrawingArea :: _ConfigClipDrawingArea ;

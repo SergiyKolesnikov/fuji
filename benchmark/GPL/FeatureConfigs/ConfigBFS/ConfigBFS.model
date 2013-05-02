@@ -1,2 +1,1 @@
-BFS_stubfix
-BFS
+ConfigBFS : BFS_stubfix BFS :: _ConfigBFS ;

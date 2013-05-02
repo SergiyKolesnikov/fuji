@@ -1,2 +1,1 @@
-InterfaceNode_stubfix
-InterfaceNode
+ConfigInterfaceNode : InterfaceNode_stubfix InterfaceNode :: _ConfigInterfaceNode ;

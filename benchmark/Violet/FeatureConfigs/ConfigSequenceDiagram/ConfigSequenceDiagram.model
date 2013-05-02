@@ -1,2 +1,1 @@
-SequenceDiagram_stubfix
-SequenceDiagram
+ConfigSequenceDiagram : SequenceDiagram_stubfix SequenceDiagram :: _ConfigSequenceDiagram ;

@@ -1,2 +1,1 @@
-HostOS_stubfix
-HostOS
+ConfigHostOS : HostOS_stubfix HostOS :: _ConfigHostOS ;

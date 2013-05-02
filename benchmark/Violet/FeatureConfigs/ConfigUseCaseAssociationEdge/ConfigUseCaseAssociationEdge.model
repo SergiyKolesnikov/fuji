@@ -1,2 +1,1 @@
-UseCaseAssociationEdge_stubfix
-UseCaseAssociationEdge
+ConfigUseCaseAssociationEdge : UseCaseAssociationEdge_stubfix UseCaseAssociationEdge :: _ConfigUseCaseAssociationEdge ;

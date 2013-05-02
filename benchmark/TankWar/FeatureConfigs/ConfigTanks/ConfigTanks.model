@@ -1,2 +1,1 @@
-Tanks_stubfix
-Tanks
+ConfigTanks : Tanks_stubfix Tanks :: _ConfigTanks ;

@@ -1,2 +1,1 @@
-SequenceCallNode_stubfix
-SequenceCallNode
+ConfigSequenceCallNode : SequenceCallNode_stubfix SequenceCallNode :: _ConfigSequenceCallNode ;

@@ -1,2 +1,1 @@
-gspec_stubfix
-gspec
+Configgspec : gspec_stubfix gspec :: _Configgspec ;

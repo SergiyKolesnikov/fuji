@@ -1,2 +1,1 @@
-Transpose_stubfix
-Transpose
+ConfigTranspose : Transpose_stubfix Transpose :: _ConfigTranspose ;

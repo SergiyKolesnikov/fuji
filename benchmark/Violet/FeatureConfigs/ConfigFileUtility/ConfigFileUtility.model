@@ -1,2 +1,1 @@
-FileUtility_stubfix
-FileUtility
+ConfigFileUtility : FileUtility_stubfix FileUtility :: _ConfigFileUtility ;

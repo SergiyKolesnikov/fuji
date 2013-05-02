@@ -1,2 +1,1 @@
-MenuResources_stubfix
-MenuResources
+ConfigMenuResources : MenuResources_stubfix MenuResources :: _ConfigMenuResources ;

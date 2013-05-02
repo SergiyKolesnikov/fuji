@@ -1,2 +1,1 @@
-ClassDependencyEdge_stubfix
-ClassDependencyEdge
+ConfigClassDependencyEdge : ClassDependencyEdge_stubfix ClassDependencyEdge :: _ConfigClassDependencyEdge ;

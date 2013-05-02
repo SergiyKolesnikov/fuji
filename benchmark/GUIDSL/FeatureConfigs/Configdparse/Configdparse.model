@@ -1,2 +1,1 @@
-dparse_stubfix
-dparse
+Configdparse : dparse_stubfix dparse :: _Configdparse ;

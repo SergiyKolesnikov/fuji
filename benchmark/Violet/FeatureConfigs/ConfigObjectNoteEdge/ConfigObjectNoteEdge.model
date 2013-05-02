@@ -1,2 +1,1 @@
-ObjectNoteEdge_stubfix
-ObjectNoteEdge
+ConfigObjectNoteEdge : ObjectNoteEdge_stubfix ObjectNoteEdge :: _ConfigObjectNoteEdge ;

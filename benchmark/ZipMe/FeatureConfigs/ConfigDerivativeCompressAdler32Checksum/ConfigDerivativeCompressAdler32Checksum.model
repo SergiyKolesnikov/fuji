@@ -1,2 +1,1 @@
-DerivativeCompressAdler32Checksum_stubfix
-DerivativeCompressAdler32Checksum
+ConfigDerivativeCompressAdler32Checksum : DerivativeCompressAdler32Checksum_stubfix DerivativeCompressAdler32Checksum :: _ConfigDerivativeCompressAdler32Checksum ;

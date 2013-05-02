@@ -1,2 +1,1 @@
-dgram_stubfix
-dgram
+Configdgram : dgram_stubfix dgram :: _Configdgram ;

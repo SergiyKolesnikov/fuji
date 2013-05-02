@@ -1,2 +1,1 @@
-ExportFilter_stubfix
-ExportFilter
+ConfigExportFilter : ExportFilter_stubfix ExportFilter :: _ConfigExportFilter ;

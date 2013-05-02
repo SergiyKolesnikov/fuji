@@ -1,2 +1,1 @@
-Entries_stubfix
-Entries
+ConfigEntries : Entries_stubfix Entries :: _ConfigEntries ;

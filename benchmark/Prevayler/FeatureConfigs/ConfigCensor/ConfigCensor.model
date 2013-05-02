@@ -1,2 +1,1 @@
-Censor_stubfix
-Censor
+ConfigCensor : Censor_stubfix Censor :: _ConfigCensor ;

@@ -1,2 +1,1 @@
-ltms_stubfix
-ltms
+Configltms : ltms_stubfix ltms :: _Configltms ;

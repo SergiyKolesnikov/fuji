@@ -1,2 +1,1 @@
-ClassNoteNode_stubfix
-ClassNoteNode
+ConfigClassNoteNode : ClassNoteNode_stubfix ClassNoteNode :: _ConfigClassNoteNode ;

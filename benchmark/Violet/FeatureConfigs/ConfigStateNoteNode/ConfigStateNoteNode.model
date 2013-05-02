@@ -1,2 +1,1 @@
-StateNoteNode_stubfix
-StateNoteNode
+ConfigStateNoteNode : StateNoteNode_stubfix StateNoteNode :: _ConfigStateNoteNode ;

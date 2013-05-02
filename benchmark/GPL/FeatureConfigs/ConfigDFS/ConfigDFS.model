@@ -1,2 +1,1 @@
-DFS_stubfix
-DFS
+ConfigDFS : DFS_stubfix DFS :: _ConfigDFS ;

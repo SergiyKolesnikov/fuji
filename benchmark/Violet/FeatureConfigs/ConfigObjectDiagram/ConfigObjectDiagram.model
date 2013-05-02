@@ -1,2 +1,1 @@
-ObjectDiagram_stubfix
-ObjectDiagram
+ConfigObjectDiagram : ObjectDiagram_stubfix ObjectDiagram :: _ConfigObjectDiagram ;

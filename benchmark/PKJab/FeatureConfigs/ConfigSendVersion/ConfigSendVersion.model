@@ -1,2 +1,1 @@
-SendVersion_stubfix
-SendVersion
+ConfigSendVersion : SendVersion_stubfix SendVersion :: _ConfigSendVersion ;

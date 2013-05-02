@@ -1,2 +1,1 @@
-RecentFile_stubfix
-RecentFile
+ConfigRecentFile : RecentFile_stubfix RecentFile :: _ConfigRecentFile ;

@@ -1,2 +1,1 @@
-eharvest_stubfix
-eharvest
+Configeharvest : eharvest_stubfix eharvest :: _Configeharvest ;

@@ -1,2 +1,1 @@
-Soundeffekt_stubfix
-Soundeffekt
+ConfigSoundeffekt : Soundeffekt_stubfix Soundeffekt :: _ConfigSoundeffekt ;

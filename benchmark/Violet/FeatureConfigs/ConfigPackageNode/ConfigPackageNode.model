@@ -1,2 +1,1 @@
-PackageNode_stubfix
-PackageNode
+ConfigPackageNode : PackageNode_stubfix PackageNode :: _ConfigPackageNode ;

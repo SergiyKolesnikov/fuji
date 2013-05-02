@@ -1,2 +1,1 @@
-FormatRaw_stubfix
-FormatRaw
+ConfigFormatRaw : FormatRaw_stubfix FormatRaw :: _ConfigFormatRaw ;

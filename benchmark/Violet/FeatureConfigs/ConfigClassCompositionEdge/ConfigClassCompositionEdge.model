@@ -1,2 +1,1 @@
-ClassCompositionEdge_stubfix
-ClassCompositionEdge
+ConfigClassCompositionEdge : ClassCompositionEdge_stubfix ClassCompositionEdge :: _ConfigClassCompositionEdge ;

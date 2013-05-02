@@ -1,2 +1,1 @@
-PreviousWindow_stubfix
-PreviousWindow
+ConfigPreviousWindow : PreviousWindow_stubfix PreviousWindow :: _ConfigPreviousWindow ;

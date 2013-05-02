@@ -1,2 +1,1 @@
-MenuBar_stubfix
-MenuBar
+ConfigMenuBar : MenuBar_stubfix MenuBar :: _ConfigMenuBar ;

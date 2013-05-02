@@ -1,2 +1,1 @@
-DerivativeGZIPCRC_stubfix
-DerivativeGZIPCRC
+ConfigDerivativeGZIPCRC : DerivativeGZIPCRC_stubfix DerivativeGZIPCRC :: _ConfigDerivativeGZIPCRC ;

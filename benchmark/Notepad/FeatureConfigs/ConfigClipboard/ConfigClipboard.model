@@ -1,2 +1,1 @@
-Clipboard_stubfix
-Clipboard
+ConfigClipboard : Clipboard_stubfix Clipboard :: _ConfigClipboard ;

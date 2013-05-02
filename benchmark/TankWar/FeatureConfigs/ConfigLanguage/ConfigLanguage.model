@@ -1,2 +1,1 @@
-Language_stubfix
-Language
+ConfigLanguage : Language_stubfix Language :: _ConfigLanguage ;

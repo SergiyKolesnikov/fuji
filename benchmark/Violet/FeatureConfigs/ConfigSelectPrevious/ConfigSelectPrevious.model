@@ -1,2 +1,1 @@
-SelectPrevious_stubfix
-SelectPrevious
+ConfigSelectPrevious : SelectPrevious_stubfix SelectPrevious :: _ConfigSelectPrevious ;

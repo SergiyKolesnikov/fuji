@@ -1,2 +1,1 @@
-ViewMenu_stubfix
-ViewMenu
+ConfigViewMenu : ViewMenu_stubfix ViewMenu :: _ConfigViewMenu ;

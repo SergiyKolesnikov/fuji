@@ -1,2 +1,1 @@
-Timestamps_stubfix
-Timestamps
+ConfigTimestamps : Timestamps_stubfix Timestamps :: _ConfigTimestamps ;

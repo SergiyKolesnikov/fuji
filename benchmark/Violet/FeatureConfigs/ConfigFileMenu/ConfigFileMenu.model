@@ -1,2 +1,1 @@
-FileMenu_stubfix
-FileMenu
+ConfigFileMenu : FileMenu_stubfix FileMenu :: _ConfigFileMenu ;

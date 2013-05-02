@@ -1,2 +1,1 @@
-SequenceNoteEdge_stubfix
-SequenceNoteEdge
+ConfigSequenceNoteEdge : SequenceNoteEdge_stubfix SequenceNoteEdge :: _ConfigSequenceNoteEdge ;

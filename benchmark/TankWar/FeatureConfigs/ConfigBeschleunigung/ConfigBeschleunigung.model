@@ -1,2 +1,1 @@
-Beschleunigung_stubfix
-Beschleunigung
+ConfigBeschleunigung : Beschleunigung_stubfix Beschleunigung :: _ConfigBeschleunigung ;

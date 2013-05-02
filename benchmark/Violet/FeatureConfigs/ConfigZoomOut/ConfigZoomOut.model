@@ -1,2 +1,1 @@
-ZoomOut_stubfix
-ZoomOut
+ConfigZoomOut : ZoomOut_stubfix ZoomOut :: _ConfigZoomOut ;

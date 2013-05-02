@@ -1,2 +1,1 @@
-Extended_stubfix
-Extended
+ConfigExtended : Extended_stubfix Extended :: _ConfigExtended ;

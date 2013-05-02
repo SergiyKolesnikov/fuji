@@ -1,2 +1,1 @@
-MSTPrim_stubfix
-MSTPrim
+ConfigMSTPrim : MSTPrim_stubfix MSTPrim :: _ConfigMSTPrim ;

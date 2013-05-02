@@ -1,2 +1,1 @@
-ClassAggregationEdge_stubfix
-ClassAggregationEdge
+ConfigClassAggregationEdge : ClassAggregationEdge_stubfix ClassAggregationEdge :: _ConfigClassAggregationEdge ;

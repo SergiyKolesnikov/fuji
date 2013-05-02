@@ -1,2 +1,1 @@
-CRC_stubfix
-CRC
+ConfigCRC : CRC_stubfix CRC :: _ConfigCRC ;

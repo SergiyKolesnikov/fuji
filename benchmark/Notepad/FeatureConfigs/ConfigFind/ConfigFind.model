@@ -1,2 +1,1 @@
-Find_stubfix
-Find
+ConfigFind : Find_stubfix Find :: _ConfigFind ;

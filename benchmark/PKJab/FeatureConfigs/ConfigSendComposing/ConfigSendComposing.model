@@ -1,2 +1,1 @@
-SendComposing_stubfix
-SendComposing
+ConfigSendComposing : SendComposing_stubfix SendComposing :: _ConfigSendComposing ;

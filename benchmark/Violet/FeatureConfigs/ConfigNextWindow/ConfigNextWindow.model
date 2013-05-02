@@ -1,2 +1,1 @@
-NextWindow_stubfix
-NextWindow
+ConfigNextWindow : NextWindow_stubfix NextWindow :: _ConfigNextWindow ;

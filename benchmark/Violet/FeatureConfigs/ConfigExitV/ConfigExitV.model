@@ -1,2 +1,1 @@
-ExitV_stubfix
-ExitV
+ConfigExitV : ExitV_stubfix ExitV :: _ConfigExitV ;

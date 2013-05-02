@@ -1,2 +1,1 @@
-TankWar_stubfix
-TankWar
+ConfigTankWar : TankWar_stubfix TankWar :: _ConfigTankWar ;

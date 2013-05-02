@@ -1,2 +1,1 @@
-DE_stubfix
-DE
+ConfigDE : DE_stubfix DE :: _ConfigDE ;

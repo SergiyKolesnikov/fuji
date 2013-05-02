@@ -1,2 +1,1 @@
-SaveFile_stubfix
-SaveFile
+ConfigSaveFile : SaveFile_stubfix SaveFile :: _ConfigSaveFile ;

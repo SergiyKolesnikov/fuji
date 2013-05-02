@@ -1,2 +1,1 @@
-GZip_stubfix
-GZip
+ConfigGZip : GZip_stubfix GZip :: _ConfigGZip ;

@@ -1,2 +1,1 @@
-MaximizeWindow_stubfix
-MaximizeWindow
+ConfigMaximizeWindow : MaximizeWindow_stubfix MaximizeWindow :: _ConfigMaximizeWindow ;

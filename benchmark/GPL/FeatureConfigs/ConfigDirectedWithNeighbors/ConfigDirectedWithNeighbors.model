@@ -1,2 +1,1 @@
-DirectedWithNeighbors_stubfix
-DirectedWithNeighbors
+ConfigDirectedWithNeighbors : DirectedWithNeighbors_stubfix DirectedWithNeighbors :: _ConfigDirectedWithNeighbors ;

@@ -1,2 +1,1 @@
-EditMenu_stubfix
-EditMenu
+ConfigEditMenu : EditMenu_stubfix EditMenu :: _ConfigEditMenu ;

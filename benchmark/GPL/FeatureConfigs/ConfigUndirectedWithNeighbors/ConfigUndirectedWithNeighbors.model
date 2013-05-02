@@ -1,2 +1,1 @@
-UndirectedWithNeighbors_stubfix
-UndirectedWithNeighbors
+ConfigUndirectedWithNeighbors : UndirectedWithNeighbors_stubfix UndirectedWithNeighbors :: _ConfigUndirectedWithNeighbors ;

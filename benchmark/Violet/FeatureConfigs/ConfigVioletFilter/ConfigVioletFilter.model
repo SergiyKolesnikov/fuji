@@ -1,2 +1,1 @@
-VioletFilter_stubfix
-VioletFilter
+ConfigVioletFilter : VioletFilter_stubfix VioletFilter :: _ConfigVioletFilter ;

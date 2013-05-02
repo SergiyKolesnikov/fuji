@@ -1,2 +1,1 @@
-HelpMenu_stubfix
-HelpMenu
+ConfigHelpMenu : HelpMenu_stubfix HelpMenu :: _ConfigHelpMenu ;

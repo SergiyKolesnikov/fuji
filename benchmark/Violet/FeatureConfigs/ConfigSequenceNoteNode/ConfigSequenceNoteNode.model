@@ -1,2 +1,1 @@
-SequenceNoteNode_stubfix
-SequenceNoteNode
+ConfigSequenceNoteNode : SequenceNoteNode_stubfix SequenceNoteNode :: _ConfigSequenceNoteNode ;

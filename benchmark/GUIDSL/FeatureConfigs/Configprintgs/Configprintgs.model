@@ -1,2 +1,1 @@
-printgs_stubfix
-printgs
+Configprintgs : printgs_stubfix printgs :: _Configprintgs ;

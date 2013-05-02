@@ -1,2 +1,1 @@
-CloseWindow_stubfix
-CloseWindow
+ConfigCloseWindow : CloseWindow_stubfix CloseWindow :: _ConfigCloseWindow ;

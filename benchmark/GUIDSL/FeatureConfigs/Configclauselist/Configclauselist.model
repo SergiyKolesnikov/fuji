@@ -1,2 +1,1 @@
-clauselist_stubfix
-clauselist
+Configclauselist : clauselist_stubfix clauselist :: _Configclauselist ;

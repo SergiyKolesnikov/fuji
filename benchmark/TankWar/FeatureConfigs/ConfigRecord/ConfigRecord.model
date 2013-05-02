@@ -1,2 +1,1 @@
-Record_stubfix
-Record
+ConfigRecord : Record_stubfix Record :: _ConfigRecord ;

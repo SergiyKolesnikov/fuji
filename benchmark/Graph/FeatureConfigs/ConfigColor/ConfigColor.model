@@ -1,2 +1,1 @@
-Color_stubfix
-Color
+ConfigColor : Color_stubfix Color :: _ConfigColor ;

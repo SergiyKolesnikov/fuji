@@ -1,2 +1,1 @@
-UseCaseNode_stubfix
-UseCaseNode
+ConfigUseCaseNode : UseCaseNode_stubfix UseCaseNode :: _ConfigUseCaseNode ;

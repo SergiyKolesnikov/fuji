@@ -1,2 +1,1 @@
-FinalStateNode_stubfix
-FinalStateNode
+ConfigFinalStateNode : FinalStateNode_stubfix FinalStateNode :: _ConfigFinalStateNode ;

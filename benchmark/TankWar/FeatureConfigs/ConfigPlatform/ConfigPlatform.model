@@ -1,2 +1,1 @@
-Platform_stubfix
-Platform
+ConfigPlatform : Platform_stubfix Platform :: _ConfigPlatform ;

@@ -1,2 +1,1 @@
-StateNoteEdge_stubfix
-StateNoteEdge
+ConfigStateNoteEdge : StateNoteEdge_stubfix StateNoteEdge :: _ConfigStateNoteEdge ;

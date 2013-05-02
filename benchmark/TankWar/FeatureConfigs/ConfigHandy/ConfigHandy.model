@@ -1,2 +1,1 @@
-Handy_stubfix
-Handy
+ConfigHandy : Handy_stubfix Handy :: _ConfigHandy ;

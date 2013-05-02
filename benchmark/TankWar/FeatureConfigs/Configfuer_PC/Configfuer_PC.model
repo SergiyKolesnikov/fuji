@@ -1,2 +1,1 @@
-fuer_PC_stubfix
-fuer_PC
+Configfuer_PC : fuer_PC_stubfix fuer_PC :: _Configfuer_PC ;

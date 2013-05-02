@@ -1,2 +1,1 @@
-formgs_stubfix
-formgs
+Configformgs : formgs_stubfix formgs :: _Configformgs ;

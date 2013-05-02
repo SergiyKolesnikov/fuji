@@ -1,2 +1,1 @@
-DeleteItem_stubfix
-DeleteItem
+ConfigDeleteItem : DeleteItem_stubfix DeleteItem :: _ConfigDeleteItem ;

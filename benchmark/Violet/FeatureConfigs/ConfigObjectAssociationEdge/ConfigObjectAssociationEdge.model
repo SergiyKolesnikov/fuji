@@ -1,2 +1,1 @@
-ObjectAssociationEdge_stubfix
-ObjectAssociationEdge
+ConfigObjectAssociationEdge : ObjectAssociationEdge_stubfix ObjectAssociationEdge :: _ConfigObjectAssociationEdge ;

@@ -1,2 +1,1 @@
-GUI_stubfix
-GUI
+ConfigGUI : GUI_stubfix GUI :: _ConfigGUI ;

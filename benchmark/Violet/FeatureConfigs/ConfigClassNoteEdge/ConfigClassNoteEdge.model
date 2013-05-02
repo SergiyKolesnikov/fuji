@@ -1,2 +1,1 @@
-ClassNoteEdge_stubfix
-ClassNoteEdge
+ConfigClassNoteEdge : ClassNoteEdge_stubfix ClassNoteEdge :: _ConfigClassNoteEdge ;

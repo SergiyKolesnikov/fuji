@@ -1,2 +1,1 @@
-CommandLine_stubfix
-CommandLine
+ConfigCommandLine : CommandLine_stubfix CommandLine :: _ConfigCommandLine ;

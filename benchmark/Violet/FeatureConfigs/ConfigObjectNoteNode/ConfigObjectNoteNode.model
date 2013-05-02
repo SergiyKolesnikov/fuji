@@ -1,2 +1,1 @@
-ObjectNoteNode_stubfix
-ObjectNoteNode
+ConfigObjectNoteNode : ObjectNoteNode_stubfix ObjectNoteNode :: _ConfigObjectNoteNode ;

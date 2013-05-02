@@ -1,2 +1,1 @@
-WindowMenu_stubfix
-WindowMenu
+ConfigWindowMenu : WindowMenu_stubfix WindowMenu :: _ConfigWindowMenu ;

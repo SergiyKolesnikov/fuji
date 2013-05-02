@@ -1,2 +1,1 @@
-Mars_stubfix
-Mars
+ConfigMars : Mars_stubfix Mars :: _ConfigMars ;

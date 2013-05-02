@@ -1,2 +1,1 @@
-ObjectReferenceEdge_stubfix
-ObjectReferenceEdge
+ConfigObjectReferenceEdge : ObjectReferenceEdge_stubfix ObjectReferenceEdge :: _ConfigObjectReferenceEdge ;

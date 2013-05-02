@@ -1,2 +1,1 @@
-DiagramSupport_stubfix
-DiagramSupport
+ConfigDiagramSupport : DiagramSupport_stubfix DiagramSupport :: _ConfigDiagramSupport ;

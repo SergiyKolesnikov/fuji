@@ -1,2 +1,1 @@
-TestProg_stubfix
-TestProg
+ConfigTestProg : TestProg_stubfix TestProg :: _ConfigTestProg ;

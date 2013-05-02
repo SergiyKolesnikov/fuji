@@ -1,2 +1,1 @@
-About_stubfix
-About
+ConfigAbout : About_stubfix About :: _ConfigAbout ;

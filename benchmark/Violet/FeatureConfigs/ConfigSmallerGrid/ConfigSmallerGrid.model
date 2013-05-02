@@ -1,2 +1,1 @@
-SmallerGrid_stubfix
-SmallerGrid
+ConfigSmallerGrid : SmallerGrid_stubfix SmallerGrid :: _ConfigSmallerGrid ;

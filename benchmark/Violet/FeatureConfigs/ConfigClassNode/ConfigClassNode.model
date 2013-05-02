@@ -1,2 +1,1 @@
-ClassNode_stubfix
-ClassNode
+ConfigClassNode : ClassNode_stubfix ClassNode :: _ConfigClassNode ;

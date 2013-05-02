@@ -1,2 +1,1 @@
-Eval_Numbers_stubfix
-Eval_Numbers
+ConfigEval_Numbers : Eval_Numbers_stubfix Eval_Numbers :: _ConfigEval_Numbers ;

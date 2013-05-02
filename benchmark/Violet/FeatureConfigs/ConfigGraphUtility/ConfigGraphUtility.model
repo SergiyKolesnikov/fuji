@@ -1,2 +1,1 @@
-GraphUtility_stubfix
-GraphUtility
+ConfigGraphUtility : GraphUtility_stubfix GraphUtility :: _ConfigGraphUtility ;

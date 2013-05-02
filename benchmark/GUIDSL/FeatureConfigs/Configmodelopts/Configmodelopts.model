@@ -1,2 +1,1 @@
-modelopts_stubfix
-modelopts
+Configmodelopts : modelopts_stubfix modelopts :: _Configmodelopts ;

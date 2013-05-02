@@ -1,2 +1,1 @@
-VersionChecker_stubfix
-VersionChecker
+ConfigVersionChecker : VersionChecker_stubfix VersionChecker :: _ConfigVersionChecker ;
