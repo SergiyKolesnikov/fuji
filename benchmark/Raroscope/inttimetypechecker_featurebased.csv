@@ -1,0 +1,6 @@
+variant	ASTcomp	typecheck	errors
+ConfigBase.model	27	553	0
+ConfigCRC.model	25	380	6
+ConfigEntries.model	26	335	1
+ConfigHostOS.model	24	371	5
+ConfigVersion.model	23	401	5
