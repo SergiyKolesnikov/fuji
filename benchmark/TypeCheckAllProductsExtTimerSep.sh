@@ -10,7 +10,7 @@
 
 echo 'variant	usertime	systemtime' > $1/exttimetypechecker.csv
 
-echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.cssv
+echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.csv
 
 # re-generate fuji.jar
 cd ../FujiCompiler/

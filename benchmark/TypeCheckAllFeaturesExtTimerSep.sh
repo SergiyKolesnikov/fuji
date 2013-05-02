@@ -8,9 +8,9 @@
 (( CpuTimeCompositionCurrent=0 ))
 (( CpuTimeTypeCheckCurrent=0 ))
 
-echo 'variant	usertime	systemtime' > $1/exttimetypechecker.csv
+echo 'variant	usertime	systemtime' > $1/exttimetypechecker_featurebased.csv
 
-echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.csv
+echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker_featurebased.csv
 
 # re-generate fuji.jar
 cd ../FujiCompiler/
@@ -30,6 +30,7 @@ do
 			--append \
 			--quiet \
 		 java -jar fuji.jar \
+		 -novariability \
 		 -timer \
          -fopRefs \
          -typechecker \
