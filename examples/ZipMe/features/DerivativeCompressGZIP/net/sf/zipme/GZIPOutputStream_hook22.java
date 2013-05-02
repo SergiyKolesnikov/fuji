@@ -1,4 +1,4 @@
-// DerivativeCompressGZIP
+//
 
 package net.sf.zipme;
 import java.io.IOException;

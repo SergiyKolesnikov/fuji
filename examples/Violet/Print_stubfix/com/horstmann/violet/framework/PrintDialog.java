@@ -1,0 +1,34 @@
+package com.horstmann.violet.framework;
+import de.uni_passau.spl.bytecodecomposer.stubs.Stub;
+import java.lang.Object;
+import java.awt.event.ActionEvent;
+import java.awt.Dialog;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.swing.AbstractButton;
+import java.awt.Component;
+import java.awt.print.Printable;
+import com.horstmann.violet.framework.Graph;
+import java.awt.geom.RectangularShape;
+import javax.swing.JOptionPane;
+import java.awt.Graphics2D;
+import java.awt.print.Book;
+import java.awt.print.PrinterJob;
+import java.lang.Math;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+import com.horstmann.violet.framework.PrintPreviewCanvas;
+import java.awt.Container;
+import javax.swing.JPanel;
+import javax.swing.JDialog;
+import javax.print.attribute.PrintRequestAttributeSet;
+import com.horstmann.violet.framework.ResourceFactory;
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
+import java.awt.BorderLayout;
+import java.awt.print.PrinterException;
+import java.awt.Window;
+import java.awt.print.PageFormat;
+import javax.swing.JButton;
+public class PrintDialog {
+}

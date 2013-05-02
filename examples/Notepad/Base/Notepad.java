@@ -98,6 +98,6 @@ public class Notepad extends JFrame{
 	}
 	//Main Method
 	public static void main(String[] args){
-		new Notepad().show();
+		new Notepad().setVisible(true);
 	}
 }

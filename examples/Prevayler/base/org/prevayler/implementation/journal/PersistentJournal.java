@@ -168,7 +168,8 @@ public class PersistentJournal implements Journal {
   protected DurableInputStream hook76(  File journal,  DurableInputStream input) throws IOException {
     return input;
   }
-  protected void hook77(  File journal,  DurableInputStream input) throws IOException {
+  protected Void hook77(  File journal,  DurableInputStream input) throws IOException {
+	  return null;
   }
   protected void hook78(  IOException iox,  File journal,  String message){
   }

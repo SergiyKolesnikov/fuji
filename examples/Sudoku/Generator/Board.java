@@ -2,7 +2,7 @@
 
 import java.util.Random;
 
-public class Board {
+public class Board implements java.lang.Cloneable, java.io.Serializable  {
 
     public void removeRandomSetField(){
     

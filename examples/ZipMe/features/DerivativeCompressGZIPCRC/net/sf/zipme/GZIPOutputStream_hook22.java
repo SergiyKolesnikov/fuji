@@ -1,4 +1,4 @@
-// DerivativeCompressGZIPCRC
+//
 
 package net.sf.zipme;
 class GZIPOutputStream_hook22 {

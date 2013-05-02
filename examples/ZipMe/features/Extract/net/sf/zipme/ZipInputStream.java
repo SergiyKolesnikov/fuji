@@ -134,13 +134,13 @@ public class ZipInputStream extends InflaterInputStream implements ZipConstants 
   /** 
  * Closes the current zip entry and moves to the next one.
  */
-  public void closeEntry() throws IOException {
-    if (entry == null)     return;
+  public Void closeEntry() throws IOException {
+    if (entry == null)     return null;
     if (method == ZipOutputStream.DEFLATED) {
       if ((flags & 8) != 0) {
         byte[] tmp=new byte[2048];
         while (read(tmp) > 0)         ;
-        return;
+        return null;
       }
       csize-=inf.getTotalIn();
       avail=inf.getRemaining();
@@ -160,6 +160,8 @@ public class ZipInputStream extends InflaterInputStream implements ZipConstants 
     if (method == ZipOutputStream.DEFLATED)     inf.reset();
     entry=null;
     entryAtEOF=true;
+    
+    return null;
   }
   public int available() throws IOException {
     return entryAtEOF ? 0 : 1;
@@ -236,14 +238,14 @@ entryAtEOF=true;
 protected ZipEntry createZipEntry(String name){
 return new ZipEntry(name);
 }
-protected void hook36() throws IOException {
+protected Void hook36() throws IOException {return null;
 }
 protected void hook37(byte[] b,int off,int len) throws IOException {
 }
-protected void hook38() throws IOException {
+protected Void hook38() throws IOException {return null;
 }
-protected void hook39() throws IOException {
+protected Void hook39() throws IOException {return null;
 }
-protected void hook40() throws IOException {
+protected Void hook40() throws IOException {return null;
 }
 }

@@ -1,7 +1,7 @@
 
 class Notepad {
 	protected JMenu buildEditMenu() {
-		JMenu editMenu   = original();
+		JMenu editMenu   = (JMenu) original();
 		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
 		JMenuItem findMenuItem = new JMenuItem("Find", new ImageIcon(this.getClass().getResource("images/find.gif")));
 		findMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
@@ -22,7 +22,7 @@ class Notepad {
 		return editMenu;
 	}
 	protected JToolBar buildToolBar() {
-		JToolBar toolBar = original();
+		JToolBar toolBar = (JToolBar) original();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		JButton findButton  = new JButton(new ImageIcon(this.getClass().getResource("images/find.gif")));
 		findButton.setToolTipText("Find");

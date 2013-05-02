@@ -1,0 +1,29 @@
+package com.horstmann.violet;
+import de.uni_passau.spl.bytecodecomposer.stubs.Stub;
+import java.lang.Object;
+import com.horstmann.violet.framework.Node;
+import com.horstmann.violet.ClassNode;
+import java.awt.Component;
+import java.awt.geom.Point2D;
+import java.util.List;
+import javax.swing.JComponent;
+import com.horstmann.violet.framework.Graph;
+import java.awt.geom.RectangularShape;
+import com.horstmann.violet.NoteNode;
+import java.awt.Graphics2D;
+import java.lang.Math;
+import javax.swing.JLabel;
+import com.horstmann.violet.InterfaceNode;
+import java.lang.String;
+import com.horstmann.violet.framework.RectangularNode;
+import com.horstmann.violet.framework.Grid;
+import java.awt.Shape;
+import java.awt.Dimension;
+import com.horstmann.violet.framework.MultiLineString;
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.GeneralPath;
+import com.horstmann.violet.framework.AbstractNode;
+import java.awt.geom.Path2D;
+public class PackageNode {
+}

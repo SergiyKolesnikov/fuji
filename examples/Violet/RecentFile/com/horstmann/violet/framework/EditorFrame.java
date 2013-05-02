@@ -56,14 +56,14 @@ public class EditorFrame {
         original();
         if (in != null)
         {
-            try
-            {
+//            try
+//            {
                 addRecentFile(open.getName());
-            }
-            catch (IOException exception)
-            {
-               JOptionPane.showInternalMessageDialog(desktop, exception);
-            }
+//            }
+//            catch (IOException exception)
+//            {
+//               JOptionPane.showInternalMessageDialog(desktop, exception);
+//            }
         }
    }
 

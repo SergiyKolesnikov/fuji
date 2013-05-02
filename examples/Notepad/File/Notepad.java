@@ -1,7 +1,7 @@
 
 class Notepad {
         protected JMenu buildFileMenu() {
-                JMenu fileMenu   = original();
+                JMenu fileMenu   = (JMenu) original();
                 if (fileMenu.getItemCount() > 0) fileMenu.addSeparator();
                 JMenuItem newFileMenuItem    = new JMenuItem("New", new ImageIcon(this.getClass().getResource("images/new.gif")));
                 newFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
@@ -37,7 +37,7 @@ class Notepad {
                 return fileMenu;
         }
         protected JToolBar buildToolBar() {
-                JToolBar toolBar = original();
+                JToolBar toolBar = (JToolBar) original();
                 if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
                 JButton newButton   = new JButton(new ImageIcon(this.getClass().getResource("images/new.gif")));
                 newButton.setToolTipText("New");

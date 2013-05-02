@@ -18,12 +18,13 @@ public class PersistentJournal {
   protected DurableInputStream hook76(  File journal,  DurableInputStream input) throws IOException {
     if (true)     input=new DurableInputStream(journal,_monitor);
  else     input=new DurableInputStream(journal);
-    return original(journal,input);
+    return ((DurableInputStream) original(journal,input));
   }
-  protected void hook77(  File journal,  DurableInputStream input) throws IOException {
+  protected Void hook77(  File journal,  DurableInputStream input) throws IOException {
     if (true)     input=new DurableInputStream(journal,_monitor);
  else     input=new DurableInputStream(journal);
     original(journal,input);
+    return null;
   }
   protected void hook78(  IOException iox,  File journal,  String message){
     _monitor.notify(this.getClass(),message,journal,iox);

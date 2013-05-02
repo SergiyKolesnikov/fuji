@@ -1,32 +1,32 @@
-// DerivativeCompressGZIP
+//
 
 package net.sf.zipme;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- * This filter stream is used to compress a stream into a "GZIP" stream.
+/** 
+ * This filter stream is used to compress a stream into a "GZIP" stream. 
  * The "GZIP" format is described in RFC 1952.
  * @author John Leuner
  * @author Tom Tromey
  * @since JDK 1.1
  */
 public class GZIPOutputStream extends DeflaterOutputStream {
-  /**
+  /** 
  * CRC-32 value for uncompressed data
  */
   protected CRC32 crc;
-  /**
+  /** 
  * Creates a GZIPOutputStream with the default buffer size
- * @param out The stream to read data (to be compressed) from
+ * @param out The stream to read data (to be compressed) from 
  */
   public GZIPOutputStream(  OutputStream out) throws IOException {
     this(out,4096);
   }
-  /**
+  /** 
  * Creates a GZIPOutputStream with the specified buffer size
- * @param out The stream to read compressed data from
- * @param size Size of the buffer to use
+ * @param out The stream to read compressed data from 
+ * @param size Size of the buffer to use 
  */
   public GZIPOutputStream(  OutputStream out,  int size) throws IOException {
     super(out,new Deflater(Deflater.DEFAULT_COMPRESSION,true),size);
@@ -41,7 +41,7 @@ public class GZIPOutputStream extends DeflaterOutputStream {
     super.write(buf,off,len);
     this.hook31(buf,off,len);
   }
-  /**
+  /** 
  * Writes remaining compressed output data to the output stream
  * and closes it.
  */
@@ -56,7 +56,7 @@ public class GZIPOutputStream extends DeflaterOutputStream {
     hook2(gzipFooter);
     gzipFooter[4]=(byte)totalin;
     gzipFooter[5]=(byte)(totalin >> 8);
-    gzipFooter[6]=(byte)(totalin >> 16);
+    gzipFooter[6]=gzipFooter[3]=(byte)(totalin >> 16);
     gzipFooter[7]=(byte)(totalin >> 24);
     out.write(gzipFooter);
   }

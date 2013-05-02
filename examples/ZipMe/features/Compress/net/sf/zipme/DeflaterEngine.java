@@ -119,7 +119,7 @@ prevAvailable=false;
 matchLen=MIN_MATCH - 1;
 break;
 }
-comprFunc=COMPR_FUNC[lvl];
+comprFunc=DeflaterConstants.COMPR_FUNC[lvl];
 }
 }
 private void updateHash(){

@@ -15,16 +15,21 @@ class Notepad {
 				redoAction.update();
 			}
 		});
+		
+		JToolBar toolBar2 = buildToolBar();
+		if (toolBar2.getComponentCount() > 0)
+		getContentPane().add("North", toolBar2);
+		setJMenuBar(buildMenuBar());
 	}
 	protected JMenu buildEditMenu() {
-		JMenu editMenu   = original();
+		JMenu editMenu   = (JMenu) original();
 		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
 		editMenu.add(undoAction);
 		editMenu.add(redoAction);
 		return editMenu;
 	}
 	protected JToolBar buildToolBar() {
-		JToolBar toolBar = original();
+		JToolBar toolBar = (JToolBar) original();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		toolBar.add(undoAction);
 		toolBar.add(redoAction);

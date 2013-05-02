@@ -6,7 +6,7 @@ class Notepad {
 		return lineWrapMenuItem;
 	}
 	protected JMenu buildFormatMenu() {
-		JMenu formatMenu = original();
+		JMenu formatMenu = (JMenu) original();
 		if (formatMenu.getItemCount() > 0) formatMenu.addSeparator();
 		lineWrapMenuItem = new JCheckBoxMenuItem("Line Wrap");
 		lineWrapMenuItem.addActionListener(new ActionListener(){
@@ -25,7 +25,7 @@ class Notepad {
 		return formatMenu;
 	}
 	protected JToolBar buildToolBar() {
-		JToolBar toolBar = original();
+		JToolBar toolBar = (JToolBar) original();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		JButton fontButton  = new JButton(new ImageIcon(this.getClass().getResource("images/font.gif")));
 		fontButton.setToolTipText("Font");
