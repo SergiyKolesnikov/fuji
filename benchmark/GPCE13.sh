@@ -1,4 +1,5 @@
-caseStudyNames=("ZipMe" "EPL" "GPL" "Graph" "GUIDSL" "Notepad" "PKJab" "Prevayler" "Raroscope" "Sudoku" "TankWar" "Violet")
+caseStudyNames=("ZipMe" "")
+# "EPL" "GPL" "Graph" "GUIDSL" "Notepad" "PKJab" "Prevayler" "Raroscope" "Sudoku" "Violet" "TankWar")
 caseStudyFeaturePaths=(
 	"../examples/ZipMe/features/" \
  	"../examples/EPL/" \
@@ -10,8 +11,8 @@ caseStudyFeaturePaths=(
  	"../examples/Prevayler/" \
  	"../examples/Raroscope/" \
  	"../examples/Sudoku/" \
- 	"../examples/TankWar/" \
- 	"../examples/Violet/"
+ 	"../examples/Violet/" \
+ 	"../examples/TankWar/"
 )
 
 i=0
@@ -20,5 +21,6 @@ do
 	path=${caseStudyFeaturePaths[$i]}
 	echo "name:$csname path:$path"
 	./TypeCheckAllProductsExtTimerSep.sh $csname $path
+	#./TypeCheckAllFeaturesExtTimerSep.sh $csname $path
 	i=$((i+1))
 done

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # $1 is case study name
 # $2 is relative path to the features directory
@@ -8,9 +8,9 @@
 (( CpuTimeCompositionCurrent=0 ))
 (( CpuTimeTypeCheckCurrent=0 ))
 
-echo 'variant	usertime	systemtime' > $1/exttimetypechecker.txt
+echo 'variant	usertime	systemtime' > $1/exttimetypechecker.csv
 
-echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.txt
+echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.cssv
 
 # re-generate fuji.jar
 cd ../FujiCompiler/
@@ -26,10 +26,12 @@ do
 	variantname=`basename $variantmodel`
 	/usr/bin/time \
 			-f $variantname\\t%U\\t%S \
-			-o $1/exttimetypechecker.txt \
+			-o $1/exttimetypechecker.csv \
 			--append \
-			--quiet \ # do not report program status (error or normal termination)
+			--quiet \
 		 java -jar fuji.jar \
+		 -timer \
+		 -novariability \
          -fopRefs \
          -typechecker \
          -basedir $2 \
@@ -40,18 +42,19 @@ do
     FoundErrors=$(grep "Found_Errors: " $variantdir/stdout.txt | egrep -o "[0-9]+")
     TimeTypeCheckCurrent=$(grep "Time_typecheck_ms: " $variantdir/stdout.txt | egrep -o "[0-9]+")
     echo "$variantmodel done. AST: $((TimeCompositionCurrent)) ms, spl error check: $((TimeTypeCheckCurrent)) ms, errors: $((FoundErrors))."
-    echo "$variantname	$TimeCompositionCurrent	$TimeTypeCheckCurrent	$FoundErrors" >> $1/inttimetypechecker.txt
+    echo "$variantname	$TimeCompositionCurrent	$TimeTypeCheckCurrent	$FoundErrors" >> $1/inttimetypechecker.csv
   done
 done
 
 echo "typechecking family"
-
+# time option --quiet means do not report program status (error or normal termination)
  /usr/bin/time \
 			-f family\\t%U\\t%S \
-			-o $1/exttimetypechecker.txt \
+			-o $1/exttimetypechecker.csv \
 			--append \
-			--quiet \ # do not report program status (error or normal termination)
+			--quiet \
 	 java -jar fuji.jar \
+	 -timer \
 	 -fopRefs \
      -typechecker \
      -basedir $2 \
@@ -60,7 +63,7 @@ echo "typechecking family"
      2> $1/familyerrout.txt
      
  TimeCompositionCurrent=$(grep "Time_AST_construction_ms: " $1/familystdout.txt | egrep -o "[0-9]+")
- FoundErrors=$(grep "Found_Errors: " $variantdir/stdout.txt | egrep -o "[0-9]+")
- TimeTypeCheckCurrent=$(grep "Time_typecheck_ms: " $1/familyerrout.txt | egrep -o "[0-9]+")
+ FoundErrors=$(grep "Found_Errors: " $1/familystdout.txt | egrep -o "[0-9]+")
+ TimeTypeCheckCurrent=$(grep "Time_typecheck_ms: " $1/familystdout.txt | egrep -o "[0-9]+")
  echo "family done. AST: $((TimeCompositionCurrent)) ms, spl error check: $((TimeTypeCheckCurrent)) ms, errors: $((FoundErrors))."
- echo "family	$TimeCompositionCurrent	$TimeTypeCheckCurrent	$FoundErrors" >> $1/inttimetypechecker.txt
+ echo "family	$TimeCompositionCurrent	$TimeTypeCheckCurrent	$FoundErrors" >> $1/inttimetypechecker.csv
