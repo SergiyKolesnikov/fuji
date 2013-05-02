@@ -31,6 +31,7 @@ do
 			--quiet \
 		 java -jar fuji.jar \
 		 -novariability \
+		 -cp ../examples/lib/stub-annotation.jar \
 		 -timer \
          -fopRefs \
          -typechecker \
