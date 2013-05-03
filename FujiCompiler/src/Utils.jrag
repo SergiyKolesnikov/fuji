@@ -18,16 +18,4 @@ aspect Utils {
     public SPLStructure ASTNode.getSPLStructure() {
         return getProgram().getSPLStructure();
     }
-    
-    /*
-     * The flag indicates to the spl-typechecker if it should treat original method calls as
-     * normal method calls.  This is used during feature-based type checking.
-     */
-    private boolean Program.ignoreOriginal = false;
-    public void Program.setIgnoreOriginal(boolean ignore) {
-        ignoreOriginal = ignore;
-    }
-    public boolean Program.ignoreOriginal() {
-        return ignoreOriginal;
-    }
 }
