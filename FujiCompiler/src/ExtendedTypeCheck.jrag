@@ -1151,7 +1151,7 @@ aspect ExtendedTypeCheck {
 	    
 	    /* Simle type check. */
 	    /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:MethodAccess.nameCheck() */
-	    if (name().equals(ORIGINAL_ACCESS)) {
+	    if (name().equals(ORIGINAL_ACCESS) && !getProgram().ignoreOriginal()) {
 	        /* get context, i.e. method signature of the method 
              * where the access comes from */
             String context = ((MethodDecl) enclosingBodyDecl()).signature();

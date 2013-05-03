@@ -247,6 +247,9 @@ public class Main implements CompositionContext {
                 }
 
                 Program ast = composition.composeAST();
+                if (cmd.hasOption(IGNORE_ORIGINAL)) {
+                    ast.setIgnoreOriginal(true);
+                }
                 ast.splErrorCheck(model, errors, warnings);
                 if (cmd.hasOption(TIMER)) {
                     System.out.println("Time_typecheck_ms: "
@@ -340,12 +343,17 @@ public class Main implements CompositionContext {
         ops.addOption(OptionBuilder
                 .withDescription(
                         "If this option is set, fuji assumes that the SPL "
-                                + "has no variability (i.e. consists only of one product).")
+                                + "has no variability (i.e. consists only of one product). This option works only with '" + TYPECHECKER + "' option.")
                 .create(SPL_HAS_NO_VARIABILITY));
         ops.addOption(OptionBuilder
                 .withDescription(
-                        "Measure time used for AST composition and family-based typechecking.  Output the measurements to stdout.")
+                        "Measure time used for AST composition and family-based typechecking.  Output the measurements to stdout. This option works only with '" + TYPECHECKER + "' option.")
                 .create(TIMER));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "'original' method calls are treated as normal method calls (used in feature-based type checking). This option works only with '" + TYPECHECKER + "' option.")
+                .create(IGNORE_ORIGINAL));
+
         return ops;
     }
 
@@ -614,6 +622,7 @@ public class Main implements CompositionContext {
         public static final String TYPECHECKER = "typechecker";
         public static final String SPL_HAS_NO_VARIABILITY = "novariability";
         public static final String TIMER = "timer";
+        public static final String IGNORE_ORIGINAL= "ignoreOriginal";
     }
 
     private static void printError(String message) {
