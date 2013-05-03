@@ -44,7 +44,7 @@ do
 			--append \
 			--quiet \
 		 java -jar fuji.jar \
-		 "$extraClasspath" \
+		 $extraClasspath \
 		 -timer \
 		 -novariability \
          -fopRefs \
