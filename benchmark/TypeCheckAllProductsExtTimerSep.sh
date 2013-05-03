@@ -18,6 +18,20 @@ ant jar
 cd ../benchmark/
 cp ../FujiCompiler/build/fuji.jar fuji.jar
 
+#classpath
+if [ ! -f "$2/classpathjars.txt" ]
+then
+  extraClasspath=""
+else
+	extraClasspath="-cp ."
+	FILE=`cat "$2/classpathjars.txt"`
+	for jarfile in $FILE;
+	do
+		extraClasspath="$extraClasspath:./../examples/lib/$jarfile"
+	done
+	echo "classpath: $extraClasspath"
+fi
+
 # run typecheck on variants
 for variantdir in $1/products/Variant*
 do
@@ -30,6 +44,7 @@ do
 			--append \
 			--quiet \
 		 java -jar fuji.jar \
+		 "$extraClasspath" \
 		 -timer \
 		 -novariability \
          -fopRefs \
