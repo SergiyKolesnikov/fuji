@@ -254,6 +254,7 @@ public class Main implements CompositionContext {
                 if (cmd.hasOption(TIMER)) {
                     System.out.println("Time_typecheck_ms: "
                             + ((getCpuTime() - startTimeNano) / 1000000));
+                    System.out.println("Found_Errors: " + errors.size());
                 }
             } else {
                 processAST(composition);
