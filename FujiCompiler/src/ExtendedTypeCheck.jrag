@@ -1368,11 +1368,9 @@ aspect ExtendedTypeCheck {
         if (!(this.hostType() == null) // exclude ImportDecls
                 && !(this instanceof PrimitiveTypeAccess)
                 && !(this instanceof ArrayTypeAccess)) {
-            if (this.hostType() != null) { // exclude ImportDecls
-                if(decls().isEmpty()) {
-                    error("no visible type named " + typeName());
-                    return;
-                }
+            if(decls().isEmpty()) {
+                error("no visible type named " + typeName());
+                return;
             }
         }
 
@@ -1426,7 +1424,7 @@ aspect ExtendedTypeCheck {
 
 	    /* Simple type check. */
         /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:ClassInstanceExpr.nameCheck() */
-	    if(decls().isEmpty()) {
+	    if(decls().isEmpty() && !type().isUnknown()) {
 	        error("can not instantiate " + type().typeName() + " no matching constructor found in " + type().typeName());
 	        return;
 	    }
