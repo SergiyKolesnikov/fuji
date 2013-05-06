@@ -1365,7 +1365,9 @@ aspect ExtendedTypeCheck {
         /* Simle type check. */
         /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:TypeAccess.nameCheck() */
 	    /* Ignore default types */
-        if (!(featureID() == -1) && !(decl().featureID() == -1) && !(hostType().featureID() == -1) && !(decl().hostType().featureID() == -1)) {
+        if (!(this.hostType() == null) // exclude ImportDecls
+                && !(this instanceof PrimitiveTypeAccess)
+                && !(this instanceof ArrayTypeAccess)) {
             if (this.hostType() != null) { // exclude ImportDecls
                 if(decls().isEmpty()) {
                     error("no visible type named " + typeName());
