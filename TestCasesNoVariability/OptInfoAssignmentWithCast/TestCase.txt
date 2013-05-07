@@ -1,0 +1,9 @@
+\subsection{OptInfoAssignmentWithCast}
+In der Klasse \code{Z} wird als Feld eine Instanz der Klasse \code{A} erzeugt und bei der Deklaration eines Feldes des Typs \code{B} mit dieser Instanz implizit nach \code{B} gecastet. In der Methode \code{foo()} wird eine Instanz der Klasse \code{A} erzeugt und bei der Deklaration einer Variablen vom Typ \code{B} mit dieser Instanz implizit nach \code{B} gecastet. Eine weitere Variable vom Typ \code{B} wird zuerst mit \code{null} initalisiert und anschlie§end dieser die Instanz der Klasse \code{A} zugewiesen. Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, findet sich nicht im Feature \feature{FeatureA}.
+
+%\subsubsection{Fall 01: Das Feature \feature{FeatureA} ist im Feature-Modell als optional gekennzeichnet.} 
+Da die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt, erwartet man hier eigentlich entsprechende Fehlermeldungen die Typkonvertierungen betreffend. Diese bleiben jedoch aus.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+\end{Verbatim}
+
+Um diese Fehler zu beseitigen, ist es ausreichend, A von B erben zu lassen.

@@ -1,0 +1,9 @@
+\subsection{OptInfoAssignmentWithCast2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoAssignmentWithCast}, allerdings geht die (im Testfall fehlende) Vererbungsbeziehung nun über zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. In der Klasse \code{Z} wird als Feld eine Instanz der Klasse \code{A} erzeugt und bei der Deklaration eines Feldes des Typs \code{C} mit dieser Instanz implizit nach \code{C} gecastet. In der Methode \code{foo()} wird eine Instanz der Klasse \code{A} erzeugt und bei der Deklaration einer Variablen vom Typ \code{C} mit dieser Instanz implizit nach \code{C} gecastet. Eine weitere Variable vom Typ \code{C} wird zuerst mit \code{null} initalisiert und dieser anschließend die Instanz der Klasse \code{A} zugewiesen.  
+
+\subsubsection{Fall 01: 
+Die Vererbungsinformationen stehen nicht zur Verf√ºgung. Es wird jedoch keine Fehlermeldung erzeugt.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{A} von der Klasse \code{B} erben zu lassen, sowie die Klasse \code{B} von der Klasse \code{C}.

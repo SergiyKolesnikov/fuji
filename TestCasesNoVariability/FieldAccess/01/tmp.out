@@ -1,0 +1,8 @@
+Errors:
+
+/home/judy/hiwi_fosd/FujiProject/branches/fuji-typesystem/TestCasesOneFeature/FieldAccess/01/FeatureA/A.java:3,17:
+  Semantic Error: no field named j
+/home/judy/hiwi_fosd/FujiProject/branches/fuji-typesystem/TestCasesOneFeature/FieldAccess/01/FeatureA/A.java:6,6:
+  Semantic Error: no visible type named B
+/home/judy/hiwi_fosd/FujiProject/branches/fuji-typesystem/TestCasesOneFeature/FieldAccess/01/FeatureA/A.java:6,16:
+  Semantic Error: no visible type named B

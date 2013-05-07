@@ -1,0 +1,4 @@
+Errors:
+
+/OptInfoImplements/01/FeatureA/A.java:3,10:
+  Semantic Error: no field named I
