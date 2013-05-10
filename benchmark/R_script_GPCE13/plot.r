@@ -1,137 +1,102 @@
-######################
-## load needed packages and libraries
-#install.packages("stringr")
-#install.packages("plotrix")
-library("stringr")
-library("plotrix")
+options(width=180)
 
-######################
-## configure this script
-## TODO command line parameter!
-# spl <- "GPL"
-# run <- "run11"
-# path <- "~/Documents/Projekte/feat-fam-p/runs"
-# setwd("~/Documents/Projekte/feat-fam-p/runs/run1/EPL")
-#currentPath <- str_c(path, "/", run, "/", spl)
-spl <- basename(getwd())
-currentPath <- "."
-exportFilePB <- str_c(currentPath, "/", spl, "_inttimetypechecker.pdf")
-exportFileCum <- str_c(currentPath, "/", spl, "_inttimetypechecker_cum.pdf")
+ca=commandArgs(trailingOnly=TRUE) #only args after --args
+#ca=c("EPL", "GPL", "GUIDSL", "Prevayler")
 
-######################
-## configure this script
-## TODO command line parameter!
-
-filePB <- str_c(currentPath, "/inttimetypechecker.csv")
-fileFB <- str_c(currentPath, "/inttimetypechecker_featurebased.csv")
-
-smoothMax <- function(x) {
-  digits <- floor(log10(x)+1)
-  firstX <- floor( x / (10^(digits-2)) ) 
-  nextth <- (firstX+1)*10^(digits-2)
-  return(nextth)
+#interpret all elements of ca as names of case studies
+caseStudies = ca[!is.na(ca)]
+csInternalData = vector("list",length(caseStudies))
+csExternalData = vector("list",length(caseStudies))
+csExternalData_features = vector("list",length(caseStudies))
+csInternalData_features = vector("list",length(caseStudies))
+for (i in 1:length(caseStudies)) {
+  cat("reading case study data \"",caseStudies[i],"\"\n", sep="")
+  int = read.csv(file=paste("./",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext = read.csv(file=paste("./",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  
+  csInternalData_features[[i]] <- read.csv(file=paste("./",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csExternalData_features[[i]] <- read.csv(file=paste("./",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  
+  csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
+  int[is.na(int)] <- c(0)
+  
+  if (nrow(int) != nrow(ext)) {
+    stop("inconsistent input tables")
+  }
+  #if (! all(int['variant'] == ext['variant'])) {
+  #	stop("inconsistent variants in input tables")
+  #}
+  csInternalData[[i]]<-int
+  csExternalData[[i]]<-ext
 }
 
-######################
-## prepare empty tables
+getFeatureTimeInt <- function(caseStudyID) {
+  prodlines = csInternalData_features[[caseStudyID]]
+  prodlines = prodlines[prodlines$variant != "family", ]
+  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+}
+getProdTimeInt <- function(caseStudyID) {
+  prodlines = csInternalData[[caseStudyID]]
+  prodlines = prodlines[prodlines$variant != "family", ]
+  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+}
 
-emptyPB <- data.frame("ASTcomp" = 0, "typecheck" = 0)
-names(emptyPB) <- str_c("PB: ", names(emptyPB))
+plotData <- matrix(nrow=4, ncol=length(caseStudies))
+for (i in 1:length(caseStudies)) {
+  plotData[,i] = rbind(as.matrix(getProdTimeInt(i)), as.matrix(c(0,0))) # feature time
+}
+print (plotData)
 
-emptyFB <- data.frame("ASTComp" = 0, "typecheck" = 0)
-names(emptyFB) <- str_c("FB: ", names(emptyFB))
+plotDataFeat <- matrix(nrow=4, ncol=length(caseStudies))
+for (i in 1:length(caseStudies)) {
+  plotDataFeat[,i] = rbind(as.matrix(c(0,0)), as.matrix(getFeatureTimeInt(i))) # feature time
+}
+print (plotDataFeat)
 
-######################
-## prepare and read BCC files
+ex_color <- rgb(51, 102, 255, maxColorValue=255)
+bdd_color <- rgb(204, 0, 51, maxColorValue=255)  
+bool_color <- rgb(0, 133, 133, maxColorValue=255)	
+intEq_color <- rgb(153,115,0, maxColorValue=255)
+intAdd_color <- rgb(0,204,51, maxColorValue=255)
+pred_color <- rgb(153, 0, 204, maxColorValue=255)
 
-#read outStubGen file
-pb <- read.table(filePB, sep="\t", header=TRUE)
-#delete products' names from frame
-pb <- subset(pb, select = -c(variant,errors) )
+getMaxY <- function(plotData, plotDataFeat) {
+  maximum = 0
+  for (i in 1:ncol(plotData)) {
+    maximum = max( sum(plotData[,i]), sum(plotDataFeat[,i]), maximum)
+  }
+  maximum
+}
 
-#read outStubApp file
-fb <- read.table(fileFB, sep="\t", header=TRUE)
-#delete feature names from frame
-fb <- subset(fb, select = -c(variant,errors) )
-
-######################
-## sums
-sumsPB <- colSums(pb)
-names(sumsPB) <- str_c("PB: ", names(sumsPB))
-sumsFB <- colSums(fb)
-names(sumsFB) <- str_c("FB: ", names(sumsFB))
-
-######################
-## generate result tables
-
-sumsPB <- cbind(t(sumsPB), emptyFB)
-sumsFB <- cbind(emptyPB, t(sumsFB))
-
-######################
-## configure plots
-
-colors <- c("lightblue", "lightskyblue", # pb
-            "tomato2", "red2" # fb
+yLimits=c(1,getMaxY(plotData, plotDataFeat)) # logarithmic plot, so we need to make the y axis larger
+xLimits=c(0,length(caseStudies)*4)
+color <- c("lightblue", "lightskyblue", # prod
+            "tomato2", "red2", "firebrick3", # feat
+            "olivedrab2", "lawngreen", "chartreuse3" # fam
 )
 
-######################
-## plot SOP
 
-pdf(file=exportFilePB,paper="A4r")  
+pdf(file=paste("plot_int.","pdf",sep=""), width=8, height=5, onefile=TRUE, paper="special") 
 
-maximumY <- max(sum(sumsPB), sum(sumsFB))
-barplot(cbind(as.matrix(t(sumsPB)), as.matrix(t(sumsFB))), 
-        names.arg = c("product-\nbased", "feature-\nbased"), 
-        col= colors,
-        main = str_c(spl, ": ", "all products"),
-        ylab = "seconds",
-        xlim = c(0, 6),
-        ylim = c(0, smoothMax(maximumY))
-)
-legend("topright",
-       legend = names(sumsPB),
-       col = colors,
-       pch = 15,
-       y.intersp = 1
-)
+for (i in 1:length(caseStudies)) {  
+  par(new=TRUE)
+  barplot(cbind( t(t(plotData[,i])), t(t(plotDataFeat[,i])) ), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+        #beside=TRUE,
+        space=c((i-1)*3, 0.1),
+        col=color,
+        ylim=yLimits,
+        xlim=xLimits,
+        xaxt="n"
+        #log="y",
+  )
+}
 
-# Write the file  
-dev.off()  
+legend("topright",c('product-based ASTComp','product-based typecheck','feature-based ASTComp','feature-based typecheck'), inset = .01, fill=color)
+positions=(((0:(length(caseStudies)-1)) * 3.0 ) ) # begin of case study
+axis(1, pos=1.1, at=positions+1.1, labels=caseStudies, cex.axis=1, tick=FALSE, las=3) #labels
+axis(1, at=positions+0.5, labels=rep("",length(caseStudies)), cex.axis=1)
+axis(1, at=positions+1.6, labels=rep("",length(caseStudies)), cex.axis=1)
+#axis(1, at=positions+2.625, labels=rep("",length(caseStudies)), cex.axis=1)
 
-
-######################
-## plot cum
-
-pdf(file=exportFileCum, paper="A4r")  
-
-cumPB <- rowSums(cumsum(pb))
-cumFB <- max(rowSums(cumsum(fb)))
-
-xrange <- c(0,NROW(cumPB)-1)
-yrange <- c(0,smoothMax(max(max(cumPB),cumFB)))
-
-par(xaxs="i", yaxs="i")
-colorsCum <- c("skyblue3", "tomato2") #
-
-plot(xrange, yrange,
-     type = "n",
-     xlab="# products",
-     ylab="seconds",
-     main=str_c(spl, ": ", "run-time by # of products")
-)
-
-par(lwd=2.5, lty=1, col="black")
-
-lines(xrange[1]:xrange[2], cumPB, type="l", col=colorsCum[1]) 
-abline(h=cumFB, col=colorsCum[2], lty=2)
-points(xrange[2],cumFB, type = "b", col = colorsCum[2], lwd=7, pch = 7, xpd = TRUE)
-
-legend("topleft", 
-       legend = c("product-based", "feature-based"),
-       col = colorsCum,
-       pch = 15,
-       y.intersp = 1
-)
-
-# Write the file  
-dev.off()  
+warnings()
+dev.off()
