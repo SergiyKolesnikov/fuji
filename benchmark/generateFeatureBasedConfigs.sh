@@ -37,6 +37,7 @@ do
 			if [ ! -d "$csname/FeatureConfigs/Config$feature" ];
 			then
 				mkdir "$csname/FeatureConfigs/Config$feature"
+				 svn propset svn:ignore "errout.txt stdout.txt" $csname/FeatureConfigs/Config$feature/
 			fi
 			echo -e "Config$feature : ${feature}_stubfix ${feature} :: _Config$feature ;" > "$csname/FeatureConfigs/Config$feature/Config$feature.model"
 		done
