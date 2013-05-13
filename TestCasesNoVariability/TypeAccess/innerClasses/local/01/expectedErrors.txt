@@ -1,0 +1,4 @@
+Errors:
+
+/TypeAccess/innerClasses/local/01/FeatureA/B.java:3,23:
+  Semantic Error: no visible type named C

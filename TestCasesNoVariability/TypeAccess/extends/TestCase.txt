@@ -1,0 +1,9 @@
+\subsection[Typzugriff: extends]{Typzugriff: extends (Ordner \code{TypeAccess/extends})}
+Die Klasse \code{A} erweitert die Klasse \code{B}. 
+\subsubsection{Fall 01: die Klasse \code{B} fehlt.} 
+Dieser Fall löst eine Fehlermeldung aus, die sich auf das Fehlen der Klasse \code{B} bezieht:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/extends/01/FeatureA/A.java:1,24:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

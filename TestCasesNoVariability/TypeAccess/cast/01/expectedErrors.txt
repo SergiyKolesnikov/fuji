@@ -1,0 +1,8 @@
+Errors:
+
+/TypeAccess/cast/01/FeatureA/B.java:1,24:
+  Semantic Error: no visible type named C
+/TypeAccess/cast/01/FeatureA/A.java:4,3:
+  Semantic Error: no visible type named C
+/TypeAccess/cast/01/FeatureA/A.java:4,10:
+  Semantic Error: no visible type named C

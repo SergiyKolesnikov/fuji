@@ -1,0 +1,8 @@
+\subsection[Typzugriff: implements]{Typzugriff: implements (Ordner \code{TypeAccess/implements})}
+Die Klasse \code{A} implementiert die Methode \code{foo()} des Interfaces \code{I}. 
+\subsubsection{Fall 01: Das Interface \code{I} fehlt.} Dieser Fall löst eine Fehlermeldungen aus, die sich auf den Typzugriff auf den Typ \code{I} bezieht:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/implements/01/FeatureA/A.java:1,27:
+  Semantic Error: no visible type named I
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, das Interface \code{I} hinzuzufügen.

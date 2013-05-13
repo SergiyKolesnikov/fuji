@@ -1,0 +1,23 @@
+Errors:
+
+/TypeAccess/innerClasses/static/01/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the method
+  static void bar() { ... }
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/TypeAccess/innerClasses/static/01/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).Inner
+  of feature FeatureB
+
+/TypeAccess/innerClasses/static/01/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+

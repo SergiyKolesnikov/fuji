@@ -1,0 +1,6 @@
+Errors:
+
+/TypeAccess/innerClasses/anonymous/01/FeatureA/A.java:3,3:
+  Semantic Error: no visible type named B
+/TypeAccess/innerClasses/anonymous/01/FeatureA/A.java:3,13:
+  Semantic Error: no visible type named B

@@ -1,0 +1,33 @@
+\subsection{OptInfoSuperAndSuperConstructorAccess}
+%%
+In der Klasse \code{B} wird das Feld \code{i} und die Methode \code{foo()} definiert. In der Klasse \code{A} wird mittels \code{super} auf das Feld der Oberklasse zugegriffen, mittels \code{super()} im Default-Konstruktor auf den Default-Konstruktor der Oberklasse zugegriffen und in der Methode \code{foo()} mittels \code{super.foo()} auf die Methode der Oberklasse zugegriffen. Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt.  
+Dieser Fall löst drei Fehlermeldungen aus, die alle das Problem thematisieren, dass der jeweilige Zugriff ins Leere geht, wenn die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht vorhanden ist:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoSuperAndSuperConstructorAccess/01/FeatureA2/A.java:2,23:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the field
+  public int i = 42;
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoSuperAndSuperConstructorAccess/01/FeatureA2/A.java:7:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void foo() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoSuperAndSuperConstructorAccess/01/FeatureA2/A.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \code{A} die Vererbungsinformation hinzuzuf√ºgen.

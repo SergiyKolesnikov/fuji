@@ -1,0 +1,13 @@
+\subsection[Typzugriff: tryCatchThrows]{Typzugriff: tryCatchThrows (Ordner \code{TypeAccess/tryCatchThrows})}
+In der Klasse \code{A} wird innerhalb eines try-catch-Blocks die statische Methode \code{bar()} der Klasse \code{B} aufgerufen. Der try-catch-Block fängt eine Exception vom Typ \code{E}, die von der Methode \code{bar()} der Klasse \code{B} erzeugt und geworfen wird. 
+\subsubsection{Fall 01: Die Klasse \code{E} fehlt.}
+Dieser Fall löst insgesamt drei Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/tryCatchThrows/01/FeatureA/B.java:2,37:
+  Semantic Error: no visible type named E
+/TypeAccess/tryCatchThrows/01/FeatureA/B.java:3,19:
+  Semantic Error: no visible type named E
+/TypeAccess/tryCatchThrows/01/FeatureA/A.java:5,12:
+  Semantic Error: no visible type named E
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{E} hinzuzufügen.

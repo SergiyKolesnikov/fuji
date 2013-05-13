@@ -1,0 +1,11 @@
+\subsection[Typzugriff: generics]{Typzugriff: generics (Ordner \code{TypAccess/generics})}
+In der Klasse \code{A} des Features \feature{FeatureA} wird eine \code{ArrayList} mit Elementen vom Typ \code{B} definiert, wobei sich die Klasse \code{B} im Feature \feature{FeatureB} befindet. 
+\{Fall 01: Die Klasse \code{B} fehlt.}
+Dieser Fall löst zwei Fehlermeldungen aus, die sich auf den Typzugriff auf den Typ \code{B} beziehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/generics/01/FeatureA/A.java:5,13:
+  Semantic Error: no visible type named B
+/TypeAccess/generics/01/FeatureA/A.java:5,35:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, die Klasse \code{B} hinzuzufügen.

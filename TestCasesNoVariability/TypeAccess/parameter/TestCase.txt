@@ -1,0 +1,9 @@
+\subsection[Typzugriff: parameter]{Typzugriff: parameter (Ordner \code{TypeAccess/parameter})}
+Die Klasse \code{A} enthält eine Methode \code{foo()}, die als Parameter ein Objekt vom Typ \code{B} erwartet.
+\subsubsection{Fall 01: Die Klasse \code{B} fehlt.}
+Dieser Fall löst eine Fehlermeldung aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/parameter/01/FeatureA/A.java:2,18:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, die Klasse \code{B} hinzuzufügen.

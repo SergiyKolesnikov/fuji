@@ -1,0 +1,13 @@
+\subsection{OptInfoParameterCast}
+%%
+In der Klasse \code{X}, die die Klasse \code{Y} erweitert, wird deren Konstruktor definiert, der eine Instanz der Klasse \code{B} als Parameter erwartet und dann den Konstruktor der Oberklasse mit einer Instanz der Klasse \code{A} aufruft. Außerdem findet sich in dieser Klasse eine Methode \code{foo(B b)}, die eine Instanz der Klasse \code{B} als Parameter erwartet. Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt.
+In der Klasse \code{Y} findet sich der Konstruktor, der eine Instanz der Klasse \code{B} als Parameter erwartet. Außerdem wird eine Instanz der Klasse \code{X} erzeugt, indem der Konstruktor der Klasse \code{X} mit einer Instanz der Klasse \code{A} aufgerufen wird. Auf dieser Instanz wird die Methode \code{foo(B b)} aufgerufen, die als Argument eine Instanz der Klasse \code{A} erhält.
+An drei Stellen wird also dem Konstruktor einer Oberklasse, dem Konstruktor einer Klasse und einer Methode einer Klasse jeweils eine Instanz einer Klasse übergeben, die eine Unterklasse des erwarteten Typs des Parameters sein soll, es jedoch nicht ist, weil das Schl√ºssewort extends fehlt.
+Dieser Fall löst nur zwei Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoParameterCast/01/FeatureA/Y.java:4:
+  Semantic Error: can not instantiate X no matching constructor found in X
+/OptInfoParameterCast/01/FeatureA/Y.java:5:
+  Semantic Error: no method named foo(A) in X matches.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \code{A} das Schl√ºsselwort "extends B" hinzuzufügen.
