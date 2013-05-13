@@ -12,5 +12,17 @@ do
 	cp $csname/inttimetypechecker_featurebased.csv resultBackup/$csname/inttimetypechecker_featurebased.csv
 	cp $csname/exttimetypechecker.csv resultBackup/$csname/exttimetypechecker.csv
 	cp $csname/exttimetypechecker_featurebased.csv resultBackup/$csname/exttimetypechecker_featurebased.csv
+	for variantdir in $csname/FeatureConfigs/Config*;
+	do
+		mkdir resultBackup/$variantdir
+		cp $variantdir/stdout.txt resultBackup/$variantdir
+		cp $variantdir/errout.txt resultBackup/$variantdir
+	done
+	for variantdir in $csname/products/Variant*;
+	do
+		mkdir resultBackup/$variantdir
+		cp $variantdir/stdout.txt resultBackup/$variantdir
+		cp $variantdir/errout.txt resultBackup/$variantdir
+	done
 	
 done
