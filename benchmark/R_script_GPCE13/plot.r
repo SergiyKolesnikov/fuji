@@ -70,13 +70,6 @@ for (i in 1:length(caseStudies)) {
 }
 print (plotDataFam)
 
-ex_color <- rgb(51, 102, 255, maxColorValue=255)
-bdd_color <- rgb(204, 0, 51, maxColorValue=255)  
-bool_color <- rgb(0, 133, 133, maxColorValue=255)	
-intEq_color <- rgb(153,115,0, maxColorValue=255)
-intAdd_color <- rgb(0,204,51, maxColorValue=255)
-pred_color <- rgb(153, 0, 204, maxColorValue=255)
-
 getMaxY <- function(plotData, plotDataFeat, plotDataFam) {
   maximum = 0
   for (i in 1:ncol(plotData)) {
@@ -85,72 +78,84 @@ getMaxY <- function(plotData, plotDataFeat, plotDataFam) {
   maximum
 }
 
-yLimits=c(1,getMaxY(plotData, plotDataFeat, plotDataFam)) # logarithmic plot, so we need to make the y axis larger
-xLimits=c(0,length(caseStudies)*4)
 color <- c("lightblue", "lightskyblue", # prod
             "tomato2", "firebrick3", # feat
             "olivedrab2", "chartreuse3" # fam
 )
 
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8, height=5, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=9, height=5, onefile=TRUE, paper="special") 
+par(mfrow=c(2,7))
+layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
 
 for (i in 1:length(caseStudies)) {  
-  if (i != 1) par(new=TRUE)
+  paintLog=FALSE
+  log=""
+  for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
+	if (caseStudies[i]==logcs) {
+		paintLog=TRUE
+		log="y"
+	}
+  }
+  #if (i != 1) par(new=TRUE)
+  maxY = max (	sum (t(t(plotData[,i]))),
+				sum(t(t(plotDataFeat[,i]))),
+				sum(t(t(plotDataFam[,i]))))
+  yLimits=c(0,maxY)
+  if (paintLog) yLimits[1]=1
+  xLimits=c(1,5)
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
         #beside=TRUE,
-        space=c((i-1)*4.0, 0.1),
+        space=c(1),
         col=color[1:2],
         ylim=yLimits,
         xlim=xLimits,
         xaxt="n",
-	yaxt="n",
-        log="y",
+        yaxt="n",
+        log=log,
+        xlab=caseStudies[i],
+        cex.lab=1.3
   )
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
-          space=c((i-1)*4.0+1.1, 0.1),
+          space=c(2.5),
           col=color[3:4],
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
+          log=log,
           yaxt="n",
-          log="y",
   )
   par(new=TRUE)
   barplot(t(t(plotDataFam[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
-          space=c((i-1)*4.0+2.2, 0.1),
+          space=c(4),
           col=color[5:6],
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
+          log=log,
           yaxt="n",
-          log="y",
   )
-#t(t(plotDataFeat[,i])) 
+  axis(1, tick=FALSE, at=c(1,2,3),labels=c("","","")) #suppress x axis
+	if (par("ylog")) {
+		# 10er potenzen falls die achse logarithmisch ist
+		aty <- exp(log(10)*seq(log10(yLimits[1]),log10(par("yaxp")[2]),by=1))
+	} else {
+		# sonst die Skala vom Plot übernehmen
+		aty <- seq(yLimits[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
+	}
+	#big.mark is the thousand-seperator
+	axis(2, at=aty, labels=format(aty, scientific=FALSE, big.mark=" "), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
 }
 
-legend("top",
+par(mar=c(0,0,0,0)) 
+plot.new()
+legend("center",
        c('product-based ASTComp','product-based typecheck',
          'feature-based ASTComp','feature-based typecheck',
          'family-based ASTComp','family-based typecheck'),
-       inset = .01, fill=color, cex=0.6)
-positions=(((0:(length(caseStudies)-1)) * 4.0 ) ) # begin of case study
-if (par("ylog")) {
-	# 10er potenzen falls die achse logarithmisch ist
-	aty <- exp(log(10)*seq(log10(par("yaxp")[1]),log10(par("yaxp")[2]),by=1))
-} else {
-	# sonst die Skala vom Plot übernehmen
-	aty <- seq(par("yaxp")[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
-}
-#big.mark is the thousand-seperator
-axis(2, at=aty, labels=format(aty, scientific=FALSE, big.mark=" "), hadj=0.9, cex.axis=0.8, las=2)
-
-axis(1, pos=1.1, at=positions+1.6, labels=caseStudies, cex.axis=1, tick=FALSE, las=3) #labels
-axis(1, at=positions+0.5, labels=rep("",length(caseStudies)), cex.axis=1)
-axis(1, at=positions+1.6, labels=rep("",length(caseStudies)), cex.axis=1)
-axis(1, at=positions+2.7, labels=rep("",length(caseStudies)), cex.axis=1)
+       inset = 0, fill=color, cex=1.2)
 
 warnings()
 if (!draft) dev.off()
