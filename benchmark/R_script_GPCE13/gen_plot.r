@@ -64,8 +64,8 @@ getFamilyTime <- function(caseStudyID, intable) {
 plotData <- matrix(nrow=3, ncol=length(caseStudies))
 
 for (i in 1:length(caseStudies)) {
-	plotData[1, i] = 3 #getProductTime(i)
-	plotData[2, i] = 4 #getFamilyTime(i)
+	plotData[1, i] = getProductTime(i)
+	plotData[2, i] = getFamilyTime(i)
 	plotData[3, i] = getFeatureTime(i)
 }
 print (plotData)

@@ -16,11 +16,11 @@ csInternalData_features = vector("list",length(caseStudies))
 csInternalData_fam = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
   cat("reading case study data \"",caseStudies[i],"\"\n", sep="")
-  int = read.csv(file=paste("./",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext = read.csv(file=paste("./",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  int = read.csv(file=paste("../",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext = read.csv(file=paste("../",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
-  csInternalData_features[[i]] <- read.csv(file=paste("./",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  csExternalData_features[[i]] <- read.csv(file=paste("./",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csInternalData_features[[i]] <- read.csv(file=paste("../",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csExternalData_features[[i]] <- read.csv(file=paste("../",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
   csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
   int[is.na(int)] <- c(0)
@@ -95,7 +95,7 @@ color <- c("lightblue", "lightskyblue", # prod
 if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8, height=5, onefile=TRUE, paper="special") 
 
 for (i in 1:length(caseStudies)) {  
-  par(new=TRUE)
+  if (i != 1) par(new=TRUE)
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
         #beside=TRUE,
         space=c((i-1)*4.0, 0.1),
@@ -103,6 +103,7 @@ for (i in 1:length(caseStudies)) {
         ylim=yLimits,
         xlim=xLimits,
         xaxt="n",
+	yaxt="n",
         log="y",
   )
   par(new=TRUE)
@@ -136,6 +137,16 @@ legend("top",
          'family-based ASTComp','family-based typecheck'),
        inset = .01, fill=color, cex=0.6)
 positions=(((0:(length(caseStudies)-1)) * 4.0 ) ) # begin of case study
+if (par("ylog")) {
+	# 10er potenzen falls die achse logarithmisch ist
+	aty <- exp(log(10)*seq(log10(par("yaxp")[1]),log10(par("yaxp")[2]),by=1))
+} else {
+	# sonst die Skala vom Plot übernehmen
+	aty <- seq(par("yaxp")[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
+}
+#big.mark is the thousand-seperator
+axis(2, at=aty, labels=format(aty, scientific=FALSE, big.mark=" "), hadj=0.9, cex.axis=0.8, las=2)
+
 axis(1, pos=1.1, at=positions+1.6, labels=caseStudies, cex.axis=1, tick=FALSE, las=3) #labels
 axis(1, at=positions+0.5, labels=rep("",length(caseStudies)), cex.axis=1)
 axis(1, at=positions+1.6, labels=rep("",length(caseStudies)), cex.axis=1)
