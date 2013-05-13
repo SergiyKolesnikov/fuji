@@ -21,6 +21,7 @@ for csname in "${caseStudyNames[@]}";
 do
 	echo "$csname"
 	path=${caseStudyFeaturePaths[$i]}
+	rm -r ./$csname/FeatureConfigs/*
 	if [ ! -d "$csname/FeatureConfigs" ];
 	then
 		mkdir "$csname/FeatureConfigs"

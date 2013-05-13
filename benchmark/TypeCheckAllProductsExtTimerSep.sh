@@ -13,10 +13,10 @@ echo 'variant	usertime	systemtime' > $1/exttimetypechecker.csv
 echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.csv
 
 # re-generate fuji.jar
-cd ../FujiCompiler/
-ant jar
-cd ../benchmark/
-cp ../FujiCompiler/build/fuji.jar fuji.jar
+cd ../FujiCompiler/;
+ant jar;
+cd ../benchmark/;
+cp ../FujiCompiler/build/fuji.jar fuji.jar;
 
 #classpath
 if [ ! -f "$2/classpathjars.txt" ]
