@@ -90,7 +90,8 @@ layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
 for (i in 1:length(caseStudies)) {  
   paintLog=FALSE
   log=""
-  for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
+  #for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
+  for(logcs in c())  {
 	if (caseStudies[i]==logcs) {
 		paintLog=TRUE
 		log="y"
@@ -100,21 +101,44 @@ for (i in 1:length(caseStudies)) {
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))))
+  if (caseStudies[i]=="Violet") {
+	maxY=maxY*1.1
+  }
   yLimits=c(0,maxY)
   if (paintLog) yLimits[1]=1
   xLimits=c(1,5)
-  barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
-        #beside=TRUE,
-        space=c(1),
-        col=color[1:2],
-        ylim=yLimits,
-        xlim=xLimits,
-        xaxt="n",
-        yaxt="n",
-        log=log,
-        xlab=caseStudies[i],
-        cex.lab=1.3
-  )
+  plot.new()
+  title(main=caseStudies[i])
+  # c(bottom, left, top, right)
+  par(mar=c(2, 4, 4, 3))
+  par(new=TRUE)
+  if (caseStudies[i]=="Violet") {
+		barplot(c(0,0), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+			#beside=TRUE,
+			space=c(0.1),
+			col=color[1:2],
+			ylim=yLimits,
+			xlim=xLimits,
+			xaxt="n",
+			yaxt="n",
+			log=log,
+			cex.lab=1.3
+	  )
+	  abline(v=1.7, lwd=8, lty=2, col=color[1:2])
+	  
+  } else {
+	  barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+			#beside=TRUE,
+			space=c(1.1),
+			col=color[1:2],
+			ylim=yLimits,
+			xlim=xLimits,
+			xaxt="n",
+			yaxt="n",
+			log=log,
+			cex.lab=1.3
+	  )
+  }
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
