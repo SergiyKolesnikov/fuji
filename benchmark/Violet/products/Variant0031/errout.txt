@@ -1,0 +1,4 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Violet/ClassNoteNode/com/horstmann/violet/ClassDiagramGraph.java:6,6:
+  Semantic Error: no field named NODE_PROTOTYPES

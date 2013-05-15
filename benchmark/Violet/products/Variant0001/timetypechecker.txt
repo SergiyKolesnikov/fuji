@@ -1,2 +1,0 @@
-construct AST:     120 ms
-(spl) error check: 1320 ms

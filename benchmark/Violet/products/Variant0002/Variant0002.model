@@ -1,1 +1,1 @@
-Variant0002 : base HelpMenu :: _Variant0002 ;
+Variant0002 : CommandLine HelpMenu WindowMenu ViewMenu EditMenu DiagramSupport NewFile :: _Variant0002 ;
