@@ -88,22 +88,22 @@ par(mfrow=c(2,7))
 layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
 
 for (i in 1:length(caseStudies)) {  
-  paintLog=FALSE
-  log=""
+  paintLog=TRUE
+  log="y"
   #for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
-  for(logcs in c())  {
-	if (caseStudies[i]==logcs) {
-		paintLog=TRUE
-		log="y"
-	}
-  }
+  #for(logcs in c())  {
+	#if (caseStudies[i]==logcs) {
+	#	paintLog=TRUE
+	#	log="y"
+	#}
+  #}
   #if (i != 1) par(new=TRUE)
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))))
-  if (caseStudies[i]=="Violet") {
-	maxY=maxY*1.1
-  }
+  #if (caseStudies[i]=="Violet") {
+	#maxY=maxY*1.1
+  #}
   yLimits=c(0,maxY)
   if (paintLog) yLimits[1]=1
   xLimits=c(1,5)
@@ -112,7 +112,7 @@ for (i in 1:length(caseStudies)) {
   # c(bottom, left, top, right)
   par(mar=c(2, 4, 4, 3))
   par(new=TRUE)
-  if (caseStudies[i]=="Violet") {
+  if (caseStudies[i]=="Violet" && FALSE) {
 		barplot(c(0,0), #, t(t(as.matrix(c(10000,10000,10000,10000))))
 			#beside=TRUE,
 			space=c(0.1),
