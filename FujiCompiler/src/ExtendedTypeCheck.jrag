@@ -134,7 +134,8 @@ aspect ExtendedTypeCheck {
 		/* get the feature model */
 		FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
-		FeatureDependencies dep = new FeatureDependencies(model);
+		//FeatureDependencies dep = new FeatureDependencies(model);
+		FeatureDependencies dep = model.getAnalyser().getDependencies();
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 		listFeatures.addAll(model.getConcreteFeatures());
@@ -643,9 +644,10 @@ aspect ExtendedTypeCheck {
   		boolean isUnqualifiedAccess, TypeDecl narrowType, boolean isTypeAccess,
   		TypeDecl accessingType, HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
 		/* get the feature model */
-  	FeatureModel model = getFeatureModel();
+	    FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
-		FeatureDependencies dep = new FeatureDependencies(model);
+		//FeatureDependencies dep = new FeatureDependencies(model);
+  	    FeatureDependencies dep = model.getAnalyser().getDependencies(); 
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 		listFeatures.addAll(model.getConcreteFeatures());

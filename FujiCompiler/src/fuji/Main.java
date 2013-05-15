@@ -48,7 +48,7 @@ public class Main implements CompositionContext {
     private Collection<String> processedCUs = new ArrayList<String>();
 
     /* Feature-Model for typechecker */
-    private static FeatureModel model = new FeatureModel();
+    private static FeatureModel model;
 
     /**
      * Starts fuji and processes exceptions.
@@ -203,6 +203,7 @@ public class Main implements CompositionContext {
                 /* read in feature model */
                 File guidsl_file = new File(
                         featuresFileOrFeatureModelFilePathname);
+                model = new FeatureModel();
                 GuidslReader reader = new GuidslReader(model);
                 try {
                     reader.readFromFile(guidsl_file);
