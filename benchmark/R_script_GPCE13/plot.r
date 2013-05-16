@@ -84,7 +84,7 @@ color <- c("lightblue", "lightskyblue", # prod
 )
 
 if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=9, height=5, onefile=TRUE, paper="special") 
-par(mfrow=c(2,7))
+
 layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
 
 for (i in 1:length(caseStudies)) {  
@@ -101,44 +101,28 @@ for (i in 1:length(caseStudies)) {
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))))
-  #if (caseStudies[i]=="Violet") {
-	#maxY=maxY*1.1
-  #}
+  if (log=="y" && ! caseStudies[i] =="GPL") {
+	maxY=maxY*10 # y axis must be longer, because it is logarithmic
+  }
   yLimits=c(0,maxY)
   if (paintLog) yLimits[1]=1
   xLimits=c(1,5)
   plot.new()
   title(main=caseStudies[i])
   # c(bottom, left, top, right)
-  par(mar=c(2, 4, 4, 3))
+  par(mar=c(2, 4.5, 4, 2))
   par(new=TRUE)
-  if (caseStudies[i]=="Violet" && FALSE) {
-		barplot(c(0,0), #, t(t(as.matrix(c(10000,10000,10000,10000))))
-			#beside=TRUE,
-			space=c(0.1),
-			col=color[1:2],
-			ylim=yLimits,
-			xlim=xLimits,
-			xaxt="n",
-			yaxt="n",
-			log=log,
-			cex.lab=1.3
-	  )
-	  abline(v=1.7, lwd=8, lty=2, col=color[1:2])
-	  
-  } else {
-	  barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
-			#beside=TRUE,
-			space=c(1.1),
-			col=color[1:2],
-			ylim=yLimits,
-			xlim=xLimits,
-			xaxt="n",
-			yaxt="n",
-			log=log,
-			cex.lab=1.3
-	  )
-  }
+  barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+		#beside=TRUE,
+		space=c(1.1),
+		col=color[1:2],
+		ylim=yLimits,
+		xlim=xLimits,
+		xaxt="n",
+		yaxt="n",
+		log=log,
+		cex.lab=1.3
+  )
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
@@ -176,9 +160,9 @@ for (i in 1:length(caseStudies)) {
 par(mar=c(0,0,0,0)) 
 plot.new()
 legend("center",
-       c('product-based ASTComp','product-based typecheck',
-         'feature-based ASTComp','feature-based typecheck',
-         'family-based ASTComp','family-based typecheck'),
+       c('Product-Based Setup','Product-Based Type Check',
+         'Feature-Based Setup','Feature-Based Type Check',
+         'Family-Based Setup','Family-Based Type Check'),
        inset = 0, fill=color, cex=1.2)
 
 warnings()
