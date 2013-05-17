@@ -78,11 +78,19 @@ getMaxY <- function(plotData, plotDataFeat, plotDataFam) {
   maximum
 }
 
-color <- c("lightblue", "lightskyblue", # prod
-            "tomato2", "firebrick3", # feat
-            "olivedrab2", "chartreuse3" # fam
-)
-
+if (FALSE) { # use colors
+	color <- c("lightblue", "lightskyblue", # prod
+				"tomato2", "firebrick3", # feat
+				"olivedrab2", "chartreuse3" # fam
+	)
+	xcolor="firebrick3"
+} else { # use black/white
+	color <- c(	rgb(0.9, 0.9, 0.9), rgb(1, 1, 1),  # prod
+				 rgb(0.5, 0.5, 0.5), rgb(0.7, 0.7, 0.7), # feat
+				rgb(0, 0, 0), rgb(0.4, 0.4, 0.4) # fam
+	)
+	xcolor=rgb(0, 0, 0)
+}
 if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=9, height=5, onefile=TRUE, paper="special") 
 
 layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
@@ -115,7 +123,8 @@ for (i in 1:length(caseStudies)) {
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
 		#beside=TRUE,
 		space=c(1.1),
-		col=color[1:2],
+		col=color[2:1],
+		
 		ylim=yLimits,
 		xlim=xLimits,
 		xaxt="n",
@@ -123,11 +132,16 @@ for (i in 1:length(caseStudies)) {
 		log=log,
 		cex.lab=1.3
   )
+  if (caseStudies[i] =="Violet") {
+	textpos = sum(t(t(plotData[,i])))
+	text(x=c(1.64), y=c(textpos), labels=c("x"), col=xcolor, cex=2)
+  }
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
           space=c(2.5),
-          col=color[3:4],
+          col=color[4:3],
+          
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
@@ -138,7 +152,8 @@ for (i in 1:length(caseStudies)) {
   barplot(t(t(plotDataFam[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
           #beside=TRUE,
           space=c(4),
-          col=color[5:6],
+          col=color[6:5],
+          
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
@@ -160,9 +175,12 @@ for (i in 1:length(caseStudies)) {
 par(mar=c(0,0,0,0)) 
 plot.new()
 legend("center",
-       c('Product-Based Setup','Product-Based Type Check',
-         'Feature-Based Setup','Feature-Based Type Check',
-         'Family-Based Setup','Family-Based Type Check'),
+       c('Product-Based Type Check',
+       'Product-Based Setup',
+         'Feature-Based Type Check',
+         'Feature-Based Setup',
+         'Family-Based Type Check',
+         'Family-Based Setup'),
        inset = 0, fill=color, cex=1.2)
 
 warnings()
