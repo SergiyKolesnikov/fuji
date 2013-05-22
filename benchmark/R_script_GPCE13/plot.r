@@ -78,7 +78,7 @@ getMaxY <- function(plotData, plotDataFeat, plotDataFam) {
   maximum
 }
 
-if (FALSE) { # use colors
+if (draft) { # use colors
 	color <- c("lightblue", "lightskyblue", # prod
 				"tomato2", "firebrick3", # feat
 				"olivedrab2", "chartreuse3" # fam
@@ -137,7 +137,7 @@ for (i in 1:length(caseStudies)) {
 	text(x=c(1.64), y=c(textpos), labels=c("x"), col=xcolor, cex=2)
   }
   par(new=TRUE)
-  barplot(t(t(plotDataFeat[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+  barplot(t(t(plotDataFeat[,i])),
           #beside=TRUE,
           space=c(2.5),
           col=color[4:3],
@@ -149,7 +149,7 @@ for (i in 1:length(caseStudies)) {
           yaxt="n",
   )
   par(new=TRUE)
-  barplot(t(t(plotDataFam[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
+  barplot(t(t(plotDataFam[,i])),
           #beside=TRUE,
           space=c(4),
           col=color[6:5],
@@ -182,6 +182,53 @@ legend("center",
          'Family-Based Type Check',
          'Family-Based Setup'),
        inset = 0, fill=color, cex=1.2)
+
+warnings()
+dev.off()
+
+
+
+#######################################################
+## plot sum over all case studies
+
+plotDataSum <- matrix(nrow=1, ncol=3)
+plotDataSum[1,1] = sum(plotData)
+plotDataSum[1,2] = sum(plotDataFeat)
+plotDataSum[1,3] = sum(plotDataFam)
+print(plotDataSum)
+
+colorSum <- c(color[1], color[3], color[5])
+names = c('product-based', 'feature-based', 'family-based')
+
+if (!draft) pdf(file=paste("plot_int_sum",".pdf",sep=""), width=9, height=10, onefile=TRUE, paper="special") 
+
+logY = "" # "y" for logarithmic y-scale, "" otherwise
+yLimitsSum=c(0,max(plotDataSum))
+if (logY == "y") {
+ yLimitsSum[1] = 1
+}
+
+barplot(plotDataSum,
+        beside=TRUE,
+        space=c(0, 0.2),
+        col=colorSum[1:3],
+        names.arg = names,
+        ylim=yLimitsSum,
+        yaxt="n",
+        log=logY,
+)
+
+if (par("ylog")) {
+  # 10er potenzen falls die achse logarithmisch ist
+  aty <- exp(log(10)*seq(log10(yLimitsSum[1]),log10(par("yaxp")[2]),by=1))
+} else {
+  # sonst die Skala vom Plot übernehmen
+  aty <- seq(yLimitsSum[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
+}
+#big.mark is the thousand-seperator
+axis(2, at=aty, labels=format(aty, scientific=TRUE, big.mark=" "), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
+
+#legend("topright", c('product-based', 'feature-based', 'family-based'), inset = .01, fill=colorSum, cex=0.6)
 
 warnings()
 if (!draft) dev.off()
