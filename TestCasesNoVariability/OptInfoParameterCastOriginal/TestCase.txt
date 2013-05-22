@@ -1,0 +1,10 @@
+\subsection{OptInfoParameterCastOriginal}
+%%
+In der Klasse \code{X} wird eine Methode \code{foo(B b)} definiert, die eine Instanz der Klasse \code{B} erwartet. Diese Methode wird verfeinert, indem in der Methode mittel \code{original()} der Code der zu verfeinernden Methode aufgerufen wird. Allerdings wird dabei eine Instanz der Klasse \code{A} übergeben. 
+\subsubsection{Fall 01: Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt.}
+Dieser Fall löst eine Fehlermeldung aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoParameterCastOriginal/01/FeatureA/X.java:3:
+  Semantic Error: no original-method found in X.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \code{A} die fehlende Vererbungsinformation hinzuzufügen.
