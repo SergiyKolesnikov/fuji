@@ -1,4 +1,0 @@
-Errors:
-
-/OptInfoParameterCastOriginal/01/FeatureA/X.java:3:
-  Semantic Error: no original-method found in X.

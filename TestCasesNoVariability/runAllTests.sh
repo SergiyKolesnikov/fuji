@@ -18,7 +18,6 @@ TESTCASES="FieldAccess \
            OptInfoNewAssignmentWithCast2Steps \
            OptInfoParameterCast \
            OptInfoParameterCast2Steps \
-           OptInfoParameterCastOriginal \
            OptInfoSuperAndSuperConstructorAccess \
            OptInfoUpAndDownCast"
 
