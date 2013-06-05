@@ -15,12 +15,12 @@ csExternalData_features = vector("list",length(caseStudies))
 csInternalData_features = vector("list",length(caseStudies))
 csInternalData_fam = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  cat("reading case study data \"",caseStudies[i],"\"\n", sep="")
-  int = read.csv(file=paste("../",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext = read.csv(file=paste("../",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  cat(i, ") reading case study data \"",caseStudies[i],"\"\n", sep="")
+  int = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
-  csInternalData_features[[i]] <- read.csv(file=paste("../",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  csExternalData_features[[i]] <- read.csv(file=paste("../",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
   csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
   int[is.na(int)] <- c(0)
@@ -186,7 +186,29 @@ legend("center",
 warnings()
 dev.off()
 
-
+#######################################################
+## Output LaTeX table with measurement results
+cat("Results LaTeX table for Product-Based | Feature-Based | Family-Based\n")
+cat("Name & Setup & Check & Total & Setup & Check & Total & Setup & Check & Total\\\\\n")
+cat("\\midrule\n")
+strategyDataRow <- function(data, splNr) {
+  paste(data[1,splNr], " & ",  data[2,splNr], " & ", data[1,splNr] + data[2,splNr], sep = "")
+}
+for (i in 1:length(caseStudies)) {
+  cat(caseStudies[i], " & ", strategyDataRow(plotData, i), " & ", strategyDataRow(plotDataFeat, i), " & ", strategyDataRow(plotDataFam, i), "\\\\\n", sep = "")
+}
+cat("\n")
+#######################################################
+## Output CSV table with measurement results
+cat("Results CSV table for Product-Based | Feature-Based | Family-Based\n")
+cat("Name,PD−B Setup,PD−B Check,PD−B Total,FT−B Setup,FT−B Check,FT−B Total,FM−B Setup,FM−B Check,FM−B Total\n")
+strategyDataRow <- function(data, splNr) {
+  paste(data[1,splNr], ",",  data[2,splNr], ",", data[1,splNr] + data[2,splNr], sep = "")
+}
+for (i in 1:length(caseStudies)) {
+  cat(caseStudies[i], ",", strategyDataRow(plotData, i), ",", strategyDataRow(plotDataFeat, i), ",", strategyDataRow(plotDataFam, i), "\n", sep = "")
+}
+cat("\n")
 
 #######################################################
 ## plot sum over all case studies
