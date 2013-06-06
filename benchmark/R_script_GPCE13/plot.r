@@ -188,14 +188,18 @@ dev.off()
 
 #######################################################
 ## Output LaTeX table with measurement results
-cat("Results LaTeX table for Product-Based | Feature-Based | Family-Based\n")
-cat("Name & Setup & Check & Total & Setup & Check & Total & Setup & Check & Total\\\\\n")
-cat("\\midrule\n")
-strategyDataRow <- function(data, splNr) {
-  paste(data[1,splNr], " & ",  data[2,splNr], " & ", data[1,splNr] + data[2,splNr], sep = "")
+cat("Results LaTeX table for Product-Based (Setup, Check, Total) | Feature-Based (Setup, Check, Total) | Family-Based (Setup, Check, Total)\n")
+violetMarker <- ""
+strategyDataRowLatex <- function(data, splNr, mark=FALSE) {
+  if (mark && caseStudies[splNr] == "Violet") {
+    violetMarker <- "\\textsuperscript{*}"
+  } else {
+    violetMarker <- ""
+  }
+  paste("\\num{", data[1,splNr], "}", violetMarker, " & \\num{",  data[2,splNr], "}", violetMarker, " & \\num{", data[1,splNr] + data[2,splNr], "}", violetMarker, sep = "")
 }
 for (i in 1:length(caseStudies)) {
-  cat(caseStudies[i], " & ", strategyDataRow(plotData, i), " & ", strategyDataRow(plotDataFeat, i), " & ", strategyDataRow(plotDataFam, i), "\\\\\n", sep = "")
+  cat(caseStudies[i], " & ", strategyDataRowLatex(plotData, i, TRUE), " & ", strategyDataRowLatex(plotDataFeat, i), " & ", strategyDataRowLatex(plotDataFam, i), "\\\\\n", sep = "")
 }
 cat("\n")
 #######################################################
