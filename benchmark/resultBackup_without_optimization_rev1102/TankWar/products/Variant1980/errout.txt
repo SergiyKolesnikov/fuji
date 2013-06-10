@@ -1,0 +1,44 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/Image/ExplodierenEffekt.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/ExplodierenEffekt.java:31:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Wall.java:9:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:15:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:20:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:65:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:68:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:71:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Tank.java:74:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Missile.java:14:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Missile.java:17:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Missile.java:21:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/Image/Missile.java:24:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:7:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:10:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:13:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:16:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:19:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.
+/local/Fuji/FujiProject/examples/TankWar/IMG_tool/Tool.java:22:
+  Semantic Error: no method named drawImage(java.lang.String, int, int) in Maler matches.

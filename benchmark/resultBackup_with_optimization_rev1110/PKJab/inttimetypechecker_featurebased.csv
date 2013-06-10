@@ -1,0 +1,10 @@
+variant	ASTcomp	typecheck	errors
+ConfigBase.model	24	1297	0
+ConfigComposing.model	24	700	0
+ConfigHistory.model	24	667	0
+ConfigResources.model	24		
+ConfigSendComposing.model	24	681	0
+ConfigSendVersion.model	24	422	0
+ConfigServerRoster.model	24	506	0
+ConfigThemeSelection.model	24	739	0
+ConfigTimestamps.model	24	607	0

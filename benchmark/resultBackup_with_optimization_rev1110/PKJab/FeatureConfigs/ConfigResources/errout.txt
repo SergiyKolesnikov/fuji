@@ -1,0 +1,10 @@
+de.ovgu.featureide.fm.core.io.UnsupportedModelException: Encountered "Resources" at line 2, column 1.
+Was expecting:
+    ":" ...
+    
+	at de.ovgu.featureide.fm.core.io.guidsl.GuidslReader.parseInputStream(GuidslReader.java:128)
+	at de.ovgu.featureide.fm.core.io.AbstractFeatureModelReader.readFromFile(AbstractFeatureModelReader.java:69)
+	at fuji.Main.<init>(Main.java:209)
+	at fuji.Main.main(Main.java:62)
+Errors:
+Feature list is empty or null.

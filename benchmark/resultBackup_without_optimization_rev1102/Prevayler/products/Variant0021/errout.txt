@@ -1,0 +1,16 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:46,11:
+  Semantic Error: no field named _remoteServerIpAddress
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:46,76:
+  Semantic Error: no visible type named ClientPublisher
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:46:
+  Semantic Error: no method named network() in org.prevayler.PrevaylerFactory matches.
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:46,102:
+  Semantic Error: no field named _remoteServerIpAddress
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:46,125:
+  Semantic Error: no field named _remoteServerPort
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: can not instantiate org.prevayler.implementation.publishing.CentralPublisher no matching constructor found in org.prevayler.implementation.publishing.CentralPublisher
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:47:
+  Semantic Error: no method named censor(org.prevayler.implementation.snapshot.GenericSnapshotManager) in org.prevayler.PrevaylerFactory matches.

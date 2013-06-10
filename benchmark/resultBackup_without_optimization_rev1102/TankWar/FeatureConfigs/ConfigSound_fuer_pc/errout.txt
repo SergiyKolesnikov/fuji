@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_pc_stubfix/TankManager.java:7,34:
+  Semantic Error: no visible type named MIDlet
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_pc_stubfix/TankManager.java:21,35:
+  Semantic Error: no visible type named MIDletStateChangeException

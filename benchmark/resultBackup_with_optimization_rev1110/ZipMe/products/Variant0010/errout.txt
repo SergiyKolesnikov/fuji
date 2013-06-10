@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/ZipMe/features/Base/ZipMETest.java:51,9:
+  Semantic Error: no visible type named ZipInputStream
+/local/Fuji/FujiProject/examples/ZipMe/features/Base/ZipMETest.java:51,39:
+  Semantic Error: no visible type named ZipInputStream

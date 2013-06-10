@@ -1,0 +1,6 @@
+variant	usertime	systemtime
+ConfigBasicGraph.model	0.91	0.05
+ConfigColor.model	0.75	0.03
+ConfigPrintHeader.model	0.82	0.05
+ConfigRecursive.model	0.75	0.04
+ConfigWeight.model	0.77	0.02

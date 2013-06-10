@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: no field named x
+/local/Fuji/FujiProject/examples/EPL/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: no field named y

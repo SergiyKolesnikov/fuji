@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/Feuerkraft_stubfix/TankManager.java:8,34:
+  Semantic Error: no visible type named MIDlet
+/local/Fuji/FujiProject/examples/TankWar/Feuerkraft_stubfix/TankManager.java:30,35:
+  Semantic Error: no visible type named MIDletStateChangeException

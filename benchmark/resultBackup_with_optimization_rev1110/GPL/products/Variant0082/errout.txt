@@ -1,0 +1,14 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/GPL/WeightedWithNeighbors/GPL/Graph.java:14:
+  Semantic Error: no original-method found in GPL.Graph.
+/local/Fuji/FujiProject/examples/GPL/WeightedWithNeighbors/GPL/Graph.java:22,38:
+  Semantic Error: no field named neighbor
+/local/Fuji/FujiProject/examples/GPL/WeightedOnlyVertices/GPL/Vertex.java:28:
+  Semantic Error: no original-method found in GPL.Vertex.
+/local/Fuji/FujiProject/examples/GPL/WeightedWithNeighbors/GPL/Vertex.java:16:
+  Semantic Error: no original-method found in GPL.Vertex.
+/local/Fuji/FujiProject/examples/GPL/WeightedWithNeighbors/GPL/Neighbor.java:16:
+  Semantic Error: no method named NeighborConstructor(GPL.Vertex) in GPL.Neighbor matches.
+/local/Fuji/FujiProject/examples/GPL/WeightedWithNeighbors/GPL/Neighbor.java:23:
+  Semantic Error: no original-method found in GPL.Neighbor.

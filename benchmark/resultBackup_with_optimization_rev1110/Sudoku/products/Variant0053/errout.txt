@@ -1,0 +1,24 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Sudoku/Generator/Board.java:28:
+  Semantic Error: no method named trySetField(Structure, int, int, Field) in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:37:
+  Semantic Error: no method named getRemainingPos() in Field matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:42:
+  Semantic Error: no method named trySetFieldPrivate(Structure, int, int, Field) in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:45:
+  Semantic Error: no method named undo() in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:49:
+  Semantic Error: no method named undo() in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:66:
+  Semantic Error: no method named solve(Board) in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:66:
+  Semantic Error: no method named clone() in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:72:
+  Semantic Error: no method named solve(Board) in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:72:
+  Semantic Error: no method named clone() in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/GenerateSudokuListener.java:28:
+  Semantic Error: no method named setBusy(boolean) in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/GenerateSudokuListener.java:31:
+  Semantic Error: no method named setBusy(boolean) in BoardManager matches.

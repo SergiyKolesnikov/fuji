@@ -1,0 +1,8 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9,11:
+  Semantic Error: no visible type named Plus
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:9,11:
+  Semantic Error: no visible type named Plus
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:11,19:
+  Semantic Error: no visible type named Plus

@@ -1,0 +1,34 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:8,5:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:9,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:10,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:11,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:12,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:13,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:14,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:15,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:16,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:84,30:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:90,22:
+  Semantic Error: no visible type named MediaException
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:96,13:
+  Semantic Error: no visible type named Player
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:104,18:
+  Semantic Error: no visible type named MediaException
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy/SoundPlayer.java:136,18:
+  Semantic Error: no visible type named MediaException
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy_stubfix/TankManager.java:4,34:
+  Semantic Error: no visible type named MIDlet
+/local/Fuji/FujiProject/examples/TankWar/Sound_fuer_Handy_stubfix/TankManager.java:18,35:
+  Semantic Error: no visible type named MIDletStateChangeException

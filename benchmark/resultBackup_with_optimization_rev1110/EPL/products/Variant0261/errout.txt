@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9,11:
+  Semantic Error: no visible type named Plus
+/local/Fuji/FujiProject/examples/EPL/Eval_Neg/tmp/Neg.java:5:
+  Semantic Error: no method named eval() in tmp.Exp matches.

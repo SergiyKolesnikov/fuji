@@ -1,0 +1,15 @@
+variant	usertime	systemtime
+ConfigBase.model	1.86	0.08
+ConfigClipboard.model	1.46	0.04
+ConfigFile.model	1.99	0.09
+ConfigFind.model	1.55	0.03
+ConfigFormatRaw.model	1.95	0.09
+ConfigFormatStyled.model	0.14	0.03
+ConfigFullStyled.model	0.15	0.03
+ConfigMenuBar.model	1.21	0.04
+ConfigPrint.model	1.55	0.04
+ConfigTextRaw.model	1.41	0.08
+ConfigTextStyled.model	0.16	0.02
+ConfigToolBar.model	1.20	0.06
+ConfigUndo.model	1.54	0.05
+Confignotepad_resources.model	0.18	0.00

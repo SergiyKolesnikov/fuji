@@ -1,0 +1,32 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:11,28:
+  Semantic Error: no visible type named javax.microedition.lcdui.Canvas
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:15,19:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:15,31:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:21,12:
+  Semantic Error: no visible type named Graphics
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:23,26:
+  Semantic Error: no visible type named Graphics
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy_stubfix/Maler.java:26,27:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:10,3:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:10,17:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:12,41:
+  Semantic Error: no field named TOP
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:12,56:
+  Semantic Error: no field named LEFT
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:339,12:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:341,42:
+  Semantic Error: no field named TOP
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:341,57:
+  Semantic Error: no field named LEFT
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:348,3:
+  Semantic Error: no visible type named Image
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:348:
+  Semantic Error: no method named createImage(java.lang.String) in Unknown matches.

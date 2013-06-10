@@ -1,0 +1,28 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:7:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:7:
+  Semantic Error: can not instantiate tmp.Neg no matching constructor found in tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Plus
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9:
+  Semantic Error: can not instantiate tmp.Plus no matching constructor found in tmp.Plus
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:7:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:7:
+  Semantic Error: can not instantiate tmp.Neg no matching constructor found in tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:9:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Plus
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:9:
+  Semantic Error: can not instantiate tmp.Plus no matching constructor found in tmp.Plus
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:11:
+  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:11:
+  Semantic Error: can not instantiate tmp.Neg no matching constructor found in tmp.Neg
+/local/Fuji/FujiProject/examples/EPL/Eval/tmp/Test.java:11:
+  Semantic Error: can not instantiate tmp.Plus no matching constructor found in tmp.Plus
+/local/Fuji/FujiProject/examples/EPL/Plus_ToString/tmp/Plus.java:5,12:
+  Semantic Error: no field named x
+/local/Fuji/FujiProject/examples/EPL/Plus_ToString/tmp/Plus.java:5,24:
+  Semantic Error: no field named y

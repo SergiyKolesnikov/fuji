@@ -1,0 +1,4 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:7,11:
+  Semantic Error: no visible type named Neg

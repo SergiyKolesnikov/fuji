@@ -1,0 +1,15 @@
+variant	ASTcomp	typecheck	errors
+ConfigBase.model	24	758	0
+ConfigClipboard.model	24	719	0
+ConfigFile.model	24	834	0
+ConfigFind.model	24	731	0
+ConfigFormatRaw.model	24	833	0
+ConfigFormatStyled.model	24		
+ConfigFullStyled.model	24		
+ConfigMenuBar.model	24	571	0
+ConfigPrint.model	24	735	0
+ConfigTextRaw.model	24	643	0
+ConfigTextStyled.model	24		
+ConfigToolBar.model	24	596	0
+ConfigUndo.model	24	725	0
+Confignotepad_resources.model	24		

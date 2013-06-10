@@ -1,0 +1,7 @@
+variant	usertime	systemtime
+ConfigCensor.model	1.06	0.05
+ConfigGZip.model	0.72	0.05
+ConfigMonitor.model	1.26	0.04
+ConfigReplication.model	1.90	0.06
+ConfigSnapshot.model	1.64	0.10
+Configbase.model	3.85	0.12

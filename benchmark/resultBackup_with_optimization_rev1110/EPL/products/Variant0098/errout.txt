@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/EPL/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: no method named eval() in tmp.Exp matches.
+/local/Fuji/FujiProject/examples/EPL/Eval_Plus/tmp/Plus.java:5:
+  Semantic Error: no method named eval() in tmp.Exp matches.

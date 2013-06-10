@@ -1,0 +1,18 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:5,12:
+  Semantic Error: no visible type named Hashtable
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:5,35:
+  Semantic Error: no visible type named Hashtable
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:12,41:
+  Semantic Error: no field named TOP
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:12,56:
+  Semantic Error: no field named LEFT
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:341,42:
+  Semantic Error: no field named TOP
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:341,57:
+  Semantic Error: no field named LEFT
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:348:
+  Semantic Error: no method named createImage(java.lang.String) in java.awt.Image matches.
+/local/Fuji/FujiProject/examples/TankWar/fuer_Handy/Maler.java:349:
+  Semantic Error: no method named scale(java.awt.Image, int, int) in Maler matches.

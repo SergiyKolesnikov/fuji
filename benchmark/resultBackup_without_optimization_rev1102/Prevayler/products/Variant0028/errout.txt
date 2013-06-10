@@ -1,0 +1,6 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: can not instantiate org.prevayler.implementation.journal.PersistentJournal no matching constructor found in org.prevayler.implementation.journal.PersistentJournal
+/local/Fuji/FujiProject/examples/Prevayler/Snapshot/org/prevayler/PrevaylerFactory.java:95:
+  Semantic Error: no method named monitor() in org.prevayler.PrevaylerFactory matches.

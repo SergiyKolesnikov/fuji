@@ -1,0 +1,24 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Violet/HelpMenu/com/horstmann/violet/framework/EditorFrame.java:4,13:
+  Semantic Error: no visible type named JMenu
+/local/Fuji/FujiProject/examples/Violet/RestoreWindow/com/horstmann/violet/framework/EditorFrame.java:9,10:
+  Semantic Error: no visible type named ActionListener
+/local/Fuji/FujiProject/examples/Violet/RestoreWindow/com/horstmann/violet/framework/EditorFrame.java:11,41:
+  Semantic Error: no visible type named ActionEvent
+/local/Fuji/FujiProject/examples/Violet/RestoreWindow/com/horstmann/violet/framework/EditorFrame.java:13,16:
+  Semantic Error: no visible type named GraphFrame
+/local/Fuji/FujiProject/examples/Violet/RestoreWindow/com/horstmann/violet/framework/EditorFrame.java:14,22:
+  Semantic Error: no visible type named GraphFrame
+/local/Fuji/FujiProject/examples/Violet/RestoreWindow/com/horstmann/violet/framework/EditorFrame.java:20,23:
+  Semantic Error: no visible type named PropertyVetoException
+/local/Fuji/FujiProject/examples/Violet/WindowMenu/com/horstmann/violet/framework/EditorFrame.java:4,13:
+  Semantic Error: no visible type named JMenu
+/local/Fuji/FujiProject/examples/Violet/ViewMenu/com/horstmann/violet/framework/EditorFrame.java:4,13:
+  Semantic Error: no visible type named JMenu
+/local/Fuji/FujiProject/examples/Violet/EditMenu/com/horstmann/violet/framework/EditorFrame.java:4,13:
+  Semantic Error: no visible type named JMenu
+/local/Fuji/FujiProject/examples/Violet/ClassNoteNode/com/horstmann/violet/ClassDiagramGraph.java:6,6:
+  Semantic Error: no field named NODE_PROTOTYPES
+/local/Fuji/FujiProject/examples/Violet/ClassNoteNode/com/horstmann/violet/ClassDiagramGraph.java:6,31:
+  Semantic Error: no visible type named NoteNode

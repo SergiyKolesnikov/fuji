@@ -1,0 +1,18 @@
+Errors:
+
+/local/Fuji/FujiProject/examples/Sudoku/Solver/Field.java:52:
+  Semantic Error: no original-method found in Field.
+/local/Fuji/FujiProject/examples/Sudoku/Solver/BoardManager.java:29:
+  Semantic Error: no method named undo() in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Solver/BoardManager.java:113:
+  Semantic Error: no method named clone() in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Solver/Guesser.java:27:
+  Semantic Error: no method named clone() in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:45:
+  Semantic Error: no method named undo() in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:49:
+  Semantic Error: no method named undo() in BoardManager matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:66:
+  Semantic Error: no method named clone() in Board matches.
+/local/Fuji/FujiProject/examples/Sudoku/Generator/SudokuGenerator.java:72:
+  Semantic Error: no method named clone() in Board matches.

@@ -1,0 +1,13 @@
+variant	usertime	systemtime
+ConfigEval.model	0.76	0.05
+ConfigEval_Neg.model	0.64	0.05
+ConfigEval_Numbers.model	0.74	0.02
+ConfigEval_Plus.model	0.68	0.04
+ConfigNeg.model	0.68	0.03
+ConfigNeg_ToString.model	0.68	0.06
+ConfigNumbers.model	0.65	0.03
+ConfigNumbers_ToString.model	0.78	0.04
+ConfigPlus.model	0.63	0.05
+ConfigPlus_ToString.model	0.64	0.04
+ConfigToString.model	0.75	0.05
+Configbase.model	0.68	0.05
