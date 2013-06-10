@@ -148,7 +148,11 @@ for (i in 1:length(caseStudies)) {
 #    plot.new() # insert an empty plot to allow for violet's large y axis labels
 #  }
   plot.new()
-  title(main=caseStudies[i])
+  if (i==1 || i==6 || i==11) {
+    title(main=caseStudies[i],ylab="Time (Seconds)          ",cex.lab=0.9, mgp=c(3,0,0))
+  } else {
+      title(main=caseStudies[i])
+  }
   # c(bottom, left, top, right)
   par(mar=c(2, 4, 3, 1))
   par(new=TRUE)
@@ -224,42 +228,63 @@ for (i in 1:length(caseStudies)) {
 	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
 }
 
-par(mar=c(0,0,0,0)) 
 plot.new()
-legend("center",
-       c('Setup',
-       'Check',
-         'Bytecode Check'),
-       inset = 0, fill=color, cex=1.2)
-       
-par(mar=c(0,0,0,0)) 
+# c(bottom, left, top, right)
+par(mar=c(1,0,1,0)) 
 plot.new()
-legend("center",
+legend("topleft",
        c(
        "PB   Product-Based",
        "FT    Feature Based",
        "FM   Family Based",
        "FT'   Feature Based With Bytecode Check",
        "FM'  Family Based Without Optimization"),
-       inset = 0, cex=1.2)
+       inset = 0, cex=1)
+       
+#par(mar=c(0,0,0,0)) 
+#plot.new()
+legend("bottomleft",
+       c('Setup',
+       'Check',
+         'Bytecode Check'),
+       inset = 0, fill=color, cex=1)
 
 warnings()
 dev.off()
 
 #######################################################
 ## Output LaTeX table with measurement results
-cat("Results LaTeX table for Product-Based (Setup, Check, Total) | Feature-Based (Setup, Check, Total) | Family-Based (Setup, Check, Total)\n")
+cat("Results LaTeX table for Product-Based (Setup, Check, Total) | Feature-Based (Setup, Check, Total, PB/FT) | Family-Based (Setup, Check, Total, PB/FM, FT/FM)\n")
 violetMarker <- ""
-strategyDataRowLatex <- function(data, splNr, mark=FALSE) {
+strategyDataRowLatex_prod <- function(splNr, mark=FALSE) {
   if (mark && caseStudies[splNr] == "Violet") {
     violetMarker <- "\\textsuperscript{*}"
   } else {
     violetMarker <- ""
   }
-  paste("\\num{", data[1,splNr], "}", violetMarker, " & \\num{",  data[2,splNr], "}", violetMarker, " & \\num{", data[1,splNr] + data[2,splNr], "}", violetMarker, sep = "")
+  paste("\\num{", plotData[1,splNr], "}", violetMarker, " & \\num{",  plotData[2,splNr], "}", violetMarker, " & \\num{", plotData[1,splNr] + plotData[2,splNr], "}", violetMarker, sep = "")
+}
+strategyDataRowLatex_feat <- function(splNr, mark=FALSE) {
+  if (mark && caseStudies[splNr] == "Violet") {
+    violetMarker <- "\\textsuperscript{*}"
+  } else {
+    violetMarker <- ""
+  }
+  paste("\\num{", plotDataFeat[1,splNr], "}", violetMarker, " & \\num{",  plotDataFeat[2,splNr], "}", violetMarker, " & \\num{", plotDataFeat[1,splNr] + plotDataFeat[2,splNr], "}", violetMarker, " & \\num{", 
+		formatC((plotData[1,splNr]+plotData[2,splNr])/(plotDataFeat[1,splNr]+plotDataFeat[2,splNr]), big.mark=" ",digits = 2, format="fg"), "}", violetMarker, sep = "")
+}
+strategyDataRowLatex_fam <- function(splNr, mark=FALSE) {
+  if (mark && caseStudies[splNr] == "Violet") {
+    violetMarker <- "\\textsuperscript{*}"
+  } else {
+    violetMarker <- ""
+  }
+  paste("\\num{", plotDataFam[1,splNr], "}", violetMarker, " & \\num{",  plotDataFam[2,splNr], "}", violetMarker, " & \\num{", plotDataFam[1,splNr] + plotDataFam[2,splNr], "}",  violetMarker,
+		" & \\num{", formatC((plotData[1,splNr]+plotData[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr])), "}", violetMarker,
+		" & \\num{", formatC((plotDataFeat[1,splNr]+plotDataFeat[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr])), "}", violetMarker, sep = "")
 }
 for (i in 1:length(caseStudies)) {
-  cat(caseStudies[i], " & ", strategyDataRowLatex(plotData, i, TRUE), " & ", strategyDataRowLatex(plotDataFeat, i), " & ", strategyDataRowLatex(plotDataFam, i), "\\\\\n", sep = "")
+  cat(caseStudies[i], " & ", strategyDataRowLatex_prod(i, TRUE), " & ", strategyDataRowLatex_feat(i), " & ", strategyDataRowLatex_fam(i), "\\\\\n", sep = "")
 }
 cat("\n")
 #######################################################
