@@ -14,10 +14,13 @@ csExternalData = vector("list",length(caseStudies))
 csExternalData_features = vector("list",length(caseStudies))
 csInternalData_features = vector("list",length(caseStudies))
 csInternalData_fam = vector("list",length(caseStudies))
+csInternalData_fam_noOpt = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
   cat(i, ") reading case study data \"",caseStudies[i],"\"\n", sep="")
   int = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   ext = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  int_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
   csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
@@ -26,6 +29,7 @@ for (i in 1:length(caseStudies)) {
   int[is.na(int)] <- c(0)
   
   csInternalData_fam[[i]] = int[int$variant == "family", ]
+  csInternalData_fam_noOpt[[i]] = int_noOpt[int$variant=="family", ]
   int = int[int$variant != "family", ]
   ext = ext[ext$variant != "family", ]
   
@@ -39,9 +43,18 @@ for (i in 1:length(caseStudies)) {
   csExternalData[[i]]<-ext
 }
 
+bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+print("bytecodecomp:")
+print(bytecodeCompTimes[bytecodeCompTimes$name=="GPL",])
+
 getFeatureTimeInt <- function(caseStudyID) {
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+}
+getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
+  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
+  prodlines = csInternalData_features[[caseStudyID]]
+  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
 }
 getProdTimeInt <- function(caseStudyID) {
   prodlines = csInternalData[[caseStudyID]]
@@ -52,28 +65,45 @@ getFamTimeInt <- function(caseStudyID) {
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
 }
 
+getFamTimeInt_noOpt <- function(caseStudyID) {
+  prodlines = csInternalData_fam_noOpt[[caseStudyID]]
+  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+}
+
 plotData <- matrix(nrow=2, ncol=length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  plotData[,i] = getProdTimeInt(i) # product time
+  plotData[,i] = getProdTimeInt(i)/1000 # product time
 }
-print (plotData)
+#print (plotData)
 
 plotDataFeat <- matrix(nrow=2, ncol=length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  plotDataFeat[,i] = getFeatureTimeInt(i) # feature time
+  plotDataFeat[,i] = getFeatureTimeInt(i)/1000 # feature time
 }
-print (plotDataFeat)
+#print (plotDataFeat)
 
 plotDataFam <- matrix(nrow=2, ncol=length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  plotDataFam[,i] = getFamTimeInt(i) # fam time
+  plotDataFam[,i] = getFamTimeInt(i)/1000 # fam time
 }
-print (plotDataFam)
+#print (plotDataFam)
 
-getMaxY <- function(plotData, plotDataFeat, plotDataFam) {
+plotDataFeat_wBytecodeComp <- matrix(nrow=3, ncol=length(caseStudies))
+for (i in 1:length(caseStudies)) {
+  plotDataFeat_wBytecodeComp[,i] = getFeatureTimeInt_wBytecodeComp(i)/1000 # fam time
+}
+print (plotDataFeat_wBytecodeComp)
+
+plotDataFam_noOpt <- matrix(nrow=2, ncol=length(caseStudies))
+for (i in 1:length(caseStudies)) {
+  plotDataFam_noOpt[,i] = getFamTimeInt_noOpt(i)/1000 # fam time
+}
+#print (plotDataFam_noOpt)
+
+getMaxY <- function(plotData, plotDataFeat, plotDataFam, plotDataFam_noOpt) {
   maximum = 0
   for (i in 1:ncol(plotData)) {
-    maximum = max( sum(plotData[,i]), sum(plotDataFeat[,i]), sum(plotDataFam[,i]), maximum)
+    maximum = max( sum(plotData[,i]), sum(plotDataFeat[,i]), sum(plotDataFam[,i]), sum(plotDataFam_noOpt[,i]), maximum)
   }
   maximum
 }
@@ -83,17 +113,15 @@ if (draft) { # use colors
 				"tomato2", "firebrick3", # feat
 				"olivedrab2", "chartreuse3" # fam
 	)
-	xcolor="firebrick3"
+	textcolor="firebrick3"
 } else { # use black/white
-	color <- c(	rgb(0.9, 0.9, 0.9), rgb(1, 1, 1),  # prod
-				 rgb(0.5, 0.5, 0.5), rgb(0.7, 0.7, 0.7), # feat
-				rgb(0, 0, 0), rgb(0.4, 0.4, 0.4) # fam
-	)
-	xcolor=rgb(0, 0, 0)
+	color <- c(rgb(0, 0, 0), rgb(1, 1, 1), rgb(0.7, 0.7, 0.7)) # setup, typecheck, bytecodeComp
+	textcolor=rgb(0, 0, 0)
 }
 if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=9, height=5, onefile=TRUE, paper="special") 
 
-layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
+#layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
+layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,14), 3, 5, byrow = TRUE))
 
 for (i in 1:length(caseStudies)) {  
   paintLog=TRUE
@@ -108,40 +136,43 @@ for (i in 1:length(caseStudies)) {
   #if (i != 1) par(new=TRUE)
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
-				sum(t(t(plotDataFam[,i]))))
+				sum(t(t(plotDataFam[,i]))),
+				sum(t(t(plotDataFam_noOpt[,i]))))
   if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxY=maxY*10 # y axis must be longer, because it is logarithmic
   }
   yLimits=c(0,maxY)
-  if (paintLog) yLimits[1]=1
-  xLimits=c(1,5)
+  if (paintLog) yLimits[1]=0.01
+  xLimits=c(1,9)
+#  if (caseStudies[i]=="Violet") {
+#    plot.new() # insert an empty plot to allow for violet's large y axis labels
+#  }
   plot.new()
   title(main=caseStudies[i])
   # c(bottom, left, top, right)
-  par(mar=c(2, 4.5, 4, 2))
+  par(mar=c(2, 4, 3, 1))
   par(new=TRUE)
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
 		#beside=TRUE,
 		space=c(1.1),
-		col=color[2:1],
+		col=color[1:2],
 		
 		ylim=yLimits,
 		xlim=xLimits,
 		xaxt="n",
 		yaxt="n",
 		log=log,
-		cex.lab=1.3
+		cex.lab=1.3,
   )
   if (caseStudies[i] =="Violet") {
 	textpos = sum(t(t(plotData[,i])))
-	text(x=c(1.64), y=c(textpos), labels=c("x"), col=xcolor, cex=2)
+	text(x=c(1.64), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
   }
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])),
           #beside=TRUE,
           space=c(2.5),
-          col=color[4:3],
-          
+          col=color[1:2],
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
@@ -152,36 +183,65 @@ for (i in 1:length(caseStudies)) {
   barplot(t(t(plotDataFam[,i])),
           #beside=TRUE,
           space=c(4),
-          col=color[6:5],
-          
+          col=color[1:2],
           ylim=yLimits,
           xlim=xLimits,
           xaxt="n",
           log=log,
           yaxt="n",
   )
-  axis(1, tick=FALSE, at=c(1,2,3),labels=c("","","")) #suppress x axis
+  par(new=TRUE)
+  barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
+          #beside=TRUE,
+          space=c(6.5),
+          col=color[1:3],
+          ylim=yLimits,
+          xlim=xLimits,
+          xaxt="n",
+          log=log,
+          yaxt="n",
+  )
+  par(new=TRUE)
+  barplot(t(t(plotDataFam_noOpt[,i])),
+          #beside=TRUE,
+          space=c(8),
+          col=color[1:2],
+          ylim=yLimits,
+          xlim=xLimits,
+          xaxt="n",
+          log=log,
+          yaxt="n",
+  )
+  axis(1, tick=FALSE, at=c(1.1,2.5,4,6.5,8.1)+0.5,labels=c("PB","FT","FM","FT'","FM'"), cex.axis=0.8, mgp=c(3,0,0))
 	if (par("ylog")) {
 		# 10er potenzen falls die achse logarithmisch ist
-		aty <- exp(log(10)*seq(log10(yLimits[1]),log10(par("yaxp")[2]),by=1))
+		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
 	} else {
 		# sonst die Skala vom Plot übernehmen
 		aty <- seq(yLimits[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
 	}
 	#big.mark is the thousand-seperator
-	axis(2, at=aty, labels=format(aty, scientific=FALSE, big.mark=" "), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
+	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
 }
 
 par(mar=c(0,0,0,0)) 
 plot.new()
 legend("center",
-       c('Product-Based Type Check',
-       'Product-Based Setup',
-         'Feature-Based Type Check',
-         'Feature-Based Setup',
-         'Family-Based Type Check',
-         'Family-Based Setup'),
+       c('Setup',
+       'Check',
+         'Bytecode Check'),
        inset = 0, fill=color, cex=1.2)
+       
+par(mar=c(0,0,0,0)) 
+plot.new()
+legend("center",
+       c(
+       "PB   Product-Based",
+       "FT    Feature Based",
+       "FM   Family Based",
+       "FT'   Feature Based With Bytecode Check",
+       "FM'  Family Based Without Optimization"),
+       inset = 0, cex=1.2)
 
 warnings()
 dev.off()
