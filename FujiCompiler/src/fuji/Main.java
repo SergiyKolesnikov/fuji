@@ -114,6 +114,7 @@ public class Main implements CompositionContext {
             FeatureDirNotFoundException, SyntacticErrorException,
             SemanticErrorException, CompilerWarningException {
 
+        /* Setup timer start. */    
         long startTimeNano = getCpuTime();
 
         /* = Fuji-features-file for typechecker */
@@ -189,10 +190,6 @@ public class Main implements CompositionContext {
         String basedir = cmd.getOptionValue(BASEDIR,
                 System.getProperty("user.dir"));
 
-        if (cmd.hasOption(TIMER)) {
-            System.out.println("Time_AST_construction_ms: "
-                    + ((getCpuTime() - startTimeNano) / 1000000));
-        }
 
         /*
          * Decide where the features list or the feature model file comes from.
@@ -243,15 +240,24 @@ public class Main implements CompositionContext {
         if (!cmd.hasOption(PROG_MODE)) {
             Composition composition = new Composition(this);
             if (cmd.hasOption(TYPECHECKER)) {
+                Program ast = composition.composeAST();
+
+                /* Setup timer stop. */
+                if (cmd.hasOption(TIMER)) {
+                    System.out.println("Time_AST_construction_ms: "
+                            + ((getCpuTime() - startTimeNano) / 1000000));
+                }
+
+                /* Type check timer start. */
                 if (cmd.hasOption(TIMER)) {
                     startTimeNano = getCpuTime();
                 }
-
-                Program ast = composition.composeAST();
                 if (cmd.hasOption(IGNORE_ORIGINAL)) {
                     ast.setIgnoreOriginal(true);
                 }
                 ast.splErrorCheck(model, errors, warnings);
+                
+                /* Type check timer start. */
                 if (cmd.hasOption(TIMER)) {
                     System.out.println("Time_typecheck_ms: "
                             + ((getCpuTime() - startTimeNano) / 1000000));
