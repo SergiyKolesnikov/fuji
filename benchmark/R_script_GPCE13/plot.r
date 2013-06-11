@@ -274,36 +274,39 @@ dev.off()
 #######################################################
 ## Output LaTeX table with measurement results
 cat("Results LaTeX table for Product-Based (Setup, Check, Total) | Feature-Based (Setup, Check, Total, PB/FT) | Family-Based (Setup, Check, Total, PB/FM, FT/FM)\n")
-violetMarker <- ""
-strategyDataRowLatex_prod <- function(splNr, mark=FALSE) {
-  if (mark && caseStudies[splNr] == "Violet") {
+
+strategyDataRowLatex_prod <- function(splNr) {
+  violetMarker <- ""
+  if (caseStudies[splNr] == "Violet") {
     violetMarker <- "\\textsuperscript{*}"
   } else {
     violetMarker <- ""
   }
-  paste("\\num{", plotData[1,splNr], "}", violetMarker, " & \\num{",  plotData[2,splNr], "}", violetMarker, " & \\num{", plotData[1,splNr] + plotData[2,splNr], "}", violetMarker, sep = "")
+  paste("", plotData[1,splNr], violetMarker, " & ",  plotData[2,splNr], violetMarker, " & ", plotData[1,splNr] + plotData[2,splNr], violetMarker, sep = "")
 }
-strategyDataRowLatex_feat <- function(splNr, mark=FALSE) {
-  if (mark && caseStudies[splNr] == "Violet") {
+strategyDataRowLatex_feat <- function(splNr) {
+  violetMarker <- ""
+  if (caseStudies[splNr] == "Violet") {
     violetMarker <- "\\textsuperscript{*}"
   } else {
     violetMarker <- ""
   }
-  paste("\\num{", plotDataFeat[1,splNr], "}", violetMarker, " & \\num{",  plotDataFeat[2,splNr], "}", violetMarker, " & \\num{", plotDataFeat[1,splNr] + plotDataFeat[2,splNr], "}", violetMarker, " & \\num{", 
-		formatC((plotData[1,splNr]+plotData[2,splNr])/(plotDataFeat[1,splNr]+plotDataFeat[2,splNr]), big.mark=" ",digits = 2, format="fg"), "}", violetMarker, sep = "")
+  paste("", plotDataFeat[1,splNr], " & ",  plotDataFeat[2,splNr], " & ", plotDataFeat[1,splNr] + plotDataFeat[2,splNr], " & ", 
+		round((plotData[1,splNr]+plotData[2,splNr])/(plotDataFeat[1,splNr]+plotDataFeat[2,splNr]), 1), violetMarker, sep = "")
 }
-strategyDataRowLatex_fam <- function(splNr, mark=FALSE) {
-  if (mark && caseStudies[splNr] == "Violet") {
+strategyDataRowLatex_fam <- function(splNr) {
+  violetMarker <- ""
+  if (caseStudies[splNr] == "Violet") {
     violetMarker <- "\\textsuperscript{*}"
   } else {
     violetMarker <- ""
   }
-  paste("\\num{", plotDataFam[1,splNr], "}", violetMarker, " & \\num{",  plotDataFam[2,splNr], "}", violetMarker, " & \\num{", plotDataFam[1,splNr] + plotDataFam[2,splNr], "}",  violetMarker,
-		" & \\num{", formatC((plotData[1,splNr]+plotData[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr])), "}", violetMarker,
-		" & \\num{", formatC((plotDataFeat[1,splNr]+plotDataFeat[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr])), "}", violetMarker, sep = "")
+  paste("", plotDataFam[1,splNr], " & ",  plotDataFam[2,splNr], " & ", plotDataFam[1,splNr] + plotDataFam[2,splNr],
+		" & ", round((plotData[1,splNr]+plotData[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), violetMarker,
+		" & ", round((plotDataFeat[1,splNr]+plotDataFeat[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), sep = "")
 }
 for (i in 1:length(caseStudies)) {
-  cat(caseStudies[i], " & ", strategyDataRowLatex_prod(i, TRUE), " & ", strategyDataRowLatex_feat(i), " & ", strategyDataRowLatex_fam(i), "\\\\\n", sep = "")
+  cat(caseStudies[i], " & ", strategyDataRowLatex_prod(i), " & ", strategyDataRowLatex_feat(i), " & ", strategyDataRowLatex_fam(i), "\\\\\n", sep = "")
 }
 cat("\n")
 #######################################################
