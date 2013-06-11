@@ -268,7 +268,7 @@ cat("Results LaTeX table for Product-Based (Setup, Check, Total) | Feature-Based
 strategyDataRowLatex_prod <- function(splNr) {
   violetMarker <- ""
   if (caseStudies[splNr] == "Violet") {
-    violetMarker <- "\\textsuperscript{X}"
+    violetMarker <- "\\textsuperscript{\sffamily{}X}"
   } else {
     violetMarker <- ""
   }
@@ -277,7 +277,7 @@ strategyDataRowLatex_prod <- function(splNr) {
 strategyDataRowLatex_feat <- function(splNr) {
   violetMarker <- ""
   if (caseStudies[splNr] == "Violet") {
-    violetMarker <- "\\textsuperscript{X}"
+    violetMarker <- "\\textsuperscript{\sffamily{}X}"
   } else {
     violetMarker <- ""
   }
@@ -287,7 +287,7 @@ strategyDataRowLatex_feat <- function(splNr) {
 strategyDataRowLatex_fam <- function(splNr) {
   violetMarker <- ""
   if (caseStudies[splNr] == "Violet") {
-    violetMarker <- "\\textsuperscript{X}"
+    violetMarker <- "\\textsuperscript{\sffamily{}X}"
   } else {
     violetMarker <- ""
   }
