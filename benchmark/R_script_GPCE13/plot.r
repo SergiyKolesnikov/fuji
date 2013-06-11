@@ -17,13 +17,13 @@ csInternalData_fam = vector("list",length(caseStudies))
 csInternalData_fam_noOpt = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
   cat(i, ") reading case study data \"",caseStudies[i],"\"\n", sep="")
-  int = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext = read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  int = read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext = read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   int_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   ext_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
-  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1110/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
   csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
   int[is.na(int)] <- c(0)
@@ -103,7 +103,7 @@ for (i in 1:length(caseStudies)) {
 getMaxY <- function(plotData, plotDataFeat, plotDataFam, plotDataFam_noOpt) {
   maximum = 0
   for (i in 1:ncol(plotData)) {
-    maximum = max( sum(plotData[,i]), sum(plotDataFeat[,i]), sum(plotDataFam[,i]), sum(plotDataFam_noOpt[,i]), maximum)
+    maximum = max( sum(plotData[,i]), sum(plotDataFeat[,i]), sum(plotDataFam[,i]), sum(plotDataFeat_wBytecodeComp[,i]), sum(plotDataFam_noOpt[,i]), maximum)
   }
   maximum
 }
@@ -115,17 +115,18 @@ if (draft) { # use colors
 	)
 	textcolor="firebrick3"
 } else { # use black/white
-	color <- c(rgb(0, 0, 0), rgb(1, 1, 1), rgb(0.7, 0.7, 0.7)) # setup, typecheck, bytecodeComp
+	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.45, .45, .45)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=9, height=5, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=10, height=6, onefile=TRUE, paper="special") 
 
 #layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
-layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,14), 3, 5, byrow = TRUE))
+layout(matrix(c(1,2,3,4,14,5,6,7,8,15,9,10,11,12,13), 3, 5, byrow = TRUE))
 
 for (i in 1:length(caseStudies)) {  
-  paintLog=TRUE
-  log="y"
+  paintLog=FALSE
+  #log="y"
+  log=""
   #for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
   #for(logcs in c())  {
 	#if (caseStudies[i]==logcs) {
@@ -137,9 +138,12 @@ for (i in 1:length(caseStudies)) {
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))),
+				sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
 				sum(t(t(plotDataFam_noOpt[,i]))))
   if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxY=maxY*10 # y axis must be longer, because it is logarithmic
+  } else {
+	maxY=maxY*1.2
   }
   yLimits=c(0,maxY)
   if (paintLog) yLimits[1]=0.01
@@ -148,8 +152,8 @@ for (i in 1:length(caseStudies)) {
 #    plot.new() # insert an empty plot to allow for violet's large y axis labels
 #  }
   plot.new()
-  if (i==1 || i==6 || i==11) {
-    title(main=caseStudies[i],ylab="Time (Seconds)          ",cex.lab=0.9, mgp=c(3,0,0))
+  if (i==1 || i==5 || i==9) {
+    title(main=caseStudies[i],ylab="Time (seconds)          ",cex.lab=1, mgp=c(3,0,0))
   } else {
       title(main=caseStudies[i])
   }
@@ -169,7 +173,7 @@ for (i in 1:length(caseStudies)) {
 		cex.lab=1.3,
   )
   if (caseStudies[i] =="Violet") {
-	textpos = sum(t(t(plotData[,i])))
+	textpos = sum(t(t(plotData[,i])))+2500
 	text(x=c(1.64), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
   }
   par(new=TRUE)
@@ -194,6 +198,11 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
+  par(new=TRUE)
+  if (caseStudies[i] =="Violet") {
+	textpos = sum(t(t(plotDataFeat_wBytecodeComp[,i])))+2500
+	text(x=c(7), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
+  }
   par(new=TRUE)
   barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
           #beside=TRUE,
@@ -228,25 +237,35 @@ for (i in 1:length(caseStudies)) {
 	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
 }
 
+library(plotrix)
+leg=matrix(
+c(     "PB","Product-based",
+       "FT","Feature-based",
+       "FM","Family-based",
+       "FT'","Feature-product-based",
+       "FM'","Family-based (no caching)")
+, 5, 2, byrow = TRUE)
+
 plot.new()
 # c(bottom, left, top, right)
-par(mar=c(1,0,1,0)) 
+par(mar=c(1,1,2.5,0)) 
 plot.new()
+#addtable2plot(0, 0.6, leg, bty="o",display.rownames=FALSE,display.colnames=FALSE,hlines=FALSE,vlines=FALSE)
 legend("topleft",
        c(
-       "PB   Product-Based",
-       "FT    Feature Based",
-       "FM   Family Based",
-       "FT'   Feature Based With Bytecode Check",
-       "FM'  Family Based Without Optimization"),
+       "PB   Product-based",
+       "FT    Feature-based",
+       "FM   Family-based",
+       "FT'   Feature-product-based",
+       "FM'  Family-based (no caching)"),
        inset = 0, cex=1)
        
-#par(mar=c(0,0,0,0)) 
+#par(mar=c(1,0,1,1)) 
 #plot.new()
 legend("bottomleft",
        c('Setup',
        'Check',
-         'Bytecode Check'),
+         'Compose'),
        inset = 0, fill=color, cex=1)
 
 warnings()
