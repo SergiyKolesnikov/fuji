@@ -237,20 +237,10 @@ for (i in 1:length(caseStudies)) {
 	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
 }
 
-library(plotrix)
-leg=matrix(
-c(     "PB","Product-based",
-       "FT","Feature-based",
-       "FM","Family-based",
-       "FT'","Feature-product-based",
-       "FM'","Family-based (no caching)")
-, 5, 2, byrow = TRUE)
-
 plot.new()
 # c(bottom, left, top, right)
 par(mar=c(1,1,2.5,0)) 
 plot.new()
-#addtable2plot(0, 0.6, leg, bty="o",display.rownames=FALSE,display.colnames=FALSE,hlines=FALSE,vlines=FALSE)
 legend("topleft",
        c(
        "PB   Product-based",
