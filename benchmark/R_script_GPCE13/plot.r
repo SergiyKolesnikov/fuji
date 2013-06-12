@@ -313,7 +313,7 @@ strategyDataRowLatex_prod <- function(splNr) {
   } else {
     violetMarker <- ""
   }
-  paste("", plotData[1,splNr], violetMarker, " & ",  plotData[2,splNr], violetMarker, " & ", plotData[1,splNr] + plotData[2,splNr], violetMarker, sep = "")
+  paste("",  round(plotData[1,splNr], 1), violetMarker, " & ",   round(plotData[2,splNr], 1), violetMarker, " & ",  round(plotData[1,splNr] + plotData[2,splNr], 1), violetMarker, sep = "")
 }
 strategyDataRowLatex_feat <- function(splNr) {
   violetMarker <- ""
@@ -322,7 +322,7 @@ strategyDataRowLatex_feat <- function(splNr) {
   } else {
     violetMarker <- ""
   }
-  paste("", plotDataFeat[1,splNr], " & ",  plotDataFeat[2,splNr], " & ", plotDataFeat[1,splNr] + plotDataFeat[2,splNr], " & ", 
+  paste("",  round(plotDataFeat[1,splNr], 1), " & ",   round(plotDataFeat[2,splNr], 1), " & ",  round(plotDataFeat[1,splNr] + plotDataFeat[2,splNr], 1), " & ", 
 		round((plotData[1,splNr]+plotData[2,splNr])/(plotDataFeat[1,splNr]+plotDataFeat[2,splNr]), 1), violetMarker, sep = "")
 }
 strategyDataRowLatex_fam <- function(splNr) {
@@ -332,7 +332,7 @@ strategyDataRowLatex_fam <- function(splNr) {
   } else {
     violetMarker <- ""
   }
-  paste("", plotDataFam[1,splNr], " & ",  plotDataFam[2,splNr], " & ", plotDataFam[1,splNr] + plotDataFam[2,splNr],
+  paste("",  round(plotDataFam[1,splNr], 1), " & ",   round(plotDataFam[2,splNr], 1), " & ",  round(plotDataFam[1,splNr] + plotDataFam[2,splNr], 1),
 		" & ", round((plotData[1,splNr]+plotData[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), violetMarker,
 		" & ", round((plotDataFeat[1,splNr]+plotDataFeat[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), sep = "")
 }
@@ -343,7 +343,7 @@ cat("\n")
 #######################################################
 ## Output CSV table with measurement results
 cat("Results CSV table for Product-Based | Feature-Based | Family-Based\n")
-cat("Name,PD−B Setup,PD−B Check,PD−B Total,FT−B Setup,FT−B Check,FT−B Total,FM−B Setup,FM−B Check,FM−B Total\n")
+cat("Name,PDBSetup,PDBCheck,PDBTotal,FTBSetup,FTBCheck,FTBTotal,FMBSetup,FMBCheck,FMBTotal\n")
 strategyDataRow <- function(data, splNr) {
   paste(data[1,splNr], ",",  data[2,splNr], ",", data[1,splNr] + data[2,splNr], sep = "")
 }
