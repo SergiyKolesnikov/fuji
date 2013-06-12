@@ -27,6 +27,7 @@ for (i in 1:length(caseStudies)) {
   
   csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
   int[is.na(int)] <- c(0)
+  int_noOpt[is.na(int)] <- c(0)
   
   csInternalData_fam[[i]] = int[int$variant == "family", ]
   csInternalData_fam_noOpt[[i]] = int_noOpt[int$variant=="family", ]
@@ -118,10 +119,22 @@ if (draft) { # use colors
 	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.45, .45, .45)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=10, height=6, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8.5, height=11, onefile=TRUE, paper="special") 
 
-#layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12,13,13), 2, 7, byrow = TRUE))
-layout(matrix(c(1,2,3,4,14,5,6,7,8,15,9,10,11,12,13), 3, 5, byrow = TRUE))
+layoutMat=matrix(c(
+	3,3,   6,6,   9,9,   #titles
+	1,2,   4,5,   7,8,   #plots
+	12,12, 15,15, 18,18, #titles
+	10,11, 13,14, 16,17, #plots
+	21,21, 24,24, 27,27, #titles
+	19,20, 22,23, 25,26, #plots
+	30,30, 33,33, 36,36, #titles
+	28,29, 31,32, 34,35, #plots
+	37,37, 37,37, 37,37  #legend
+), 9, 6, byrow = TRUE)
+layoutHeights=c(0.2,1, 0.2,1, 0.2,1, 0.2,1, 0.5)
+layoutWidths=c(1,0.8, 1,0.8, 1,0.8)
+layout(mat=layoutMat, heights=layoutHeights, widths=layoutWidths)
 
 for (i in 1:length(caseStudies)) {  
   paintLog=FALSE
@@ -137,28 +150,26 @@ for (i in 1:length(caseStudies)) {
   #if (i != 1) par(new=TRUE)
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
-				sum(t(t(plotDataFam[,i]))),
-				sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
-				sum(t(t(plotDataFam_noOpt[,i]))))
+				sum(t(t(plotDataFam[,i]))))
   if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxY=maxY*10 # y axis must be longer, because it is logarithmic
+  } else if (caseStudies[i] =="Violet") {
+	maxY=maxY*1.1
   } else {
 	maxY=maxY*1.2
   }
   yLimits=c(0,maxY)
   if (paintLog) yLimits[1]=0.01
-  xLimits=c(1,9)
+  xLimits=c(1,4.5)
 #  if (caseStudies[i]=="Violet") {
 #    plot.new() # insert an empty plot to allow for violet's large y axis labels
 #  }
-  plot.new()
-  if (i==1 || i==5 || i==9) {
-    title(main=caseStudies[i],ylab="Time (seconds)          ",cex.lab=1, mgp=c(3,0,0))
-  } else {
-      title(main=caseStudies[i])
-  }
   # c(bottom, left, top, right)
-  par(mar=c(2, 4, 3, 1))
+  par(mar=c(2, 5, 0, 2))
+  plot.new()
+  if (i==1 || i==4 || i==7 || i==10) {
+    title(ylab="Time (seconds)          ",cex.lab=1.2, mgp=c(3.2,0,0))
+  }
   par(new=TRUE)
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
 		#beside=TRUE,
@@ -173,7 +184,7 @@ for (i in 1:length(caseStudies)) {
 		cex.lab=1.3,
   )
   if (caseStudies[i] =="Violet") {
-	textpos = sum(t(t(plotData[,i])))+2500
+	textpos = sum(t(t(plotData[,i])))
 	text(x=c(1.64), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
   }
   par(new=TRUE)
@@ -198,34 +209,7 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
-  par(new=TRUE)
-  if (caseStudies[i] =="Violet") {
-	textpos = sum(t(t(plotDataFeat_wBytecodeComp[,i])))+2500
-	text(x=c(7), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
-  }
-  par(new=TRUE)
-  barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
-          #beside=TRUE,
-          space=c(6.5),
-          col=color[1:3],
-          ylim=yLimits,
-          xlim=xLimits,
-          xaxt="n",
-          log=log,
-          yaxt="n",
-  )
-  par(new=TRUE)
-  barplot(t(t(plotDataFam_noOpt[,i])),
-          #beside=TRUE,
-          space=c(8),
-          col=color[1:2],
-          ylim=yLimits,
-          xlim=xLimits,
-          xaxt="n",
-          log=log,
-          yaxt="n",
-  )
-  axis(1, tick=FALSE, at=c(1.1,2.5,4,6.5,8.1)+0.5,labels=c("PB","FT","FM","FT'","FM'"), cex.axis=0.8, mgp=c(3,0,0))
+  axis(1, tick=FALSE, at=c(1.1,2.5,4)+0.5,labels=c("PB","FT","FM"), cex.axis=0.8, mgp=c(3,0,0))
 	if (par("ylog")) {
 		# 10er potenzen falls die achse logarithmisch ist
 		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
@@ -235,13 +219,70 @@ for (i in 1:length(caseStudies)) {
 	}
 	#big.mark is the thousand-seperator
 	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
+  
+  xLimits=c(1,4)
+  maxYP2 = max(sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
+  			sum(t(t(plotDataFam_noOpt[,i]))))
+  if (log=="y" && ! caseStudies[i] =="GPL") {
+	maxYP2=maxYP2*10 # y axis must be longer, because it is logarithmic
+  } else if (caseStudies[i] =="Violet") {
+	maxYP2=maxYP2*1.1
+  } else {
+	maxYP2=maxYP2*1.2
+  }
+  yLimits=c(0,maxYP2)
+  # c(bottom, left, top, right)
+  par(mar=c(2, 2, 0, 3))
+  plot.new()
+  par(new=TRUE)
+  barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
+          #beside=TRUE,
+          space=c(1.1),
+          col=color[1:3],
+          ylim=yLimits,
+          xlim=xLimits,
+          xaxt="n",
+          log=log,
+          yaxt="n",
+  )
+  par(new=TRUE)
+  if (caseStudies[i] =="Violet") {
+	textpos = sum(t(t(plotDataFeat_wBytecodeComp[,i])))+2500
+	text(x=c(1.6), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
+  }
+  par(new=TRUE)
+  barplot(t(t(plotDataFam_noOpt[,i])),
+          #beside=TRUE,
+          space=c(2.5),
+          col=color[1:2],
+          ylim=yLimits,
+          xlim=xLimits,
+          xaxt="n",
+          log=log,
+          yaxt="n",
+  )
+  axis(1, tick=FALSE, at=c(1.1,2.5)+0.5,labels=c("FT'","FM'"), cex.axis=0.8, mgp=c(3,0,0))
+	if (par("ylog")) {
+		# 10er potenzen falls die achse logarithmisch ist
+		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
+	} else {
+		# sonst die Skala vom Plot übernehmen
+		aty <- seq(yLimits[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
+	}
+	#big.mark is the thousand-seperator
+	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
+	
+	#title
+	# c(bottom, left, top, right)
+	par(mar=c(0,0,2,0)) 
+	plot.new()
+	title(main=caseStudies[i])
 }
 
-plot.new()
 # c(bottom, left, top, right)
-par(mar=c(1,1,2.5,0)) 
+par(mar=c(1,1,0,0)) 
 plot.new()
-legend("topleft",
+legend("bottomleft",
        c(
        "PB   Product-based",
        "FT    Feature-based",
@@ -252,9 +293,9 @@ legend("topleft",
        
 #par(mar=c(1,0,1,1)) 
 #plot.new()
-legend("bottomleft",
+legend(x=0.21,y=0.6,
        c('Setup',
-       'Check',
+       'Checking',
          'Compose'),
        inset = 0, fill=color, cex=1)
 
