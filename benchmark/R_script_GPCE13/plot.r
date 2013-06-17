@@ -5,7 +5,7 @@ if (draft) dev.off()
 options(width=180)
 
 ca=commandArgs(trailingOnly=TRUE) #only args after --args
-if (draft) ca=c("EPL", "GraphLib", "GUIDSL", "Prevayler")
+if (draft) ca=c("EPL", "GPL", "GUIDSL", "Prevayler")
 
 #interpret all elements of ca as names of case studies
 caseStudies = ca[!is.na(ca)]
@@ -46,14 +46,14 @@ for (i in 1:length(caseStudies)) {
 
 bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
 print("bytecodecomp:")
-print(bytecodeCompTimes[bytecodeCompTimes$name=="GraphLib",])
+print(bytecodeCompTimes[bytecodeCompTimes$name=="GPL",])
 
 getFeatureTimeInt <- function(caseStudyID) {
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
-  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GraphLib",]$bytecode_typecheck
+  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
 }
@@ -140,7 +140,7 @@ for (i in 1:length(caseStudies)) {
   paintLog=FALSE
   #log="y"
   log=""
-  #for(logcs in c("EPL", "GraphLib", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
+  #for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
   #for(logcs in c())  {
 	#if (caseStudies[i]==logcs) {
 	#	paintLog=TRUE
@@ -151,7 +151,7 @@ for (i in 1:length(caseStudies)) {
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))))
-  if (log=="y" && ! caseStudies[i] =="GraphLib") {
+  if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxY=maxY*10 # y axis must be longer, because it is logarithmic
   } else if (caseStudies[i] =="Violet") {
 	maxY=maxY*1.1
@@ -165,7 +165,7 @@ for (i in 1:length(caseStudies)) {
 #    plot.new() # insert an empty plot to allow for violet's large y axis labels
 #  }
   # c(bottom, left, top, right)
-  par(mar=c(2, 5, 0, 2))
+  par(mar=c(1, 5, 0, 2))
   plot.new()
   if (i==1 || i==4 || i==7 || i==10) {
     title(ylab="Time (seconds)          ",cex.lab=1.2, mgp=c(3.2,0,0))
@@ -223,7 +223,7 @@ for (i in 1:length(caseStudies)) {
   xLimits=c(1,4)
   maxYP2 = max(sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
   			sum(t(t(plotDataFam_noOpt[,i]))))
-  if (log=="y" && ! caseStudies[i] =="GraphLib") {
+  if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxYP2=maxYP2*10 # y axis must be longer, because it is logarithmic
   } else if (caseStudies[i] =="Violet") {
 	maxYP2=maxYP2*1.1
@@ -232,7 +232,7 @@ for (i in 1:length(caseStudies)) {
   }
   yLimits=c(0,maxYP2)
   # c(bottom, left, top, right)
-  par(mar=c(2, 2, 0, 3))
+  par(mar=c(1, 2, 0, 3))
   plot.new()
   par(new=TRUE)
   barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
@@ -274,13 +274,17 @@ for (i in 1:length(caseStudies)) {
 	
 	#title
 	# c(bottom, left, top, right)
-	par(mar=c(0,0,2,0)) 
+	par(mar=c(0,0,0,0)) 
 	plot.new()
-	title(main=caseStudies[i])
+	if(caseStudies[i]=="Graph") {
+		title(main="GraphLib",line=-2.5)
+	} else {
+		title(main=caseStudies[i],line=-2.5)
+	}
 }
 
 # c(bottom, left, top, right)
-par(mar=c(1,1,0,0)) 
+par(mar=c(0,1,0,0)) 
 plot.new()
 legend("bottomleft",
        c(
@@ -293,7 +297,7 @@ legend("bottomleft",
        
 #par(mar=c(1,0,1,1)) 
 #plot.new()
-legend(x=0.21,y=0.6,
+legend(x=0.21,y=0.515,
        c('Setup',
        'Checking',
          'Compose'),
