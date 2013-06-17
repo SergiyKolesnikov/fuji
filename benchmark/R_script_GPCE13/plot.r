@@ -44,7 +44,7 @@ for (i in 1:length(caseStudies)) {
   csExternalData[[i]]<-ext
 }
 
-bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck_complete.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
 print("bytecodecomp:")
 print(bytecodeCompTimes[bytecodeCompTimes$name=="GPL",])
 
@@ -53,7 +53,8 @@ getFeatureTimeInt <- function(caseStudyID) {
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
-  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
+  #bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
+  bytecodeCompTime=bytecodeCompTimes[caseStudyID, "bytecode_typecheck"]
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
 }
@@ -91,13 +92,13 @@ for (i in 1:length(caseStudies)) {
 
 plotDataFeat_wBytecodeComp <- matrix(nrow=3, ncol=length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  plotDataFeat_wBytecodeComp[,i] = getFeatureTimeInt_wBytecodeComp(i)/1000 # fam time
+  plotDataFeat_wBytecodeComp[,i] = getFeatureTimeInt_wBytecodeComp(i)/1000 # feature time
 }
 print (plotDataFeat_wBytecodeComp)
 
 plotDataFam_noOpt <- matrix(nrow=2, ncol=length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  plotDataFam_noOpt[,i] = getFamTimeInt_noOpt(i)/1000 # fam time
+  plotDataFam_noOpt[,i] = getFamTimeInt_noOpt(i)/1000 # fam time no opt
 }
 #print (plotDataFam_noOpt)
 
@@ -340,8 +341,26 @@ strategyDataRowLatex_fam <- function(splNr) {
 		" & ", round((plotData[1,splNr]+plotData[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), violetMarker,
 		" & ", round((plotDataFeat[1,splNr]+plotDataFeat[2,splNr])/(plotDataFam[1,splNr]+plotDataFam[2,splNr]), 1), sep = "")
 }
+strategyDataRowLatex_feat_wBytecodeComp <- function(splNr) {
+  violetMarker <- ""
+  if (caseStudies[splNr] == "Violet") {
+    violetMarker <- "\\textsuperscript{\\sffamily{}X}"
+  } else {
+    violetMarker <- ""
+  }
+  paste("",  round(plotDataFeat_wBytecodeComp[1,splNr] + plotDataFeat_wBytecodeComp[2,splNr] + plotDataFeat_wBytecodeComp[3,splNr], 1), violetMarker, sep = "")
+}
+strategyDataRowLatex_fam_noOpt <- function(splNr) {
+  violetMarker <- ""
+  if (caseStudies[splNr] == "Violet") {
+    violetMarker <- "\\textsuperscript{\\sffamily{}X}"
+  } else {
+    violetMarker <- ""
+  }
+  paste("",  round((plotDataFam_noOpt[1,splNr]+plotDataFam_noOpt[2,splNr]), 1), sep = "")
+}
 for (i in 1:length(caseStudies)) {
-  cat(caseStudies[i], " & ", strategyDataRowLatex_prod(i), " & ", strategyDataRowLatex_feat(i), " & ", strategyDataRowLatex_fam(i), "\\\\\n", sep = "")
+  cat(caseStudies[i], " & ", strategyDataRowLatex_prod(i), " & ", strategyDataRowLatex_feat(i), " & ", strategyDataRowLatex_fam(i), " & ", strategyDataRowLatex_feat_wBytecodeComp(i), " & ", strategyDataRowLatex_fam_noOpt(i), "\\\\\n", sep = "")
 }
 cat("\n")
 #######################################################
