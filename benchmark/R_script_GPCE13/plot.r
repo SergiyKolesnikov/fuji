@@ -5,7 +5,7 @@ if (draft) dev.off()
 options(width=180)
 
 ca=commandArgs(trailingOnly=TRUE) #only args after --args
-if (draft) ca=c("EPL", "GPL", "GUIDSL", "Prevayler")
+if (draft) ca=c("EPL", "GraphLib", "GUIDSL", "Prevayler")
 
 #interpret all elements of ca as names of case studies
 caseStudies = ca[!is.na(ca)]
@@ -46,14 +46,14 @@ for (i in 1:length(caseStudies)) {
 
 bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
 print("bytecodecomp:")
-print(bytecodeCompTimes[bytecodeCompTimes$name=="GPL",])
+print(bytecodeCompTimes[bytecodeCompTimes$name=="GraphLib",])
 
 getFeatureTimeInt <- function(caseStudyID) {
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
-  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
+  bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GraphLib",]$bytecode_typecheck
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
 }
@@ -140,7 +140,7 @@ for (i in 1:length(caseStudies)) {
   paintLog=FALSE
   #log="y"
   log=""
-  #for(logcs in c("EPL", "GPL", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
+  #for(logcs in c("EPL", "GraphLib", "GUIDSL", "Notepad", "TankWar", "Violet"))  {
   #for(logcs in c())  {
 	#if (caseStudies[i]==logcs) {
 	#	paintLog=TRUE
@@ -151,7 +151,7 @@ for (i in 1:length(caseStudies)) {
   maxY = max (	sum (t(t(plotData[,i]))),
 				sum(t(t(plotDataFeat[,i]))),
 				sum(t(t(plotDataFam[,i]))))
-  if (log=="y" && ! caseStudies[i] =="GPL") {
+  if (log=="y" && ! caseStudies[i] =="GraphLib") {
 	maxY=maxY*10 # y axis must be longer, because it is logarithmic
   } else if (caseStudies[i] =="Violet") {
 	maxY=maxY*1.1
@@ -209,7 +209,7 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
-  axis(1, tick=FALSE, at=c(1.1,2.5,4)+0.5,labels=c("PB","FT","FM"), cex.axis=0.8, mgp=c(3,0,0))
+  axis(1, tick=FALSE, at=c(1.1,2.5,4)+0.5,labels=c("PB","FT","FM"), cex.axis=1, mgp=c(3,0,0))
 	if (par("ylog")) {
 		# 10er potenzen falls die achse logarithmisch ist
 		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
@@ -223,7 +223,7 @@ for (i in 1:length(caseStudies)) {
   xLimits=c(1,4)
   maxYP2 = max(sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
   			sum(t(t(plotDataFam_noOpt[,i]))))
-  if (log=="y" && ! caseStudies[i] =="GPL") {
+  if (log=="y" && ! caseStudies[i] =="GraphLib") {
 	maxYP2=maxYP2*10 # y axis must be longer, because it is logarithmic
   } else if (caseStudies[i] =="Violet") {
 	maxYP2=maxYP2*1.1
@@ -261,7 +261,7 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
-  axis(1, tick=FALSE, at=c(1.1,2.5)+0.5,labels=c("FT'","FM'"), cex.axis=0.8, mgp=c(3,0,0))
+  axis(1, tick=FALSE, at=c(1.1,2.6)+0.5,labels=c("FT'","FM'"), cex.axis=1, mgp=c(3,0,0))
 	if (par("ylog")) {
 		# 10er potenzen falls die achse logarithmisch ist
 		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
