@@ -261,7 +261,7 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
-  axis(1, tick=FALSE, at=c(1.1,2.6)+0.5,labels=c("FT'","FM'"), cex.axis=1, mgp=c(3,0,0))
+  axis(1, tick=FALSE, at=c(1.05,2.6)+0.5,labels=c("FT*","FM*"), cex.axis=1, mgp=c(3,0,0))
 	if (par("ylog")) {
 		# 10er potenzen falls die achse logarithmisch ist
 		aty <- exp(log(10)*seq(log10(yLimits[1]), log10(par("yaxp")[2]),by=1))
@@ -291,8 +291,8 @@ legend("bottomleft",
        "PB   Product-based",
        "FT    Feature-based",
        "FM   Family-based",
-       "FT'   Feature-product-based",
-       "FM'  Family-based (no caching)"),
+       "FT*   Feature-product-based",
+       "FM*  Family-based (no caching)"),
        inset = 0, cex=1)
        
 #par(mar=c(1,0,1,1)) 
