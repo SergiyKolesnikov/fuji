@@ -53,7 +53,6 @@ getFeatureTimeInt <- function(caseStudyID) {
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
-  #bytecodeCompTime=bytecodeCompTimes[bytecodeCompTimes$name=="GPL",]$bytecode_typecheck
   bytecodeCompTime=bytecodeCompTimes[caseStudyID, "bytecode_typecheck"]
   prodlines = csInternalData_features[[caseStudyID]]
   c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
