@@ -404,6 +404,5 @@ barplot(plotDataSum,
         horiz=TRUE,
         ylim=c(0,4)
 )
-
 warnings()
 if (!draft) dev.off()
