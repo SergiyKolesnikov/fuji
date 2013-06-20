@@ -12,6 +12,11 @@ do
 	cp $csname/inttimetypechecker_featurebased.csv resultBackup/$csname/inttimetypechecker_featurebased.csv
 	cp $csname/exttimetypechecker.csv resultBackup/$csname/exttimetypechecker.csv
 	cp $csname/exttimetypechecker_featurebased.csv resultBackup/$csname/exttimetypechecker_featurebased.csv
+	
+	mkdir resultBackup/$csname/family/
+	cp $csname/familyerrout.txt resultBackup/$csname/family/familyerrout.txt
+	cp $csname/familystdout.txt resultBackup/$csname/family/familystdout.txt
+	
 	for variantdir in $csname/FeatureConfigs/Config*;
 	do
 		mkdir resultBackup/$variantdir
