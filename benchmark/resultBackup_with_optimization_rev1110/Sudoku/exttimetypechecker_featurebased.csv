@@ -1,8 +1,0 @@
-variant	usertime	systemtime
-ConfigBase.model	2.24	0.08
-ConfigColor.model	1.32	0.09
-ConfigExtended.model	1.45	0.05
-ConfigGenerator.model	1.68	0.06
-ConfigSolver.model	2.20	0.08
-ConfigStates.model	1.97	0.06
-ConfigUndo.model	1.26	0.04

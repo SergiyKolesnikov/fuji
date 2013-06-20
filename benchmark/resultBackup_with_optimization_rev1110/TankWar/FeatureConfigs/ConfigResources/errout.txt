@@ -1,3 +1,0 @@
-Errors:
-The following directoies specified in the features list do not exist in the project's base directory:
-Resources_stubfix

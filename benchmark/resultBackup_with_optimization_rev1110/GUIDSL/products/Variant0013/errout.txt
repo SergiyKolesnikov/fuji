@@ -1,6 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/GUIDSL/eharvest/Bvar.java:9:
-  Semantic Error: no method named find(java.lang.String) in variable matches.
-/local/Fuji/FujiProject/examples/GUIDSL/clauselist/bterm.java:6:
-  Semantic Error: no method named find(java.lang.String) in variable matches.

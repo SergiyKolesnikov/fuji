@@ -1,6 +1,0 @@
-variant	usertime	systemtime
-ConfigBase.model	1.18	0.06
-ConfigCRC.model	0.66	0.06
-ConfigEntries.model	0.63	0.04
-ConfigHostOS.model	0.68	0.05
-ConfigVersion.model	0.72	0.05
