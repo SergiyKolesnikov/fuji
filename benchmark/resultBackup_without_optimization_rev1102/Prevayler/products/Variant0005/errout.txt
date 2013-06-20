@@ -1,4 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/Prevayler/base/org/prevayler/PrevaylerFactory.java:262,15:
-  Semantic Error: no visible type named GenericSnapshotManager

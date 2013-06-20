@@ -1,4 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/Sudoku/Solver/BoardManager.java:29:
-  Semantic Error: no method named undo() in BoardManager matches.

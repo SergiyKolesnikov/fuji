@@ -1,4 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/EPL/Neg_ToString/tmp/Neg.java:5,20:
-  Semantic Error: no field named x

@@ -1,6 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9:
-  Semantic Error: can not assign e of type tmp.Exp a value of type tmp.Plus
-/local/Fuji/FujiProject/examples/EPL/ToString/tmp/Test.java:9:
-  Semantic Error: can not instantiate tmp.Plus no matching constructor found in tmp.Plus

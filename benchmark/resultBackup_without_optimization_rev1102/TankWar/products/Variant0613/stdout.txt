@@ -1,3 +1,0 @@
-Time_AST_construction_ms: 26
-Time_typecheck_ms: 1040
-Found_Errors: 21

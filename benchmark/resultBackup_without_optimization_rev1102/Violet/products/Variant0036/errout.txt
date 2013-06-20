@@ -1,8 +1,0 @@
-Errors:
-
-/local/Fuji/FujiProject/examples/Violet/ClassAssociationEdge/com/horstmann/violet/ClassDiagramGraph.java:9,7:
-  Semantic Error: no field named EDGE_PROTOTYPES
-/local/Fuji/FujiProject/examples/Violet/ClassNode/com/horstmann/violet/ClassDiagramGraph.java:6,6:
-  Semantic Error: no field named NODE_PROTOTYPES
-/local/Fuji/FujiProject/examples/Violet/ClassNode/com/horstmann/violet/ClassDiagramGraph.java:6,31:
-  Semantic Error: no visible type named ClassNode
