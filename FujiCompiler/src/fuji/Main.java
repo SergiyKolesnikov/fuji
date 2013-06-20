@@ -652,7 +652,7 @@ public class Main implements CompositionContext {
     }
 
     private static String version() {
-        return "2013-05-13";
+        return "2013-06-14";
     }
 
     /**
