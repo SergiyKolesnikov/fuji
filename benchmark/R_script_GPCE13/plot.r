@@ -17,20 +17,22 @@ csInternalData_fam = vector("list",length(caseStudies))
 csInternalData_fam_noOpt = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
   cat(i, ") reading case study data \"",caseStudies[i],"\"\n", sep="")
-  int = read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext = read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  int_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext_noOpt = read.csv(file=paste("../resultBackup_without_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  int = read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext = read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  int_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),
+		colClasses=c("character",rep("numeric",3)),head=TRUE, sep="\t", na.strings=c("","NA"))
+  ext_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
   
-  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev1132/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  
+  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+
   csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
   int[is.na(int)] <- c(0)
-  int_noOpt[is.na(int)] <- c(0)
-  
+  int_noOpt[is.na(int_noOpt)] <- c(0)
+    
   csInternalData_fam[[i]] = int[int$variant == "family", ]
-  csInternalData_fam_noOpt[[i]] = int_noOpt[int$variant=="family", ]
+  csInternalData_fam_noOpt[[i]] = int_noOpt[int_noOpt$variant=="family", ]
+  
   int = int[int$variant != "family", ]
   ext = ext[ext$variant != "family", ]
   
@@ -170,6 +172,8 @@ for (i in 1:length(caseStudies)) {
   if (i==1 || i==4 || i==7 || i==10) {
     title(ylab="Time (seconds)          ",cex.lab=1.2, mgp=c(3.2,0,0))
   }
+  cat ("barplot1, ylim:")
+  print(yLimits)
   par(new=TRUE)
   barplot(t(t(plotData[,i])), #, t(t(as.matrix(c(10000,10000,10000,10000))))
 		#beside=TRUE,
@@ -187,6 +191,8 @@ for (i in 1:length(caseStudies)) {
 	textpos = sum(t(t(plotData[,i])))
 	text(x=c(1.64), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
   }
+  cat ("barplot2, ylim:")
+  print(yLimits)
   par(new=TRUE)
   barplot(t(t(plotDataFeat[,i])),
           #beside=TRUE,
@@ -198,6 +204,8 @@ for (i in 1:length(caseStudies)) {
           log=log,
           yaxt="n",
   )
+  cat ("barplot3, ylim:")
+  print(yLimits)
   par(new=TRUE)
   barplot(t(t(plotDataFam[,i])),
           #beside=TRUE,
@@ -217,12 +225,16 @@ for (i in 1:length(caseStudies)) {
 		# sonst die Skala vom Plot übernehmen
 		aty <- seq(yLimits[1], par("yaxp")[2], (par("yaxp")[2] - par("yaxp")[1])/par("yaxp")[3])
 	}
+	cat ("axis2, aty:")
+	print(aty)
 	#big.mark is the thousand-seperator
 	axis(2, at=aty, labels=formatC(aty, big.mark=" ",digits = 2, format="fg"), hadj=0.9, cex.axis=1,cex.lab=3, las=2)
   
   xLimits=c(1,4)
   maxYP2 = max(sum(t(t(plotDataFeat_wBytecodeComp[,i]))),
   			sum(t(t(plotDataFam_noOpt[,i]))))
+  cat ("maxYP2:")
+  print(plotDataFam_noOpt[,i])
   if (log=="y" && ! caseStudies[i] =="GPL") {
 	maxYP2=maxYP2*10 # y axis must be longer, because it is logarithmic
   } else if (caseStudies[i] =="Violet") {
@@ -234,6 +246,8 @@ for (i in 1:length(caseStudies)) {
   # c(bottom, left, top, right)
   par(mar=c(1, 2, 0, 3))
   plot.new()
+  cat ("barplotNext1, ylim:")
+  print(yLimits)
   par(new=TRUE)
   barplot(t(t(plotDataFeat_wBytecodeComp[,i])),
           #beside=TRUE,
@@ -250,6 +264,8 @@ for (i in 1:length(caseStudies)) {
 	textpos = sum(t(t(plotDataFeat_wBytecodeComp[,i])))+2500
 	text(x=c(1.6), y=c(textpos), labels=c("x"), col=textcolor, cex=2)
   }
+  cat ("barplotNext2, ylim:")
+  print(yLimits)
   par(new=TRUE)
   barplot(t(t(plotDataFam_noOpt[,i])),
           #beside=TRUE,
