@@ -1,0 +1,37 @@
+Errors:
+/OptInfoAssignmentWithCast/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoAssignmentWithCast/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoAssignmentWithCast/01/FeatureZ/Z.java:6:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoAssignmentWithCast/01/FeatureZ/Z.java:8:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+

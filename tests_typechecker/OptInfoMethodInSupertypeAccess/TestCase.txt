@@ -1,0 +1,112 @@
+\subsection{OptInfoMethodInSupertypeAccess}
+%%
+In der Klasse \code{Z} des Features \feature{FeatureZ} wird eine Instanz der Klasse \code{A} erzeugt, implizit nach \code{B} gecastet und dann die Methode \code{foo()} dieser Instanz aufgerufen. Die Methode \code{foo(}) wird in der Klasse \code{B} des Features \feature{FeatureB} definiert. Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, findet sich nur im Feature \feature{FeatureA}.
+\subsubsection{Fall 01: Das Feature \feature{FeatureA} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht zur Verfügung steht, wenn das Feature \feature{FeatureA} nicht ausgewählt wurde, das als einziges Feature diese Information enthält.
+Dieser Fall löst drei Fehlermeldungen aus, die alle das Problem thematisieren, dass der jeweilige Zugriff ins Leere geht, wenn die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht vorhanden ist. Eine dieser Fehlermeldungen bezieht sich auf den impliziten Zugriff auf den Konstruktor der Oberklasse im Default-Konstruktor der Klasse \code{A} und die anderen beiden auf den Typzugriff auf den Typ \code{B} und die Methode \code{foo()} der Klasse \code{B}:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoMethodInSupertypeAccess/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess/01/FeatureZ/Z.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void foo() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureZ $\implies$ FeatureA} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureZ} ausgewählt wurde, auch das Feature \feature{FeatureA} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureA2} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{A} des Features \feature{FeatureA} nicht ausgewählt werden, wenn das Feature \feature{FeatureA2} ausgewählt wird. Damit ist auch die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht verfügbar und es werden folgende Fehlermeldungen ausgegeben:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoMethodInSupertypeAccess/02/FeatureA2/A.java:1:
+  Semantic Error: NEVER dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+
+/OptInfoMethodInSupertypeAccess/02/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess/02/FeatureZ/Z.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void foo() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureZ $\implies$ FeatureA} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureZ} ausgewählt wurde, auch das Feature \feature{FeatureA} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA2} in keiner Variante mehr ausgewählt werden. 
+\subsubsection{Fall 03: Die Klasse \code{A} (mit der Information, dass die Klasse \code{A} die Klasse \code{B} erweitert) wird identisch in den zwei optionalen Features \feature{FeatureA} und \feature{FeatureAA} definiert.} Für die Zugriffe aus der Klasse \code{Z} des Features \feature{FeatureZ} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, gar nicht zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoMethodInSupertypeAccess/03/FeatureA2/A.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the super constructor
+     public B()
+   of class B.
+- in feature FeatureAA as subclass of class B the super constructor
+     public B()
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) extends the class(es) above is not present at all.
+
+/OptInfoMethodInSupertypeAccess/03/FeatureZ/Z.java:3:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class B { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) extends the class(es) above is not present at all.
+
+/OptInfoMethodInSupertypeAccess/03/FeatureZ/Z.java:4:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the method
+     public void foo() { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B the method
+     public void foo() { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) extends the class(es) above is not present at all.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureA $\iff$ FeatureAA} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{A} mit der Vererbungsinformation ausgewählt werden.

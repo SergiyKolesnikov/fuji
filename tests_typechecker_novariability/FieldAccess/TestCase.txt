@@ -1,0 +1,98 @@
+\subsection[Feldzugriff]{Feldzugriff (Ordner \code{FieldAccess})}
+Im Feature \feature{FeatureA} greift die Klasse \code{A} auf das statische Feld \code{j} und das Feld \code{k} der Klasse \code{B} zu, welche nicht vorhanden ist. 
+%\subsubsection{Fall 01: Das Feature \feature{FeatureB} ist im Feature-Modell nicht vorhanden.} 
+Dadurch passiert es, dass die benötigte Klasse \code{B} nicht zur Verfügung steht. Dieser Fall löst insgesamt drei Fehlermeldungen aus, wobei sich eine Fehlermeldung auf den Feldzugriff bezieht und die anderen beiden auf die nicht vorhandene Klasse B:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+FieldAccess/01/FeatureA/A.java:3,17:
+  Semantic Error: no field named j
+FieldAccess/01/FeatureA/A.java:6,6:
+  Semantic Error: no visible type named B
+FieldAccess/01/FeatureA/A.java:6,16:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB}hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden.
+
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureB} schließen sich im Feature-Modell gegenseitig aus.} 
+Dadurch kann die Klasse \code{B} des Features \feature{FeatureB} nicht ausgewählt werden, wenn das Feature \feature{FeatureA} ausgewählt wird:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/FieldAccess/02/FeatureA/A.java:3,17:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the field
+  public static int j = 23;
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:6:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:7,16:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the field
+  public int k = 42;
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+
+/FieldAccess/02/FeatureA/A.java:6
+/FieldAccess/02/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA} zum einen das Feature \feature{FeatureA} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Die Klasse \code{B} wird identisch in den zwei optionalen Features \feature{FeatureB} und \feature{FeatureB2} definiert.} Für die Zugriffe aus der Klasse \code{A} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass in einer Variante gar kein Ziel zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/FieldAccess/03/FeatureA/A.java:3,17:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the field
+    public static int j = 23;
+  of feature FeatureB
+- the field
+    public static int j = 23;
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:6:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the constructor
+    public B()
+  of feature FeatureB
+- the constructor
+    public B()
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:7,16:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the field
+    public int k = 42;
+  of feature FeatureB
+- the field
+    public int k = 42;
+  of feature FeatureB2
+
+/FieldAccess/03/FeatureA/A.java:6
+/FieldAccess/03/FeatureA/A.java:3:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureB $\iff$ FeatureB2} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{B} ausgewählt werden.

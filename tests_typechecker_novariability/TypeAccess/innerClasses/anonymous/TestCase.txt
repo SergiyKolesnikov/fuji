@@ -1,0 +1,11 @@
+\subsection[Typzugriff: innerClass, anonymous]{Typzugriff: innerClass, anonymous (Ordner \code{TypeAccess/""innerClasses/""anonymous})}
+Die Klasse \code{A} erzeugt eine anonyme (innere) Instanz der Klasse \code{B}, indem die Methode \code{bar()} der Klasse \code{B} überschrieben wird. 
+\subsubsection{Fall 01: Die Klasse \code{B} fehlt.}
+Dieser Fall löst insgesamt zwei Fehlermeldungen aus, die sich beide auf das Fehlen der Klasse \code{C} beziehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/innerClasses/anonymous/01/FeatureA/A.java:3,3:
+  Semantic Error: no visible type named B
+/TypeAccess/innerClasses/anonymous/01/FeatureA/A.java:3,13:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

@@ -1,0 +1,1 @@
+Base : A B :: _Base ;

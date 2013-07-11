@@ -1,0 +1,23 @@
+Errors:
+/TypeAccess/tryCatchThrows/01/FeatureB/B.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureB accesses the constructor
+  public E() { ... }
+of feature FeatureE.
+Feature FeatureE may not be present in every valid selection.
+
+/TypeAccess/tryCatchThrows/01/FeatureA/A.java:5:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).E
+  of feature FeatureE
+
+/TypeAccess/tryCatchThrows/01/FeatureB/B.java:3
+/TypeAccess/tryCatchThrows/01/FeatureB/B.java:2:
+  Semantic Error: 1 optional target:
+Feature FeatureB accesses:
+- the type
+    (default package).E
+  of feature FeatureE
+

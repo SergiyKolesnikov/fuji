@@ -1,0 +1,36 @@
+Errors:
+/TypeAccess/innerClasses/local/02/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/TypeAccess/innerClasses/local/02/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the method
+  public void bar() { ... }
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/TypeAccess/innerClasses/local/02/FeatureB/B.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureB accesses the super constructor
+  public C()
+of feature FeatureC.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+
+/TypeAccess/innerClasses/local/02/FeatureA/A.java:3:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+
+/TypeAccess/innerClasses/local/02/FeatureB/B.java:3:
+  Semantic Error: NEVER dependency:
+Feature FeatureB accesses the type
+  (default package).C
+of feature FeatureC.
+Features FeatureB and FeatureC cannot both be present in a valid selection.
+

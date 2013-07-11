@@ -1,0 +1,10 @@
+\subsection[Typzugriff: Konstruktor]{Typzugriff: Konstruktor (Ordner \code{TypeAccess/constructor})}
+In der Klasse \code{A} wird eine Instanz der Klasse \code{B} erzeugt. 
+\subsubsection{Fall 01: Dide Klasse \code{C} fehlt.} Dieser Fall löst insgesamt zwei Fehlermeldungen aus, wobei sich beide Fehlermeldungen auf den Zugriff auf eine nicht vorhandene Klasse beziehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/constructor/01/FeatureA/A.java:3,3:
+  Semantic Error: no visible type named B
+/TypeAccess/constructor/01/FeatureA/A.java:3,13:
+  Semantic Error: no visible type named B
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

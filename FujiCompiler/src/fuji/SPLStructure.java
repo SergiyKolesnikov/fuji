@@ -7,17 +7,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+import de.ovgu.featureide.fm.core.Feature;
+import de.ovgu.featureide.fm.core.FeatureModel;
+import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
+
 import AST.CompilationUnit;
-import AST.Program;
 
 /**
  * Represents the structure of an SPL, has full information about features,
@@ -32,40 +33,67 @@ public class SPLStructure {
     private static final Pattern SOURCE_FILE_EXT_PAT = Pattern.compile(
             ".*\\.java$", Pattern.CASE_INSENSITIVE);
 
-    /* JastAddJ classpath option name. */
-    public static final String JAJOPT_CP = "-" + Main.OptionName.CLASSPATH;
-
     private String basedirPathname; // canonical pathname
 
     /* Feature module pathenames in the order they are listed in features file. */
     private List<String> featureModulePathnames; // canonical pathnames
 
-    private String[] classpathArg = new String[2];
+    private FeatureModel featureModel;
+
+    /*
+     * The flag indicates if the SPL has variability or not (i.e. consists only
+     * of one product).
+     */
+    private boolean hasVariability = true;
+
     private Map<String, RoleGroup> roleGroups;
-    private List<Collection<RoleGroup>> dependecyGraphs;
 
     /**
      * SPLStructure constructor.
      * 
      * @param bdPathname
      *            absolute pathname of the SPL's root directory
+     * @param featureModelPathname
+     *            absolute pathname of the feature model file
      * @param featuresFilePathname
-     *            absolute pathname of the features file.
-     * @param singleDependencyGraph
-     *            put all the role groups in one dependency graph regardless
-     *            their actual interrelations.
+     *            absolute pathname of the features file
+     * @param hasVariability
+     *            indicates if the SPL has variability or not (i.e. consists
+     *            only of one product). <code>true</code> if the SPL has
+     *            variability or <code>false</code> otherwise
      * @throws IOException
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
+     * @throws UnsupportedModelException
+     * @throws IllegalArgumentException 
      */
-    public SPLStructure(String bdPathname, String featuresFilePathname,
-            boolean singleDependencyGraph) throws IOException,
-            FeatureDirNotFoundException, SyntacticErrorException {
+    public SPLStructure(String bdPathname, String featureModelPathname,
+            String featuresFilePathname, boolean hasVariability)
+            throws IOException, FeatureDirNotFoundException,
+            SyntacticErrorException, UnsupportedModelException, IllegalArgumentException {
 
+        if (featureModelPathname == null && featuresFilePathname == null) {
+            throw new IllegalArgumentException(
+                    "The pathname of the feature model and the features file may not be both null.");
+        }
         basedirPathname = new File(bdPathname).getCanonicalPath();
-        featureModulePathnames = parseFeautresFile(basedirPathname, new File(
-                featuresFilePathname).getCanonicalPath());
-        initSPLStructure(singleDependencyGraph);
+        if (featureModelPathname != null) {
+
+            /* Read in the feature model. */
+            File guidsl_file = new File(featureModelPathname);
+            featureModel = new FeatureModel();
+            GuidslReader reader = new GuidslReader(featureModel);
+            reader.readFromFile(guidsl_file);
+        }
+        if (featuresFilePathname == null) {
+            featureModulePathnames = parseFeatureList(basedirPathname,
+                    featureNamesFromModel(featureModel));
+        } else {
+            featureModulePathnames = parseFeautresFile(basedirPathname,
+                    new File(featuresFilePathname).getCanonicalPath());
+        }
+        this.hasVariability = hasVariability;
+        initSPLStructure();
     }
 
     /**
@@ -73,43 +101,44 @@ public class SPLStructure {
      * 
      * @param bdPathname
      *            absolute pathname of the SPL's root directory.
+     * @param featureModel
+     *            a feature model
      * @param featuresList
      *            a list of features to be composed.
-     * @param singleDependencyGraph
-     *            put all the role groups in one dependency graph regardless
-     *            their actual interrelations.
+     * @param hasVariability
+     *            indicates if the SPL has variability or not (i.e. consists
+     *            only of one product). <code>true</code> if the SPL has
+     *            variability or <code>false</code> otherwise.
      * @throws IOException
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
+     * @throws IllegalArgumentException 
      */
-    public SPLStructure(String bdPathname, List<String> featuresList,
-            boolean singleDependencyGraph) throws IOException,
-            FeatureDirNotFoundException, SyntacticErrorException {
+    public SPLStructure(String bdPathname, FeatureModel featureModel,
+            List<String> featuresList, boolean hasVariability)
+            throws IOException, FeatureDirNotFoundException,
+            SyntacticErrorException, IllegalArgumentException {
 
+        if (featureModel == null && featuresList == null) {
+            throw new IllegalArgumentException(
+                    "The feature model and the feature list may not be both null.");
+        }
         basedirPathname = new File(bdPathname).getCanonicalPath();
+        this.featureModel = featureModel;
+        if (featuresList == null) {
+            featuresList = featureNamesFromModel(this.featureModel); 
+        }
         featureModulePathnames = parseFeatureList(basedirPathname, featuresList);
-        initSPLStructure(singleDependencyGraph);
+        this.hasVariability = hasVariability;
+        initSPLStructure();
     }
 
     /**
      * Functionality common to all constructors.
      */
-    private void initSPLStructure(boolean singleDependencyGraph)
-            throws IOException, FeatureDirNotFoundException,
-            SyntacticErrorException {
-        classpathArg = constructClasspathArg(this.basedirPathname,
-                featureModulePathnames);
+    private void initSPLStructure() throws IOException,
+            FeatureDirNotFoundException, SyntacticErrorException {
         roleGroups = createRoleGroups(featureModulePathnames);
-        if (singleDependencyGraph) {
-            ArrayList<RoleGroup> graph = new ArrayList<RoleGroup>();
-            for (RoleGroup rg : roleGroups.values()) {
-                graph.add(rg);
-            }
-            dependecyGraphs = new ArrayList<Collection<RoleGroup>>();
-            dependecyGraphs.add(graph);
-        } else {
-            dependecyGraphs = createDependecyGraphs(roleGroups);
-        }
     }
 
     /**
@@ -120,8 +149,8 @@ public class SPLStructure {
      * @return a list of dependency graphs ordered by the number of nodes (role
      *         groups). A graph with least nodes first.
      */
-    public List<Collection<RoleGroup>> getDependencyGraphs() {
-        return Collections.unmodifiableList(dependecyGraphs);
+    public Collection<RoleGroup> getRoleGropus() {
+        return Collections.unmodifiableCollection(roleGroups.values());
     }
 
     /**
@@ -196,6 +225,10 @@ public class SPLStructure {
         return roleGroups.keySet().contains(pathname);
     }
 
+    public FeatureModel getFeatureModel() {
+        return featureModel;
+    }
+    
     /**
      * Parse the file containing the feature choice.
      * 
@@ -294,34 +327,20 @@ public class SPLStructure {
         return fmPathnames;
     }
 
-    /*
-     * Construct classpath argument for initProgram()
+    /**
+     * Generates a list of names of <em>concrete</em> features from a given
+     * feature model.
      * 
-     * @param bdPathname path to the SPL's root dir.
-     * 
-     * @param fmPathnames list paths to the SPL's feature modules.
-     * 
-     * @return the constructed classpath argument array.
+     * @param fm
+     *            feature model from which the method takes the feature names
+     * @return a list of feature names
      */
-    private String[] constructClasspathArg(String bdPathname,
-            List<String> fmPathnames) {
-
-        String[] cpArg = new String[2];
-        cpArg[0] = JAJOPT_CP;
-        cpArg[1] = bdPathname;
-
-        /*
-         * NOTE: The order of feature module pathnames in the classpath is
-         * important for the dependency calculation algorithm in
-         * calculateDependencies() (see the NOTE their) and must correspond to
-         * the order of features given in the features file. This condition is
-         * satisfied by default due to the fmPathnames preserving the order of
-         * features file entries.
-         */
-        for (String s : fmPathnames) {
-            cpArg[1] += ":" + s;
+    private List<String> featureNamesFromModel(FeatureModel fm) {
+        List<String> featuresList = new ArrayList<String>();
+        for (Feature f : fm.getConcreteFeatures()) {
+            featuresList.add(f.getName());
         }
-        return cpArg;
+        return featuresList;
     }
 
     /*
@@ -373,128 +392,6 @@ public class SPLStructure {
         return returnGroups;
     }
 
-    /*
-     * Creates dependency graphs for the given role groups. A dependency graph
-     * contains all the role groups that are referencing or are being referenced
-     * by a role group form the graph.
-     * 
-     * @param rgs role groups to create dependency graphs for.
-     * 
-     * @return a list of dependency graphs ordered by the number of nodes (role
-     * groups). A graph with least nodes first.
-     */
-    private List<Collection<RoleGroup>> createDependecyGraphs(
-            Map<String, RoleGroup> rgs) throws SyntacticErrorException {
-
-        calculateDependencies(rgs);
-
-        /* Sort role groups: RGs with less dependencies first. */
-        List<RoleGroup> sortedRGs = new ArrayList<RoleGroup>(rgs.values());
-        Collections.sort(sortedRGs, (new Comparator<RoleGroup>() {
-            @Override
-            public int compare(RoleGroup o1, RoleGroup o2) {
-                return o1.dependencies.size() - o2.dependencies.size();
-            }
-        }));
-
-        /* Create graphs. */
-        List<Collection<RoleGroup>> graphs = new ArrayList<Collection<RoleGroup>>();
-        for (RoleGroup rg : sortedRGs) {
-            Collection<RoleGroup> aGraph = new ArrayList<RoleGroup>();
-            aGraph.add(rg);
-            for (String dep : rg.dependencies) {
-                aGraph.add(rgs.get(dep));
-            }
-            graphs.add(aGraph);
-        }
-        return graphs;
-    }
-
-    /*
-     * Calculates dependencies for the given role groups.
-     * 
-     * @param rgs a map from a base role absolute pathname to the corresponding
-     * role group.
-     */
-    private void calculateDependencies(Map<String, RoleGroup> rgs)
-            throws SyntacticErrorException {
-
-        /* Compute transitive dependencies. */
-        for (RoleGroup currentRG : rgs.values()) {
-            Program program = initAST(); // TODO try to init once and reuse
-            program.addSourceFile(currentRG.basePathname);
-            for (String path : currentRG.calculateRefinementRelativePathnames())
-                program.addSourceFile(path);
-            @SuppressWarnings("unchecked")
-            Iterator<CompilationUnit> iter = program.compilationUnitIterator();
-            while (iter.hasNext()) {
-                CompilationUnit currentCU = iter.next();
-                if (currentCU.fromSource()) {
-                    @SuppressWarnings("unchecked")
-                    Collection parseErrors = currentCU.parseErrors();
-                    if (!parseErrors.isEmpty()) {
-                        StringBuilder message = new StringBuilder();
-                        for (Object o : parseErrors) {
-                            message.append(o + "\n");
-                        }
-                        throw new SyntacticErrorException(message.toString());
-                    }
-
-                    /*
-                     * NOTE: This will load the source files for all the types
-                     * reference in the current CU. The SPL's roles, for which
-                     * the source files are loaded, are guaranteed to be the
-                     * base roles. This is because the classpath contains
-                     * pahtnames of the feature modules in the order they are
-                     * given in features file (see constructClasspathArg()). So
-                     * the classpath is searched in this order too and the base
-                     * role of a class will be definitely found before any
-                     * refinement role.
-                     */
-                    currentCU.toString();
-
-                    /*
-                     * currentCU.pathName() is the pathname of a _base_ role,
-                     * see the NOTE above.
-                     */
-                    RoleGroup depRG = rgs.get(currentCU.pathName());
-                    if (depRG != null
-                            && !currentRG.basePathname
-                                    .equals(depRG.basePathname)
-                            && !currentRG.dependencies
-                                    .contains(depRG.basePathname)) {
-                        program.addSourceFileIfNew(depRG.basePathname);
-                        for (String path : depRG
-                                .calculateRefinementRelativePathnames()) {
-                            program.addSourceFileIfNew(path);
-                        }
-                        currentRG.dependencies.add(depRG.basePathname);
-                    }
-                }
-            }
-        }
-    }
-
-    /*
-     * Initialize an AST.
-     */
-    private Program initAST() {
-        Program program = new Program();
-        program.state().reset();
-        program.initBytecodeReader(new AST.BytecodeParser());
-        program.initJavaParser(new AST.JavaParser() {
-            public CompilationUnit parse(java.io.InputStream is, String fileName)
-                    throws java.io.IOException, beaver.Parser.Exception {
-                return new parser.JavaParser().parse(is, fileName);
-            }
-        });
-        AST.Options options = program.options();
-        options.initOptions();
-        options.addKeyValueOption(JAJOPT_CP);
-        program.options().addOptions(classpathArg);
-        return program;
-    }
-
     /**
      * RoleGroup encapsulates a base role and all its refinement roles, provides
      * some utility methods.
@@ -511,13 +408,6 @@ public class SPLStructure {
          * refinement roles.
          */
         private List<String> refiningFeatureModules = new ArrayList<String>();
-
-        /*
-         * Role groups that are referenced (directly or indirectly) in the code
-         * of this role group (i.e. this role gruop's direct and transitive
-         * dependencies).
-         */
-        private HashSet<String> dependencies = new HashSet<String>();
 
         /**
          * Flag: true, if a compilation unit for the role group has been
@@ -597,5 +487,16 @@ public class SPLStructure {
         public String toString() {
             return basePathname;
         }
+    }
+
+    /**
+     * The flag indicates if the SPL has variability or not (i.e. consists only
+     * of one product).
+     * 
+     * @return <code>true</code> if the SPL has variability or
+     *         <code>false</code> otherwise.
+     */
+    public boolean hasVariability() {
+        return hasVariability;
     }
 }

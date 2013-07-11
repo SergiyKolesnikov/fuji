@@ -1,0 +1,23 @@
+\subsection{OptInfoExtends}
+%%
+In der Klasse \code{C} finden implizite Casts von Instanzen des Typs \code{A} nach dem Typ \code{B} und Aufrufe der Methode \code{bar()} dieser Instanzen und der statischen Methode \code{foobar()} der Klasse \code{B} statt.  
+Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, findet sich nur im Feature \feature{FeatureA}. Die Klasse \code{A} des Features \feature{FeatureA2} greift auf das statische Feld \code{i} zu, dass in der Klasse \code{B} definiert wird, und ruft mittels \code{this.bar()} die Methode \code{bar()} der Klasse \code{B} auf. 
+
+\subsubsection{Fall 01: In der Klasse \code{A} fehlt die Information, dass A von B erbt} 
+Bisher werden fehlende, weil in der Oberklasse definierte Funktionen, erkannt, aber dass ein impliziter Cast stattfindet, wird nicht erkannt.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+Errors:
+
+/OptInfoExtends/01/FeatureA/A.java:2,24:
+  Semantic Error: no field named i
+/OptInfoExtends/01/FeatureA/A.java:4:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:7:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:8:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:10:
+  Semantic Error: no method named foobar() in A matches.
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \code{A} die Vererbungsinformationen ("extends B") hinzuzufügen.

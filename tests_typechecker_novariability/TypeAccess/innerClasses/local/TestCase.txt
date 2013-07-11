@@ -1,0 +1,9 @@
+\subsection[Typzugriff: innerClass, local]{Typzugriff: innerClass, local (Ordner \code{TypeAccess/""innerClasses/""local})}
+Die Klasse \code{B} enthält in der Methode \code{bar()} eine lokale innere Klasse \code{Inner}, die die Klasse \code{C} erweitert. Die Klasse \code{A} erzeugt eine Instanz der Klasse \code{B} und ruft deren Methode \code{bar()} auf.
+\subsubsection{Fall 01: Die Klasse \code{C} fehlt.}
+Dieser Fall löst eine Fehlermeldung aus, die sich auf das Fehlen der Klasse \code{C} bezieht:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/innerClasses/local/01/FeatureA/B.java:3,23:
+  Semantic Error: no visible type named C
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

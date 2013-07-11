@@ -1,0 +1,8 @@
+\subsection{OptInfoNewAssignmentWithCast2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoNewAssignmentWithCast}, allerdings geht die Vererbungsbeziehung nun über zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. Diese Information fehlt jeweils. In der Klasse \code{Z} wird eine Instanz der Klasse \code{A} erzeugt und implizit nach \code{C} gecastet.
+Dieser Fall löst keine Fehlermeldung aus.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, jeweils die Vererbungsinformation hinzuzuf√ºgen, also zur Klasse /code{A} "extends B" und zur Klasse \code{B} "extends C".

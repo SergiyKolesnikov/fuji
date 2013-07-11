@@ -1,4 +1,6 @@
 #!/bin/sh
+. ../scripts/global_vars
+
 CL=classes
 
 cd BerkeleyDB-fuji-compilable
