@@ -1,17 +1,17 @@
 caseStudyNames=("ZipMe" "EPL" "GPL" "Graph" "GUIDSL" "Notepad" "PKJab" "Prevayler" "Raroscope" "Sudoku" "Violet" "TankWar")
 caseStudyFeaturePaths=( \
-	"../examples/ZipMe/features/" \
- 	"../examples/EPL/" \
- 	"../examples/GPL/" \
- 	"../examples/Graph/" \
- 	"../examples/GUIDSL/" \
- 	"../examples/Notepad/" \
- 	"../examples/PKJab/" \
- 	"../examples/Prevayler/" \
- 	"../examples/Raroscope/" \
- 	"../examples/Sudoku/" \
- 	"../examples/Violet/" \
- 	"../examples/TankWar/" \
+	"./subjectSystems/ZipMe/features/" \
+ 	"./subjectSystems/EPL/" \
+ 	"./subjectSystems/GPL/" \
+ 	"./subjectSystems/Graph/" \
+ 	"./subjectSystems/GUIDSL/" \
+ 	"./subjectSystems/Notepad/" \
+ 	"./subjectSystems/PKJab/" \
+ 	"./subjectSystems/Prevayler/" \
+ 	"./subjectSystems/Raroscope/" \
+ 	"./subjectSystems/Sudoku/" \
+ 	"./subjectSystems/Violet/" \
+ 	"./subjectSystems/TankWar/" \
 )
 
 i=0

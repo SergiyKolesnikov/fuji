@@ -1,0 +1,37 @@
+import de.uni_passau.spl.bytecodecomposer.stubs.Stub;
+import java.lang.Object;
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractButton;
+import javax.swing.text.StyleContext;
+import javax.swing.text.JTextComponent;
+import javax.swing.JTextPane;
+import javax.swing.JMenuBar;
+import javax.swing.undo.UndoManager;
+import javax.swing.WindowConstants;
+import javax.swing.JComponent;
+import javax.swing.JToolBar;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.Style;
+import java.awt.event.WindowAdapter;
+import javax.swing.KeyStroke;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.lang.Class;
+import java.lang.String;
+import java.awt.Container;
+import javax.swing.text.StyledDocument;
+import java.awt.Frame;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import javax.swing.text.StyleConstants;
+import javax.swing.JMenuItem;
+import java.awt.Window;
+import javax.swing.text.Document;
+import javax.swing.JMenu;
+import javax.swing.JButton;
+public class Notepad {
+}

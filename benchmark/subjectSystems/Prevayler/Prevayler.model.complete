@@ -1,0 +1,8 @@
+SPL : [Censor] [GZip] [Monitor] [Replication] [Snapshot] base :: PrevaylerSPL ;
+
+%% // added:
+Snapshot implies Replication ;
+Snapshot implies Censor ;
+Snapshot implies Monitor ;
+Censor implies Snapshot ;
+base implies Snapshot ;

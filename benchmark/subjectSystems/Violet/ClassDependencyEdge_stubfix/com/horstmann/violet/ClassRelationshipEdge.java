@@ -1,0 +1,19 @@
+package com.horstmann.violet;
+import de.uni_passau.spl.bytecodecomposer.stubs.Stub;
+public class ClassRelationshipEdge implements com.horstmann.violet.framework.Edge {
+    @Stub
+    public ClassRelationshipEdge() {
+    }
+    @Stub
+    public void setStartArrowHead(com.horstmann.violet.ArrowHead head) {
+    	return ;
+    }
+    @Stub
+    public void setEndArrowHead(com.horstmann.violet.ArrowHead head) {
+    	return ;
+    }
+    @Stub
+    public void setLineStyle(com.horstmann.violet.LineStyle style){
+    	return ;
+    }
+}

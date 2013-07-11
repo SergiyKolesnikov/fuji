@@ -27,7 +27,7 @@ else
 	FILE=`cat "$2/classpathjars.txt"`
 	for jarfile in $FILE;
 	do
-		extraClasspath="$extraClasspath:./../examples/lib/$jarfile"
+		extraClasspath="$extraClasspath:./subjectSystems/lib/$jarfile"
 	done
 	echo "classpath: $extraClasspath"
 fi

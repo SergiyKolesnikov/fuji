@@ -21,13 +21,13 @@ cp ../FujiCompiler/build/fuji.jar fuji.jar
 #classpath
 if [ ! -f "$2/classpathjars.txt" ]
 then
-  extraClasspath="-cp ../examples/lib/stub-annotation.jar"
+  extraClasspath="-cp ./subjectSystems/lib/stub-annotation.jar"
 else
-	extraClasspath="-cp ../examples/lib/stub-annotation.jar"
+	extraClasspath="-cp ./subjectSystems/lib/stub-annotation.jar"
 	FILE=`cat "$2/classpathjars.txt"`
 	for jarfile in $FILE;
 	do
-		extraClasspath="$extraClasspath:./../examples/lib/$jarfile"
+		extraClasspath="$extraClasspath:./subjectSystems/lib/$jarfile"
 	done
 	echo "classpath: $extraClasspath"
 fi

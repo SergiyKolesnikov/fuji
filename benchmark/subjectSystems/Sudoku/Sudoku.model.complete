@@ -1,0 +1,12 @@
+// assumed model (all features optional except base feature):
+Sudoku : Base [States] [Undo] [Color] [Solver] [Generator] 
+              [Extended] :: _Sudoku ;
+              
+%% // added:
+
+Generator implies Solver ;
+Undo implies States ;
+Solver implies Undo ;
+Solver implies States ;
+Generator implies Undo ;
+Generator implies States ;
