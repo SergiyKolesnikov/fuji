@@ -1,0 +1,126 @@
+\subsection{OptInfoImplements2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoImplements}, allerdings geht die Subtyp-Beziehung nun über zwei Stufen: Das Interface \code{A} greift im Feature \feature{FeatureA2} auf die Konstante \code{I} zu, die im Interface \code{B} des Features \feature{FeatureB2} definiert wird, und auf die Konstante \code{K}, die im Interface \code{C} des Features \feature{FeatureC} definiert wird. Die Information, dass das Interface \code{A} das Interface \code{B} implementiert, findet sich nur im Feature \feature{FeatureA}. Die Information, dass das Interface \code{B} das Interface \code{C} implementiert, findet sich nur im Feature \feature{FeatureB}.
+\subsubsection{Fall 01: Die Features \feature{FeatureA} und \feature{FeatureB} sind im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante sämtliche Vererbungsinformationen nicht zur Verfügung stehen, wenn die Features \feature{FeatureA} und \feature{FeatureB} nicht ausgewählt wurden.
+Dieser Fall löst drei Fehlermeldungen aus, die alle die Probleme thematisieren, die aus diesem möglichen Fehlen der Vererbungsinformationen entstehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements2Steps/01/FeatureA2/A.java:2,30:
+  Semantic Error: MAYBE dependency:
+Interface A of feature FeatureA2 accesses the field
+  public static final int I = 42;
+which is accessible via interface B.
+Interface A of feature FeatureA extends interface B.
+The information that interface A extends interface B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoImplements2Steps/01/FeatureA2/A.java:3,30:
+  Semantic Error: MAYBE dependency:
+Interface A of feature FeatureA2 accesses the field
+  public static final int K = 23;
+which is accessible via interface C.
+Interface A of feature FeatureA extends interface C.
+The information that interface A extends interface C is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoImplements2Steps/01/FeatureA2/A.java:3,30:
+  Semantic Error: MAYBE dependency:
+Interface B of feature FeatureA2 accesses the field
+  public static final int K = 23;
+which is accessible via interface C.
+Interface B of feature FeatureB extends interface C.
+The information that interface B extends interface C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{FeatureA2 $\implies$ FeatureA} und \constraint{FeatureA2 $\implies$ FeatureB} hinzuzufügen.
+Dadurch müssen, wenn das Feature \feature{FeatureA2} ausgewählt wurde, auch die Features \feature{FeatureA} und \feature{FeatureB} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureA2} und die Features \feature{FeatureB} und \feature{FeatureB2} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{A} des Features \feature{FeatureA} nicht ausgewählt werden, wenn das Feature \feature{FeatureA2} ausgewählt wird und die Klasse \code{B} des Features \feature{FeatureB} nicht ausgewählt werden, wenn das Feature \feature{FeatureB2} ausgewählt wird. Damit sind die Vererbungsinformationen nicht verfügbar und es werden folgende fünf Fehlermeldungen ausgegeben:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements2Steps/02/FeatureA2/A.java:2,30:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA2 accesses the field
+  public static final int I = 42;
+of feature FeatureB2.
+Feature FeatureB2 may not be present in every valid selection.
+
+/OptInfoImplements2Steps/02/FeatureA2/A.java:2,30:
+  Semantic Error: NEVER dependency:
+Interface A of feature FeatureA2 accesses the field
+  public static final int I = 42;
+which is accessible via interface B.
+Interface A of feature FeatureA extends interface B.
+The information that interface A extends interface B is only present in feature FeatureA.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+
+/OptInfoImplements2Steps/02/FeatureA2/A.java:3,30:
+  Semantic Error: NEVER dependency:
+Interface A of feature FeatureA2 accesses the field
+  public static final int K = 23;
+which is accessible via interface C.
+Interface A of feature FeatureA extends interface C.
+The information that interface A extends interface C is only present in feature FeatureA.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+
+/OptInfoImplements2Steps/02/FeatureA2/A.java:3,30:
+  Semantic Error: MAYBE dependency:
+Interface B of feature FeatureA2 accesses the field
+  public static final int K = 23;
+which is accessible via interface C.
+Interface B of feature FeatureB extends interface C.
+The information that interface B extends interface C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoImplements2Steps/02/FeatureA/A.java:1:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB2.
+Feature FeatureB2 may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{FeatureA2 $\implies$ FeatureA}, \constraint{FeatureB2 $\implies$ FeatureB} und \constraint{FeatureA $\implies$ FeatureB2} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA2} ausgewählt wurde, auch das Feature \feature{FeatureA} ausgewählt werden und wenn das Feature \feature{FeatureB2} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden. Allerdings können dadurch die Features \feature{FeatureA2} und \feature{FeatureB2} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA2} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA2} zum einen das Feature \feature{FeatureA} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht. Analog für \feature{FeatureB2} und \feature{FeatureB}.
+\subsubsection{Fall 03: Die Klasse \code{A} (mit der Vererbungsinformation) wird identisch in den zwei optionalen Features \feature{FeatureA} und \feature{FeatureAA} definiert und die Klasse \code{B} (mit der Vererbungsinformation) wird identisch in den zwei optionalen Features \feature{FeatureB} und \feature{FeatureBB} definiert.} Für die Zugriffe aus der Klasse \code{A} des Features \feature{FeatureA2} heraus werden nun jeweils zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass sämtliche Vererbungsinformationen nicht zur Verfügung stehen, wenn alle vier Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements2Steps/03/FeatureA2/A.java:2,30:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Interface A of feature FeatureA2 accesses:
+- in feature FeatureA as subinterface of interface B the field
+     public static final int I = 42;
+   of interface B.
+- in feature FeatureAA as subinterface of interface B the field
+     public static final int I = 42;
+   of interface B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that interface A (transitively) extends the interface(s) above is not present at all.
+
+/OptInfoImplements2Steps/03/FeatureA2/A.java:3,30:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Interface A of feature FeatureA2 accesses:
+- in feature FeatureA as subinterface of interface B the field
+     public static final int K = 23;
+   of interface B.
+- in feature FeatureAA as subinterface of interface B the field
+     public static final int K = 23;
+   of interface B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that interface A (transitively) extends the interface(s) above is not present at all.
+
+/OptInfoImplements2Steps/03/FeatureA2/A.java:3,30:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Interface B of feature FeatureA2 accesses:
+- in feature FeatureB as subinterface of interface C the field
+     public static final int K = 23;
+   of interface C.
+- in feature FeatureBB as subinterface of interface C the field
+     public static final int K = 23;
+   of interface C.
+There may be a valid selection where none of the features FeatureB and FeatureBB is present.
+So it may be that the information 
+that interface B (transitively) extends the interface(s) above is not present at all.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{$\lnot$ FeatureA $\iff$ FeatureAA} und \constraint{$\lnot$ FeatureB $\iff$ FeatureBB} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{A} und immer genau ein Exemplar der Klasse \code{B} mit den Vererbungsinformationen ausgewählt werden.

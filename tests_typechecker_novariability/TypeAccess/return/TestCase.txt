@@ -1,0 +1,9 @@
+\subsection[Typzugriff: return]{Typzugriff: return (Ordner \code{TypeAccess/return})}
+Die Klasse \code{B} erzeugt in der statischen Methode \code{bar()} eine Instanz der Klasse \code{C}. Diese Instanz wird von der Methode zurückgegeben. Die Methode wird in der Klasse \code{A} des Features \feature{FeatureA} aufgerufen. 
+\subsubsection{Fall 01: Die Klasse \code{C} fehlt.}
+Dieser Fall löst insgesamt drei Fehlermeldungen aus, wobei eine Fehlermeldung sich auf den Typzugriff der Klasse \code{A} auf den Typ \code{C} bezieht:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/return/01/FeatureA/A.java:3,3:
+  Semantic Error: no visible type named C
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

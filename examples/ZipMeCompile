@@ -1,4 +1,6 @@
 #!/bin/sh
+. ../scripts/global_vars
+
 CL=classes
 cd ZipMe
 /bin/rm -rf "$CL"

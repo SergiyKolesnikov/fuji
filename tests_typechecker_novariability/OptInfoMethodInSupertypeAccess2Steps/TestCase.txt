@@ -1,0 +1,62 @@
+\subsection{OptInfoMethodInSupertypeAccess2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoMethodInSupertypeAccess}, allerdings geht die Vererbungsbeziehung nun über zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. Diese Information fehlt.
+In der Klasse \code{Z} wird eine Instanz der Klasse \code{A} erzeugt, nun implizit nach \code{C} gecastet und dann die Methode \code{foo()} dieser Instanz aufgerufen. Die Methode \code{foo(}) wird in der Klasse \code{C} definiert.
+Dieser Fall löst sechs Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureB2/B.java:1:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the super constructor
+  public C()
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureZ/Z.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void foo() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess2Steps/01/FeatureZ/Z.java:4:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the method
+  public void foo() { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{FeatureZ $\implies$ FeatureA} und \constraint{FeatureZ $\implies$ FeatureB} hinzuzufügen.
+Dadurch müssen, wenn das Feature \feature{FeatureZ} ausgewählt wurde, auch die Features \feature{FeatureA} und \feature{FeatureB} ausgewählt werden.

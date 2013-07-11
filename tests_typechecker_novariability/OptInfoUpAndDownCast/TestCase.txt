@@ -1,0 +1,8 @@
+\subsection{OptInfoUpAndDownCast}
+%%
+In der Klasse \code{C} wird eine Instanz der Klasse \code{A} explizit nach \code{B} gecastet (Upcast) und eine Instanz der Klasse \code{B} explizit nach \code{A} gecastet (Downcast). Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt.
+Dieser Fall löst keine Fehlermeldungen aus.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \Code{A} das Schl√ºsselwort extends hinzuzufügen.

@@ -1,0 +1,13 @@
+Errors:
+/OptInfoImplements/03/FeatureA2/A.java:3,32:
+  Semantic Error: 2 optional targets (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as implementation of interface B the field
+     public static final int I = 42;
+   of interface B.
+- in feature FeatureAA as implementation of interface B the field
+     public static final int I = 42;
+   of interface B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information that class A (transitively) implements the interface(s) above is not present at all.
+

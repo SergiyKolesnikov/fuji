@@ -1,5 +1,6 @@
 #!/bin/sh
 CL=classes
+. ../scripts/global_vars
 
 cd GUIDSL
 /bin/rm -rf "$CL"

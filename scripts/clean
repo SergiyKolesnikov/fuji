@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Clean up temporary files in examples, tests*, and FujiCompiler/build.
+
 PWD=`pwd`
 if [ "${PWD:0:1}"=="/" ]; then
     THISPATH=`dirname "$0"`
@@ -7,20 +9,35 @@ else
     THISPATH=`dirname "$PWD/$0"`
 fi
 
+. "$THISPATH"/global_vars
+
 FUJI="$THISPATH/../FujiCompiler"
 EXAMPLESCL=`find "$THISPATH/../examples/" -maxdepth 2 \
-    -name classes -type d -or -name sources -type d`
+    -name "$TMPCLASSOUT" -type d \
+    -or -name "$TMPSRCOUT" -type d \
+    -or -name "$TMPPRODOUT" -type d \
+    -or -name 'tmp-fuji-uncompilable_configurations.txt' -type f`
 TESTSCL=`find "$THISPATH/../tests/" -maxdepth 2 \
-    -name classes -type d -or -name sources -type d`
+    -name "$TMPCLASSOUT" -type d \
+    -or -name "$TMPSRCOUT" -type d`
+TEST_TC=`find "$THISPATH/../tests_typechecker" -name '*tmp*.out' -or -name 'expectedSorted.txt' -or -name 'expectedtmp.txt'`
+TEST_TC_NOVAR=`find "$THISPATH/../tests_typechecker_novariability" -name '*tmp*.out' -or -name 'expectedSorted.txt' -or -name 'expectedtmp.txt'`
+
+OLDIFS=$IFS
 IFS=$'\n'
+
+removeall() {
+    TOREMOVE="$*"
+    for I in $TOREMOVE; do
+	/bin/rm -rf "$I"
+    done
+}
 
 if [ "$EXAMPLESCL" != "" ]; then
     echo "$EXAMPLESCL"
     read -p "Remove? [y/n]: "
     if [ "$REPLY" == "y" ]; then
-	for I in $EXAMPLESCL; do
-	    /bin/rm -rf "$I"
-	done
+	removeall $EXAMPLESCL
     fi
 fi
 
@@ -28,9 +45,17 @@ if [ "$TESTSCL" != "" ]; then
     echo "$TESTSCL"
     read -p "Remove? [y/n]: "
     if [ "$REPLY" == "y" ]; then
-	for I in $TESTSCL; do
-	    /bin/rm -rf "$I"
-	done
+	removeall $TESTSCL
+    fi
+fi
+
+if [ "$TEST_TC" != "" -o "$TEST_TC_NOVAR" != "" ]; then
+    echo "$TEST_TC"
+    echo "$TEST_TC_NOVAR"
+    read -p "Remove? [y/n]: "
+    if [ "$REPLY" == "y" ]; then
+	removeall $TEST_TC
+	removeall $TEST_TC_NOVAR
     fi
 fi
 
@@ -40,3 +65,5 @@ if [ "$REPLY" == "y" ]; then
     ant clean
     cd ~-
 fi
+
+IFS=$OLDIFS

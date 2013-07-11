@@ -26,23 +26,12 @@ public class Composition {
      * @param compContext
      *            an instance of CompositionContext implementation that provides
      *            all the data and methods needed by this strategy context
-     *            (e.g.: spl structure, factory method for
-     *            concrete strategies).
+     *            (e.g.: spl structure, factory method for concrete strategies).
      * @param spl
      *            a representation of an SPL to be composed.
      */
     public Composition(CompositionContext compContext) {
         compositionContext = compContext;
-    }
-
-    /**
-     * Return an iterator over the ASTs build for the SPL's dependency graphs.
-     * ASTs for graphs with least dependencies are returned first.
-     * 
-     * @return an iterator over the ASTs build for the SPL's dependency graphs.
-     */
-    public Iterator<Program> getASTIterator() {
-        return this.new ASTIterator();
     }
 
     /*
@@ -61,6 +50,7 @@ public class Composition {
         initBackboneCompilerOptions(program);
         program.options().addOptions(
                 compositionContext.getBackboneCompilerArgs());
+        program.setSPLStructure(compositionContext.getSPLStructure());
         return program;
     }
 
@@ -122,73 +112,40 @@ public class Composition {
     }
 
     /**
-     * This iterator triggers the generation of an AST for each dependency graph
-     * and iterates over this ASTs.
+     * Triggers the generation of an ASTW. During generation all the base roles
+     * get a CompilationUnit (CU) and this CU is composed with CUs of the
+     * corresponding refining roles. The CUs for the refining roles stay in the
+     * AST but their fromSource flag is set to false so that fromSource()
+     * returns false. Thus, they can be excluded from bytecode generation
+     * process by checking the fromSource property.
+     * 
+     * @return an AST for the next dependency graph.
      */
-    private class ASTIterator implements Iterator<Program> {
+    public Program composeAST() {
+        Collection<RoleGroup> rolegroups = compositionContext.getSPLStructure()
+                .getRoleGropus();
+        Program ast = initAST();
 
-        private Iterator<Collection<RoleGroup>> graphIterator;
-
-        /**
-         * Default constructor.
-         */
-        public ASTIterator() {
-            graphIterator = compositionContext.getSPLStructure()
-                    .getDependencyGraphs().iterator();
-        }
-
-        @Override
-        public boolean hasNext() {
-            return graphIterator.hasNext();
-        }
-
-        /**
-         * Triggers the generation of an AST for the next dependency graph and
-         * returns the generated AST. During generation all the base roles in
-         * the next dependency graph get a CompilationUnit and this is composed
-         * with CompilationUnits of the corresponding refining roles. The
-         * CompilationUnits for the refining roles stay in the AST but their
-         * fromSource flag is set to false so the fromSource() returns false
-         * too. Thus they can be excluded from bytecode generation process by
-         * checking the fromSource property.
+        /*
+         * Add base roles to the AST.
          * 
-         * @return an AST for the next dependency graph.
+         * NOTE: base roles must be added to the AST before any refinement to
+         * guarantee correct name resolution and such.
          */
-        @Override
-        public Program next() {
-            Collection<RoleGroup> graph = graphIterator.next();
-            Program ast = initAST();
-
-            /*
-             * Add base roles to the AST.
-             * 
-             * NOTE: base roles must be added to the AST before any refinement
-             * to guarantee correct name resolution and such.
-             */
-            Collection<RoleGroup> rgsToCompose = new ArrayList<RoleGroup>();
-            for (RoleGroup rg : graph) {
-                if (rg.composed) {
-                    continue;
-                }
-                rgsToCompose.add(rg);
-                // ast.addSourceFile(rg.getBaseRelativePathname());
-                ast.addSourceFile(rg.getBasePathname());
+        Collection<RoleGroup> rgsToCompose = new ArrayList<RoleGroup>();
+        for (RoleGroup rg : rolegroups) {
+            if (rg.composed) {
+                continue;
             }
-
-            /* Compose base roles with their refinements. */
-            for (RoleGroup rg : rgsToCompose) {
-                composeRoleGroup(ast, rg);
-                rg.composed = true;
-            }
-            return ast;
+            rgsToCompose.add(rg);
+            ast.addSourceFile(rg.getBasePathname());
         }
 
-        /**
-         * This operation is not supported.
-         */
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
+        /* Compose base roles with their refinements. */
+        for (RoleGroup rg : rgsToCompose) {
+            composeRoleGroup(ast, rg);
+            rg.composed = true;
         }
+        return ast;
     }
 }

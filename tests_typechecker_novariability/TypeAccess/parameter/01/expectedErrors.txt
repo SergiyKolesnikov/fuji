@@ -1,0 +1,3 @@
+Errors:
+/TypeAccess/parameter/01/FeatureA/A.java:2,18:
+  Semantic Error: no visible type named B

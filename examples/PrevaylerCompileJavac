@@ -1,4 +1,5 @@
 #!/bin/sh
+. ../scripts/global_vars
 
 cd Prevayler
 /bin/rm -rf classes

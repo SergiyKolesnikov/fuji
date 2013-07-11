@@ -1,0 +1,7 @@
+Errors:
+/FieldAccess/01/FeatureA/A.java:3,17:
+  Semantic Error: no field named j
+/FieldAccess/01/FeatureA/A.java:6,6:
+  Semantic Error: no visible type named B
+/FieldAccess/01/FeatureA/A.java:6,16:
+  Semantic Error: no visible type named B

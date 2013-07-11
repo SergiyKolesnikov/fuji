@@ -1,0 +1,12 @@
+\subsection[Methodenzugriff]{Methodenzugriff (Ordner \code{MethodAccess})}
+Im Feature \feature{FeatureA} greift die Klasse \code{A} auf die statische Methode \code{getValue()} und auf die Methode \code{getValue2()} der nicht vorhandenen Klasse \code{B} zu. 
+
+Dieser Fall löst insgesamt zwei Fehlermeldungen aus, wobei sich zwei davon auf die Typzugriffe beziehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+MethodAccess/01/FeatureA/A.java:6,6:
+  Semantic Error: no visible type named B
+MethodAccess/01/FeatureA/A.java:6,16:
+  Semantic Error: no visible type named B
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{B} mit den statischen Methoden \code{getValue()} und \code{getValue2()} hinzuzufügen.

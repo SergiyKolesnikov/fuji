@@ -1,0 +1,30 @@
+Errors:
+/MethodAccess/01/FeatureA/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the method
+  public static int getValue() { ... }
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/MethodAccess/01/FeatureA/A.java:6:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the constructor
+  public B()
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/MethodAccess/01/FeatureA/A.java:7:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the method
+  public int getValue2() { ... }
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/MethodAccess/01/FeatureA/A.java:3
+/MethodAccess/01/FeatureA/A.java:6:
+  Semantic Error: 1 optional target:
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+

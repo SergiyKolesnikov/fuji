@@ -1,5 +1,21 @@
+import fuji.SPLStructure;
+
 aspect Utils {
     /* Allows every node to access the program node. */
     syn Program ASTNode.getProgram() = getParent().getProgram();
     eq Program.getProgram() = this;
+    
+    /*
+     *  Make SPLStructure available to AST nodes through corresponding getters and setters. 
+     */
+    private SPLStructure Program.splStructure = null;
+    public void Program.setSPLStructure(SPLStructure spl) {
+        splStructure = spl;
+    }
+    public SPLStructure Program.getSPLStructure() {
+        return splStructure;
+    }
+    public SPLStructure ASTNode.getSPLStructure() {
+        return getProgram().getSPLStructure();
+    }
 }

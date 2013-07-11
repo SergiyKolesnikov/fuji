@@ -1,0 +1,7 @@
+Errors:
+/TypeAccess/tryCatchThrows/01/FeatureA/B.java:2,37:
+  Semantic Error: no visible type named E
+/TypeAccess/tryCatchThrows/01/FeatureA/B.java:3,19:
+  Semantic Error: no visible type named E
+/TypeAccess/tryCatchThrows/01/FeatureA/A.java:5,12:
+  Semantic Error: no visible type named E

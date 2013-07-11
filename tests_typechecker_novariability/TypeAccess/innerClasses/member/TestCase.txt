@@ -1,0 +1,14 @@
+\subsection[Typzugriff: innerClass, member]{Typzugriff: innerClass, member (Ordner \code{TypeAccess/""innerClasses/""member})}
+Die Klasse \code{B} enthält eine innere Klasse \code{Inner}, die eine Methode \code{bar()} enthält.
+Die Klasse \code{A} erzeugt eine Instanz der Klasse \code{B} und innerhalb dieser Instanz eine Instanz der inneren Klasse \code{Inner}, deren Methode \code{bar()} aufgerufen wird. 
+\subsubsection{Fall 01: Die Klasse \code{B} fehlt.}
+Dieser Fall löst insgesamt drei Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:3,3:
+  Semantic Error: no visible type named B
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:3,13:
+  Semantic Error: no visible type named B
+/TypeAccess/innerClasses/member/01/FeatureA/A.java:4,9:
+  Semantic Error: no visible type named Inner
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} mit der inneren Klasse \code{Inner}  hinzuzufügen.

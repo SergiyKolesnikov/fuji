@@ -1,0 +1,48 @@
+\subsection{OptInfoImplements}
+%%
+Das Interface \code{B} des Features \feature{FeatureB} definiert eine Konstante \code{I} und eine Methode \code{foo()}. Die Klasse \code{A} des Features \feature{FeatureA2} implementiert diese Methode und greift auf die Konstante \code{I} zu. Die Information, dass die Klasse \code{A} das Interface \code{B} implementiert, findet sich nur im Feature \feature{FeatureA}.
+\subsubsection{Fall 01: Das Feature \feature{FeatureA} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die Information, dass die Klasse \code{A} das Interface \code{B} implementiert, nicht zur Verfügung steht, wenn das Feature \feature{FeatureA} nicht ausgewählt wurde, das als einziges Feature diese Information enthält.
+Dieser Fall löst eine Fehlermeldung aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements/01/FeatureA2/A.java:3,10:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the field
+  public static final int I = 42;
+which is accessible via interface B.
+Class A of feature FeatureA implements interface B.
+The information that class A implements interface B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA2 $\implies$ FeatureA} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA2} ausgewählt wurde, auch das Feature \feature{FeatureA} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureA2} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{A} des Features \feature{FeatureA} nicht ausgewählt werden, wenn das Feature \feature{FeatureA2} ausgewählt wird. Damit ist auch die Information, dass die Klasse \code{A} das Interface \code{B} implementiert, nicht verfügbar und es wird die folgende Fehlermeldung ausgegeben:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements/02/FeatureA2/A.java:3,32:
+  Semantic Error: NEVER dependency:
+Class A of feature FeatureA2 accesses the field
+  public static final int I = 42;
+which is accessible via interface B.
+Class A of feature FeatureA implements interface B.
+The information that class A implements interface B is only present in feature FeatureA.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA2 $\implies$ FeatureA} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA2} ausgewählt wurde, auch das Feature \feature{FeatureA} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA2} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA2} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA2} zum einen das Feature \feature{FeatureA} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Die Klasse \code{A} (mit der Information, dass die Klasse \code{A} das Interface \code{B} implementiert) wird identisch in den zwei optionalen Features \feature{FeatureA} und \feature{FeatureAA} definiert.} Für den Zugriff aus der Klasse \code{A} des Features \feature{FeatureA2} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass die Information, dass die Klasse \code{A} das Interface \code{B} implementiert, gar nicht zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements/03/FeatureA2/A.java:3,32:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as implementation of interface B the field
+     public static final int I = 42;
+   of interface B.
+- in feature FeatureAA as implementation of interface B the field
+     public static final int I = 42;
+   of interface B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) implements the interface(s) above is not present at all.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureA $\iff$ FeatureAA} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{A} mit der Vererbungsinformation ausgewählt werden.

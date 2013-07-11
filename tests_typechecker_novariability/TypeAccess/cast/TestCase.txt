@@ -1,0 +1,14 @@
+\subsection[Typzugriff: Cast]{Typzugriff: Cast (Ordner \code{TypeAccess/cast})}
+\label{sec:TypeAccess} 
+In der Klasse \code{A} wird eine Instanz der Klasse \code{B} explizit nach der Klasse \code{C} des Features \feature{FeatureC} gecastet. Die Klasse \code{B} erweitert die Klasse \code{C}.
+\subsubsection{Fall 01: Die Klasse \code{C} fehlt.}
+Dieser Fall löst insgesamt drei Fehlermeldungen aus, wobei sich alle dieser Fehlermeldungen auf den nicht sichtbaren Typ C beziehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/cast/01/FeatureA/B.java:1,24:
+  Semantic Error: no visible type named C
+/TypeAccess/cast/01/FeatureA/A.java:4,3:
+  Semantic Error: no visible type named C
+/TypeAccess/cast/01/FeatureA/A.java:4,10:
+  Semantic Error: no visible type named C
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{C} hinzuzufügen.

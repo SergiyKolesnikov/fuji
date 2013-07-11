@@ -1,0 +1,33 @@
+#!/bin/sh
+if [ -z "$1" ]; then
+    echo Error: Wrong number of parameters.
+    echo "Usage: ./CompileAllProducts SPL_dir [base_dir]"
+    exit 2
+fi
+
+SPL_DIR="$1"
+
+if [ -z "$2" ]; then
+    BASE_DIR=`readlink -f "$1"`
+else
+    BASE_DIR="$2"
+fi
+
+SPL_CLASSPATH=`cat "$SPL_DIR/$SPL_DIR.classpath" 2>/dev/null`
+CL="classes"
+PRODUCTS_DIR="tmp-fuji-products"
+CONFIGS_DIR="configs/all"
+UNCOMPILABLE="tmpe-fuji-uncompilable_configurations.txt"
+
+cd "$SPL_DIR"
+/bin/rm -rf "$CL"
+/bin/rm -rf "$PRODUCTS/*"
+: >"$UNCOMPILABLE"
+for CONFIG in "$CONFIGS_DIR"/*; do
+    echo "$SPL_DIR: Compiling configuration $CONFIG..."
+    java -jar ../../FujiCompiler/build/fuji.jar \
+	-cp :"$SPL_CLASSPATH" -basedir "$BASE_DIR" \
+	-d "$PRODUCTS_DIR/$CONFIG" "$CONFIG" \
+	|| echo "$CONFIG" >>"$UNCOMPILABLE"
+done
+echo "Done."
