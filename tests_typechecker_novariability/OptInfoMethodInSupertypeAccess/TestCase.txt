@@ -1,0 +1,34 @@
+\subsection{OptInfoMethodInSupertypeAccess}
+%%
+In der Klasse \code{Z} wird eine Instanz der Klasse \code{A} erzeugt, implizit nach \code{B} gecastet und dann die Methode \code{foo()} dieser Instanz aufgerufen. Die Methode \code{foo(}) wird in der Klasse \code{B} definiert. Die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, fehlt.
+\subsubsection{Fall 01: Das Feature \feature{FeatureA} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht zur Verfügung steht, wenn das Feature \feature{FeatureA} nicht ausgewählt wurde, das als einziges Feature diese Information enthält.
+Dieser Fall löst drei Fehlermeldungen aus, die alle das Problem thematisieren, dass der jeweilige Zugriff ins Leere geht, wenn die Information, dass die Klasse \code{A} die Klasse \code{B} erweitert, nicht vorhanden ist. Eine dieser Fehlermeldungen bezieht sich auf den impliziten Zugriff auf den Konstruktor der Oberklasse im Default-Konstruktor der Klasse \code{A} und die anderen beiden auf den Typzugriff auf den Typ \code{B} und die Methode \code{foo()} der Klasse \code{B}:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoMethodInSupertypeAccess/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class B { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoMethodInSupertypeAccess/01/FeatureZ/Z.java:4:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the method
+  public void foo() { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zur Klasse \code{A} das Schl√ºsselwort "extends B" hinzuzuf√ºgen.

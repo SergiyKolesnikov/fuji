@@ -1,0 +1,10 @@
+Errors:
+/OptInfoImplements/01/FeatureA2/A.java:3,10:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the field
+  public static final int I = 42;
+which is accessible via interface B.
+Class A of feature FeatureA implements interface B.
+The information that class A implements interface B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+

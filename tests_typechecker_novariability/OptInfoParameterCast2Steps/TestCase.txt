@@ -1,0 +1,8 @@
+\subsection{OptInfoParameterCast2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoParameterCast}, allerdings geht die Vererbungsbeziehung nun über zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. Statt einer Instanz der Klasse \code{B} wird nun in den Konstruktoren und in der Methode eine Instanz der Klasse \code{C} erwartet.
+S√§mtliche Vererbungsinformationen stehen jedoch nicht zur Verf√ºgung.
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zu den Klassen \code{A} und \Code{B} die Vererbungsinformationen hinzuzufügen.

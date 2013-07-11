@@ -1,0 +1,11 @@
+\subsection{OptInfoImplements2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoImplements}, allerdings geht die Subtyp-Beziehung nun über zwei Stufen: Das Interface \code{A} greift auf die Konstante \code{I} zu, die im Interface \code{B} definiert wird, und auf die Konstante \code{K}, die im Interface \code{C} definiert wird. Die Information, dass das Interface \code{A} das Interface \code{B} implementiert, fehlt. Die Information, dass das Interface \code{B} das Interface \code{C} implementiert, fehlt ebenfalls.
+Dieser Fall löst zwei Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements2Steps/01/FeatureA/A.java:2,30:
+  Semantic Error: no field named I
+/OptInfoImplements2Steps/01/FeatureA/A.java:3,30:
+  Semantic Error: no field named K
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die fehlenen Vererbungsinformationen hinzuzuf√ºgen.

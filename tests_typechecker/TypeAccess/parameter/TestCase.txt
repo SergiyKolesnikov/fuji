@@ -1,0 +1,39 @@
+\subsection[Typzugriff: parameter]{Typzugriff: parameter (Ordner \code{TypeAccess/parameter})}
+Die Klasse \code{A} des Features \feature{FeatureA} enthält eine Methode \code{foo()}, die als Parameter ein Objekt vom Typ \code{B} erwartet. Die Klasse \code{B} wird im Feature \feature{FeatureB} definiert.
+\subsubsection{Fall 01: Das Feature \feature{FeatureB} ist im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante die benötigte Klasse \code{B} nicht zur Verfügung steht, wenn das Feature \feature{FeatureB} nicht ausgewählt wurde. Dieser Fall löst eine Fehlermeldung aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/parameter/01/FeatureA/A.java:2:
+  Semantic Error: MAYBE dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureB} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{B} des Features \feature{FeatureB} nicht ausgewählt werden, wenn das Feature \feature{FeatureA} ausgewählt wird:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/parameter/02/FeatureA/A.java:2:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).B
+of feature FeatureB.
+Features FeatureA and FeatureB cannot both be present in a valid selection.
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{FeatureA $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureA} ausgewählt wurde, auch das Feature \feature{FeatureB} ausgewählt werden. Allerdings kann dadurch das Feature \feature{FeatureA} in keiner Variante mehr ausgewählt werden. Eine Auswahl des Features \feature{FeatureA} würde im Feature-Modell zu einem Widerspruch führen, da das Feature \feature{FeatureA} zum einen das Feature \feature{FeatureB} impliziert, zum anderen aber mit diesem in gegenseitigem Ausschluss steht.
+\subsubsection{Fall 03: Die Klasse \code{B} wird identisch in den zwei optionalen Features \feature{FeatureB} und \feature{FeatureB2} definiert.} Für die Zugriffe aus der Klasse \code{A} heraus werden nun zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass in einer Variante gar kein Ziel zur Verfügung steht, wenn beide Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/TypeAccess/parameter/03/FeatureA/A.java:2:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Feature FeatureA accesses:
+- the type
+    (default package).B
+  of feature FeatureB
+- the type
+    (default package).B
+  of feature FeatureB2
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell das Constraint \constraint{$\lnot$ FeatureB $\iff$ FeatureB2} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{B} ausgewählt werden.

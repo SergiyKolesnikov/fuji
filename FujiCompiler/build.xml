@@ -73,7 +73,7 @@
   <!-- build fuji with FOP access modifiers-->
   <target name="build-mod" depends="gen" description="build fuji with FOP access modifiers.  Run 'ant clean' if you have build fuji without access modifiers before.">
     <mkdir dir="${bin}"/>
-    <javac debug="true" nowarn="true" classpath="${bin}:${lib}/commons-cli-1.2/commons-cli-1.2.jar"
+    <javac debug="true" nowarn="true" classpath="${bin}:${lib}/commons-cli-1.2/commons-cli-1.2.jar:${lib}/eclipse-equinox/org.eclipse.equinox.common_3.6.0.v20110523.jar:${lib}/featureide/de.ovgu.featureide.fm.core_2.6.5.201305151404.jar:${lib}/guidsl/guidsl.jar:${lib}/jakarta/jakarta.jar:${lib}/sat4j/org.sat4j.core.jar"
 	   srcdir="${Fuji}" destdir="${bin}" includes="**/*.java"
 	   excludes="test/**" includeAntRuntime="false" />
   </target>
@@ -240,22 +240,30 @@
   </target>
 	
   <!-- build binaries -->
-  <target name="jar" depends="build" description="build a runnable jar file (fuji without FOP access modifiers).  Run 'ant clean' if you have build fuji without access modifiers before.">
+  <target name="jar" depends="build" description="build a runnable jar file (fuji without FOP access modifiers).  Run 'ant clean' if you have build fuji with access modifiers before.">
     <property name="jarName" value="fuji.jar"/>
     <antcall target="jar-builder"/>
   </target>
-  <target name="jar-mod" depends="build-mod" description="build a runnable jar file (fuji with FOP access modifiers). Run 'ant clean' if you have build fuji with access modifiers before.">
+  <target name="jar-mod" depends="build-mod" description="build a runnable jar file (fuji with FOP access modifiers). Run 'ant clean' if you have build fuji without access modifiers before.">
     <property name="jarName" value="fuji-mod.jar"/>
     <antcall target="jar-builder"/>
   </target>
   <target name="jar-builder">
     <antcall target="copy-licences"/>
-    <jar destfile="${build}/${jarName}" basedir="${bin}" includes="**/*.class" excludes="test/**" manifest="${Fuji}/Manifest">
+    <jar destfile="${build}/${jarName}" basedir="${bin}" manifest="${Fuji}/Manifest">
       <fileset dir="${bin}">
 	<include name="**/*.class"/>
 	<include name="${copying}"/>
       </fileset>
+      <fileset dir="${Fuji}">
+	<include name="**/*.java"/>
+      </fileset>
       <zipfileset includes="**/*.class" src="${lib}/commons-cli-1.2/commons-cli-1.2.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/eclipse-equinox/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/featureide/de.ovgu.featureide.fm.core_2.6.5.201305151404.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/guidsl/guidsl.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/jakarta/jakarta.jar"/>
+      <zipfileset includes="**/*.class" src="${lib}/sat4j/org.sat4j.core.jar"/>
     </jar>
   </target>
 

@@ -1,0 +1,144 @@
+\subsection{OptInfoNewAssignmentWithCast2Steps}
+%%
+Dieser Testfall ähnelt dem Testfall \textbf{OptInfoNewAssignmentWithCast}, allerdings geht die Vererbungsbeziehung nun über zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. Diese Information findet sich jeweils nur im Feature \feature{FeatureA} bzw. \feature{FeatureB}. In der Klasse \code{Z} des Features \feature{FeatureZ} wird eine Instanz der Klasse \code{A} erzeugt und implizit nach \code{C} gecastet. Die Klasse \code{A} wird definiert in den Features \feature{FeatureA} und \feature{FeatureA2}. Die Klasse \code{B} wird definiert in den Features \feature{FeatureB} und \feature{FeatureB2}.
+\subsubsection{Fall 01: Die Features \feature{FeatureA} und \feature{FeatureB} sind im Feature-Modell als optional gekennzeichnet.} Dadurch kann es passieren, dass in einer Variante sämtliche Vererbungsinformationen nicht zur Verfügung stehen, wenn die Features \feature{FeatureA} und \feature{FeatureB} nicht ausgewählt wurden.
+Dieser Fall löst vier Fehlermeldungen aus, die alle die Probleme thematisieren, die aus diesem möglichen Fehlen der Vererbungsinformationen entstehen:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoNewAssignmentWithCast2Steps/01/FeatureA2/A.java:1:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/01/FeatureB2/B.java:1:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses the super constructor
+  public C()
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/01/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{FeatureZ $\implies$ FeatureA} und \constraint{FeatureZ $\implies$ FeatureB} hinzuzufügen.
+Dadurch müssen, wenn das Feature \feature{FeatureZ} ausgewählt wurde, auch die Features \feature{FeatureA} und \feature{FeatureB} ausgewählt werden.
+\subsubsection{Fall 02: Die Features \feature{FeatureA} und \feature{FeatureA2} und die Features \feature{FeatureB} und \feature{FeatureB2} schließen sich im Feature-Modell gegenseitig aus.} Dadurch kann die Klasse \code{A} des Features \feature{FeatureA} nicht ausgewählt werden, wenn das Feature \feature{FeatureA2} ausgewählt wird und die Klasse \code{B} des Features \feature{FeatureB} nicht ausgewählt werden, wenn das Feature \feature{FeatureB2} ausgewählt wird. Damit sind die Vererbungsinformationen nicht verfügbar und es werden folgende vier Fehlermeldungen ausgegeben:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoNewAssignmentWithCast2Steps/02/FeatureA2/A.java:1:
+  Semantic Error: NEVER dependency:
+Class A of feature FeatureA2 accesses the super constructor
+  public B()
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Features FeatureA2 and FeatureA cannot both be present in a valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/02/FeatureB2/B.java:1:
+  Semantic Error: NEVER dependency:
+Class B of feature FeatureB2 accesses the super constructor
+  public C()
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Features FeatureB2 and FeatureB cannot both be present in a valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/02/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class A of feature FeatureA2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class B.
+Class A of feature FeatureA extends class B.
+The information that class A extends class B is only present in feature FeatureA.
+Feature FeatureA may not be present in every valid selection.
+
+/OptInfoNewAssignmentWithCast2Steps/02/FeatureZ/Z.java:3:
+  Semantic Error: MAYBE dependency:
+Class B of feature FeatureB2 accesses (by an implicit cast/in the type hierarchy) the type
+  public class C { ... }
+which is accessible via class C.
+Class B of feature FeatureB extends class C.
+The information that class B extends class C is only present in feature FeatureB.
+Feature FeatureB may not be present in every valid selection.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{FeatureZ $\implies$ FeatureA} und \constraint{FeatureZ $\implies$ FeatureB} hinzuzufügen.
+Dadurch muss, wenn das Feature \feature{FeatureZ} ausgewählt wurde, auch das Feature \feature{FeatureA} und das Feature \feature{FeatureB} ausgewählt werden. Allerdings können dadurch die Features \feature{FeatureA2} und \feature{FeatureB2} in keiner Variante mehr ausgewählt werden.
+\subsubsection{Fall 03: Die Klasse \code{A} (mit der Vererbungsinformation) wird identisch in den zwei optionalen Features \feature{FeatureA} und \feature{FeatureAA} definiert und die Klasse \code{B} (mit der Vererbungsinformation) wird identisch in den zwei optionalen Features \feature{FeatureB} und \feature{FeatureBB} definiert.} Für die Zugriffe aus der Klasse \code{Z} des Features \feature{FeatureZ} heraus werden nun jeweils zwei Ziele angeboten, die aber beide nicht ausgewählt werden müssen. Dadurch kann es passieren, dass sämtliche Vererbungsinformationen nicht zur Verfügung stehen, wenn alle vier Features nicht ausgewählt wurden:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoNewAssignmentWithCast2Steps/03/FeatureA2/A.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B the super constructor
+     public B()
+   of class B.
+- in feature FeatureAA as subclass of class B the super constructor
+     public B()
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) extends the class(es) above is not present at all.
+
+/OptInfoNewAssignmentWithCast2Steps/03/FeatureB2/B.java:1:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class B of feature FeatureB2 accesses:
+- in feature FeatureB as subclass of class C the super constructor
+     public C()
+   of class C.
+- in feature FeatureBB as subclass of class C the super constructor
+     public C()
+   of class C.
+There may be a valid selection where none of the features FeatureB and FeatureBB is present.
+So it may be that the information
+ that class B (transitively) extends the class(es) above is not present at all.
+
+/OptInfoNewAssignmentWithCast2Steps/03/FeatureZ/Z.java:3:
+  Semantic Error: 2 optional targets
+   (there may be a valid selection where none of these targets is present):
+Class A of feature FeatureA2 accesses:
+- in feature FeatureA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class C { ... }
+   of class B.
+- in feature FeatureAA as subclass of class B (by an implicit cast/in the type hierarchy) the type
+     public class C { ... }
+   of class B.
+There may be a valid selection where none of the features FeatureA and FeatureAA is present.
+So it may be that the information 
+that class A (transitively) extends the class(es) above is not present at all.
+
+/OptInfoNewAssignmentWithCast2Steps/03/FeatureZ/Z.java:3:
+  Semantic Error: 2 optional targets 
+  (there may be a valid selection where none of these targets is present):
+Class B of feature FeatureB2 accesses:
+- in feature FeatureB as subclass of class C (by an implicit cast/in the type hierarchy) the type
+     public class C { ... }
+   of class C.
+- in feature FeatureBB as subclass of class C (by an implicit cast/in the type hierarchy) the type
+     public class C { ... }
+   of class C.
+There may be a valid selection where none of the features FeatureB and FeatureBB is present.
+So it may be that the information 
+that class B (transitively) extends the class(es) above is not present at all.
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, zum Feature-Modell die Constraints \constraint{$\lnot$ FeatureA $\iff$ FeatureAA} und \constraint{$\lnot$ FeatureB $\iff$ FeatureBB} hinzuzufügen.
+Dadurch muss immer genau ein Exemplar der Klasse \code{A} und immer genau ein Exemplar der Klasse \code{B} mit den Vererbungsinformationen ausgewählt werden.

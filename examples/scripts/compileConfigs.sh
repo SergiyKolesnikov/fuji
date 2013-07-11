@@ -17,6 +17,6 @@ shift
 for CONF in "$@"; do
     echo -------------------------------------------
     echo "$CONF"
-    DESTDIR=$(basename "$CONF")".classes"
+    DESTDIR=$(basename "$CONF")".fuji-tmp-classes"
     java -jar "$FUJI" -basedir "$BDIR" -d "$DESTDIR" "$CONF"
 done

@@ -1,0 +1,8 @@
+Errors:
+/TypeAccess/implements/02/FeatureA/A.java:1:
+  Semantic Error: NEVER dependency:
+Feature FeatureA accesses the type
+  (default package).I
+of feature FeatureI.
+Features FeatureA and FeatureI cannot both be present in a valid selection.
+

@@ -1,0 +1,10 @@
+\subsection{OptInfoExtends2Steps}
+%%
+Dieser Testfall 둯nelt dem Testfall \textbf{OptInfoExtends}, allerdings geht die Vererbungsbeziehung nun 웑er zwei Stufen: Die Klasse \code{A} erweitert die Klasse \code{B}, die wiederum die Klasse \code{C} erweitert. Das Feld und die Methoden, auf die von der Klasse \code{D} aus zugegriffen wird, finden sich nun in der Klasse \code{C}.
+
+\subsubsection{Fall 01: Die Klassen \code{A} und \code{B} enthalten nicht das Schl체sselwort f체r die Vererbung} 
+
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, reicht es, in der Klasse \code{A} das Schl체sselwort "extends B" hinzuzuf체gen und in der Klasse B das Schl체sselwort "extends C".
+

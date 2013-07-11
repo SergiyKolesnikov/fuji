@@ -1,0 +1,9 @@
+\subsection[Typzugriff: innerClass, static]{Typzugriff: innerClass, static (Ordner \code{TypeAccess/""innerClasses/""static})}
+Die Klasse \code{B} enthält eine innere statische Klasse \code{Inner}, die eine statische Methode \code{bar()} enthält.
+Die Klasse \code{A} ruft die statische Methode \code{bar()} der inneren statischen Klasse \code{Inner} der Klasse \code{B} auf. 
+\subsubsection{Fall 01: Die Klasse \code{B} fehlt.}
+Dieser Fall löst keine Fehlermeldungen aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+
+\end{Verbatim}
+Um diese Fehler zu beseitigen, ist es ausreichend, die Klasse \code{B} mit der inneren statischen Klasse \code{Inner}, die eine statische Methode \code{bar()} enth√§lt, hinzuzufügen.

@@ -1,3 +1,4 @@
 #!/bin/sh
 
+
 java -cp Notepad/classes/ Notepad

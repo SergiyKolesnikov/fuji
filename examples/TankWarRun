@@ -1,3 +1,4 @@
 #!/bin/sh
+. ../scripts/global_vars
 
 /usr/lib/jvm/java-6-sun/bin/java -cp TankWar/classes/ TankManager

@@ -1,0 +1,10 @@
+\subsection{OptInfoImplements}
+%%
+Das Interface \code{B} definiert eine Konstante \code{I} und eine Methode \code{foo()}. Die Klasse \code{A} des Features \feature{FeatureA2} implementiert diese Methode und greift auf die Konstante \code{I} zu. Die Information, dass die Klasse \code{A} das Interface \code{B} implementiert, fehlt.
+%\subsubsection{Fall 01: Das Feature \feature{FeatureA} ist im Feature-Modell als optional gekennzeichnet.}
+Dieser Fall löst eine Fehlermeldung aus:
+\begin{Verbatim}[fontsize=\scriptsize, frame=single]
+/OptInfoImplements/01/FeatureA/A.java:3,10:
+  Semantic Error: no field named I
+\end{Verbatim}
+Um diesen Fehler zu beseitigen, ist es ausreichend, das Schl√ºsselwort "implements B" hinzuzufügen.

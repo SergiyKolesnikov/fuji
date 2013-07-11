@@ -1,0 +1,5 @@
+Errors:
+/MethodAccess/01/FeatureA/A.java:6,6:
+  Semantic Error: no visible type named B
+/MethodAccess/01/FeatureA/A.java:6,16:
+  Semantic Error: no visible type named B
