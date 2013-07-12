@@ -84,7 +84,7 @@ for SPLBAKDIR in `find -L "$BAKDIR" -mindepth 1 -maxdepth 1 -type d`; do
     SPLNAME=`basename "$SPLBAKDIR"`
 
     echo "Prepare subject system $SPLNAME:..."
-    cp -rf "../examples/$SPLNAME" "$SPLSYSOUT"
+    cp -rf "subjectSystems/$SPLNAME" "$SPLSYSOUT"
 done
 
 touch "$OUTDIR/README"
