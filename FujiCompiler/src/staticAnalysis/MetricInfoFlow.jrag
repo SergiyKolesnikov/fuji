@@ -1,0 +1,468 @@
+/**
+ * The information flow complexity implemented by this aspect are based on a 
+ * mix of the IEEE 982.2 standard and an adaption of it described on
+ * http://www.aivosto.com/project/help/pm-proc-infoflow.html .
+ * 
+ * Since the measure was originally designed for the use on procedure level,
+ * further adjustments had to be made to adopt it to features and their
+ * interaction. 
+ * 
+ * FanIn of a feature: 
+ * 		procedures of this feature called by other features +
+ * 		called procedures of other features which return a value +
+ *		parameters read by the methods of the feature +
+ *		global variables (i.e. fields) read by the methods of the feature
+ * 
+ * FanOut of a feature:
+ * 		called procedures of other features +
+ * 		parameters changed by the methods of the feature +
+ *		global variables (i.e. fields) changed by the methods of the feature
+ * 
+ * Information flow complexity IFC of a feature:
+ * 		(FanIn * FanOut)^2
+ * 
+ * Effective 02.08.2013.		
+ */
+
+
+/*
+ * To do:
+ * - parameter/global variable fanin/out added even if method is actually never
+ * 	 called by another feature
+ * - usage of feature-model
+ * - correct handling of interfaces and abstract classes
+ * - global variable handling in initializers
+ * - improve aliasing for use/change of global variables/parameters
+ */
+//import AST.ASTNode;
+//import AST.BodyDecl;
+//import AST.Program;
+//import AST.TypeDecl;
+
+/**
+ * The aspect implements information flow metric calculation.
+ *
+ */
+aspect InformationFlow {
+	
+	public class IntTuple {
+		int first, second;
+		
+		public IntTuple(int first, int second) {
+			this.first = first;
+			this.second = second;
+		}
+
+		public int getFirst() {
+			return first;
+		}
+
+		public void incFirst() {
+			this.first++;
+		}
+
+		public int getSecond() {
+			return second;
+		}
+
+		public void incSecond() {
+			this.second++;
+		}		
+	}
+	
+	/**
+	 * Hashtable to store the FanIn and FanOut values for each feature
+	 */
+	private Hashtable<Integer, IntTuple> Program.fanInOut = 
+			new Hashtable<Integer, IntTuple>();
+	
+	/**
+	 * Prints FanIn, FanOut and IFC for all features of the Program.
+	 * Features with "0" values for both metrics are omitted. 
+	 */
+	public void Program.printInfoFlow() {
+		
+		Hashtable<Integer, IntTuple> fanInOut = calcFanInOut();
+		TreeSet<Integer> sortedKeys = new TreeSet<Integer>(fanInOut.keySet());
+				
+		String sep = ";";
+		System.out.println("Feature" + sep + "FanIn" + sep + "FanOut" + sep 
+							+ "IFC");
+		int in, out;
+		for (Integer key : sortedKeys) {
+			IntTuple values = fanInOut.get(key);
+			in = values.getFirst();
+			out = values.getSecond();
+			System.out.println(key + sep + in + sep + out + sep 
+								+ (in*out)*(in*out));
+		}		
+	}
+	
+	/**
+	 * Calculates and returns a hashtable with the FanIn and FanOut values
+	 * for the features of the Program
+	 */
+	public Hashtable<Integer, IntTuple> Program.calcFanInOut() {
+
+		int callerID = -1;
+		int calleeID = -1;
+		
+		// Calculate FanIn/Out caused by method calls
+		for (MethodAccess ma : collMethodAccesses()) {
+			MethodDecl refDecl = null;
+						
+			if (ma.decl().featureID() != -1) {
+				refDecl = ma.decl();
+			} else {
+				refDecl = ma.getOriginalDecl();
+			}
+			
+			if (refDecl != null) {
+				
+				//Handling of abstract methods not implemented yet
+				if (refDecl.hostType().isAbstract()) {
+					System.err.println("Warning: InfoFlow for " 
+							+ "interface/abstract methods not supported yet!");
+					continue;
+				}
+			
+				callerID = ma.featureID();
+				for (MethodDecl md : refDecl.hostType().collMethodDecls()) {
+					calleeID = md.featureID();
+						
+					if ((callerID != calleeID) && refDecl.sameSignature(md)) {
+						//InfoFlow induced by the method call itself
+						incFanIn(calleeID);
+						incFanOut(callerID);
+							
+						//InfoFlow induced by called method returning a value
+						if (!md.isVoid()) {
+							incFanIn(callerID);
+							incFanOut(calleeID);
+						}
+					}
+				}
+			}
+		}			
+		
+		// Calculate FanInOut caused by constructor calls (super() and this())
+		for (ConstructorAccess ca : collConstructorAccesses()) {
+			if (ca.decl().featureID() != -1) {
+				callerID = ca.featureID();
+				for (ConstructorDecl cd : ca.decl()
+						.hostType().collConstructorDecls()) {
+					
+					calleeID = cd.featureID();
+					if ((callerID != calleeID) && ca.decl().sameSignature(cd)) {
+						incFanIn(calleeID);
+						incFanOut(callerID);
+						// Constructor returns object as return value
+						incFanIn(callerID);
+						incFanOut(calleeID);
+					}
+				}
+			}
+		}
+		
+		// Calculate FanInOut caused by constructor calls (new Object())
+		for (ClassInstanceExpr ca : collClassInstanceExpr()) {
+			if (ca.decl().featureID() != -1) { 
+				callerID = ca.featureID();
+				for (ConstructorDecl cd : ca.decl()
+						.hostType().collConstructorDecls()) {
+					
+					calleeID = cd.featureID();
+					if ((callerID != calleeID) && ca.decl().sameSignature(cd)) {
+						incFanIn(calleeID);
+						incFanOut(callerID);
+						// Constructor returns object as return value
+						incFanIn(callerID);
+						incFanOut(calleeID);
+					}
+				}
+			}
+		}
+		
+		java.util.List<BodyDecl> bodyDecls = new ArrayList<BodyDecl>(); 
+		bodyDecls.addAll(collMethodDecls());
+		bodyDecls.addAll(collConstructorDecls());
+				
+		// Calculate FanIn/Out caused by global variable/parameter access
+		for (BodyDecl bd : bodyDecls) {
+			if (bd.featureID() != -1) {
+				considerVariableUsage(bd);
+			}
+		}
+		
+		return fanInOut;
+	}
+	
+	private void Program.considerMethodCalls(BodyDecl decl) {
+		
+	}
+	
+	/**
+	 * Calculate FanIn/FanOut caused by usage of variables in a feature method 
+	 */
+	private void Program.considerVariableUsage(BodyDecl decl) {
+		List<ParameterDeclaration> params = decl.getParameters();
+
+		Iterator<ParameterDeclaration> iter = params.iterator();
+		java.util.List<ASTNode> used = new ArrayList<ASTNode>();
+		java.util.List<ASTNode> changed = new ArrayList<ASTNode>();
+
+		//Copy parameters to a java.util.List
+		java.util.List<ParameterDeclaration> pl = 
+				new ArrayList<ParameterDeclaration>();
+		while (iter.hasNext()) {
+			pl.add(iter.next());
+		}						
+
+		for (VarAccess va : decl.collVarAccesses()) {
+			
+			//Check for used/changed parameters
+			if (!va.isFieldAccess() && !pl.isEmpty()) {
+				iter = pl.iterator();
+				while (iter.hasNext()) {
+					ParameterDeclaration pd = iter.next();
+					if (va.getID().equals(pd.getID())) {
+						if (!used.contains(pd)
+								&& va.isSource() 
+								&& !(va.isLeftChildOfDot() 
+									&& !((AbstractDot)va.getParent()).isSource())) {
+							incFanIn(decl.featureID());
+							used.add(pd);
+						}
+
+						if (!changed.contains(pd)
+								&& va.isLeftChildOfDot() 
+								&& (((AbstractDot)va.getParent()).isArrayAccess()
+									|| ((AbstractDot)va.getParent()).getRight() 
+										instanceof VarAccess)) {
+							incFanOut(decl.featureID());
+							changed.add(pd);
+						}
+
+						if (used.contains(pd)
+								&& changed.contains(pd)) {
+							iter.remove();
+						}
+					}
+				}
+			
+			//Check for used/changed global variables
+			} else if (va.isFieldAccess()) {
+				FieldDeclaration fd = (FieldDeclaration)va.decl();
+				if (!used.contains(fd) && va.isSource() 
+						&& !(va.isLeftChildOfDot() 
+							&& !((AbstractDot)va.getParent()).isSource())) {
+					incFanIn(decl.featureID());
+					used.add(fd);
+				}
+
+				if (!changed.contains(fd)
+						&& (va.isDest()
+							|| (va.isLeftChildOfDot() 
+								&& (((AbstractDot)va.getParent()).isArrayAccess() 
+									|| ((AbstractDot)va.getParent()).getRight() 
+										instanceof VarAccess)))) {
+					incFanOut(decl.featureID());
+					changed.add(fd);
+				}				
+			}						
+		}
+	}
+	
+	/**
+	 * Dummy needed for being able to use BodyDecl in considerVariableUsage()
+	 * method
+	 */
+	syn List<ParameterDeclaration> BodyDecl.getParameters() = null;
+	
+	/**
+	 * Dummy needed for being able to use BodyDecl in considerVariableUsage()
+	 * method
+	 */
+	syn java.util.List<VarAccess> BodyDecl.collVarAccesses() = null;
+	
+	/**
+	 * Increases the FanIn value of a given feature by one
+	 */
+	private void Program.incFanIn(int featureID) {
+		if (fanInOut.containsKey(featureID)) {
+			fanInOut.get(featureID).incFirst();
+		} else {
+			fanInOut.put(featureID, new IntTuple(1,0));
+		}
+	}
+	
+	/**
+	 * Increases the FanOut value of a given feature by one
+	 */
+	private void Program.incFanOut(int featureID) {
+		if (fanInOut.containsKey(featureID)) {
+			fanInOut.get(featureID).incSecond();
+		} else {
+			fanInOut.put(featureID, new IntTuple(0,1));
+		}
+	}
+	
+	/**
+	 * String identifying a call to original()
+	 */
+	private static final String MethodAccess.ORIGINAL_OPERATOR = "original";
+	
+	/**
+	 * Checks if the calling MethodAccess is an original() call and returns
+	 * either the MethodDecl which is addressed by the original() or null if
+	 * the MethodAccess is not an original() call. 
+	 */
+	syn MethodDecl MethodAccess.getOriginalDecl() {
+		if (getID().equals(ORIGINAL_OPERATOR)) {		
+			ASTNode par = getParent();
+			while (!(par instanceof MethodDecl)) {
+				par = par.getParent();
+			}
+			return (MethodDecl)par;
+		} else {
+			return null;
+		}
+	}
+		
+	/**
+     * Attribute contains all MethodAccesses in the subtree of the Program
+     */
+    coll java.util.List<MethodAccess> Program.collMethodAccesses()
+        [new ArrayList<MethodAccess>()] with add root Program;
+    
+    MethodAccess contributes this
+        to Program.collMethodAccesses()
+        for getProgram();
+        		
+    /**
+     * Attribute contains all MethodDecls declared in the TypeDecl		
+     */
+	coll java.util.List<MethodDecl> TypeDecl.collMethodDecls()
+		[new ArrayList<MethodDecl>()] with add root TypeDecl;
+        		
+	MethodDecl contributes this
+   		to TypeDecl.collMethodDecls()
+   		for hostType();
+   				
+   	/**			
+   	 * Attribute contains all ConstructorAccesses in the subtree of the Program
+   	 */
+   	coll java.util.List<ConstructorAccess> Program.collConstructorAccesses()
+   		[new ArrayList<ConstructorAccess>()] with add root Program;
+
+   	ConstructorAccess contributes this
+    	to Program.collConstructorAccesses()
+    	for getProgram();
+    			
+    /**
+     * Attribute contains all ClassInstanceExprs in the subtree of the Program
+     */
+    coll java.util.List<ClassInstanceExpr> Program.collClassInstanceExpr()
+    	[new ArrayList<ClassInstanceExpr>()] with add root Program;
+    			
+    ClassInstanceExpr contributes this
+    	to Program.collClassInstanceExpr()
+    	for getProgram();
+
+    /**    			
+ 	 * Attribute contains all ConstructorDecls declared in the Type
+ 	 */
+	coll java.util.List<ConstructorDecl> TypeDecl.collConstructorDecls()
+		[new ArrayList<ConstructorDecl>()] with add root TypeDecl;
+    			
+    ConstructorDecl contributes this
+    	to TypeDecl.collConstructorDecls()
+    	for hostType();
+    	
+    /**
+     * Attribute contains all feature related MethodAccesses in the subtree of
+     * the Program
+     */
+    coll java.util.List<MethodDecl> Program.collMethodDecls()
+    	[new ArrayList<MethodDecl>()] with add root Program;
+    			           
+    MethodDecl contributes this
+        to Program.collMethodDecls()
+        for getProgram();
+        		
+    /**    			
+     * Attribute contains all ConstructorDecls declared in the Program
+     */
+    coll java.util.List<ConstructorDecl> Program.collConstructorDecls()
+    	[new ArrayList<ConstructorDecl>()] with add root Program;
+
+    ConstructorDecl contributes this
+    	to Program.collConstructorDecls()
+    	for getProgram();
+    			
+    /**
+     * Returns the nearest MethodDecl to a VarAccess
+     */
+    syn MethodDecl VarAccess.closestMethodDecl() {
+    	ASTNode node = this;
+    	while(!(node.getParent() instanceof Program)) {
+    	  	node = node.getParent();
+    	  	if(node instanceof MethodDecl) {
+    	   		return (MethodDecl)node;
+    	   	}
+    	}
+    	return null;
+    }
+        			
+    /**
+    * Attribute contains all VarAccesses in the subtree of the Program
+    */
+    coll java.util.List<VarAccess> MethodDecl.collVarAccesses()
+    	[new ArrayList<VarAccess>()] with add root MethodDecl;
+    VarAccess contributes this
+    	when closestMethodDecl() != null
+    	to MethodDecl.collVarAccesses()
+    	for closestMethodDecl();
+    			
+    /**
+     * Returns the nearest ConstructorDecl to a VarAccess
+     */			
+    syn ConstructorDecl VarAccess.closestConstructorDecl() {
+    	ASTNode node = this;
+    	while(!(node.getParent() instanceof Program)) {
+    		node = node.getParent();
+    		if(node instanceof ConstructorDecl) {
+    			return (ConstructorDecl)node;
+         	}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Attribute contains all VarAccesses in the subtree of the Program
+     */
+    coll java.util.List<VarAccess> ConstructorDecl.collVarAccesses()
+      	[new ArrayList<VarAccess>()] with add root ConstructorDecl;
+    VarAccess contributes this
+       	when closestConstructorDecl() != null
+       	to ConstructorDecl.collVarAccesses()
+       	for closestConstructorDecl();    			
+    			
+   
+    /** Compare content of decls() and collMethodDecls() **/
+//	private void Program.compareDeclsToCollDecls() {
+//    	for (MethodAccess ma : collMethodAccesses()) {
+//			System.out.println("\n\nAccess: " + ma.featureID() + "." + ma.name());
+//			Iterator decls = ma.decls().iterator();
+//			while(decls.hasNext()) {
+//				MethodDecl md = (MethodDecl)decls.next();
+//				System.out.println("Decls - Decl: " + md.featureID() + "." + md.hostType().name() + "." + md.name());
+//			}
+//			for (MethodDecl md : ma.decl().hostType().collMethodDecls()) {
+//				if (ma.potentiallyApplicable(md))
+//					System.out.println("Potentially - Decl: " + md.featureID() + "." + md.hostType().name()+ "." + md.name() );
+//			}
+//		}
+//    }
+
+}

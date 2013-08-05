@@ -1,0 +1,12 @@
+/*
+ * The inherited attributed bellow is declared in JavaLiveness1.4.jrag in the
+ * original flow analysis package.  But it actually belongs into Helpers.jrag.
+ * In this way CFG implementation can be used separately from liveness
+ * analysis implemented in the flow package.
+ *
+ * I didn't add this attribute to Helpers.jrag because I want to stay
+ * compatible with the original implementation.
+ */
+aspect PatchCFG {	
+	inh lazy BitSet CFGNode.emptyBitSet();
+}

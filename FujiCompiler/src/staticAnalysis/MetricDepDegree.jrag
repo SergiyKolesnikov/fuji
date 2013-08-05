@@ -1,0 +1,68 @@
+import AST.MethodDecl;
+import depdegree.MethodResult;
+
+/**
+ * The aspect implements dep-degree metric calculation.
+ *
+ * TODO:
+ * - FixBug: dd is incorrect for methods with feild access.
+ *
+ * - exclude synthetic method declarations from dep-degree calculation
+ *   (isSynthetic() attribute)?
+ *
+ * - better roots for collection attributes.
+ */
+aspect DepDegree {
+	
+	/**
+	 * Calculate DepDegrees for all children of an ASTNode.
+	 */
+	public ArrayList<MethodResult> ASTNode.calculateDepDegrees(String cuQualifier) {
+		ArrayList<MethodResult> result = new ArrayList<MethodResult>();
+		if (this instanceof CompilationUnit) {
+			cuQualifier = ((CompilationUnit)this).pathName();
+		}
+		if (this instanceof MethodDecl) {
+			MethodDecl md = (MethodDecl) this;
+	        result.add(new MethodResult(cuQualifier, md.featureID(), md.signature() + ":L" + md.lineNumber(), md.depDegree()));
+		}
+	    for (int i = 0; i < getNumChild(); ++i) {
+	    	result.addAll(getChild(i).calculateDepDegrees(cuQualifier));
+	    }
+	    return result;
+	}
+	
+    /**
+     * Dep-degree for a MethodDecl.
+     */
+    syn int MethodDecl.depDegree() {
+        int dd = 0;
+        for (VarAccess va : collDescendantVarAccesses()) {
+        	//if (!va.simpleAssignment()) {
+        			dd += va.reachingDefinitions().size();
+        	//}
+        	//if (va.simpleAssignment())
+				//System.out.println("SIMPLE\t" + "Assignment: " + va + "\tSize: " + va.reachingDefinitions().size());
+        }
+        return dd;
+    }
+
+    /**
+     * Attribute contains all the VarAccesses in the BodyDecl subtree.
+     */
+    coll java.util.List<VarAccess> BodyDecl.collDescendantVarAccesses()
+        circular [new ArrayList<VarAccess>()] with add root CompilationUnit;
+    VarAccess contributes this
+        to BodyDecl.collDescendantVarAccesses()
+        for enclosingBodyDecl();
+
+    /**
+     * Top-level expression calculation.  Top-level expression == operation.
+     * Can be used to calculate operation dep-degree.
+     *
+     *  NOTE: the topLevelExpr() of a top-level expression returns null.
+     */
+    inh Expr Expr.topLevelExpr();
+    eq Program.getChild().topLevelExpr() = null;
+    eq Expr.getChild().topLevelExpr() = this;
+}

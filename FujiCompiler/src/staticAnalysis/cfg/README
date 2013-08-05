@@ -1,0 +1,39 @@
+-----------------------------------------------------
+CONTROL-FLOW and DATA-FLOW for Java 1.4 and Java 5.
+These modules are part of the JastAdd project (http://www.jastadd.org).
+The source code copyright is held by Emma Söderberg, emma@cs.lth.se, and is covered by the BSD license.
+
+For more information, see the following paper:
+Emma Nilsson-Nyman, Görel Hedin, Eva Magnusson, Torbjörn Ekman: Declarative Intraprocedural Flow Analysis of Java Source Code. Electr. Notes Theor. Comput. Sci. 238(5): 155-171 (2009). http://dx.doi.org/10.1016/j.entcs.2009.09.046
+-----------------------------------------------------
+DEPENDENCIES
+The modules depend on the JastAddJ frontends for Java1.4 and Java1.5, which should be located in the following sibling directories (or adapt the build.xml file):
+  ../Java1.4Frontend
+  ../Java1.5Frontend
+All tools needed (jastadd2, jflex, beaver, etc.) are included in Java1.4Frontend. You only need to have javac and Apache Ant installed in order to continue.
+-----------------------------------------------------
+BUILD
+Build is done by an ant build.xml file.
+
+- Ordinary build (generate and compile):
+    > ant
+
+- Remove all generated files and class files
+    > ant clean
+----------------------------------------------------
+RUN
+An example main program JavaDeadAssignCheckerExpr.java is included that parses Java source code, and outputs information about dead assignments.
+
+Usage: java JavaDeadAssignCheckerExpr <options> <source files>
+  -verbose                  Output messages about what the compiler is doing
+  -classpath <path>         Specify where to find user class files
+  -sourcepath <path>        Specify where to find input source files
+  -bootclasspath <path>     Override location of bootstrap class files
+  -extdirs <dirs>           Override location of installed extensions
+  -d <directory>            Specify where to place generated class files
+  -help                     Print a synopsis of standard options
+  -version                  Print version information
+---------------------------------------------------
+LICENSE
+The specification source code is covered by the BSD license.
+--------------------------------------------------

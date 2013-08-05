@@ -1,0 +1,33 @@
+
+aspect Java_CFG_1_5 {
+
+    // -------------------- CFG: Enum constants
+	// EnumConstant: Inherits from FieldDeclaration but adds arguments (Expr node children)
+	// control flow for enum constants: first the arguments, then the init expression, then the exit node
+	eq EnumConstant.entry().following() = getNumArg() > 0 ? 
+        SmallSet.<CFGNode>singleton(getArg(0)) : 
+            hasInit() ? SmallSet.<CFGNode>singleton(getInit()) : 
+                SmallSet.<CFGNode>singleton(exit());
+	eq EnumConstant.getArg(int i).following() = i + 1 < getNumArg() ?
+			SmallSet.<CFGNode>singleton(getArg(i + 1)) : 
+                hasInit() ? SmallSet.<CFGNode>singleton(getInit()) : 
+                    SmallSet.<CFGNode>singleton(exit());
+	eq EnumConstant.getInit().following() = SmallSet.<CFGNode>singleton(exit());
+	// TODO: eq EnumConstant.exit().following() = ???
+
+
+	// ------------- EnhancedForStmt
+	// succ/following
+	eq EnhancedForStmt.succ() = SmallSet.<CFGNode>singleton(getExpr());
+    eq EnhancedForStmt.getExpr().followingWhenTrue() = 
+        SmallSet.<CFGNode>singleton(getVariableDeclaration());
+    eq EnhancedForStmt.getExpr().followingWhenFalse() = following();
+	eq EnhancedForStmt.getExpr().following() = 
+        getExpr().followingWhenTrue().union(getExpr().followingWhenFalse());	
+//	eq EnhancedForStmt.getExpr().following() = following().union(getVariableDeclaration());
+	eq EnhancedForStmt.getVariableDeclaration().following()= SmallSet.<CFGNode>singleton(getStmt());
+	eq EnhancedForStmt.getStmt().following()= 
+		SmallSet.<CFGNode>singleton(getExpr());
+
+}
+
