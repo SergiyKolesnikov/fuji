@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashMap;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -26,10 +27,15 @@ import org.apache.commons.cli.ParseException;
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
+import depdegree.DDPrinter;
+import depdegree.MethodResult;
+
+import AST.ASTNode;
 import AST.CompilationUnit;
 import AST.ComposingVisitor;
 import AST.Problem;
 import AST.Program;
+import AST.MethodDecl;
 
 /**
  * The main fuji class. Manages all the work.
@@ -153,14 +159,16 @@ public class Main implements CompositionContext {
 
         /* Decide if the class file should be generated. */
         if (cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)
-                || cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+                || cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)
+                || cmd.hasOption(DEPDEGREE) || cmd.hasOption(INFOFLOW)) {
             generateClassFiles = false;
         }
 
         /* Select a feature composition strategy. */
         if ((cmd.hasOption(COMPOSTION_STRATEGY) && cmd.getOptionValue(
                 COMPOSTION_STRATEGY).equals(COMPOSTION_STRATEGY_ARG_FAMILY))
-                || cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)) {
+                || cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)
+                || cmd.hasOption(DEPDEGREE) || cmd.hasOption(INFOFLOW)) {
 
             /* Family-based. */
             composingVisitor = new AST.ComposingVisitorRSF();
@@ -258,16 +266,18 @@ public class Main implements CompositionContext {
     private void testOptions() throws IllegalArgumentException {
 
         /* Check compatibility of options. */
-        if ((cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS))
-                && cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
+        if ((cmd.hasOption(EXT_INTROS) || cmd.hasOption(EXT_REFS)
+        		|| cmd.hasOption(DEPDEGREE) || cmd.hasOption(INFOFLOW))
+               		&& cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
 
             /*
-             * Intros/Refs calculation ComposingVisitorRSF and ASTS calculation
-             * requires ComposingVisitorNormal
+             * Intros/Refs/Depdegree/Infoflow calculation requires 
+			 * ComposingVisitorRSF and ASTS calculation requires 
+			 * ComposingVisitorNormal
              */
             throw new IllegalArgumentException("Incompatible options:"
-                    + EXT_INTROS + "/" + EXT_REFS + "and"
-                    + EXT_MEASURE_ASTS_SOURCE + "\n");
+                    + EXT_INTROS + "/" + EXT_REFS + "/" DEPDEGREE + "/" 
+                    + INFOFLOW + "and" + EXT_MEASURE_ASTS_SOURCE + "\n");
         }
 
         /* Check if the name of the compostion strategy is known. */
@@ -375,6 +385,18 @@ public class Main implements CompositionContext {
                         "'original' method calls are treated as normal method calls (used in feature-based type checking). This option works only with '"
                                 + TYPECHECKER + "' option.").create(
                         IGNORE_ORIGINAL));
+        ops.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("format")
+				.withDescription(
+						"Calculate DepDegrees\n"
+								+ "\t--dd csv: csv output to depdegree.csv\n"
+								+ "\t--dd format: formatted output to stdout")
+				.withLongOpt("dd").create(DEPDEGREE));
+		ops.addOption(OptionBuilder
+				.withDescription(
+						"Calculate and print Informational Flow to infoflow.csv")
+				.withLongOpt("if").create(INFOFLOW));
         return ops;
     }
 
@@ -475,6 +497,25 @@ public class Main implements CompositionContext {
         if (cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
             System.out.println(ast.measureASTSSource());
         }
+        
+        if (cmd.hasOption(INFOFLOW)) {
+				ast.printInfoFlow();
+		}
+		
+		if (cmd.hasOption(DEPDEGREE)) {
+			if (cmd.getOptionValue(DEPDEGREE) != null) {
+				if (cmd.getOptionValue(DEPDEGREE).equals("format"))
+					DDPrinter.printByCU();
+				else if (cmd.getOptionValue(DEPDEGREE).equals("csv"))
+					DDPrinter.printCSV();
+				else {
+					throw new WrongArgumentException(
+							"Invalid option argument for output of DepDegrees.");
+				}
+			} else {
+				DDPrinter.printByCU();
+			}
+		}	
     }
 
     /**
@@ -566,9 +607,14 @@ public class Main implements CompositionContext {
                 cu.generateClassfile();
             }
         }
+        if (cmd.hasOption(DEPDEGREE) && !processedCUs.contains(cu.pathName())) {
+			DDPrinter.depDegrees
+					.addAll(cu.calculateDepDegrees(cu.classQName()));
+		}
+		
+		processedCUs.add(cu.pathName());
+	}
 
-        processedCUs.add(cu.pathName());
-    }
 
     /**
      * Generate source code from the compilation unit and write it to a file in
@@ -594,51 +640,51 @@ public class Main implements CompositionContext {
         }
     }
 
-    /**
-     * Get backbone compiler (currently JastAddJ) arguments (options) that were
-     * extracted from the fujis command line.
-     * 
-     * @return compiler arguments (options).
-     */
-    public String[] getBackboneCompilerArgs() {
-        return backboneCompilerArgs.toArray(new String[backboneCompilerArgs
-                .size()]);
-    }
+	/**
+	 * Get backbone compiler (currently JastAddJ) arguments (options) that were
+	 * extracted from the fujis command line.
+	 * 
+	 * @return compiler arguments (options).
+	 */
+	public String[] getBackboneCompilerArgs() {
+		return backboneCompilerArgs.toArray(new String[backboneCompilerArgs
+				.size()]);
+	}
 
-    /**
-     * Returns composition strategy visitor to be used in the AST composition
-     * process.
-     * 
-     * @return composition strategy visitor.
-     */
-    public ComposingVisitor getComposingVisitor() {
-        return composingVisitor;
-    }
+	/**
+	 * Returns composition strategy visitor to be used in the AST composition
+	 * process.
+	 * 
+	 * @return composition strategy visitor.
+	 */
+	public ComposingVisitor getComposingVisitor() {
+		return composingVisitor;
+	}
 
-    /**
-     * Returns an object representing the SPL structure.
-     * 
-     * @return object representing SPL structure.
-     */
-    public SPLStructure getSPLStructure() {
-        return spl;
-    }
+	/**
+	 * Returns an object representing the SPL structure.
+	 * 
+	 * @return object representing SPL structure.
+	 */
+	public SPLStructure getSPLStructure() {
+		return spl;
+	}
 
-    /**
-     * A factory method for Composition objects.
-     * 
-     * @param compContext
-     *            a CompositionContext to initialize the Composition instance
-     *            with.
-     * 
-     * @return a instance of Composition object initialized with the
-     *         corresponding composition context.
-     */
-    public Composition getComposition(CompositionContext compContext) {
-        return new Composition(compContext);
-    }
+	/**
+	 * A factory method for Composition objects.
+	 * 
+	 * @param compContext
+	 *            a CompositionContext to initialize the Composition instance
+	 *            with.
+	 * 
+	 * @return a instance of Composition object initialized with the
+	 *         corresponding composition context.
+	 */
+	public Composition getComposition(CompositionContext compContext) {
+		return new Composition(compContext);
+	}
 
-    /**
+  	/**
      * Return compiler errors.
      * 
      * @return a unmodifiable collection with compiler errors.
@@ -655,24 +701,24 @@ public class Main implements CompositionContext {
     public Collection<Problem> getWarnings() {
         return Collections.unmodifiableCollection(warnings);
     }
-
-    /**
+    
+	/**
      * Enumerates all options (and eventually their arguments) accepted by fuji.
-     * 
-     * @author kolesnik
-     */
-    public static class OptionName {
-        public static final String BOOTCLASSPATH = "bootclasspath"; //
-        public static final String CLASSPATH = "classpath"; //
-        public static final String D = "d"; //
-        public static final String EXTDIRS = "extdirs"; //
-        public static final String HELP = "help"; //
-        public static final String NOWARN = "nowarn";
-        public static final String SOURCEPATH = "sourcepath"; //
-        public static final String VERSION = "version";
+	 * 
+	 * @author kolesnik
+	 */
+	public static class OptionName {
+		public static final String BOOTCLASSPATH = "bootclasspath"; //
+		public static final String CLASSPATH = "classpath"; //
+		public static final String D = "d"; //
+		public static final String EXTDIRS = "extdirs"; //
+		public static final String HELP = "help"; //
+		public static final String NOWARN = "nowarn";
+		public static final String SOURCEPATH = "sourcepath"; //
+		public static final String VERSION = "version";
 
         /* Fuji-specific options. */
-        public static final String BASEDIR = "basedir";
+ 		public static final String BASEDIR = "basedir";
         public static final String EXT_ACCESSCOUNT = "fopStatistic"; //
         public static final String EXT_INTROS = "fopIntroduces"; //
         public static final String EXT_REFS = "fopRefs"; //
@@ -688,27 +734,31 @@ public class Main implements CompositionContext {
         public static final String SPL_HAS_NO_VARIABILITY = "novariability";
         public static final String TIMER = "timer";
         public static final String IGNORE_ORIGINAL = "ignoreOriginal";
-    }
+		
+		/* Static analysis */
+		public static final String DEPDEGREE = "depdegree";
+		public static final String INFOFLOW = "infoflow";
+	}
 
-    private static void printError(String message) {
-            System.err.println("Errors:");
-            System.err.print(message);
-    }
+	private static void printError(String message) {
+		System.err.println("Errors:");
+		System.err.print(message);
+	}
 
     private static void printHelp(Options options) {
         new HelpFormatter().printHelp(72, toolName() + " features_file", "",
                 options, "", true);
     }
 
-    private static String toolName() {
-        return "fuji";
-    }
+	private static String toolName() {
+		return "fuji";
+	}
 
-    private static String projectURL() {
-        return "http://www.fosd.de/fuji";
-    }
+	private static String projectURL() {
+		return "http://www.fosd.de/fuji";
+	}
 
-    private static String version() {
+	private static String version() {
         return "2013-07-08";
     }
 
@@ -721,5 +771,5 @@ public class Main implements CompositionContext {
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         return bean.isCurrentThreadCpuTimeSupported() ? bean
                 .getCurrentThreadCpuTime() : 0L;
-    }
+	}
 }
