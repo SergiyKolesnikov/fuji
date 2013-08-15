@@ -27,9 +27,6 @@ import org.apache.commons.cli.ParseException;
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
-import depdegree.DDPrinter;
-import depdegree.MethodResult;
-
 import AST.ASTNode;
 import AST.CompilationUnit;
 import AST.ComposingVisitor;
@@ -230,6 +227,14 @@ public class Main implements CompositionContext {
                     + ((getCpuTime() - startTimeNano) / 1000000));
         }
 
+        if (cmd.hasOption(INFOFLOW)) {
+			ast.printInfoFlow();
+        }
+	
+        if (cmd.hasOption(DEPDEGREE)) {
+        	ast.printDepDegree();
+        }	
+	
         if (cmd.hasOption(TYPECHECKER)) {
             /* Type check timer start. */
             if (cmd.hasOption(TIMER)) {
@@ -276,7 +281,7 @@ public class Main implements CompositionContext {
 			 * ComposingVisitorNormal
              */
             throw new IllegalArgumentException("Incompatible options:"
-                    + EXT_INTROS + "/" + EXT_REFS + "/" DEPDEGREE + "/" 
+                    + EXT_INTROS + "/" + EXT_REFS + "/" + DEPDEGREE + "/" 
                     + INFOFLOW + "and" + EXT_MEASURE_ASTS_SOURCE + "\n");
         }
 
@@ -386,16 +391,12 @@ public class Main implements CompositionContext {
                                 + TYPECHECKER + "' option.").create(
                         IGNORE_ORIGINAL));
         ops.addOption(OptionBuilder
-				.hasArg()
-				.withArgName("format")
 				.withDescription(
-						"Calculate DepDegrees\n"
-								+ "\t--dd csv: csv output to depdegree.csv\n"
-								+ "\t--dd format: formatted output to stdout")
+						"Calculate and print DepDegrees")
 				.withLongOpt("dd").create(DEPDEGREE));
 		ops.addOption(OptionBuilder
 				.withDescription(
-						"Calculate and print Informational Flow to infoflow.csv")
+						"Calculate and print Informational Flow")
 				.withLongOpt("if").create(INFOFLOW));
         return ops;
     }
@@ -497,25 +498,6 @@ public class Main implements CompositionContext {
         if (cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
             System.out.println(ast.measureASTSSource());
         }
-        
-        if (cmd.hasOption(INFOFLOW)) {
-				ast.printInfoFlow();
-		}
-		
-		if (cmd.hasOption(DEPDEGREE)) {
-			if (cmd.getOptionValue(DEPDEGREE) != null) {
-				if (cmd.getOptionValue(DEPDEGREE).equals("format"))
-					DDPrinter.printByCU();
-				else if (cmd.getOptionValue(DEPDEGREE).equals("csv"))
-					DDPrinter.printCSV();
-				else {
-					throw new WrongArgumentException(
-							"Invalid option argument for output of DepDegrees.");
-				}
-			} else {
-				DDPrinter.printByCU();
-			}
-		}	
     }
 
     /**
@@ -607,11 +589,7 @@ public class Main implements CompositionContext {
                 cu.generateClassfile();
             }
         }
-        if (cmd.hasOption(DEPDEGREE) && !processedCUs.contains(cu.pathName())) {
-			DDPrinter.depDegrees
-					.addAll(cu.calculateDepDegrees(cu.classQName()));
-		}
-		
+        		
 		processedCUs.add(cu.pathName());
 	}
 

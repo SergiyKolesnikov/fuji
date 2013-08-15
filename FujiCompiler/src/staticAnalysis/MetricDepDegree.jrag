@@ -1,11 +1,17 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import AST.MethodDecl;
-import depdegree.MethodResult;
 
 /**
  * The aspect implements dep-degree metric calculation.
  *
  * TODO:
- * - FixBug: dd is incorrect for methods with feild access.
+ * - FixBug: dd is incorrect for methods with field access.
  *
  * - exclude synthetic method declarations from dep-degree calculation
  *   (isSynthetic() attribute)?
@@ -14,28 +20,96 @@ import depdegree.MethodResult;
  */
 aspect DepDegree {
 	
-	/**
-	 * Calculate DepDegrees for all children of an ASTNode.
-	 */
-	public ArrayList<MethodResult> ASTNode.calculateDepDegrees(String cuQualifier) {
-		ArrayList<MethodResult> result = new ArrayList<MethodResult>();
-		if (this instanceof CompilationUnit) {
-			cuQualifier = ((CompilationUnit)this).pathName();
+	public class MethodDD {
+		private String compilationUnit;
+		private int featureID;
+		private String signature;
+		private int depDegree;
+		
+		public MethodDD(int id, int dd, String cu, String s) {
+			featureID = id;
+			depDegree = dd;
+			compilationUnit = cu;
+			signature = s;
 		}
-		if (this instanceof MethodDecl) {
-			MethodDecl md = (MethodDecl) this;
-	        result.add(new MethodResult(cuQualifier, md.featureID(), md.signature() + ":L" + md.lineNumber(), md.depDegree()));
+		
+		public int getFeatureID() {
+			return featureID;
 		}
-	    for (int i = 0; i < getNumChild(); ++i) {
-	    	result.addAll(getChild(i).calculateDepDegrees(cuQualifier));
-	    }
-	    return result;
+		public int getDepDegree() {
+			return depDegree;
+		}
+		public String getCompilationUnit() {
+			return compilationUnit;
+		}
+		public String getSignature() {
+			return signature;
+		}
+		
+		
 	}
+	
+	public void Program.printDepDegree() {
+		
+		ArrayList<MethodDD> depDegrees = calcDepDegrees();
+		sortDDList(depDegrees);
+		
+		String sep =";";
+		System.out.println("FeatureID" + sep + "DepDegree" + sep + "File" + sep 
+				+ "Method");
+		
+		for (MethodDD r : depDegrees) {
+			System.out.println(r.getFeatureID() + sep + r.getDepDegree() + sep +
+					r.getCompilationUnit() + sep + r.getSignature());
+		}	
+		
+		/*String sep = ";";
+		File file = new File("depdegree.csv");
+			
+		try {
+			FileWriter output = new FileWriter(file);
+			output.write("FeatureID" + sep + "DepDegree" + sep + "File" + sep 
+						+ "Method\n");
+			for (MethodDD r : depDegrees) {
+				output.write(r.getFeatureID() + sep + r.getDepDegree() + sep +
+						r.getCompilationUnit() + sep + r.getSignature() + "\n");
+				output.flush();
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+	}
+//	/**
+//	 * Calculate DepDegrees for all children of an ASTNode.
+//	 */
+//	public ArrayList<MethodDD> Program.calcDepDegrees() {
+//		ArrayList<MethodDD> result = new ArrayList<MethodDD>();
+//		if (this instanceof CompilationUnit) {
+//			cuQualifier = ((CompilationUnit)this).pathName();
+//		}
+//		if (this instanceof MethodDecl) {
+//			MethodDecl md = (MethodDecl) this;
+//	        result.add(new MethodDD(cuQualifier, md.featureID(), md.signature() + ":L" + md.lineNumber(), md.depDegree()));
+//		}
+//	    for (int i = 0; i < getNumChild(); ++i) {
+//	    	result.addAll(getChild(i).calculateDepDegrees(cuQualifier));
+//	    }
+//	    return result;
+//	}
+	
+	coll ArrayList<MethodDD> Program.calcDepDegrees()
+		[new ArrayList<MethodDD>()] with add root Program;
+		
+	MethodDecl contributes this.depDegree()
+		when this.featureID() != -1
+		to Program.calcDepDegrees()
+		for getProgram();
 	
     /**
      * Dep-degree for a MethodDecl.
      */
-    syn int MethodDecl.depDegree() {
+    syn MethodDD MethodDecl.depDegree() {
         int dd = 0;
         for (VarAccess va : collDescendantVarAccesses()) {
         	//if (!va.simpleAssignment()) {
@@ -44,7 +118,9 @@ aspect DepDegree {
         	//if (va.simpleAssignment())
 				//System.out.println("SIMPLE\t" + "Assignment: " + va + "\tSize: " + va.reachingDefinitions().size());
         }
-        return dd;
+        MethodDD result = new MethodDD(featureID(), dd, getCompUnit().pathName(),  
+				signature() + ":L" + lineNumber());
+        return result;
     }
 
     /**
@@ -55,14 +131,44 @@ aspect DepDegree {
     VarAccess contributes this
         to BodyDecl.collDescendantVarAccesses()
         for enclosingBodyDecl();
-
+        		
     /**
-     * Top-level expression calculation.  Top-level expression == operation.
-     * Can be used to calculate operation dep-degree.
-     *
-     *  NOTE: the topLevelExpr() of a top-level expression returns null.
-     */
-    inh Expr Expr.topLevelExpr();
-    eq Program.getChild().topLevelExpr() = null;
-    eq Expr.getChild().topLevelExpr() = this;
+      * Returns the CompilationUnit of a node
+      */			
+    eq CompilationUnit.getChild(int i).getCompUnit() = this;
+    inh CompilationUnit MethodDecl.getCompUnit();
+    
+
+////    /**
+////     * Top-level expression calculation.  Top-level expression == operation.
+////     * Can be used to calculate operation dep-degree.
+////     *
+////     *  NOTE: the topLevelExpr() of a top-level expression returns null.
+////     */
+////    inh Expr Expr.topLevelExpr();
+////    eq Program.getChild().topLevelExpr() = null;
+////    eq Expr.getChild().topLevelExpr() = this;
+    
+    private void Program.sortDDList(ArrayList<MethodDD> ddList) {
+		Collections.sort(ddList, new Comparator<MethodDD>() {
+			@Override
+			/* This comparator imposes orderings that are inconsistent with
+			 * equals. Ordering precedence:
+			 * feature ID -> depdegree -> compilation unit -> method signature
+			 */
+			public int compare(MethodDD o1, MethodDD o2) {
+				int comp;
+				if ((comp = o1.getFeatureID() - o2.getFeatureID()) != 0) {
+					return comp;
+				} else if ((comp = o2.getDepDegree() - o1.getDepDegree()) != 0) {
+					return comp;
+				} else if (((comp = o1.getCompilationUnit().compareTo(
+						o2.getCompilationUnit())) != 0)) {
+					return comp;
+				} else {
+					return o1.getSignature().compareTo(o2.getSignature());
+				}
+			}
+		});
+	}
 }
