@@ -147,7 +147,7 @@
     <include name="Alias.jrag" />
     <include name="MetricDepDegree.jrag" />
     <include name="MetricInfoFlow.jrag" />
-    </fileset>
+     </fileset>
     </jastadd>
     <!-- copy beaver library files -->
     <copy todir="${beaver}" preservelastmodified="true">

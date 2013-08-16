@@ -1,3 +1,5 @@
+import de.ovgu.featureide.fm.core.FeatureModel;
+
 /**
  * The information flow complexity implemented by this aspect are based on a 
  * mix of the IEEE 982.2 standard and an adaption of it described on
@@ -28,16 +30,25 @@
 /*
  * To do:
  * - parameter/global variable fanin/out added even if method is actually never
- * 	 called by another feature
+ * 	 called by another feature. ok?
  * - usage of feature-model
  * - correct handling of interfaces and abstract classes
  * - global variable handling in initializers
  * - improve aliasing for use/change of global variables/parameters
  */
-//import AST.ASTNode;
-//import AST.BodyDecl;
-//import AST.Program;
-//import AST.TypeDecl;
+
+/*
+ * To do for implementing usage of >>feature model<<:
+ * - add option in Main.java for reading model file (ask Sergiy)
+ * - add attribute featureName() to ASTNodes  (similar to featureID())
+ * - get FeatureModel fm = getSPLStructure().getFeatureModel()
+ * - calculate feature dependencies: fd = new FeatureDependencies(FeatureModel fm)
+ * - for iteration of MethodAccesses, ConstructorAccesses and ClassInstanceExpr:
+ *   + get features of caller and callee by using their featureName() 
+ *     and fm.getFeature(String name)
+ *   + add dependency checks: if (callerID != calleeID && ...
+ *   	...&& !fd.never(Feature caller).contains(Feature callee) 
+ */
 
 /**
  * The aspect implements information flow metric calculation.
@@ -130,7 +141,8 @@ aspect InformationFlow {
 				callerID = ma.featureID();
 				for (MethodDecl md : refDecl.hostType().collMethodDecls()) {
 					calleeID = md.featureID();
-						
+					
+					// TODO: add feature dependency check here
 					if ((callerID != calleeID) && refDecl.sameSignature(md)) {
 						//InfoFlow induced by the method call itself
 						incFanIn(calleeID);
@@ -154,6 +166,8 @@ aspect InformationFlow {
 						.hostType().collConstructorDecls()) {
 					
 					calleeID = cd.featureID();
+					
+					// TODO: add feature dependency check here
 					if ((callerID != calleeID) && ca.decl().sameSignature(cd)) {
 						incFanIn(calleeID);
 						incFanOut(callerID);
@@ -173,6 +187,8 @@ aspect InformationFlow {
 						.hostType().collConstructorDecls()) {
 					
 					calleeID = cd.featureID();
+					
+					// TODO: add feature dependency check here
 					if ((callerID != calleeID) && ca.decl().sameSignature(cd)) {
 						incFanIn(calleeID);
 						incFanOut(callerID);
