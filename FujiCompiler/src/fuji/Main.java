@@ -180,8 +180,8 @@ public class Main implements CompositionContext {
             if (cmd.hasOption(TYPECHECKER)) {
 
             	//CSV Output
-            	System.setOut(System.err);
-            	System.out.println("{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}");
+            	//System.setOut(System.err);
+            	//System.out.println("{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}");
             	
                 /* The provided file is a feature model. */
                 spl = new SPLStructure(basedir,

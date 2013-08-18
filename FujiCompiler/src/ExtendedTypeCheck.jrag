@@ -97,35 +97,35 @@ aspect ExtendedTypeCheck {
 	protected static final int ASTNode.CLASS_EXTENDS_CLASS = 1;
 	protected static final int ASTNode.CLASS_IMPLEMENTS_INTERFACE = 2;
 	protected static final int ASTNode.INTERFACE_EXTENDS_INTERFACE = 3;
+	protected boolean ASTNode.isTypeAccess = false;
+	
 	
 	/* checks for SPL errors in two rounds: (based on feature model)
-	 * first round:
+	 * first round: ASTNode.addSplErrorsOneRound
 	 * check if at least one target (in declsAndTargetHostTypes) 
 	 * is ALWAYS reachable from the feature fromFeatureID, i.e.
 	 * if there is only one target:
 	 * fromFeatureID is neither in MAYBE- nor in NEVER-dependency with target
 	 * if there is more than one target: 
 	 * at least one target is not optional 
-	 * second round:
+	 * second round: ASTNode.addSplErrorsTwoRounds
 	 * check if at least one feature that has subtype information is ALWAYS 
 	 * reachable from all features that do not have that subtype information
 	 * but rely on that information to access fields, methods, constructors
 	 * in a super type */
-	public void ASTNode.addSplErrors(int fromFeatureID, 
+	public boolean ASTNode.addSplErrorsOneRound(int fromFeatureID, 
 			HashSet<Integer> contextPresentFeatures,
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
-			String targetStructure, 
-			boolean isTypeAccess, 
+			String targetStructure,
 			TypeDecl sourceHostType,
-			boolean secondRoundDone, 
 			int state,
 			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-			boolean isUnqualifiedAccess, 
-			TypeDecl narrowType,
 			TypeDecl accessingType,
 			HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
 		// Switch Output between csv / text
-		boolean csv = true;
+		boolean csv = false;
+		//return-value
+		boolean errorFound = false;
 		/* get the feature model */
 		FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -134,9 +134,7 @@ aspect ExtendedTypeCheck {
 		/* get features */
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 		listFeatures.addAll(model.getConcreteFeatures());
-		/* get targetHostTypes */
-		HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
-		targetHostTypes.addAll(declsAndTargetHostTypes.values());
+		
 		/* just one target (i.e. one decl) */
 		if (declsAndTargetHostTypes.keySet().size() == 1) {
 			/* get this decl */
@@ -148,7 +146,7 @@ aspect ExtendedTypeCheck {
 			ASTNode outputDecl = outputDeclsAndTargetHostTypes.keySet().iterator()
 					.next();
 			// OUTPUT
-			String declFirstLine = buildSplErrorDeclFirstLine(outputDecl, targetHostType, isTypeAccess);
+			String declFirstLine = buildSplErrorDeclFirstLine(outputDecl, targetHostType);
 			
 			TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes
 					.get(outputDecl);
@@ -197,17 +195,18 @@ aspect ExtendedTypeCheck {
 					}
 					// OUTPUT
 					StringBuilder sbtei = new StringBuilder();
-					sbtei = buildSplTypeErrorInfo(fromFeatureID, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);
+					sbtei = buildSplTypeErrorInfo(fromFeatureID, accessingType, accessingDeclsAndTargetHostTypes);
 					if (csv){
 						buildSplErrorCSVSingle(fromFeature, toFeature, never, maybe,
-							state,targetStructure, sourceHostType, isTypeAccess, 
+							state,targetStructure, sourceHostType, 
 							outputTargetHostType, sbtei, declFirstLine);
 					}else{
 						buildSplErrorTextSingle(fromFeature, toFeature, never, maybe,
-								state,targetStructure, sourceHostType, isTypeAccess, 
+								state,targetStructure, sourceHostType, 
 								outputTargetHostType, sbtei, declFirstLine);
 
 					}
+					errorFound = true;
 				}
 			}
 			/* more than one target */
@@ -224,7 +223,7 @@ aspect ExtendedTypeCheck {
 				TypeDecl targetHostType = declsAndTargetHostTypes.get(var);
 
 				// OUTPUT
-				String declFirstLine = buildSplErrorDeclFirstLine(var, targetHostType, isTypeAccess);
+				String declFirstLine = buildSplErrorDeclFirstLine(var, targetHostType);
 
 				mapDecls.put(var.featureID(), declFirstLine);
 			}
@@ -237,7 +236,7 @@ aspect ExtendedTypeCheck {
 				TypeDecl outputTargetHostType = outputDeclsAndTargetHostTypes
 						.get(outputVar);
 				// OUTPUT
-				String declFirstLine = buildSplErrorDeclFirstLine(outputVar, outputTargetHostType, isTypeAccess);				
+				String declFirstLine = buildSplErrorDeclFirstLine(outputVar, outputTargetHostType);				
 				outputMapDecls.put(outputVar.featureID(), declFirstLine);
 			}
 			/* source feature exists */
@@ -275,72 +274,107 @@ aspect ExtendedTypeCheck {
 				}
 				// OUTPUT
 				StringBuilder sbtei = new StringBuilder();
-				sbtei = buildSplTypeErrorInfo(fromFeatureID, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);				
+				sbtei = buildSplTypeErrorInfo(fromFeatureID, accessingType, accessingDeclsAndTargetHostTypes);				
 				if (csv) {
 					buildSplErrorCSVMultiple(fromFeature, mayBeMissing, state,
-						targetStructure, sourceHostType, isTypeAccess, toFeatureIDs,
+						targetStructure, sourceHostType, toFeatureIDs,
 					    mapDecls, listFeatures, outputMapDecls, sbtei);
 				}else{
 					buildSplErrorTextMultiple(fromFeature, mayBeMissing, state,
-							targetStructure, sourceHostType, isTypeAccess, toFeatureIDs,
+							targetStructure, sourceHostType, toFeatureIDs,
 						    mapDecls, listFeatures, outputMapDecls, sbtei);
 				}
+				errorFound = true;
 			}
+		}	
+		return errorFound;
+	}
+	
+	
+	public boolean ASTNode.addSplErrorsTwoRounds(int fromFeatureID, 
+			HashSet<Integer> contextPresentFeatures,
+			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes,
+			String targetStructure,
+			TypeDecl sourceHostType,
+			int state,
+			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
+			boolean isUnqualifiedAccess, 
+			TypeDecl narrowType,
+			TypeDecl accessingType,
+			HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
+		
+		//Return-Value
+		boolean errorFound = false;
+		// first round
+		errorFound = addSplErrorsOneRound(fromFeatureID, 
+				contextPresentFeatures,
+				declsAndTargetHostTypes,
+				targetStructure,
+				sourceHostType,
+				state,
+				outputDeclsAndTargetHostTypes,
+				accessingType,
+				accessingDeclsAndTargetHostTypes);
+		
+		// second round
+		/* get all feature IDs*/
+		HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
+		for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter
+				.hasNext();) {
+			ASTNode var = (ASTNode) iter.next();
+			toFeatureIDs.add(var.featureID());
 		}
-		if (!(secondRoundDone)) {
-			/* second Round */
-			/* get all feature IDs*/
-			HashSet<Integer> toFeatureIDs = new HashSet<Integer>();
-			for (Iterator iter = declsAndTargetHostTypes.keySet().iterator(); iter
-					.hasNext();) {
-				ASTNode var = (ASTNode) iter.next();
-				toFeatureIDs.add(var.featureID());
-			}
-			/* external access: move starting point of checks to narrow type */
-			if (!(isUnqualifiedAccess)) {
-				/* no more interest in accessing host type, get narrow type */
-				sourceHostType = narrowType;
-			}
-			/* for all targets */
-			for (TypeDecl top : targetHostTypes) {
-				/* fromFeature present and no access to a standard type */
-				if (fromFeatureID != -1 && !(toFeatureIDs.contains(-1))) {
-					/* access to different host type */
-					if (!(sourceHostType.equals(top))) {
-						/* get paths in type hierarchy from source to target */
-						HashMap<TypeDecl, HashSet<TypeDecl>> paths = getTypeHierarchyPaths(
-								sourceHostType, top);
-						/* there is at least one subtype relation */
-						if (!(paths.isEmpty())) {
-							/* check for every path if the information about 
-							 * the subtype relation in every step is always available */
-							for (TypeDecl nextTd : paths.get(sourceHostType)) {
-								/* next line is mostly redundant 
-								 * (fromFeature should be included in contextPresentFeatures),
-								 * just to get sure */
-								contextPresentFeatures.add(fromFeatureID);
-								/* check <paths> in type hierarchy 
-								 * from <sourceHostType> (bottom) to <top> 
-								 * over <nextTd> (super types of bottom) */
-								splErrorCheckAccessToSuperType(sourceHostType, nextTd, top, paths, 
-										fromFeatureID, contextPresentFeatures, targetStructure, outputDeclsAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);
-							}							
-						}
+		/* external access: move starting point of checks to narrow type */
+		if (!(isUnqualifiedAccess)) {
+			/* no more interest in accessing host type, get narrow type */
+			sourceHostType = narrowType;
+		}
+		
+		/* get targetHostTypes */
+		HashSet<TypeDecl> targetHostTypes = new HashSet<TypeDecl>();
+		targetHostTypes.addAll(declsAndTargetHostTypes.values());
+		/* for all targets */
+		for (TypeDecl top : targetHostTypes) {
+			/* fromFeature present and no access to a standard type */
+			if (fromFeatureID != -1 && !(toFeatureIDs.contains(-1))) {
+				/* access to different host type */
+				if (!(sourceHostType.equals(top))) {
+					/* get paths in type hierarchy from source to target */
+					HashMap<TypeDecl, HashSet<TypeDecl>> paths = getTypeHierarchyPaths(
+							sourceHostType, top);
+					/* there is at least one subtype relation */
+					if (!(paths.isEmpty())) {
+						/* check for every path if the information about 
+						 * the subtype relation in every step is always available */
+						for (TypeDecl nextTd : paths.get(sourceHostType)) {
+							/* next line is mostly redundant 
+							 * (fromFeature should be included in contextPresentFeatures),
+							 * just to get sure */
+							contextPresentFeatures.add(fromFeatureID);
+							/* check <paths> in type hierarchy 
+							 * from <sourceHostType> (bottom) to <top> 
+							 * over <nextTd> (super types of bottom) */
+							errorFound = splErrorCheckAccessToSuperType(sourceHostType, nextTd, top, paths, 
+									fromFeatureID, contextPresentFeatures, targetStructure, outputDeclsAndTargetHostTypes,
+									isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
+						}							
 					}
 				}
 			}
 		}
+		return errorFound;
 	}
 	
 	/* find fromFeatureIDs that do not have subtype information that they rely on
 	 * to access fields, methods, constructors in their super type */
-	public void ASTNode.splErrorCheckAccessToSuperType(TypeDecl currentSourceHostType, 
+	public boolean ASTNode.splErrorCheckAccessToSuperType(TypeDecl currentSourceHostType, 
   		TypeDecl td, TypeDecl top, HashMap<TypeDecl, HashSet<TypeDecl>> paths, 
   		int fromFeatureID, HashSet<Integer> contextPresentFeatures, String targetStructure, 
   		HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
-  		boolean isUnqualifiedAccess, TypeDecl narrowType, boolean isTypeAccess,
+  		boolean isUnqualifiedAccess, TypeDecl narrowType,
   		TypeDecl accessingType, HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
+		//return-value
+		boolean errorFound = false;
 		/* get the feature model */
 	    FeatureModel model = getFeatureModel();
 		/* get dependencies from feature model */
@@ -400,12 +434,11 @@ aspect ExtendedTypeCheck {
 							contextPresentFeatures.add(fromFeatureID);
 							/* check for SPL errors: is the extends info ALWAYS available 
 							 * from this fromFeature due to the feature model? */
-							addSplErrors(fromFeatureID, contextPresentFeatures,
+							errorFound = addSplErrorsOneRound(fromFeatureID, contextPresentFeatures,
 									accessesAndTargetHostTypes, targetStructure,
-									isTypeAccess, currentSourceHostType, true,
-									CLASS_EXTENDS_CLASS,
-									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
+									currentSourceHostType, 	CLASS_EXTENDS_CLASS,
+									outputDeclsAndTargetHostTypes, accessingType, 
+									accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access
@@ -425,12 +458,12 @@ aspect ExtendedTypeCheck {
 								contextPresentFeatures.add(fromFeatureID);
 								contextPresentFeatures.add(featureID);
 								/* check for SPL errors, narrow type */
-								addSplErrors(featureID, contextPresentFeatures, 
+								errorFound = addSplErrorsOneRound(featureID, contextPresentFeatures, 
 										narrowTypeAccessesAndTargetHostTypes,
-										targetStructure, isTypeAccess, currentSourceHostType, true,
+										targetStructure, currentSourceHostType,
 										CLASS_EXTENDS_CLASS,
 										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
+										accessingType, accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -467,12 +500,11 @@ aspect ExtendedTypeCheck {
 							contextPresentFeatures.add(fromFeatureID);
 							/* check for SPL errors: is the implements info ALWAYS available 
 							 * from this fromFeature due to the feature model? */
-							addSplErrors(fromFeatureID, contextPresentFeatures,
+							errorFound = addSplErrorsOneRound(fromFeatureID, contextPresentFeatures,
 									accessesAndTargetHostTypes, targetStructure,
-									isTypeAccess, currentSourceHostType, true,
-									CLASS_IMPLEMENTS_INTERFACE,
-									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
+									currentSourceHostType, CLASS_IMPLEMENTS_INTERFACE,
+									outputDeclsAndTargetHostTypes, accessingType,
+									accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access
@@ -487,12 +519,11 @@ aspect ExtendedTypeCheck {
 								contextPresentFeatures.add(fromFeatureID);
 								contextPresentFeatures.add(featureID);
 								/* check for SPL errors, narrow type */
-								addSplErrors(featureID, contextPresentFeatures,
+								errorFound = addSplErrorsOneRound(featureID, contextPresentFeatures,
 										accessesAndTargetHostTypes, targetStructure,
-										isTypeAccess, currentSourceHostType, true,
-										CLASS_IMPLEMENTS_INTERFACE,
-										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
+										currentSourceHostType, CLASS_IMPLEMENTS_INTERFACE,
+										nextTdAndTargetHostTypes, accessingType, 
+										accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -539,12 +570,11 @@ aspect ExtendedTypeCheck {
 							contextPresentFeatures.add(fromFeatureID);
 							/* check for SPL errors: is the extends info ALWAYS available 
 							 * from this fromFeature due to the feature model? */
-							addSplErrors(fromFeatureID, contextPresentFeatures,
+							errorFound = addSplErrorsOneRound(fromFeatureID, contextPresentFeatures,
 									accessesAndTargetHostTypes, targetStructure,
-									isTypeAccess, currentSourceHostType, true,
-									INTERFACE_EXTENDS_INTERFACE,
-									outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-									currentSourceHostType, accessingType, accessingDeclsAndTargetHostTypes);
+									currentSourceHostType, INTERFACE_EXTENDS_INTERFACE,
+									outputDeclsAndTargetHostTypes, accessingType, 
+									accessingDeclsAndTargetHostTypes);
 						}
 					} else {
 						/* external access
@@ -559,12 +589,11 @@ aspect ExtendedTypeCheck {
 								contextPresentFeatures.add(fromFeatureID);
 								contextPresentFeatures.add(featureID);
 								/* check for SPL errors, narrow type */
-								addSplErrors(featureID, contextPresentFeatures,
+								errorFound = addSplErrorsOneRound(featureID, contextPresentFeatures,
 										accessesAndTargetHostTypes, targetStructure,
-										isTypeAccess, currentSourceHostType, true,
-										INTERFACE_EXTENDS_INTERFACE,
+										currentSourceHostType, INTERFACE_EXTENDS_INTERFACE,
 										nextTdAndTargetHostTypes,
-										isUnqualifiedAccess, narrowType, accessingType, accessingDeclsAndTargetHostTypes);
+										accessingType, accessingDeclsAndTargetHostTypes);
 							}
 						}
 					}
@@ -577,12 +606,17 @@ aspect ExtendedTypeCheck {
 			/* different ways up */
 			for (TypeDecl nextTd : paths.get(currentSourceHostType)) {
 				/* recursive call: go up the type hierarchy */
-				splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
+				/*j*/
+				if(td.isTypeAccess){
+					nextTd.isTypeAccess=true;
+				}
+				errorFound = splErrorCheckAccessToSuperType(td, nextTd, top, paths, fromFeatureID, 
 						contextPresentFeatures,
 						targetStructure, outputDeclsAndTargetHostTypes, isUnqualifiedAccess,
-						narrowType, isTypeAccess, accessingType, accessingDeclsAndTargetHostTypes);
+						narrowType, accessingType, accessingDeclsAndTargetHostTypes);
 			}
 		}
+		return errorFound;
 	}
 	
 	/* is this type (= bottom) in the type hierarchy beneath 
@@ -776,8 +810,11 @@ aspect ExtendedTypeCheck {
 								HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
 								contextPresentFeatures.add(i);
 								/* check for SPL errors */
-								addSplErrors(i, contextPresentFeatures, declsAndTargetHostType, "the type", true, sourceHostType, false, FIRST_ROUND, declsAndTargetHostType,
-										innerTypeAndInfo.get(targetHostType).isUnqualifiedAccess(), sourceHostType, sourceHostType, declsAndTargetHostType);
+								this.isTypeAccess=true;
+								addSplErrorsTwoRounds(i, contextPresentFeatures, declsAndTargetHostType, 
+										"the type", sourceHostType, FIRST_ROUND, declsAndTargetHostType,
+										innerTypeAndInfo.get(targetHostType).isUnqualifiedAccess(), 
+										sourceHostType, sourceHostType, declsAndTargetHostType);
 							}
 						}
 					}
@@ -849,8 +886,9 @@ aspect ExtendedTypeCheck {
     			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     			contextPresentFeatures.add(featureID());
     			/* check for SPL errors */
-    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the field", false,
-    					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    			addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					"the field", 
+    					hostType(), FIRST_ROUND, declsAndTargetHostTypes, 
     					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
     					narrowType, hostType(), declsAndTargetHostTypes);
 		    }
@@ -861,7 +899,7 @@ aspect ExtendedTypeCheck {
 	public void MethodAccess.splTypeCheck() {
 	    String ORIGINAL_ACCESS = "original";
 	    
-	    /* Simle type check. */
+	    /* Simple type check. */
 	    /* Name check.  See JastAddJ/Java1.4Frontend/NameCheck.jrag:MethodAccess.nameCheck() */
 	    if (name().equals(ORIGINAL_ACCESS) && !getProgram().ignoreOriginal()) {
 	        /* get context, i.e. method signature of the method 
@@ -945,8 +983,10 @@ aspect ExtendedTypeCheck {
     			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     			contextPresentFeatures.add(featureID());
     			/* check for SPL errors */
-    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, s.toString(), false,
-    					hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, !(isQualified()), hostType(), hostType(), declsAndTargetHostTypes);
+    			addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					s.toString(),
+    					hostType(), FIRST_ROUND, declsAndTargetHostTypes, 
+    					!(isQualified()), hostType(), hostType(), declsAndTargetHostTypes);
     			/* check, if types of arguments fit the method declaration 
     			 * (i.e. check, if the information that the type of an argument is 
     			 * a subtype of the expected parameter is always available due to 
@@ -967,9 +1007,9 @@ aspect ExtendedTypeCheck {
       						HashMap<ASTNode, TypeDecl> typeOfParameter = new HashMap<ASTNode, TypeDecl>();
       						typeOfParameter.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
     							/* check for SPL errors */
-    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-    									"(by an implicit cast from argument to parameter type) the type", false, hostType(), 
-    									false, FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    							addSplErrorsTwoRounds(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"(by an implicit cast from argument to parameter type) the type", hostType(), 
+    									FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
     						}					
     					}
     				}
@@ -1024,8 +1064,9 @@ aspect ExtendedTypeCheck {
     			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     			contextPresentFeatures.add(featureID());
     			/* check for SPL errors */
-    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the method",
-    					false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    			addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					"the method",
+    					hostType(), FIRST_ROUND, declsAndTargetHostTypes, 
     					(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
     					narrowType, hostType(), declsAndTargetHostTypes);
     			/* check, if types of arguments fit the method declaration 
@@ -1048,9 +1089,9 @@ aspect ExtendedTypeCheck {
       						HashMap<ASTNode, TypeDecl> typeOfParameter = new HashMap<ASTNode, TypeDecl>();
       						typeOfParameter.put(md.getParameter(i).type(), md.getParameter(i).type().hostType());
     							/* check for SPL errors */
-    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-    									"(by an implicit cast from argument type to parameter type) the type", false, hostType(), 
-    									false, FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    							addSplErrorsTwoRounds(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"(by an implicit cast from argument type to parameter type) the type", hostType(), 
+    									FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
     						}
     					}
     				}
@@ -1146,8 +1187,9 @@ aspect ExtendedTypeCheck {
     		HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     		contextPresentFeatures.add(featureID());
     		/* check for SPL errors */
-    		addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "the constructor",
-    				false, hostType(), false, FIRST_ROUND, declsAndTargetHostTypes, 
+    		addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    				"the constructor",
+    				hostType(), FIRST_ROUND, declsAndTargetHostTypes, 
     				(!(isQualified()) || qualifier().isThisAccess() || qualifier().isSuperAccess()), 
     				decl().hostType(), hostType(), declsAndTargetHostTypes);
     		/* check, if types of arguments fit the constructor declaration 
@@ -1170,9 +1212,9 @@ aspect ExtendedTypeCheck {
     						HashMap<ASTNode, TypeDecl> typeOfParameter = new HashMap<ASTNode, TypeDecl>();
     						typeOfParameter.put(cd.getParameter(i).type(), cd.getParameter(i).type().hostType());
     						/* check for SPL errors */
-    						addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-    								"(by an implicit cast from argument type to parameter type) the type", false, hostType(), 
-    								false, FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    						addSplErrorsTwoRounds(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    								"(by an implicit cast from argument type to parameter type) the type", hostType(), 
+    								FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
     					}				
     				}
     			}
@@ -1185,25 +1227,13 @@ aspect ExtendedTypeCheck {
 	 * Casts
 	 */
 	
+	/* Check for variability-related errors first, if none found, 
+	 * set variabilityError = false and thus enable checking for errors 
+	 * unrelated to variability. 
+	 */
+	public boolean FieldDeclaration.variabilityError = false;
 	/* Declaration of Field with implicit upcast */
 	public void FieldDeclaration.splTypeCheck() {
-	    
-	    /* Simple type check. */
-	    /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:FieldDeclaration.typeCheck() */
-	    
-        /* 
-         * TODO: what if there is a simple type error, there is no an spl-type error,
-         * and not all features are mandatory.  Do simple and var-aware checks, reutrn warning if the simple check returned an error and var-aware not.
-         */
-	    if(hasInit() && !getSPLStructure().hasVariability()) {
-	        TypeDecl source = getInit().type();
-	        TypeDecl dest = type();
-	        if(!source.assignConversionTo(dest, getInit())) {
-	            error("can not assign " + name() + " of type " + dest.typeName() +
-	                    " a value of type " + source.typeName());
-	            return;
-	        }
-	    }
 	    
 	    /* Variability aware type check. */
         if (getSPLStructure().hasVariability()) {
@@ -1221,24 +1251,16 @@ aspect ExtendedTypeCheck {
     				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     				contextPresentFeatures.add(featureID());
     				/* check for SPL errors */
-    				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    				variabilityError = addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
     						"(by an implicit cast/in the type hierarchy) the type",
-    						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    						hostType(), FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
     			}
     		}
 		}
-	}
-	
-	/* Declaration of Variable with implicit upcast */
-	public void VariableDeclaration.splTypeCheck() {
-
+        
 	    /* Simple type check. */
-        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:VariableDeclaration.splTypeCheck() */
-        /* 
-	     * TODO: what if there is a simple type error, there is no an spl-type error,
-	     * and not all features are mandatory. 
-	     */
-	    if(hasInit() && !getSPLStructure().hasVariability()) {
+	    /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:FieldDeclaration.typeCheck() */
+	    if((hasInit() && !getSPLStructure().hasVariability()) || !variabilityError) {
 	        TypeDecl source = getInit().type();
 	        TypeDecl dest = type();
 	        if(!source.assignConversionTo(dest, getInit())) {
@@ -1247,6 +1269,22 @@ aspect ExtendedTypeCheck {
 	            return;
 	        }
 	    }
+	}
+	
+	/*******************************
+	 * 
+	 * 
+	 * 
+	 * */
+	
+	/* Check for variability-related errors first, if none found, 
+	 * set variabilityError = false and thus enable checking for errors 
+	 * unrelated to variability. 
+	 */
+	public boolean VariableDeclaration.variabilityError = false;
+	
+	/* Declaration of Variable with implicit upcast */
+	public void VariableDeclaration.splTypeCheck() {
 	    
 	    /* Variability aware type check. */
 	    if (getSPLStructure().hasVariability()) {
@@ -1264,29 +1302,35 @@ aspect ExtendedTypeCheck {
     				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     				contextPresentFeatures.add(featureID());
     				/* check for SPL errors */
-    				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    				variabilityError = addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
     						"(by an implicit cast/in the type hierarchy) the type",
-    						false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    						hostType(), FIRST_ROUND, outputDeclsAndTargetHostTypes, 
+    						false, sourceType, hostType(), declsAndTargetHostTypes);
     			}
     		}
 	    }
+	    
+	    /* Simple type check. */
+        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:VariableDeclaration.splTypeCheck() */
+	    if((hasInit() && !getSPLStructure().hasVariability()) || !variabilityError) {
+	        TypeDecl source = getInit().type();
+	        TypeDecl dest = type();
+	        if(!source.assignConversionTo(dest, getInit())) {
+	            error("can not assign " + name() + " of type " + dest.typeName() +
+	                    " a value of type " + source.typeName());
+	            return;
+	        }
+	    }
 	}
 	
+	
+	/* Check for variability-related errors first, if none found, 
+	 * set variabilityError = true and thus enable checking for errors 
+	 * unrelated to variability. 
+	 */
+	public boolean AssignSimpleExpr.variabilityError = false;
 	/* Simple Assignment with implicit upcast */
 	public void AssignSimpleExpr.splTypeCheck() {
-
-	    /* Simple type check. */
-        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:AssignSimpleExpr.splTypeCheck() */
-        /* 
-         * TODO: what if there is a simple type error, there is no an spl-type error,
-         * and not all features are mandatory. 
-         */
-	    if (!getSPLStructure().hasVariability()) {
-    	    if(!sourceType().assignConversionTo(getDest().type(), getSource()) && !sourceType().isUnknown()) {
-    	        error("can not assign " + getDest() + " of type " + getDest().type().typeName() +
-    	              " a value of type " + sourceType().typeName());
-    	    }
-	    }
 	    
 	    /* Variability aware type check. */
         if (getSPLStructure().hasVariability()) {
@@ -1313,11 +1357,21 @@ aspect ExtendedTypeCheck {
     			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     			contextPresentFeatures.add(featureID());
     			/* check for SPL errors */
-    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    			variabilityError = addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
     					"(by an implicit cast/in the type hierarchy) the type",
-    					false, hostType(), false, FIRST_ROUND, outputDeclsAndTargetHostTypes, false, sourceType, hostType(), declsAndTargetHostTypes);
+    					hostType(), FIRST_ROUND, outputDeclsAndTargetHostTypes, 
+    					false, sourceType, hostType(), declsAndTargetHostTypes);
     		}
 		}
+
+	    /* Simple type check. */
+        /* Type check.  See /home/kolesnik/work/projects/fuji/FujiProject/branches/fuji-typesystem/FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag:AssignSimpleExpr.splTypeCheck() */
+	    if ((!getSPLStructure().hasVariability()) || !variabilityError) {
+    	    if(!sourceType().assignConversionTo(getDest().type(), getSource()) && !sourceType().isUnknown()) {
+    	        error("can not assign " + getDest() + " of type " + getDest().type().typeName() +
+    	              " a value of type " + sourceType().typeName());
+    	    }
+	    }
 	}
 
 	/* handle up- and downcasts */
@@ -1365,8 +1419,10 @@ aspect ExtendedTypeCheck {
         					HashMap<ASTNode, TypeDecl> typeDeclAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
         					typeDeclAndTargetHostTypes.put(ta.decl(), ta.decl().hostType());
           				/* check for SPL errors */
-          				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-          						false, FIRST_ROUND, typeDeclAndTargetHostTypes, false, getExpr().type(), hostType(), typeDeclAndTargetHostTypes);
+          				addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+          						"by a cast the type", hostType(), 
+          						FIRST_ROUND, typeDeclAndTargetHostTypes, false, getExpr().type(),
+          						hostType(), typeDeclAndTargetHostTypes);
           			} else if (ta.decl().isInTypeHierarchy(getExpr().type())) {
           				/* TypeAccess side of CastExpr is in type hierarchy beneath 
           				 * the Expr side => downcast */
@@ -1376,8 +1432,10 @@ aspect ExtendedTypeCheck {
           				HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
           				contextPresentFeatures.add(featureID());
           				/* check for SPL errors */
-          				addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, "by a cast the type", false, hostType(), 
-          						false, FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), hostType(), declsAndTargetHostTypes);
+          				addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes,
+          						"by a cast the type", hostType(), 
+          						FIRST_ROUND, declsAndTargetHostTypes, false, ta.decl(), 
+          						hostType(), declsAndTargetHostTypes);
           			}
           		}
       	    }
@@ -1419,9 +1477,9 @@ aspect ExtendedTypeCheck {
     			HashSet<Integer> contextPresentFeatures = new HashSet<Integer>();
     			contextPresentFeatures.add(featureID());
     			/* check for SPL errors: this is an unqualified access */
-    			addSplErrors(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
-    					"the super constructor", false, hostType(), 
-    					false, FIRST_ROUND, declsAndTargetHostTypes, true, hostType(), hostType(), declsAndTargetHostTypes);
+    			addSplErrorsTwoRounds(featureID(), contextPresentFeatures, declsAndTargetHostTypes, 
+    					"the super constructor", hostType(), 
+    					FIRST_ROUND, declsAndTargetHostTypes, true, hostType(), hostType(), declsAndTargetHostTypes);
     			/* check, if types of arguments fit the constructor declaration 
     			 * (i.e. check, if the information that the type of an argument is 
     			 * a subtype of the expected parameter is always available due to 
@@ -1442,9 +1500,9 @@ aspect ExtendedTypeCheck {
       						HashMap<ASTNode, TypeDecl> typeOfParameter = new HashMap<ASTNode, TypeDecl>();
       						typeOfParameter.put(cd.getParameter(i).type(), cd.getParameter(i).type().hostType());
     							/* check for SPL errors */
-    							addSplErrors(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
-    									"(by an implicit cast from argument type to parameter type) the type", false, hostType(), 
-    									false, FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
+    							addSplErrorsTwoRounds(featureID(), contextPresentFeatures, typeDeclsAndTargetHostTypes, 
+    									"(by an implicit cast from argument type to parameter type) the type", hostType(), 
+    									FIRST_ROUND, typeOfParameter, false, getArg(i).type(), hostType(), declsAndTargetHostTypes);
     						}						
     					}
     				}
@@ -1453,9 +1511,9 @@ aspect ExtendedTypeCheck {
     	}
 	}
 	
-	private String ASTNode.buildSplErrorDeclFirstLine(ASTNode node, TypeDecl typeDecl, boolean isTypeAccess){
+	private String ASTNode.buildSplErrorDeclFirstLine(ASTNode node, TypeDecl typeDecl){
 		String declFirstLine;
-		if (isTypeAccess) {
+		if (this.isTypeAccess) {
 		    /* <package name (default: "(default package)")>.<type name> */
 		    declFirstLine = (typeDecl.packageName() != "" ? typeDecl
 		            .packageName() : "(default package)") + "." + typeDecl.name();
@@ -1482,11 +1540,10 @@ aspect ExtendedTypeCheck {
 	 */
 	private StringBuilder ASTNode.buildSplTypeErrorInfo(
 			int fromFeatureID,
-			boolean isTypeAccess,  
 			TypeDecl accessingType,
 			HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes){
 		StringBuilder sbtei = new StringBuilder();
-		if (isTypeAccess) {
+		if (this.isTypeAccess) {
 			if (typeAccesses != null) {
 				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = typeAccesses.get(fromFeatureID);
 				if (outerMap != null) {
@@ -1519,7 +1576,6 @@ aspect ExtendedTypeCheck {
 			int state,
 			String targetStructure,
 			TypeDecl sourceHostType,
-			boolean isTypeAccess,
 			TypeDecl outputTargetHostType, 
 			StringBuilder sbtei, // wirklich hier?!
 			String declFirstLine){
@@ -1553,7 +1609,7 @@ aspect ExtendedTypeCheck {
 				sb.append(sourceHostType.name() + " of feature ");
 				sb.append(fromFeature.getName());
 				sb.append(" accesses ");
-				if (isTypeAccess) {
+				if (this.isTypeAccess) {
 					if (state == CLASS_EXTENDS_CLASS) {
 						sb.append("the instance");
 					} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
@@ -1623,7 +1679,7 @@ aspect ExtendedTypeCheck {
 		}
 		if (never || maybe) {
 			//evtl. wieder in Aufrufer
-			if (isTypeAccess) {
+			if (this.isTypeAccess) {
 				typeError(sbtei.toString(), sb.toString());
 			} else {
 				error(sb.toString());
@@ -1637,7 +1693,6 @@ aspect ExtendedTypeCheck {
 		    int state,
 		    String targetStructure,
 		    TypeDecl sourceHostType,
-		    boolean isTypeAccess, 
 		    HashSet<Integer> toFeatureIDs,
 		    HashMap<Integer, String> mapDecls,
 		    ArrayList<Feature> listFeatures,
@@ -1689,7 +1744,7 @@ aspect ExtendedTypeCheck {
 		                } else if (state == INTERFACE_EXTENDS_INTERFACE) {
 		                    sb.append(" as subinterface of interface ");
 		                }
-		                if (isTypeAccess) {
+		                if (this.isTypeAccess) {
 		                    sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
 		                            .next()));
 		                } else {
@@ -1704,7 +1759,7 @@ aspect ExtendedTypeCheck {
 		                        || (state == INTERFACE_EXTENDS_INTERFACE)) {
 		                    sb.append("\n   of interface ");
 		                }
-		                if (isTypeAccess) {
+		                if (this.isTypeAccess) {
 		                    sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
 		                            .next()));
 		                } else {
@@ -1742,7 +1797,7 @@ aspect ExtendedTypeCheck {
 		        }
 		        sb.append("is not present at all.\n");
 		    }
-		    if (isTypeAccess) {
+		    if (this.isTypeAccess) {
 		        typeError(sbtei.toString(), sb.toString());
 		    } else {
 		        error(sb.toString());
@@ -1788,12 +1843,11 @@ aspect ExtendedTypeCheck {
 			int state,
 			String targetStructure,
 			TypeDecl sourceHostType,
-			boolean isTypeAccess,
 			TypeDecl outputTargetHostType, 
 			StringBuilder sbtei,
 			String declFirstLine){
 		StringBuilder sb = new StringBuilder();	
-		if (isTypeAccess) {
+		if (this.isTypeAccess) {
 			sb.append(getTypeErrorPosition(sbtei.toString()));
 	    } else {
 	    	sb.append(getErrorPosition());
@@ -1830,7 +1884,7 @@ aspect ExtendedTypeCheck {
 				sb.append(sourceHostType.name() + " of feature ");
 				sb.append(fromFeature.getName());
 				sb.append(" accesses ");
-				if (isTypeAccess) {
+				if (this.isTypeAccess) {
 					if (state == CLASS_EXTENDS_CLASS) {
 						sb.append("the instance");
 					} else if ((state == CLASS_IMPLEMENTS_INTERFACE)
@@ -1903,7 +1957,6 @@ aspect ExtendedTypeCheck {
 		    int state,
 		    String targetStructure,
 		    TypeDecl sourceHostType,
-		    boolean isTypeAccess, 
 		    HashSet<Integer> toFeatureIDs,
 		    HashMap<Integer, String> mapDecls,
 		    ArrayList<Feature> listFeatures,
@@ -1911,7 +1964,7 @@ aspect ExtendedTypeCheck {
 		    StringBuilder sbtei){
 		
 		StringBuilder sb = new StringBuilder();
-		if (isTypeAccess) {
+		if (this.isTypeAccess) {
 			sb.append(getTypeErrorPosition(sbtei.toString()));
 	    } else {
 	    	sb.append(getErrorPosition());
@@ -1984,7 +2037,7 @@ aspect ExtendedTypeCheck {
 		                } else if (state == INTERFACE_EXTENDS_INTERFACE) {
 		                    sb.append(" as subinterface of interface ");
 		                }
-		                if (isTypeAccess) {
+		                if (this.isTypeAccess) {
 		                    sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
 		                            .next()));
 		                } else {
@@ -1999,7 +2052,7 @@ aspect ExtendedTypeCheck {
 		                        || (state == INTERFACE_EXTENDS_INTERFACE)) {
 		                    sb.append(" of interface ");
 		                }
-		                if (isTypeAccess) {
+		                if (this.isTypeAccess) {
 		                    sb.append(outputMapDecls.get(outputMapDecls.keySet().iterator()
 		                            .next()));
 		                } else {
