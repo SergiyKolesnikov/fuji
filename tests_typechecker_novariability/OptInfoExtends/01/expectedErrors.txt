@@ -1,11 +1,1 @@
-Errors:
-/OptInfoExtends/01/FeatureA/A.java:2,24:
-  Semantic Error: no field named i
-/OptInfoExtends/01/FeatureA/A.java:4:
-  Semantic Error: no method named bar() in A matches.
-/OptInfoExtends/01/FeatureA/C.java:7:
-  Semantic Error: no method named bar() in A matches.
-/OptInfoExtends/01/FeatureA/C.java:8:
-  Semantic Error: no method named bar() in A matches.
-/OptInfoExtends/01/FeatureA/C.java:10:
-  Semantic Error: no method named foobar() in A matches.
+not all errors found

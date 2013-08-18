@@ -1,0 +1,7 @@
+Errors:
+/OptInfoAssignmentWithCast2Steps/01/FeatureA/Z.java:3:
+  Semantic Error: can not assign c of type C a value of type A
+/OptInfoAssignmentWithCast2Steps/01/FeatureA/Z.java:6:
+  Semantic Error: can not assign c of type C a value of type A
+/OptInfoAssignmentWithCast2Steps/01/FeatureA/Z.java:8:
+  Semantic Error: can not assign c2 of type C a value of type A

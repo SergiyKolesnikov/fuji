@@ -1,5 +1,1 @@
-Errors:
-/OptInfoParameterCast/01/FeatureA/Y.java:4:
-  Semantic Error: can not instantiate X no matching constructor found in X
-/OptInfoParameterCast/01/FeatureA/Y.java:5:
-  Semantic Error: no method named foo(A) in X matches.
+not all errors found
