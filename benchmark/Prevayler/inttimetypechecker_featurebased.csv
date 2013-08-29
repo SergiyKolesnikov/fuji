@@ -1,7 +1,0 @@
-variant	ASTcomp	typecheck	errors
-ConfigCensor.model	23	453	0
-ConfigGZip.model	24	377	0
-ConfigMonitor.model	23	553	0
-ConfigReplication.model	23	792	0
-ConfigSnapshot.model	23	689	0
-Configbase.model	23	1558	0
