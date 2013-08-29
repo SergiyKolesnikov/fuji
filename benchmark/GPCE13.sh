@@ -1,3 +1,5 @@
+#!/bin/bash
+
 caseStudyNames=("ZipMe" "EPL" "GPL" "Graph" "GUIDSL" "Notepad" "PKJab" "Prevayler" "Raroscope" "Sudoku" "Violet" "TankWar")
 caseStudyFeaturePaths=( \
 	"./subjectSystems/ZipMe/features/" \
@@ -14,12 +16,30 @@ caseStudyFeaturePaths=( \
  	"./subjectSystems/TankWar/" \
 )
 
-i=0
-for csname in "${caseStudyNames[@]}"
+numRepetitions=2
+
+for repetition in `seq 1 $numRepetitions`
 do
-	path=${caseStudyFeaturePaths[$i]}
-	echo "name:$csname path:$path"
-	./TypeCheckAllFeaturesExtTimerSep.sh $csname $path
-	./TypeCheckAllProductsExtTimerSep.sh $csname $path
-	i=$((i+1))
+	rm -f results_repetition$repetition.tar.gz
+	rm -rf result_repetition$repetition
+done
+for repetition in `seq 1 $numRepetitions`
+do
+	echo "repetition$repetition"
+	./cleanResults.sh
+	
+	i=0
+	for csname in "${caseStudyNames[@]}"
+	do
+		path=${caseStudyFeaturePaths[$i]}
+		echo "name:$csname path:$path"
+		./TypeCheckAllFeaturesExtTimerSep.sh $csname $path
+		./TypeCheckAllProductsExtTimerSep.sh $csname $path
+		
+		i=$((i+1))
+	done
+
+	./saveResults.sh
+	mv resultBackup results_repetition$repetition
+	tar -czf results_repetition$repetition.tar.gz results_repetition$repetition
 done
