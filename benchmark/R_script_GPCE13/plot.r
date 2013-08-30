@@ -1,5 +1,5 @@
 draft = F
-if (draft) dev.off()
+#if (draft) dev.off()
 
 
 options(width=180)
@@ -45,7 +45,7 @@ getRepetitionData <- function(repetitionNumber) {
 				csExternalData_features=csExternalData_features, csInternalData_features=csInternalData_features,
 				csInternalData_fam=csInternalData_fam)
 }
-rep_data=list(getRepetitionData(1), getRepetitionData(2), getRepetitionData(3))
+rep_data=list(getRepetitionData(1), getRepetitionData(2))#, getRepetitionData(3))
 
 #get data without optimization
 csInternalData_fam_noOpt = vector("list",length(caseStudies))
@@ -70,6 +70,9 @@ getFeatureTimeInt <- function(caseStudyID) {
 		astComp[[i]] <- sum((prodlines$ASTcomp))
 		typecheck[[i]] <- sum((prodlines$typecheck))
 	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " featurebased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
 	c(mean(astComp), mean(typecheck))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
@@ -81,6 +84,10 @@ getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
 		astComp[[i]] <- sum((prodlines$ASTcomp))
 		typecheck[[i]] <- sum((prodlines$typecheck))
 	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " feature_wBytecodeComp\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
+		# bytecode comp is a single value, statically read out of a file, standard deviation makes no sense
 	c(mean(astComp), mean(typecheck),sum((bytecodeCompTime)))
 }
 getProdTimeInt <- function(caseStudyID) {
@@ -91,6 +98,9 @@ getProdTimeInt <- function(caseStudyID) {
 		astComp[[i]] <- sum((prodlines$ASTcomp))
 		typecheck[[i]] <- sum((prodlines$typecheck))
 	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " productbased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
   c(mean(astComp), mean(typecheck))
 }
 getFamTimeInt <- function(caseStudyID) {
@@ -101,6 +111,9 @@ getFamTimeInt <- function(caseStudyID) {
 		astComp[[i]] <- sum((prodlines$ASTcomp))
 		typecheck[[i]] <- sum((prodlines$typecheck))
 	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " familybased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
   c(mean(astComp), mean(typecheck))
 }
 
