@@ -16,7 +16,7 @@ caseStudyFeaturePaths=( \
  	"./subjectSystems/TankWar/" \
 )
 
-numRepetitions=2
+numRepetitions=10
 
 for repetition in `seq 1 $numRepetitions`
 do
@@ -26,6 +26,8 @@ done
 for repetition in `seq 1 $numRepetitions`
 do
 	echo "repetition$repetition"
+	date #print current date/time
+	
 	./cleanResults.sh
 	
 	i=0

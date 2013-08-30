@@ -1,7 +1,7 @@
 #!/bin/bash
 caseStudyNames=("ZipMe" "EPL" "GPL" "Graph" "GUIDSL" "Notepad" "PKJab" "Prevayler" "Raroscope" "Sudoku" "Violet" "TankWar")
 
-rm -r resultBackup
+rm -rf resultBackup
 mkdir resultBackup
 for csname in "${caseStudyNames[@]}"
 do
