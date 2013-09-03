@@ -45,7 +45,9 @@ getRepetitionData <- function(repetitionNumber) {
 				csExternalData_features=csExternalData_features, csInternalData_features=csInternalData_features,
 				csInternalData_fam=csInternalData_fam)
 }
-rep_data=list(getRepetitionData(1), getRepetitionData(2))#, getRepetitionData(3))
+rep_data=list(getRepetitionData(1), getRepetitionData(2), getRepetitionData(3), 
+getRepetitionData(4), getRepetitionData(5), getRepetitionData(6), 
+getRepetitionData(7), getRepetitionData(8), getRepetitionData(9))
 
 #get data without optimization
 csInternalData_fam_noOpt = vector("list",length(caseStudies))
@@ -167,7 +169,7 @@ if (draft) { # use colors
 	)
 	textcolor="firebrick3"
 } else { # use black/white
-	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.45, .45, .45)) # setup, typecheck, bytecodeComp
+	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.35, .35, .35)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
 if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8.5, height=11, onefile=TRUE, paper="special") 
