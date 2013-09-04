@@ -172,21 +172,23 @@ if (draft) { # use colors
 	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.35, .35, .35)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8.5, height=11, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=10, height=10, onefile=TRUE, paper="special") 
 
 layoutMat=matrix(c(
-	3,3,   6,6,   9,9,   #titles
-	1,2,   4,5,   7,8,   #plots
-	12,12, 15,15, 18,18, #titles
-	10,11, 13,14, 16,17, #plots
-	21,21, 24,24, 27,27, #titles
-	19,20, 22,23, 25,26, #plots
-	30,30, 33,33, 36,36, #titles
-	28,29, 31,32, 34,35, #plots
-	37,37, 37,37, 37,37  #legend
-), 9, 6, byrow = TRUE)
-layoutHeights=c(0.2,1, 0.2,1, 0.2,1, 0.2,1, 0.5)
-layoutWidths=c(1,0.8, 1,0.8, 1,0.8)
+	# 37 is the legend1
+	# 38 is the legend2
+	# 39 is free
+	3,3,   6,6,   9,9,   39, #titles
+	1,2,   4,5,   7,8,   37, #plots
+	12,12, 15,15, 18,18, 39, #titles
+	10,11, 13,14, 16,17, 38, #plots
+	21,21, 24,24, 27,27, 39, #titles
+	19,20, 22,23, 25,26, 39, #plots
+	30,30, 33,33, 36,36, 39, #titles
+	28,29, 31,32, 34,35, 39  #plots
+), 8, 7, byrow = TRUE)
+layoutHeights=c(0.2,1, 0.2,1, 0.2,1, 0.2,1)
+layoutWidths=c(1,0.8, 1,0.8, 1,0.8, 1.3)
 layout(mat=layoutMat, heights=layoutHeights, widths=layoutWidths)
 
 for (i in 1:length(caseStudies)) {  
@@ -351,9 +353,9 @@ for (i in 1:length(caseStudies)) {
 }
 
 # c(bottom, left, top, right)
-par(mar=c(0,1,0,0)) 
+par(mar=c(0,0,0,0)) 
 plot.new()
-legend("bottomleft",
+legend(x=-0.04,y=1,
        c(
        "PB   Product-based",
        "FT    Feature-based",
@@ -362,9 +364,8 @@ legend("bottomleft",
        "FM*  Family-based (no caching)"),
        inset = 0, cex=1)
        
-#par(mar=c(1,0,1,1)) 
-#plot.new()
-legend(x=0.21,y=0.515,
+par(mar=c(0,0,0,0)) 
+legend(x=-0.04,y=0.515,
        c('Setup',
        'Checking',
          'Compose'),
