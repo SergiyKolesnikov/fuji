@@ -172,7 +172,7 @@ if (draft) { # use colors
 	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.35, .35, .35)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=10, height=10, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=11, height=10, onefile=TRUE, paper="special") 
 
 layoutMat=matrix(c(
 	# 37 is the legend1
