@@ -79,11 +79,7 @@ aspect DepDegree {
     syn MethodDD MethodDecl.depDegree() {
         int dd = 0;
         for (VarAccess va : collDescendantVarAccesses()) {
-        	//if (!va.simpleAssignment()) {
-        			dd += va.reachingDefinitions().size();
-        	//}
-        	//if (va.simpleAssignment())
-				//System.out.println("SIMPLE\t" + "Assignment: " + va + "\tSize: " + va.reachingDefinitions().size());
+        	dd += va.reachingDefinitions().size();
         }
         MethodDD result = new MethodDD(featureID(), dd, getCompUnit().pathName(),  
 				signature() + ":L" + lineNumber());
