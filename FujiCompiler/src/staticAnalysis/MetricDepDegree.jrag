@@ -62,41 +62,8 @@ aspect DepDegree {
 			System.out.println(r.getFeatureID() + sep + r.getDepDegree() + sep +
 					r.getCompilationUnit() + sep + r.getSignature());
 		}	
-		
-		/*String sep = ";";
-		File file = new File("depdegree.csv");
-			
-		try {
-			FileWriter output = new FileWriter(file);
-			output.write("FeatureID" + sep + "DepDegree" + sep + "File" + sep 
-						+ "Method\n");
-			for (MethodDD r : depDegrees) {
-				output.write(r.getFeatureID() + sep + r.getDepDegree() + sep +
-						r.getCompilationUnit() + sep + r.getSignature() + "\n");
-				output.flush();
-			}
-			output.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 	}
-//	/**
-//	 * Calculate DepDegrees for all children of an ASTNode.
-//	 */
-//	public ArrayList<MethodDD> Program.calcDepDegrees() {
-//		ArrayList<MethodDD> result = new ArrayList<MethodDD>();
-//		if (this instanceof CompilationUnit) {
-//			cuQualifier = ((CompilationUnit)this).pathName();
-//		}
-//		if (this instanceof MethodDecl) {
-//			MethodDecl md = (MethodDecl) this;
-//	        result.add(new MethodDD(cuQualifier, md.featureID(), md.signature() + ":L" + md.lineNumber(), md.depDegree()));
-//		}
-//	    for (int i = 0; i < getNumChild(); ++i) {
-//	    	result.addAll(getChild(i).calculateDepDegrees(cuQualifier));
-//	    }
-//	    return result;
-//	}
+
 	
 	coll ArrayList<MethodDD> Program.calcDepDegrees()
 		[new ArrayList<MethodDD>()] with add root Program;
