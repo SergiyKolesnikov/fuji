@@ -7,28 +7,15 @@ aspect ReachingDefinitions {
 
         // reaching definitions
         public SmallSet<CFGNode> Access.reachingDefinitions() {
-        		//System.out.println("BAAAHH" + ((VarAccess)this).decl());
-                Location l = getLocation();
-                //Need to check if the Access is the left part of the AbstractDot?
+        		Location l = getLocation();
+                
                 if(!isSource() || l == null || (getParent() instanceof AbstractDot && !((AbstractDot)getParent()).isSource()))
                         return SmallSet.<CFGNode>empty();
                 // we don't want the node to be its own reaching definition
                 SmallSet<CFGNode> res = SmallSet.<CFGNode>empty();
-                //System.out.println("\n__ ACCESS __\n");
-            	//System.out.println("Calculating RD for: " + this + ":" + lineNumber() + ". Location: " + l);
-                //System.out.println();
-                /*for(CFGNode p : pred())
-                	System.out.println(p.toString() + " :: " + ((ASTNode)p).lineNumber() + " :: " + p.getClass());
-                System.out.println();*/
+                
                 for(CFGNode p : pred()) {
-                	//SmallSet<CFGNode> rd = p.reachingDefinitionsFor(l);
-                	//if (rd.size()!=0) {
-                		//res = SmallSet.<CFGNode>singleton((FieldDeclaration)((VarAccess)this).decl());
-                	//}// else {
-                		res = res.union(p.reachingDefinitionsFor(l));
-                //	}
-                	//System.out.println("SIZE: " + pred().size());
-                	//System.out.println("PRED: " + p + "\t LINE: " + ((ASTNode)p).lineNumber());
+               		res = res.union(p.reachingDefinitionsFor(l));
                 }
                 return res;
         }
@@ -37,23 +24,11 @@ aspect ReachingDefinitions {
             // BUG: no isField() in Variable (returned by decl())
             //if(decl().isField()) {
         		
-        		//System.out.println("VARACCESS:" + this.toString() +", Location:"+ this.lineNumber());
-        		//FieldDeclaration fd = null;
-        		//SmallSet<CFGNode> res = super.reachingDefinitions();
-                if(isFieldAccess()) {
-                	 	//System.out.println("FIELD ACCESS, RD.size:" /*+ res.size()*/);
-                		FieldDeclaration fd = (FieldDeclaration)decl();
-                    	//System.out.println("Decl:" + fd.toString() +" INIT: " + fd.hasInit());
-                        if(fd.isConstant() && fd.hasInit()) //|| (res.size()==0))
+        		if(isFieldAccess()) {
+                	 	FieldDeclaration fd = (FieldDeclaration)decl();
+                    	if(fd.isConstant() && fd.hasInit())
                                 return SmallSet.<CFGNode>singleton(fd);
-                }
-//               SmallSet<CFGNode> res = super.reachingDefinitions(); //res;
-//               if (res.contains(null)) {
-//            	   res.compl(null);
-//            	   if (fd != null)
-//            		   res.add(fd);
-//               }
-            	   
+                }            	   
                return super.reachingDefinitions();
         }
 
@@ -94,27 +69,14 @@ aspect ReachingDefinitions {
                 circular [SmallSet.<CFGNode>empty()] {
                 SmallSet<CFGNode> res = SmallSet.<CFGNode>empty();
                 if ((isReachingDefinitionFor(l)) || (this instanceof ASTNode && (ASTNode)this instanceof CFGEntry)) {
-                		//if (this.getClass() instanceof Access)
-                		//System.out.println( this + ": "+ this.lineNumber() +" - " + this.getClass() + "; is blocking " + l + ":" + l.getClass() + "? " + isBlockingDefinitionFor(l));
-                        res = SmallSet.singleton((CFGNode)this);
-                        //if(isBlockingDefinitionFor(l))
+                		res = SmallSet.singleton((CFGNode)this);
+                        //former check for blocking taken out
+                		//if(isBlockingDefinitionFor(l))
                         return res;
                 }
-            	//System.out.println("Preds of " + this.toString() + ", Number of Preds: " + pred().size() );
-              /*  System.out.println();
-                if (pred().size() == 0)
-                	System.out.println("No Pred  :: Pred of " + this.toString());
-                else {
-                	for(CFGNode p : pred())   
-                		System.out.println(p.toString() + " :: " + ((ASTNode)p).lineNumber() + " :: " + p.getClass() + ":: Pred of " + this.toString());		
-                }
-                System.out.println();*/
+            	
                 for(CFGNode p : pred())  {             	
-                		//System.out.println("SIZE: " + pred().size());
-                		//System.out.println("PRED: " + p + "\t LINE: " + ((ASTNode)p).lineNumber());
-                        res = res.union(p.reachingDefinitionsFor(l));
-                /*if (res.size() < pred().size())
-                	System.out.println("POSSIBLY NOT INITIALIZED");*/
+                		res = res.union(p.reachingDefinitionsFor(l));
                 }
                 return res;
         }
