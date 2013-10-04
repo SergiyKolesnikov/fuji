@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="zipME" default="build" basedir=".">
+
+  <property name="wtk.home" value="THE_PATH_TO_YOUR_WTK_INSTALLATION"/>
+
+  <target name="build">
+
+    <delete dir="classes"/>
+    <mkdir dir="classes"/>
+
+    <!-- Compile all files -->
+    <javac srcdir="src"
+           destdir="classes"
+           bootclasspath="${wtk.home}/lib/cldcapi10.jar:${wtk.home}/lib/midpapi10.jar"
+           source="1.4"
+           target="1.4"/>
+
+    <delete dir="lib"/>
+    <mkdir dir="lib"/>
+
+    <!-- Create a jar file -->
+    <jar destfile="lib/zipme.jar" basedir="classes">
+      <manifest>
+        <attribute name="API" value="zipME"/>
+        <attribute name="API-Name" value="zipME - Zip library for MIDP applications"/>
+        <attribute name="API-Specification-Version" value="0.9"/>
+        <attribute name="API-Type" value="Optional"/>
+        <attribute name="API-Dependencies" value="CLDC > 1.0, MIDP > 1.0"/>
+      </manifest>
+    </jar>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="classes"/>
+    <delete file="lib/zipme.jar"/>
+  </target>
+
+</project>

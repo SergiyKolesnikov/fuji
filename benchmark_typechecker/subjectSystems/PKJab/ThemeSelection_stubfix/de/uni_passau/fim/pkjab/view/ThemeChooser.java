@@ -1,0 +1,32 @@
+package de.uni_passau.fim.pkjab.view;
+import de.uni_passau.spl.bytecodecomposer.stubs.Stub;
+import java.lang.Object;
+import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
+import java.awt.Dialog;
+import javax.swing.JFrame;
+import javax.swing.JRootPane;
+import javax.swing.AbstractButton;
+import javax.swing.text.JTextComponent;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+import de.uni_passau.fim.pkjab.view.AbstractTheme;
+import java.awt.Font;
+import java.lang.String;
+import javax.swing.JColorChooser;
+import java.awt.Container;
+import java.lang.Integer;
+import javax.swing.JPanel;
+import javax.swing.JDialog;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import de.uni_passau.fim.pkjab.view.DefaultTheme;
+import javax.swing.JCheckBox;
+import java.awt.Window;
+import javax.swing.JButton;
+import de.uni_passau.fim.pkjab.view.IndividualTheme;
+public class ThemeChooser {
+}

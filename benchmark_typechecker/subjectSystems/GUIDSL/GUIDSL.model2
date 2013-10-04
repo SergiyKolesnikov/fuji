@@ -1,0 +1,52 @@
+// assumed model (all features optional except first three features and
+//                stack behavior: see below)
+GUIDSL : kernel genbali dgram
+[dmain]
+[swingutils]
+[gspec]
+[fillgs]
+[eharvest]
+[propgs]
+[printgs]
+[bexpr]
+[formgs]
+[clauselist]
+[ltms]
+[reasons]
+[guigs]
+[guiext]
+[guilisteners]
+[output]
+[dparse]
+[solver]
+[cnfFormat]
+[modelopts]
+[tool]
+[ordergs]
+[cubeInterface] :: _GUIDSL ;
+
+%% // stack behavior: feature list grows from top to bottom:
+
+cubeInterface implies ordergs ;
+ordergs implies tool ;
+tool implies modelopts ;
+modelopts implies cnfFormat ;
+cnfFormat implies solver ;
+solver implies dparse ;
+dparse implies output ;
+output implies guilisteners ;
+guilisteners implies guiext ;
+guiext implies guigs ;
+guigs implies reasons ;
+reasons implies ltms ;
+ltms implies clauselist ;
+clauselist implies formgs ;
+formgs implies bexpr ;
+bexpr implies printgs ;
+printgs implies propgs ;
+propgs implies eharvest ;
+eharvest implies fillgs ;
+fillgs implies gspec ;
+gspec implies swingutils ;
+swingutils implies dmain ;
+dmain implies dgram ;

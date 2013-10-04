@@ -1,0 +1,2 @@
+class or extends node {
+}

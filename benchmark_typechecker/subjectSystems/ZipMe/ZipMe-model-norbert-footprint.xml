@@ -1,0 +1,294 @@
+<plm name="ZipMe" canReuseInstance="true">
+  <element id="1" name="base" type="feature" optional="false" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="2" name="zipMe_compress" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>4</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+      <previous_element>
+        <id>6</id>
+      </previous_element>
+      <previous_element>
+        <id>7</id>
+      </previous_element>
+      <previous_element>
+        <id>8</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="3" name="zipMe_extract" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>2</id>
+      </previous_element>
+      <previous_element>
+        <id>4</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+      <previous_element>
+        <id>6</id>
+      </previous_element>
+      <previous_element>
+        <id>7</id>
+      </previous_element>
+      <previous_element>
+        <id>8</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="4" name="zipMe_GZIP" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+      <previous_element>
+        <id>6</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="5" name="zipMe_CRC" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="6" name="zipMe_archiveCheck" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="7" name="zipMe_adaptation" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>4</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+      <previous_element>
+        <id>6</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="8" name="zipMe_adler32Chcksum" type="feature" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement />
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order>
+      <previous_element>
+        <id>1</id>
+      </previous_element>
+      <previous_element>
+        <id>4</id>
+      </previous_element>
+      <previous_element>
+        <id>5</id>
+      </previous_element>
+      <previous_element>
+        <id>6</id>
+      </previous_element>
+      <previous_element>
+        <id>7</id>
+      </previous_element>
+    </order>
+  </element>
+  <element id="9" name="Derivative_zipMe_GZIP_zipMe_CRC" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>4</id>
+      <id>5</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="10" name="Derivative_zipMe_compress_zipMe_CRC" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>5</id>
+      <id>2</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="11" name="Derivative_zipMe_extract_zipMe_CRC" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>3</id>
+      <id>5</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="12" name="Derivative_zipMe_compress_zipMe_GZIP" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>2</id>
+      <id>4</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="13" name="Derivative_zipMe_compress_zipMe_adler32Chcksum" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>8</id>
+      <id>2</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+  <element id="14" name="Derivative_zipMe_compress_zipMe_GZIP_zipMe_CRC" type="derivative" optional="true" dynamic="true">
+    <path_absolut />
+    <path_relativ />
+    <parentElement>
+      <id>2</id>
+      <id>4</id>
+      <id>5</id>
+    </parentElement>
+    <constraints>
+      <constraint type="alternative" />
+      <constraint type="commulative" />
+      <constraint type="requires" />
+      <constraint type="excludes" />
+    </constraints>
+    <childElements />
+    <order />
+  </element>
+</plm>
