@@ -1,0 +1,44 @@
+
+aspect JavaLiveness14 {	
+
+
+	inh lazy BitSet CFGNode.emptyBitSet();
+
+	// isDead
+	syn lazy boolean CFGNode.isDead();
+    eq CFGNode.isDead() = !liveness_def().compl(liveness_out()).isEmpty();
+
+	// liveness_in : BitSet<Variable>
+	syn BitSet CFGNode.liveness_in() circular [emptyBitSet()];
+	eq CFGNode.liveness_in() = liveness_use().union(liveness_out().compl(liveness_def()));
+
+	// liveness_out : BitSet<Variable>
+    public BitSet CFGNode.liveness_out() { return coll_liveness_out(); }
+	coll BitSet CFGNode.coll_liveness_out() circular [emptyBitSet().mutable()] with add root TypeDecl;
+	Stmt contributes liveness_in() to CFGNode.coll_liveness_out() for each pred();
+	Expr contributes liveness_in() to CFGNode.coll_liveness_out() for each pred();
+	ParameterDeclaration contributes liveness_in() to CFGNode.coll_liveness_out() for each pred();
+    // Need to do this
+    protected void BodyDecl.collect_contributors_CFGNode_coll_liveness_out() {
+    	entry().collect_contributors_CFGNode_coll_liveness_out();
+    	exit().collect_contributors_CFGNode_coll_liveness_out();
+    	super.collect_contributors_CFGNode_coll_liveness_out();
+    }
+
+	// liveness_def : BitSet<Variable>
+    syn BitSet CFGNode.liveness_def();
+    eq Stmt.liveness_def() = emptyBitSet().mutable();
+    eq Expr.liveness_def() = emptyBitSet().mutable();
+    eq FieldDeclaration.liveness_def() = emptyBitSet().mutable();
+    eq VarAccess.liveness_def() = isDest() ? emptyBitSet().mutable().union(decl()) : 
+        emptyBitSet().mutable();
+    eq VariableDeclaration.liveness_def() = emptyBitSet().mutable().union(this);
+    eq ParameterDeclaration.liveness_def() = emptyBitSet().mutable().union(this);
+
+	// liveness_use : BitSet<Variable>
+    syn BitSet CFGNode.liveness_use() = emptyBitSet().mutable();
+    eq VarAccess.liveness_use() = 
+        isSource() ? emptyBitSet().mutable().union(decl()) : emptyBitSet().mutable();
+    eq ClassInstanceExpr.liveness_use() = anonymousUses();
+
+}

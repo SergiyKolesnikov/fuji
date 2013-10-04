@@ -1,0 +1,21 @@
+
+class Test {
+
+	void m() {
+		class VD {
+			private int a = 1+1;
+			public VD(int a, int b) {
+				this.a = a; 
+				this.a = b;
+			}
+		}
+		
+		VD vd = new VD(2+3, 4*5){
+			void v2(){ 
+				int a = 0;
+			}			
+		};
+	
+	}
+	
+}

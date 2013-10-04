@@ -1,0 +1,23 @@
+
+public class Test {
+
+	void m7() {
+		int a = 0;		
+		while (a > 0) {
+			int b;
+			try {
+				int c;
+				if (a > 0) {
+					int d;
+					continue;
+				}
+				int e;
+			}
+			finally {
+				int f;
+			}
+			int g;
+		}
+		int h;
+	}
+}

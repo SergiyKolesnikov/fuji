@@ -1,0 +1,8 @@
+
+public class Test {
+
+	Test() {
+		int a = 0;
+	}
+
+}

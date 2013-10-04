@@ -1,0 +1,6 @@
+
+class Test {
+
+	// field, has no control flow for stmts (but for expressions)
+	int a = 0;
+}

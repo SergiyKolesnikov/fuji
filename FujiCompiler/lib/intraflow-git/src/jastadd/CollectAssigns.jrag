@@ -1,0 +1,41 @@
+
+aspect CollectAssigns {
+
+	coll SmallSet<Stmt> CompilationUnit.allAssigns() 
+		[SmallSet.mutable()] with add root CompilationUnit;
+
+	ExprStmt contributes this 
+		when !def().isEmpty() && includeInDeadAssignAnalysis()
+		to CompilationUnit.allAssigns()
+		for enclosingCompilationUnit();
+
+	VariableDeclaration contributes this 
+		when /*hasInit() && */includeInDeadAssignAnalysis()
+		to CompilationUnit.allAssigns()
+		for enclosingCompilationUnit();
+
+
+	syn String Stmt.liveness_printDefNames() {
+		StringBuffer buf = new StringBuffer();
+		Iterator itr = def().iterator();
+		while (itr.hasNext()) {
+			Variable var = (Variable)itr.next();
+			buf.append(var.name() + ":");
+		}
+		return buf.toString();
+	}
+}
+
+
+aspect CollectMethodSize {
+
+	coll SmallSet<BodyDecl> CompilationUnit.descendingBodyDecls() 
+		[SmallSet.mutable()] with add root CompilationUnit;
+
+	inh CompilationUnit BodyDecl.enclosingCompilationUnit();
+
+	BodyDecl contributes this 
+		to CompilationUnit.descendingBodyDecls() 
+		for enclosingCompilationUnit();
+
+}

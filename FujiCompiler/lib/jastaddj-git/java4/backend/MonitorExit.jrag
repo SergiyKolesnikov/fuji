@@ -1,0 +1,16 @@
+/*
+ * The JastAdd Extensible Java Compiler (http://jastadd.org) is covered
+ * by the modified BSD License. You should have received a copy of the
+ * modified BSD license with this compiler.
+ *
+ * Copyright (c) 2013, Jesper Öqvist <jesper.oqvist@cs.lth.se>
+ * All rights reserved.
+ */
+
+aspect MonitorExit {
+  syn lazy int MonitorExit.handler_label() = hostType().constantPool().newLabel();
+
+  syn lazy int MonitorExit.handler_end_label() = hostType().constantPool().newLabel();
+
+  syn lazy int MonitorExit.end_label() = hostType().constantPool().newLabel();
+}

@@ -1,0 +1,62 @@
+
+aspect Candidates {
+
+	coll SmallSet<CFGNode> CompilationUnit.candidates() 
+		[SmallSet.mutable()] with add root CompilationUnit;
+
+	VarAccess contributes this 
+		when includeInDeadAssignAnalysis()
+		to CompilationUnit.candidates()
+		for enclosingCompilationUnit();
+
+	VariableDeclaration contributes this 
+		when includeInDeadAssignAnalysis()
+		to CompilationUnit.candidates()
+		for enclosingCompilationUnit();
+
+
+/*
+    protected int VarAccess.oldStart = -1;
+    public ASTNode VarAccess.setStart(int i) {
+        if (oldStart < 0)
+            oldStart = start;
+        return super.setStart(i);
+    }
+
+    class LineSymbol extends Symbol {
+        protected int startLine = 0;
+        public LineSymbol(short id, int start_line, int start_column, int length, Object value) {
+            super(id, start_line, start_column, length, value);
+            startLine = start_line;
+        }
+        public int startLine() {
+            return startLine;
+        }
+    }
+*/
+
+    public String VarAccess.printCandidate() {
+        StringBuffer buf = new StringBuffer();
+       	String packageName = hostType().fullName();
+		int index = packageName.indexOf(".Anonymous");
+		if (index != -1) {
+			packageName = packageName.substring(0, index);
+		}
+        buf.append(packageName + ":" + location() + ":" + getID() + "(VarAccess)");
+        return buf.toString();
+    }
+
+    public String VariableDeclaration.printCandidate() {
+        StringBuffer buf = new StringBuffer();
+       	String packageName = hostType().fullName();
+		int index = packageName.indexOf(".Anonymous");
+		if (index != -1) {
+			packageName = packageName.substring(0, index);
+		}
+        buf.append(packageName + ":" + location() + ":" + getID());
+        return buf.toString();
+    }
+
+}
+
+

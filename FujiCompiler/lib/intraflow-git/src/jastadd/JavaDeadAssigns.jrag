@@ -1,0 +1,43 @@
+
+aspect JavaDeadAssigns {
+
+	// enclosingCompilationUnit : CompilationUnit
+	inh lazy CompilationUnit CFGNode.enclosingCompilationUnit();
+	eq CompilationUnit.getChild(int i).enclosingCompilationUnit() = this;
+
+	// def : BitSet<Variable>
+	coll BitSet CFGNode.def() [emptyBitSet().mutable()] with add root BodyDecl;
+	VarAccess contributes decl() when isDest() to CFGNode.def() for this; 
+	VariableDeclaration contributes this  to CFGNode.def() for this;
+	ParameterDeclaration contributes this to CFGNode.def() for this;
+
+	// deadAssignments : SmallSet<CFGNode>
+	coll SmallSet<CFGNode> CompilationUnit.deadAssignments() 
+		[SmallSet.mutable()] with add root CompilationUnit;
+	VarAccess contributes this when includeInDeadAssignAnalysis() && isDeadAssign() 
+		to CompilationUnit.deadAssignments() for enclosingCompilationUnit();
+	VariableDeclaration contributes this 
+		when includeInDeadAssignAnalysis() && isDeadAssign()
+		to CompilationUnit.deadAssignments() for enclosingCompilationUnit();
+
+    // includeInDeadAssignAnalyis : boolean
+	syn lazy boolean CFGNode.includeInDeadAssignAnalysis() = false;
+    eq VarAccess.includeInDeadAssignAnalysis() = isDest() && isLocalStore();
+    eq VariableDeclaration.includeInDeadAssignAnalysis() = 
+        hasInit() && isLocalVariable() && !isConstant();
+
+    // isConstant : boolean
+	syn lazy boolean VariableDeclaration.isConstant() =
+		isFinal() && hasInit() && getInit().isConstant() && 
+		(type().isPrimitive() || type().isString());
+
+
+	// Connect to liveness analysis
+
+    // isDeadAssign : boolean
+    syn lazy boolean CFGNode.isDeadAssign() = false;
+    eq VarAccess.isDeadAssign() = isDead(); 
+    eq VariableDeclaration.isDeadAssign() = isDead(); 
+
+}
+

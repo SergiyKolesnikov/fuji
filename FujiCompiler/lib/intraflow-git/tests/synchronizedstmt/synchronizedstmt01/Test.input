@@ -1,0 +1,9 @@
+
+class Test {
+
+    void m() {
+        String s = "";
+		synchronized (s="aaa") { s = "bbb"; }
+    }
+
+}

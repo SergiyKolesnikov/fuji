@@ -1,8 +1,4 @@
-package fuji;
-
 import java.util.HashSet;
-
-import AST.SimpleSet;
 
 /**
  * Keeps info about:
@@ -13,6 +9,8 @@ import AST.SimpleSet;
  * 
  * Used by ExtendedTypeCheck.jrag
  */
+aspect TypeErrorInfo {
+
 public class TypeErrorInfo {
 
     /* Accesses to implementations of a certain type */
@@ -57,4 +55,5 @@ public class TypeErrorInfo {
     public void setUnqualifiedAccess(boolean isUnqualifiedAccess) {
         this.isUnqualifiedAccess = isUnqualifiedAccess;
     }
+}
 }

@@ -95,8 +95,8 @@ aspect Refs {
     }
     
     public void InterfaceDecl.printRefs(java.util.List<String> featureModulePathnames) {
-        if (getSuperInterfaceIdList().getNumChild() != 0) {
-            List<Access> ext = getSuperInterfaceIdList();
+        if (getSuperInterfaceList().getNumChild() != 0) {
+            List<Access> ext = getSuperInterfaceList();
             for (int i = 0; i < ext.getNumChild(); ++i) { // getNumChild with trasform OK
                 Access ac = ext.getChild(i); // getChild with trasform OK
                 String featureName = new File(featureModulePathnames.get(featureID())).getName();
@@ -119,8 +119,8 @@ aspect Refs {
     }
     
     public void ClassDecl.printRefs(java.util.List<String> featureModulePathnames) {
-        if (hasSuperClassAccess()) {
-            Opt<Access> ext = getSuperClassAccessOpt();
+        if (hasSuperClass()) {
+            Opt<Access> ext = getSuperClassOpt();
             for (int i = 0; i < ext.getNumChild(); ++i) { // getNumChild with transform is OK.
                 Access ac = ext.getChild(i); // getChild with transform is OK.
                 String featureName = new File(featureModulePathnames.get(featureID())).getName();
@@ -300,8 +300,11 @@ aspect Refs {
      * If not in the refs printing mod, act normal.
      */
     refine VariableScopePropagation eq VarAccess.decl() {
-        boolean allowMultDecls = getProgram().options()
-            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        boolean allowMultDecls = false;
+        Program p = getProgram();
+        if (p != null) {
+            allowMultDecls = p.options().hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        }
         SimpleSet decls = decls();
         if (allowMultDecls && decls.size() >= 1) {
             Variable var = null;
@@ -329,8 +332,11 @@ aspect Refs {
      * If not in the refs printing mod, act normal.
      */
     refine GenericsTypeAnalysis eq TypeAccess.decl() {
-        boolean allowMultDecls = getProgram().options()
-            .hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        boolean allowMultDecls = false;
+        Program p = getProgram();
+        if (p != null) {
+            allowMultDecls = p.options().hasOption(IntrosRefsUtil.ALLOW_MULTIPLE_DECLARATIONS);
+        }
         SimpleSet decls = decls();
         TypeDecl decl = null;
         if(allowMultDecls && decls.size() >= 1) {
@@ -444,12 +450,19 @@ aspect IntrosRefsUtil {
 
         /*
          * Calculates a visible enclosing type for the given type declaration.
+         * 
          * The enclosing types are processed recursively untill the first
-         * non-anonymous and not-nested type (i.e. visible type) is found.
+         * non-anonymous and non-nested type (i.e., visible type) is found.
+         * 
+         * Type variables used in generic expressions 
+         * are also considered invisible.  Thus in the example
+         *   class Main<T extends Integer> {}
+         * Integer is referenced by Main and not by T.
          */
         public static TypeDecl visibleHostType(TypeDecl td) {
-            while (td.isAnonymous() || td.isLocalClass())
+            while (td.isAnonymous() || td.isLocalClass() || td.isTypeVariable()) {
                 td=td.enclosingType();
+            }
             return td;
         }
 
@@ -467,7 +480,6 @@ aspect IntrosRefsUtil {
             source.append(typeDeclQName(host));
             BodyDecl enclosing = expr.enclosingBodyDecl();
             if (enclosing != null) {
-                // TODO else if branch for FieldDecl
                 if (enclosing instanceof MethodDecl) {
                     MethodDecl enclosingMD = (MethodDecl) enclosing;
                     source.append(DELIM_METHOD);

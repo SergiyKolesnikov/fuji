@@ -1,0 +1,18 @@
+
+class Test {
+
+    void m() {
+        int a = 0;
+        try {
+            a = mm();
+        } catch (Exception e) {
+            a = 2;
+        }
+        a = 3;
+    }
+
+    int mm () throws Exception {
+        throw new Exception("");
+    }
+
+}

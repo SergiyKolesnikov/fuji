@@ -1,0 +1,1 @@
+Testing break-finally(throw)-target, throw in finally overrides break

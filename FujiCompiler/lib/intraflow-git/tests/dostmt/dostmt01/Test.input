@@ -1,0 +1,12 @@
+
+class Test {
+
+    void m() {
+        boolean a = false;
+		do {
+			int b;
+		} while (a);
+		int c;
+    }
+
+}

@@ -1,0 +1,8 @@
+
+class Test {
+
+	{
+		for(;;)
+			break;
+	}
+}

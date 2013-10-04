@@ -1,0 +1,11 @@
+aspect CFGGraph {
+	/*public interface DotGraphNode {
+		public int getDotId();
+		public void setDotId();
+	}
+	 
+	Stmt implements CFGNode;
+	Expr implements CFGNode;
+	ParameterDeclaration implements CFGNode;
+	FieldDeclaration implements CFGNode;*/
+}

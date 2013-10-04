@@ -1,0 +1,19 @@
+
+CFGStmt : EmptyStmt;
+CFGExit : EmptyStmt;
+CFGEntry : EmptyStmt;
+
+/*
+ForCFGStmt : CFGStmt;
+WhileCFGStmt : CFGStmt;
+DoCFGStmt : CFGStmt;
+IfCFGStmt : CFGStmt;
+SwitchCFGStmt : CFGStmt;
+SynchronizedCFGStmt : CFGStmt;
+ConstCaseCFGStmt : CFGStmt;
+AssertCFGStmt : CFGStmt;
+ReturnCFGStmt : CFGStmt; 
+ThrowCFGStmt : CFGStmt;
+
+EnhancedForExprStmt : CFGStmt;
+*/

@@ -1,8 +1,19 @@
 import fuji.SPLStructure;
 
 aspect Utils {
-    /* Allows every node to access the program node. */
-    syn Program ASTNode.getProgram() = getParent().getProgram();
+    /* 
+     * Allows every node to access the program node.  The attribute may return 
+     * null (e.g., on newly created nodes that have not been linked to the AST 
+     * yet).
+     */
+    syn Program ASTNode.getProgram() {
+        ASTNode parent = getParent();
+        if (parent != null) {
+            return parent.getProgram();
+        } else {
+            return null;
+        }
+    }
     eq Program.getProgram() = this;
     
     /*

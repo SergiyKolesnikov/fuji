@@ -1,0 +1,12 @@
+
+class Test {
+
+	{
+		boolean a = false;
+		while (a) {
+			int b;
+			break;
+		}
+		int c;
+	}
+}

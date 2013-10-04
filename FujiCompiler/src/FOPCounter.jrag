@@ -261,13 +261,29 @@ aspect AccessAnalyzer {
                        .equals(source.hostType().hostPackage())) {
                 minOOPModifier = "package";
             }
-            if (minOOPModifier == null &&
-                source.hostType().subclassWithinBody(target.hostType())
-                != null) {
-                minOOPModifier = "protected";
-            } else if (minOOPModifier == null) {
-                minOOPModifier = "public";
-            }
+	    
+	    if (true)
+	        throw new UnsupportedOperationException("The implementation is broken by changes in the latest JastAddJ.  See FOPCounter.jrag source for more info.");
+            /* From JastAddJ changelog:
+         2012-03-06 (JO)
+         Removed the TypeDecl.subclassWithinBody(TypeDecl) method since the
+         purpose of that method was to find an enclosing class inheriting from a
+         given superclass C while determining member accessibility.
+         Only looking at the directly enclosing subclass of C is not sufficient to
+         determine the accessibility of the field or method - all enclsing classes
+         must be checked until one that can access the member is found.
+         This is the puprpose of the new methods
+         TypeDecl.mayAccess(Expr, FieldDeclaration)
+         TypeDecl.mayAccess(MethodAccess, MethodDecl)
+
+	     * if (minOOPModifier == null &&
+             *     source.hostType().subclassWithinBody(target.hostType())
+             *     != null) {
+             *     minOOPModifier = "protected";
+             * } else if (minOOPModifier == null) {
+             *     minOOPModifier = "public";
+             * }
+             */
 
             String minFOPModifier = null;
             if (source.featureID() != -1 && target.featureID() != -1) {

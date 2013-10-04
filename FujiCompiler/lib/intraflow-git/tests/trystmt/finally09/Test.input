@@ -1,0 +1,18 @@
+
+public class Test {
+
+	void m9() {
+		try {	
+			int a;
+			throw new TestException();
+		} catch (TestException e) {
+			int b;
+		} finally {
+			int c;
+		}
+		int d;
+	}
+}
+
+class TestException extends Exception {
+}

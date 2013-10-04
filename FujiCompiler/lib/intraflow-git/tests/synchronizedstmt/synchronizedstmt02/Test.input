@@ -1,0 +1,8 @@
+
+class Test {
+
+    synchronized void m() {
+        int a = 2;
+    }
+
+}

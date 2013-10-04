@@ -1,0 +1,12 @@
+
+class Test {
+
+    void m() {
+        int a = 0;
+        while (a < 10) {
+            a++;
+        }
+        int b = 0;
+    }
+
+}

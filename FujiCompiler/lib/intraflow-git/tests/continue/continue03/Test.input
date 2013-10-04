@@ -1,0 +1,15 @@
+
+class Test {
+
+	{	
+		int a = 0;
+		int b = 0;
+		outer:
+		while (a > 0) {
+			inner:
+			while (b > 0) {
+				continue outer;
+			}					
+		}
+	}
+}

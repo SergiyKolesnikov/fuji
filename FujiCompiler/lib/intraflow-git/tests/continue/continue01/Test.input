@@ -1,0 +1,10 @@
+
+class Test {
+
+	{
+		int a = 0;
+		while (a > 0) {
+			continue;
+		}
+	}
+}

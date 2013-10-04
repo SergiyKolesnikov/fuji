@@ -1,0 +1,7 @@
+
+interface Test {
+	
+	// static field, has no control flow for stmts (but for expressions)
+	static int a = 0;
+
+}

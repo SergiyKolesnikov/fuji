@@ -1,0 +1,13 @@
+
+class Test {
+
+	void m() throws TestException {
+		boolean b = false;
+		if (b) {
+			throw new TestException();
+		}
+	}
+}
+
+class TestException extends Exception {
+}

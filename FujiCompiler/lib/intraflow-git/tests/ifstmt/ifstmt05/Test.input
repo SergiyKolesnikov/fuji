@@ -1,0 +1,15 @@
+
+class Test {
+
+    void m() {
+		if (true) {
+			int j;
+		} else if (true) {
+			int k;
+		} else {
+			int l;
+		}
+    }
+}
+
+

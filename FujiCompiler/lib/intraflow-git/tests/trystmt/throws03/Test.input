@@ -1,0 +1,17 @@
+
+class Test {
+
+	void m() throws TestException {
+		boolean b = false;
+		try {
+			if (b) {
+				throw new TestException();
+			}
+		} catch (TestException e) {
+			throw new TestException();
+		}
+	}
+}
+
+class TestException extends Exception {
+}

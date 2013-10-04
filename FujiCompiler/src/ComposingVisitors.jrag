@@ -92,12 +92,12 @@ aspect ComposingVisitorNormal {
              * 'extends' in the interface declaration. Preserving Accesses of
              * the base type.
              */
-            if (featND.getSuperInterfaceIdListNoTransform()
+            if (featND.getSuperInterfaceListNoTransform()
                 .getNumChild() != 0) { // getNumChild with trasform OK
                 List<Access> featSup =
-                    featND.getSuperInterfaceIdListNoTransform();
+                    featND.getSuperInterfaceListNoTransform();
                 List<Access> baseSup =
-                    baseND.getSuperInterfaceIdListNoTransform();
+                    baseND.getSuperInterfaceListNoTransform();
                 for (int i = 0; i < featSup.getNumChild(); ++i) { // getNumChild with trasform OK
                     Access ac = featSup.getChild(i); // getChild with trasform OK
 
@@ -271,12 +271,12 @@ aspect ComposingVisitorNormal {
 //            }
 
             /* SuperClassAccess. 'extends' in the class declaration. */
-            if (featCD.hasSuperClassAccess()) {
+            if (featCD.hasSuperClass()) {
 
                 /* Feature SuperClassAccess overrides that of the base. */
-                Opt<Access> sup = featCD.getSuperClassAccessOptNoTransform();
+                Opt<Access> sup = featCD.getSuperClassOptNoTransform();
                 sup.setOldParent(sup.getParent());
-                baseCD.setSuperClassAccessOpt(sup);
+                baseCD.setSuperClassOpt(sup);
             }
 
             /* Implements */
@@ -723,12 +723,12 @@ aspect ComposingVisitorRSF {
              *'extends' in the interface declaration. Preserving Accesses of
              * the base type.
              */
-            if (featND.getSuperInterfaceIdListNoTransform()
+            if (featND.getSuperInterfaceListNoTransform()
                 .getNumChild() != 0) { // getNumChild with trasform OK
                 List<Access> featSup =
-                    featND.getSuperInterfaceIdListNoTransform();
+                    featND.getSuperInterfaceListNoTransform();
                 List<Access> baseSup =
-                    baseND.getSuperInterfaceIdListNoTransform();
+                    baseND.getSuperInterfaceListNoTransform();
 
                 for (int i = 0; i < featSup.getNumChild(); ++i) { // getNumChild with trasform OK
                     Access ac = featSup.getChild(i); // getChild with trasform OK
@@ -828,19 +828,19 @@ aspect ComposingVisitorRSF {
 //            }
 
             /* SuperClassAccess. 'extends' in the class declaration. */
-            if (featCD.hasSuperClassAccess()) {
-                if (baseCD.hasSuperClassAccess()) {
+            if (featCD.hasSuperClass()) {
+                if (baseCD.hasSuperClass()) {
 
                     /*
                      * Preserve the SuperClassAccess of the base type for later 
                      * use (e.g. in refs generation).
                      */
-                    Access baseSup = baseCD.getSuperClassAccess();
+                    Access baseSup = baseCD.getSuperClass();
                     baseCD.addPreservedSuperClassAccess(baseSup);
                 }
-                Access featSup = featCD.getSuperClassAccess();
+                Access featSup = featCD.getSuperClass();
                 featSup.setOldParent(featSup.getParent());
-                baseCD.setSuperClassAccess(featSup);
+                baseCD.setSuperClass(featSup);
             }
 
             /* Implements */

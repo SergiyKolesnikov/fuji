@@ -1,0 +1,23 @@
+
+class Test {
+
+	void m() {
+		try {
+			try {
+				int a;
+				throw new TestException();
+			} catch (TestSubException e) {
+				int b;
+				throw new TestSubException();
+			}
+		} catch (TestException e) {
+			int c;
+		}
+	}
+}
+
+class TestException extends Exception {
+}
+
+class TestSubException extends TestException {
+}

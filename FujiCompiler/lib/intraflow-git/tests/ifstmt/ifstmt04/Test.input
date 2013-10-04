@@ -1,0 +1,16 @@
+
+class Test {
+
+    void m() {
+		if (true) {
+			if (true) {
+				if (true) {
+					int h;
+				}
+			}
+			int i;
+		}
+    }
+}
+
+

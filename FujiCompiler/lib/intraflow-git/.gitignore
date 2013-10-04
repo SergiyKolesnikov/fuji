@@ -1,0 +1,12 @@
+/bin
+/src/gen
+/src/tmp
+/doc
+/jastaddj-*.zip
+/jastaddj*.jar
+/fileset.tmp
+
+# temporary files
+/tmp
+/testoutput
+TEST*.xml

@@ -1,0 +1,39 @@
+
+import java.io.*;
+
+class Test {
+
+    void m() throws Exception {
+        File outFile = new File("hhk");
+        boolean b = false;
+        OutputStream out = null;
+        try {
+            out = new java.io.FileOutputStream(outFile);
+            out = new BufferedOutputStream(out);
+        }
+        catch (Exception ex) {
+          throw new Exception("Failed to open " + outFile, ex);
+        }
+        boolean success = false;
+        try {
+            System.out.println(out);
+        }
+        catch (Exception ex) {
+            if(b) {
+                throw new Exception(ex);
+            }
+            throw ex;
+        }
+        finally {
+          try {
+            out.close();
+          }
+          catch (IOException ioe) {
+            System.out.println("Error closing output file");
+          }
+          if(!success) {
+            outFile.delete();
+          }
+        }
+    }
+}

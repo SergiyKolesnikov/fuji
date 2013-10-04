@@ -1,0 +1,13 @@
+
+class Test {
+
+	{
+		boolean a = false;
+		outer:
+		while (true) {
+			if (a)
+				break outer;
+		}
+		int b;
+	}
+}

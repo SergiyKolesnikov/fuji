@@ -1,0 +1,100 @@
+aspect DumpDotGraph {
+	public String ASTNode.dumpASTDotGraph() {
+		StringBuffer s = new StringBuffer();
+		s.append("digraph {\n").append("    node [shape=box];\n");
+		dotId = 2;
+		int lastId = dumpASTDotGraph(s, dotId);
+		s.append(subGraphs());
+		s.append("}");
+		return s.toString();
+	}
+	
+	public String BodyDecl.dumpDotGraph() {
+		StringBuffer s = new StringBuffer();
+		s.append("    node [shape=box];\n");
+		
+		entry().setDotId(0);
+		entry().dumpASTDotGraph(s, entry().getDotId());
+		exit().setDotId(1);
+		exit().dumpASTDotGraph(s, exit().getDotId());
+		
+		this.dotId = 2;
+		int lastId = dumpASTDotGraph(s, dotId);
+		
+		s.append("    ").append(entry().nodeName()).append(" -> ").append(nodeName()).append(" [dir=none]\n");
+		s.append("    ").append(exit().nodeName()).append(" -> ").append(nodeName()).append(" [dir=none]\n");
+		
+		s.append(test.TestUtil.printCFG(this));
+		s.append(subGraphs());
+		return s.toString();
+	}
+
+	protected int ASTNode.dotId = -1;
+	
+	public void ASTNode.setDotId(int id) {
+		dotId = id;
+	}
+	
+	syn int Stmt.getDotId() = dotId;
+	syn int Expr.getDotId() = dotId;
+	syn int ParameterDeclaration.getDotId() = dotId;
+	syn int FieldDeclaration.getDotId() = dotId;
+	
+	public int ASTNode.dumpASTDotGraph(StringBuffer s, int lastId) {
+		s.append("    ").append(nodeName()).append(" [");
+		s.append(dotAttributes()).append("];\n");
+		for(int i = 0; i < getNumChild(); i++) {
+			appendTreeEdge(s, i, ++lastId);
+			lastId = getChild(i).dumpASTDotGraph(s, lastId);
+		}
+		return lastId;
+	}
+	
+	syn String ASTNode.nodeName() = "n" + dotId;
+	syn String ASTNode.dotAttributes() = "label=\"" + dumpString() + '\"';
+	syn String Stmt.dotAttributes() = "shape=record, label=\"<name> " + dumpString() + " | {<pred> pred | <succ> succ}\"";
+	syn String Expr.dotAttributes() = "shape=record, label=\"<name> " + dumpString() + " | {<pred> pred | <succ> succ}\"";
+	syn String ParameterDeclaration.dotAttributes() = "shape=record, label=\"<name> " + dumpString() + " | {<pred> pred | <succ> succ}\"";
+	syn String FieldDeclaration.dotAttributes() = "shape=record, label=\"<name> " + dumpString() + " | {<pred> pred | <succ> succ}\"";
+	syn String CFGEntry.dotAttributes() = "shape=ellipse, label=\"" + dumpString() + "\"";
+	syn String CFGExit.dotAttributes() = "shape=ellipse, label=\"" + dumpString() + "\"";
+	
+	public void ASTNode.appendTreeEdge(StringBuffer s, int childIndex, int childId) {
+		s.append("    ").append(nodeName()).append(" -> ");
+		getChild(childIndex).appendNodeId(s, childId);
+		s.append(" [style=dotted,weight=10];\n");
+	}
+	
+	public void ASTNode.appendNodeId(StringBuffer s, int childId) {
+		dotId = childId;
+		s.append(nodeName());
+	}
+
+	//Compute rank subgraphs
+	public String ASTNode.subGraphs() {
+		ArrayList<Set<String>> list = new ArrayList<Set<String>>();
+		subGraphs(list, 0);
+		StringBuffer s = new StringBuffer(entryExitRank());
+		for (Set<String> set : list) {
+			if (set.size() > 1) {
+				s.append("    {rank = same; ");
+				for (String str : set)
+					s.append(str).append("; ");
+				s.append("}\n");
+			}
+		}
+		return s.toString();
+	}
+	
+	syn lazy String ASTNode.entryExitRank() = "";
+	syn String BodyDecl.entryExitRank() = "    {rank = same; " + entry().nodeName() + "; " + exit().nodeName() + "; " + nodeName() + "; }\n";
+	
+	public void ASTNode.subGraphs(ArrayList<Set<String>> list, int level) {
+		if (level >= list.size())
+			list.add(new TreeSet<String>());
+		list.get(level).add(nodeName());
+		for (int i = 0; i < getNumChild(); i++)
+			getChild(i).subGraphs(list, level + 1);
+	}
+
+}

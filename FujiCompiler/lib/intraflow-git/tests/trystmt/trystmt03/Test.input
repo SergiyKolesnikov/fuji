@@ -1,0 +1,24 @@
+package test.trystmt;
+
+class TryStmtTest3 {
+
+    void m() {
+        int a = 0;
+        try {
+            try {
+                a = 2 + mm();
+            } catch (NumberFormatException f) {
+                a = 5;
+            } 
+            a = mm();
+        } catch (Exception e) {
+            a = 2;
+        }
+        a = 3;
+    }
+
+    int mm () throws Exception {
+        throw new Exception("");
+    }
+
+}

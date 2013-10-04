@@ -1,0 +1,17 @@
+
+import java.util.*;
+
+class Test {
+
+	void m() {
+		Collection<String> coll = new LinkedList<String>();
+		for (String str : coll) {
+			int a = 5;
+			if (str.equals(""))
+				break;
+			int b= 9;
+		}
+		int c;
+        c = 4;
+	}
+}

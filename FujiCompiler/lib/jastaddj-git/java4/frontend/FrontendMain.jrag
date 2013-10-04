@@ -1,0 +1,231 @@
+/* Copyright (c) 2005-2008, Torbjorn Ekman
+ *                    2013, Jesper Öqvist <jesper.oqvist@cs.lth.se>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Lund University nor the names of its
+ *       contributors may be used to endorse or promote products derived from
+ *       this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import org.jastadd.util.*;
+
+aspect FrontendMain {
+  protected long Program.javaParseTime;
+  protected long Program.bytecodeParseTime;
+  protected long Program.codeGenTime;
+  protected long Program.errorCheckTime;
+  protected int Program.numJavaFiles;
+  protected int Program.numClassFiles;
+
+  /**
+   * Abstract Java compiler frontend.
+   */
+  public abstract class Frontend {
+    protected Program program;
+
+    protected Frontend() {
+      program = new Program();
+      program.state().reset();
+    }
+
+    public boolean process(String[] args, BytecodeReader reader, JavaParser parser) {
+
+      // reset statistics
+      program.javaParseTime = 0;
+      program.bytecodeParseTime = 0;
+      program.codeGenTime = 0;
+      program.errorCheckTime = 0;
+      program.numJavaFiles = 0;
+      program.numClassFiles = 0;
+
+      program.initBytecodeReader(reader);
+      program.initJavaParser(parser);
+
+      initOptions();
+      processArgs(args);
+
+      Collection files = program.options().files();
+
+      if(program.options().hasOption("-version")) {
+        printVersion();
+        return true;
+      }
+
+      if(program.options().hasOption("-help") || files.isEmpty()) {
+        printUsage();
+        return true;
+      }
+
+      try {
+        for(Iterator iter = files.iterator(); iter.hasNext(); ) {
+          String name = (String)iter.next();
+          if(!new File(name).exists())
+            System.err.println("WARNING: file \"" + name + "\" does not exist");
+          program.addSourceFile(name);
+        }
+
+        Iterator<CompilationUnit> iter = program.compilationUnitIterator();
+        while (iter.hasNext()) {
+          if (!processCompilationUnit(iter.next())) {
+            return false;
+          }
+        }
+
+        // fill in library dependencies
+        RobustMap<String, CompilationUnit> valueMap =
+          (RobustMap<String, CompilationUnit>) program.getLibCompilationUnitValueMap();
+        if (valueMap != null) {
+          iter = valueMap.robustValueIterator();
+          while (iter.hasNext()) {
+            if (!processCompilationUnit(iter.next())) {
+              return false;
+            }
+          }
+        }
+
+      } catch (Throwable t) {
+        System.err.println("Errors:");
+        System.err.println("Fatal exception:");
+        t.printStackTrace(System.err);
+        return false;
+      } finally {
+        if (program.options().hasOption("-profile")) {
+          System.out.println("javaParseTime: " + program.javaParseTime);
+          System.out.println("numJavaFiles: " + program.numJavaFiles);
+          System.out.println("bytecodParseTime: " + program.javaParseTime);
+          System.out.println("numClassFiles: " + program.numClassFiles);
+          System.out.println("errorCheckTime: " + program.errorCheckTime);
+          System.out.println("codeGenTime: " + program.codeGenTime);
+        }
+      }
+      return true;
+    }
+
+    protected boolean processCompilationUnit(CompilationUnit unit) {
+      long start;
+
+      if (unit != null && unit.fromSource()) {
+        try {
+          Collection errors = unit.parseErrors();
+          Collection warnings = new LinkedList();
+          // compute static semantic errors when there are no parse errors
+          // or the recover from parse errors option is specified
+          if(errors.isEmpty() || program.options().hasOption("-recover")) {
+            start = System.nanoTime();
+            unit.errorCheck(errors, warnings);
+            program.errorCheckTime += System.nanoTime() - start;
+          }
+          if(!errors.isEmpty()) {
+            processErrors(errors, unit);
+            return false;
+          } else {
+            if(!warnings.isEmpty()) {
+              processWarnings(warnings, unit);
+            }
+            start = System.nanoTime();
+            processNoErrors(unit);
+            program.codeGenTime += System.nanoTime() - start;
+          }
+        } catch (Throwable t) {
+          System.err.println("Errors:");
+          System.err.println("Fatal exception while processing " +
+              unit.pathName() + ":");
+          t.printStackTrace(System.err);
+          return false;
+        }
+      }
+      return true;
+    }
+
+    protected void initOptions() {
+      Options options = program.options();
+      options.initOptions();
+      options.addKeyOption("-version");
+      options.addKeyOption("-print");
+      options.addKeyOption("-g");
+      options.addKeyOption("-g:none");
+      options.addKeyOption("-g:lines,vars,source");
+      options.addKeyOption("-nowarn");
+      options.addKeyOption("-verbose");
+      options.addKeyOption("-deprecation");
+      options.addKeyValueOption("-classpath");
+      options.addKeyValueOption("-cp");
+      options.addKeyValueOption("-sourcepath");
+      options.addKeyValueOption("-bootclasspath");
+      options.addKeyValueOption("-extdirs");
+      options.addKeyValueOption("-d");
+      options.addKeyValueOption("-encoding");
+      options.addKeyValueOption("-source");
+      options.addKeyValueOption("-target");
+      options.addKeyOption("-help");
+      options.addKeyOption("-O");
+      options.addKeyOption("-J-Xmx128M");
+      options.addKeyOption("-recover");
+      options.addKeyOption("-profile"); // output profiling information
+    }
+    protected void processArgs(String[] args) {
+      program.options().addOptions(args);
+    }
+
+    protected void processErrors(Collection errors, CompilationUnit unit) {
+      System.err.println("Errors:");
+      for(Iterator iter2 = errors.iterator(); iter2.hasNext(); ) {
+        System.err.println(iter2.next());
+      }
+    }
+
+    protected void processWarnings(Collection warnings, CompilationUnit unit) {
+      System.err.println("Warnings:");
+      for(Iterator iter2 = warnings.iterator(); iter2.hasNext(); ) {
+        System.err.println(iter2.next());
+      }
+    }
+
+    protected void processNoErrors(CompilationUnit unit) {
+    }
+
+    protected void printUsage() {
+      System.out.println(name() + " " + version());
+      System.out.println(
+          "\n" +
+          "Usage: java " + name() + " <options> <source files>\n" +
+          "  -verbose                  Output messages about what the compiler is doing\n" +
+          "  -classpath <path>         Specify where to find user class files\n" +
+          "  -sourcepath <path>        Specify where to find input source files\n" +
+          "  -bootclasspath <path>     Override location of bootstrap class files\n" +
+          "  -extdirs <dirs>           Override location of installed extensions\n" +
+          "  -d <directory>            Specify where to place generated class files\n" +
+          "  -help                     Print a synopsis of standard options\n" +
+          "  -version                  Print version information\n"
+          );
+    }
+
+    protected void printVersion() {
+      System.out.println(name() + " " + version());
+    }
+
+    abstract protected String name();
+
+    abstract protected String version();
+  }
+}

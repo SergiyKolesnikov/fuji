@@ -1,0 +1,12 @@
+
+public class Test {
+
+	void m1() {
+		try {
+			int a;
+		} finally {
+			int b;
+		}
+		int c;
+	}
+}

@@ -1,0 +1,18 @@
+
+class Test {
+
+	{
+		boolean b = true;
+		outer: 
+		do {
+			inner:
+			for (;;) {
+				if (b) {
+					break inner;
+				}
+				break outer;
+			}
+				
+		} while (b);
+	}
+}

@@ -1,0 +1,14 @@
+
+class Test {
+
+	{	
+		int a = 0;	
+		switch (a) {
+			case 1: 
+			break;
+			case 2: 
+			a = 3;
+		}
+		a = 1;
+	}
+}

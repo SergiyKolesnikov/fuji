@@ -1,0 +1,15 @@
+
+class Test {
+
+    void m() {
+
+		int a;
+		int b;
+		boolean c = true;
+		
+		for (a=1, b=2; c; ) {
+			a = 7;
+        }
+	}
+
+}

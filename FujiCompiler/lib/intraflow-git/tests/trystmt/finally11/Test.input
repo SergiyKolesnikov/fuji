@@ -1,0 +1,24 @@
+
+public class Test {
+
+	void m11() throws TestException {
+		try {	
+			int a = 0;
+			if (a > 0)
+				throw new TestSubException();
+		} catch (TestSubException e) {
+			int b;
+			throw new TestException();
+		} finally {
+			int c;
+		}
+		int d;
+	}
+
+}
+
+class TestException extends Exception {
+}
+
+class TestSubException extends TestException {
+}

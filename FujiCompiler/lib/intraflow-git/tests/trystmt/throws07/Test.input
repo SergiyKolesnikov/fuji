@@ -1,0 +1,30 @@
+
+class Test {
+
+	void m() {
+		try {
+			A a = new A();
+			a.m();
+			int b;
+		} catch (TestException e) {
+			int c;
+		}
+		int d;
+	}
+}
+
+class A {
+	public A() {
+	}
+	public A(int i) throws TestException {
+	}
+	public A(int i, int j) throws TestException {
+		this(j+i);
+	}
+	int m() throws TestException {
+		throw new TestException();
+	}
+}
+
+class TestException extends Exception {
+}

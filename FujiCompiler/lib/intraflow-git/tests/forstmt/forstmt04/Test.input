@@ -1,0 +1,11 @@
+
+class Test {
+
+    void m() {
+		boolean a = false;
+		int i = 0; 
+		for (; a; i++)
+			;
+    }
+
+}

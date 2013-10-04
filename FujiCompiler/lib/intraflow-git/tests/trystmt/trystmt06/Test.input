@@ -1,0 +1,56 @@
+
+class Test {
+
+	void m(int a, boolean b){
+		while(b){
+			
+			try{
+				try {
+					if(a>0)
+						throw new IOException();
+					if(a<6) 
+						throw new NullPointerException ();
+					if(a==8)
+						break;
+					a++;
+					return;
+				}
+				catch (IOException e) {
+					if(a>1)
+						throw new ArrayIndexOutOfBoundsException();
+					a = 1;
+				}
+				catch (ArrayIndexOutOfBoundsException e) {
+					a = 2;
+				}
+				finally{			
+					if(a<8)
+						throw new IOException();
+					a = 3;
+				}
+				
+				if(a>1)
+					throw new IOException();
+				
+				a--;
+				
+			}
+			catch (IOException e) {
+				if(a>1)
+					throw new ArrayIndexOutOfBoundsException();
+				a = 1;
+			}
+			catch (ArrayIndexOutOfBoundsException e) {
+				a = 2;
+			}
+			finally{
+				throw new ArrayIndexOutOfBoundsException();
+				a++;
+			}	
+			a--;
+		}
+		a++;
+
+	}
+
+} 

@@ -19,7 +19,7 @@ import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 
 import org.sat4j.specs.TimeoutException;
 
-import fuji.TypeErrorInfo;
+
 
 aspect ExtendedTypeCheck {
 
@@ -217,8 +217,8 @@ aspect ExtendedTypeCheck {
 					 * a TypeAccess to a specific type takes place
 					 */
 					if (isTypeAccess) {
-						if (typeAccesses != null) {
-							HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = typeAccesses.get(fromFeatureID);
+						if (getProgram().typeAccesses != null) {
+							HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = getProgram().typeAccesses.get(fromFeatureID);
 							if (outerMap != null) {
 								HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(accessingType);
 								if (innerMap != null) {
@@ -448,8 +448,8 @@ aspect ExtendedTypeCheck {
 				 */
 				StringBuilder sbtei = new StringBuilder();
 				if (isTypeAccess) {
-					if (typeAccesses != null) {
-						HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = typeAccesses.get(fromFeatureID);
+					if (getProgram().typeAccesses != null) {
+						HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> outerMap = getProgram().typeAccesses.get(fromFeatureID);
 						if (outerMap != null) {
 							HashMap<TypeDecl, TypeErrorInfo> innerMap = outerMap.get(accessingType);
 							if (innerMap != null) {
@@ -663,9 +663,9 @@ aspect ExtendedTypeCheck {
 					}
 				}
 				/* get super class access */
-				if (sc.hasSuperClassAccess()) {
-					if (sc.getSuperClassAccess().type().equals(td)) {
-						accesses.add(sc.getSuperClassAccess());
+				if (sc.hasSuperClass()) {
+					if (sc.getSuperClass().type().equals(td)) {
+						accesses.add(sc.getSuperClass());
 					}
 				}
 				/* if there is extends info of this targetHostType */
@@ -804,8 +804,8 @@ aspect ExtendedTypeCheck {
 				}
 				/* get all feature with extends info of this targetHostType */
 				HashMap<ASTNode, TypeDecl> accessesAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
-				if (si.getNumSuperInterfaceId() != 0) {
-					for (Access ac : si.getSuperInterfaceIdList()) {
+				if (si.getNumSuperInterface() != 0) {
+					for (Access ac : si.getSuperInterfaceList()) {
 						if (ac.type().equals(td)) {
 							accessesAndTargetHostTypes.put(ac, ac.hostType());
 						}
@@ -891,8 +891,8 @@ aspect ExtendedTypeCheck {
 				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
 					accesses.addAll(cd.getPreservedSuperClassAccess());
 				}
-				if (cd.hasSuperClassAccess()) {
-					accesses.add(cd.getSuperClassAccess());
+				if (cd.hasSuperClass()) {
+					accesses.add(cd.getSuperClass());
 				}
 				/* get implements information */
 				if (cd.getNumImplements() != 0) {
@@ -903,8 +903,8 @@ aspect ExtendedTypeCheck {
 			} else if (this instanceof InterfaceDecl) {
 				InterfaceDecl id = (InterfaceDecl) this;
 				/* get extends information*/
-				if (id.getNumSuperInterfaceId() != 0) {
-					for (Access ac : id.getSuperInterfaceIdList()) {
+				if (id.getNumSuperInterface() != 0) {
+					for (Access ac : id.getSuperInterfaceList()) {
 						accesses.add(ac);
 					}
 				}
@@ -951,8 +951,8 @@ aspect ExtendedTypeCheck {
 				if (!(cd.getPreservedSuperClassAccess().isEmpty())) {
 					accesses.addAll(cd.getPreservedSuperClassAccess());
 				}
-				if (cd.hasSuperClassAccess()) {
-					accesses.add(cd.getSuperClassAccess());
+				if (cd.hasSuperClass()) {
+					accesses.add(cd.getSuperClass());
 				}
 				/* get implements information (Class) */
 				if (cd.getNumImplements() != 0) {
@@ -963,8 +963,8 @@ aspect ExtendedTypeCheck {
 			} else if (bottomType instanceof InterfaceDecl) {
 				InterfaceDecl ifd = (InterfaceDecl) bottomType;
 				/* get extends information (Interface) */
-				if (ifd.getNumSuperInterfaceId() != 0) {
-					for (Access ac : ifd.getSuperInterfaceIdList()) {
+				if (ifd.getNumSuperInterface() != 0) {
+					for (Access ac : ifd.getSuperInterfaceList()) {
 						accesses.add(ac);
 					}
 				}
@@ -1011,9 +1011,12 @@ aspect ExtendedTypeCheck {
 	 * map: (fromFeatureID, map: (sourceHostType, map: (targetHostType, TypeErrorInfo)))
 	 * (TypeErrorInfo decls: accesses to constructors of this type 
    * and source file name and line number of these type accesses) */
-	protected static HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> ASTNode.typeAccesses =
-	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
+//	protected static HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> ASTNode.typeAccesses =
+//	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
 
+	protected HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>> Program.typeAccesses =
+	new HashMap<Integer, HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>>();
+	
 	/* for type accesses */
 	protected ArrayList Program.errors = new ArrayList();
 
@@ -1044,10 +1047,10 @@ aspect ExtendedTypeCheck {
 		ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 		listFeatures.addAll(getFeatureModel().getConcreteFeatures());
 		/* for all fromFeatureIDs that need types */
-		for (int i : typeAccesses.keySet()) {
+		for (int i : getProgram().typeAccesses.keySet()) {
 			Feature fromFeature = listFeatures.get(i);
-			if (!(typeAccesses.get(i).isEmpty())) {
-				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(i);
+			if (!(getProgram().typeAccesses.get(i).isEmpty())) {
+				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = getProgram().typeAccesses.get(i);
 				if (!(typesAndInfo.keySet().isEmpty())) {
 					/* for all sourceHostTypes where a type is needed in this feature */
 					for (TypeDecl sourceHostType : typesAndInfo.keySet()) {
@@ -1375,7 +1378,7 @@ aspect ExtendedTypeCheck {
     		if (isRaw()) {
     			/* do not collect default types */
     			if (!(fromFeatureID == -1) && !(decl().featureID() == -1) && !(hostType().featureID() == -1) && !(decl().hostType().featureID() == -1)) {
-    				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = typeAccesses.get(fromFeatureID);
+    				HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>> typesAndInfo = getProgram().typeAccesses.get(fromFeatureID);
     				if (typesAndInfo == null) {
     					typesAndInfo = new HashMap<TypeDecl, HashMap<TypeDecl, TypeErrorInfo>>();
     				}
@@ -1403,7 +1406,7 @@ aspect ExtendedTypeCheck {
     				tei.getAccessSourceInfo().add(sourceFile() + ":" + lineNumber());
     				innerTypeAndInfo.put(decl().hostType(), tei);
     				typesAndInfo.put(hostType(), innerTypeAndInfo);
-    				typeAccesses.put(fromFeatureID, typesAndInfo);
+    				getProgram().typeAccesses.put(fromFeatureID, typesAndInfo);
     			}
     		}
         }

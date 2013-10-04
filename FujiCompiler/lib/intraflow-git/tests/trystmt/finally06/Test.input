@@ -1,0 +1,26 @@
+
+public class Test {
+
+	void m6() {
+		boolean bool = false;
+		do {
+			int a;
+			try {
+				int b;
+				try {
+					int c;
+					if (bool) 
+						break;
+				} finally {
+					int d;
+				}
+				int e;
+			}
+			finally {
+				int f;
+			}
+			int g;
+		} while (bool);
+		int h;
+	}
+}

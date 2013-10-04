@@ -1,0 +1,135 @@
+
+aspect ReachingDefinition {
+
+	// ReachedUse
+	interface ReachedUse {
+	}
+	VarAccess implements ReachedUse;
+
+
+	// ReachingDef
+	interface ReachingDef {
+	}
+	VarAccess implements ReachingDef;
+	VariableDeclaration implements ReachingDef;
+	ParameterDeclaration implements ReachingDef;
+    FieldDeclaration implements ReachingDef;
+
+
+	// reaching_out () : BitSet<ReachingDef>
+	syn BitSet CFGNode.reaching_out() circular [emptyBitSet()];
+	eq CFGNode.reaching_out() = reaching_gen().union(reaching_in().compl(reaching_kill()));
+
+	// reaching_in () : BitSet<ReachingDef>
+    public BitSet CFGNode.reaching_in() { return coll_reaching_in(); }
+	coll BitSet CFGNode.coll_reaching_in() circular
+		[emptyBitSet().mutable()] with add root TypeDecl;
+	Stmt contributes reaching_out() to CFGNode.coll_reaching_in() for each succ();
+	Expr contributes reaching_out() to CFGNode.coll_reaching_in() for each succ();
+	ParameterDeclaration contributes reaching_out() to CFGNode.coll_reaching_in() for each succ();
+    // Need to do this
+    protected void BodyDecl.collect_contributors_CFGNode_coll_reaching_in() {
+    	entry().collect_contributors_CFGNode_coll_reaching_in();
+    	exit().collect_contributors_CFGNode_coll_reaching_in();
+    	super.collect_contributors_CFGNode_coll_reaching_in();
+    }
+
+	// reaching_gen () : BitSet<ReachingDef>
+	syn BitSet CFGNode.reaching_gen();
+    eq Stmt.reaching_gen() = emptyBitSet().mutable();
+    eq Expr.reaching_gen() = emptyBitSet().mutable();
+    eq FieldDeclaration.reaching_gen() = emptyBitSet().mutable();
+    eq VarAccess.reaching_gen() = isDest() ? emptyBitSet().mutable().union(this) : 
+        emptyBitSet().mutable();
+    eq VariableDeclaration.reaching_gen() = emptyBitSet().mutable().union(this);
+    eq ParameterDeclaration.reaching_gen() = emptyBitSet().mutable().union(this);
+
+	// reaching_kill () : BitSet<ReachingDef>
+	syn BitSet CFGNode.reaching_kill();
+    eq Stmt.reaching_kill() = emptyBitSet().mutable();
+    eq Expr.reaching_kill() = emptyBitSet().mutable();
+    eq FieldDeclaration.reaching_kill() = emptyBitSet().mutable();
+    eq VarAccess.reaching_kill() = isDest() ? 
+        decl().reaching_compl(this) : emptyBitSet().mutable();
+    eq VariableDeclaration.reaching_kill() = reaching_compl(this);
+    eq ParameterDeclaration.reaching_kill() = reaching_compl(this);
+
+
+	// reaching_defs () : BitSet<ReachingDef>
+	coll BitSet Variable.reaching_defs() [emptyBitSet().mutable()] with add root BodyDecl;
+	VarAccess contributes this when isDest() to Variable.reaching_defs() for decl();
+	VariableDeclaration contributes this to Variable.reaching_defs() for this;
+	ParameterDeclaration contributes this to Variable.reaching_defs() for this;
+
+	// Do not include in code size count!
+	syn BitSet ReachingDef.reaching_defs_shorthand() = reaching_reachedUses();
+
+	// reaching_matchingDeclares
+	// ( BitSet<ReachingDefinition> ) : BitSet<ReachingDefinition>
+	syn BitSet VarAccess.reaching_reachingDefs() circular [emptyBitSet()];
+	eq VarAccess.reaching_reachingDefs() {
+		BitSet set = emptyBitSet();
+		Iterator itr = reaching_in().iterator();
+		while (itr.hasNext()) {
+			ReachingDef def = (ReachingDef)itr.next();
+			if (def.reaching_declares(this)) {
+				set = set.union(def);
+			}
+		}
+        if (hasAnonymousUse())
+            set = set.union(decl());
+		return set;
+	}
+
+
+    // inDeadAssign
+    inh boolean ReachedUse.inDeadAssign();
+    eq VariableDeclaration.getInit().inDeadAssign() = isDead();
+    eq AssignExpr.getSource().inDeadAssign() = getDest().isLocalStore() && getDest().isDead();
+    eq MethodAccess.getArg(int i).inDeadAssign() = false;
+    eq ConstructorAccess.getArg(int i).inDeadAssign() = false;
+    eq ClassInstanceExpr.getArg(int i).inDeadAssign() = false;
+    eq Program.getChild().inDeadAssign() = false;
+
+	// allReachedUsesDead : 
+	syn boolean ReachingDef.allReachedUsesAreDead() circular [false];
+	eq ReachingDef.allReachedUsesAreDead() {
+		Iterator itr = reaching_reachedUses().iterator();
+		while (itr.hasNext()) {
+			ReachedUse use = (ReachedUse)itr.next();
+			if (!use.inDeadAssign()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	// reaching_declares
+	syn boolean ReachingDef.reaching_declares(ReachingDef def);
+	eq VarAccess.reaching_declares(ReachingDef def) = getID().equals(def.reaching_name()); 
+	eq VariableDeclaration.reaching_declares(ReachingDef def) = getID().equals(def.reaching_name());
+	eq ParameterDeclaration.reaching_declares(ReachingDef def) = getID().equals(def.reaching_name());
+    eq FieldDeclaration.reaching_declares(ReachingDef def) = getID().equals(def.reaching_name());
+
+	// reaching_name
+	syn lazy String ReachingDef.reaching_name();
+	eq VarAccess.reaching_name() = getID();
+	eq VariableDeclaration.reaching_name() = getID();
+	eq ParameterDeclaration.reaching_name() = getID();
+    eq FieldDeclaration.reaching_name() = getID();
+
+	// reaching_reachedUses () : BitSet<ReachedUse>
+	coll BitSet ReachingDef.reaching_reachedUses() 
+        [emptyBitSet().mutable()] with add root BodyDecl;
+	VarAccess contributes this when isSource() 
+        to ReachingDef.reaching_reachedUses() 
+		for each reaching_reachingDefs();
+
+	// reaching_compl : BitSet<ReachingDef>
+	syn BitSet Variable.reaching_compl(ReachingDef def);
+	eq Variable.reaching_compl(ReachingDef def) {
+		return reaching_defs().compl(def);
+	}
+
+}

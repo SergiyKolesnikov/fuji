@@ -1,0 +1,31 @@
+digraph {
+    node [shape=box];
+    n0 [shape=ellipse, label="AST.CFGEntry"];
+    n1 [shape=ellipse, label="AST.CFGExit"];
+    n2 [label="AST.InstanceInitializer"];
+    n2 -> n3 [style=dotted,weight=10];
+    n3 [shape=record, label="<name> AST.Block | {<pred> pred | <succ> succ}"];
+    n3 -> n4 [style=dotted,weight=10];
+    n4 [label="AST.List"];
+    n4 -> n5 [style=dotted,weight=10];
+    n5 [shape=record, label="<name> AST.VariableDeclaration [a] | {<pred> pred | <succ> succ}"];
+    n5 -> n6 [style=dotted,weight=10];
+    n6 [label="AST.Modifiers"];
+    n6 -> n7 [style=dotted,weight=10];
+    n7 [label="AST.List"];
+    n5 -> n8 [style=dotted,weight=10];
+    n8 [shape=record, label="<name> AST.PrimitiveTypeAccess [int] | {<pred> pred | <succ> succ}"];
+    n5 -> n9 [style=dotted,weight=10];
+    n9 [label="AST.Opt"];
+    n9 -> n10 [style=dotted,weight=10];
+    n10 [shape=record, label="<name> AST.IntegerLiteral [0] | {<pred> pred | <succ> succ}"];
+    n0 -> n2 [dir=none]
+    n1 -> n2 [dir=none]
+    n0 -> n3:name;
+    n3:succ -> n5:name;
+    n5:succ -> n10:name;
+    n10:succ -> n1;
+    {rank = same; n0; n1; n2; }
+    {rank = same; n6; n8; n9; }
+    {rank = same; n10; n7; }
+}

@@ -1,0 +1,26 @@
+
+class Test {
+
+	void m() {
+	    class VD {
+			private int a = 1+1;
+			public VD(int a, int b) {
+				this.a = a; 
+				this.a = b;
+			}
+		}
+	
+	    int[][] array1 = new int[a=2][b=3];		
+		array1[a=1][b=2] = 5;
+		
+		int[][] array2 = new int[a=5][];
+		array2[0][10] = 6;
+				
+		String[][] str1 = {{"s"+"1"},{"s"+"2","s"+"3"}}; 		
+		String[][] str2 = new String[][]{{"s1"},{"s2",""}};
+		
+		VD[][] vd3 = new VD[2][b=3];
+		vd3[a=0][b=0] = new VD(a=2, b=5);
+		
+	}
+}

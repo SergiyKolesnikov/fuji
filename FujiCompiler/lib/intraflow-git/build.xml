@@ -1,0 +1,201 @@
+<project name="JastAddJ-IntraFlow" default="build">
+	<property name="jj.root" location="${basedir}/../jastaddj"/>
+	<property name="ja2.root" location="${basedir}/../jastadd2"/>
+	<property name="flow.root" location="${basedir}"/>
+	<property name="parser.root" location="${basedir}/../jastaddparser"/>
+	<property file="${flow.root}/build.properties"/>
+	
+	<!-- define scanner generator task -->
+	<taskdef name="jflex" classname="JFlex.anttask.JFlexTask"
+		classpath="${tools.dir}/JFlex.jar"/>
+
+	<!-- parser generator task -->
+	<taskdef name="beaver" classname="beaver.comp.run.AntTask"
+		classpath="${tools.dir}/beaver-ant.jar"/>
+
+	<!-- jastadd task -->
+		<taskdef name="jastadd" classname="jastadd.JastAddTask"
+		classpath="${ja2.root}/jastadd2.jar"/>
+	
+	<target name="build">
+		<antcall target="frontend"/>
+	</target>
+	
+	<target name="frontend" depends="frontend-gen" description="compile JastAddJ-IntraFlow">
+		<mkdir dir="${bin.dir}"/>
+		<javac
+			srcdir="${src.dir}"
+			destdir="${bin.dir}"
+			debug="${debug}"
+			nowarn="true"
+			includeantruntime="true">
+			<src path="${src.dir}"/>
+			<src path="${gen.dir}"/>
+			<exclude name="org/jastadd/jastaddj/flow/JavaDeadAssignChecker.java"/>
+			<classpath>
+				<pathelement path="${tools.dir}/beaver-rt.jar"/>
+				<pathelement path="${ant.dir}/junit-4.11-SNAPSHOT.jar"/>
+			</classpath>
+		</javac>
+		<!--<antcall target="copy-resources"/>-->
+	</target>
+
+	<target name="frontend-gen" depends="scanner,parser">
+		<!-- generate AST node types and weave aspect modules -->
+		<!-- don't include backend stuff here -->
+		<mkdir dir="${gen.dir}"/>
+		<jastadd
+			package="${ast.package}"
+			rewrite="true"
+			beaver="true"
+			noVisitCheck="true"
+			noCacheCycle="true"
+			outdir="${gen.dir}"
+			defaultMap="new org.jastadd.util.RobustMap(new java.util.HashMap())">
+			<fileset dir="${java4.dir}/grammar">
+				<include name="*.ast"/>
+			</fileset>
+			<fileset dir="${java4.dir}/frontend">
+				<include name="*.jrag"/>
+				<include name="*.jadd"/>
+				<exclude name="BytecodeAttributes.jrag"/>
+				<exclude name="BytecodeDescriptor.jrag"/>
+				<exclude name="BytecodeReader.jrag"/>
+			</fileset>
+			<fileset dir="${java5.dir}/grammar">
+				<include name="*.ast"/>
+			</fileset>
+			<fileset dir="${java5.dir}/frontend">
+				<include name="*.jrag"/>
+				<include name="*.jadd"/>
+			</fileset>
+			<fileset dir="${flow.dir}">
+				<include name="*.ast"/>
+				<include name="*.jrag"/>
+				<include name="*.jadd"/>
+			    <!-- Option A: include this line to only include liveness analysis -->
+				<include name="JavaDeadAssigns.jrag" />
+			    <!-- Option B: include these lines to include liveness and reaching definition --> 
+				<exclude name="JavaReaching1.4.jrag" />
+				<exclude name="JavaDeadAssignsReaching.jrag" />
+			    <!-- You have to select ONE of the above two options (A,B) -->
+			</fileset>
+		</jastadd>
+	</target>
+	
+	<target name="scanner">
+		<!-- compose scanner specification -->
+		<mkdir dir="${tmp.dir}/scanner"/>
+		<concat destfile="${tmp.dir}/scanner/JavaScanner.flex"
+			binary="true" force="false">
+			<!-- we use filelist because the order is important -->
+			<filelist dir="${java4.dir}/scanner">
+				<file name="Preamble.flex"/>
+				<file name="Macros.flex"/>
+			</filelist>
+			<filelist dir="${java5.dir}/scanner">
+				<file name="Macros.flex"/>
+			</filelist>
+			<filelist dir="${java4.dir}/scanner">
+				<file name="RulesPreamble.flex"/>
+				<file name="WhiteSpace.flex"/>
+				<file name="Comments.flex"/>
+				<file name="Keywords.flex"/>
+			</filelist>
+			<filelist dir="${java5.dir}/scanner">
+				<file name="Keywords.flex"/>
+			</filelist>
+			<filelist dir="${java4.dir}/scanner">
+				<file name="Literals.flex"/>
+			</filelist>
+			<filelist dir="${java5.dir}/scanner">
+				<file name="Literals.flex"/>
+			</filelist>
+			<filelist dir="${java4.dir}/scanner">
+				<file name="Separators.flex"/>
+				<file name="Operators.flex"/>
+			</filelist>
+			<filelist dir="${java5.dir}/scanner">
+				<file name="Operators.flex"/>
+				<file name="Identifiers.flex"/>
+			</filelist>
+			<filelist dir="${java4.dir}/scanner">
+				<file name="Postamble.flex"/>
+			</filelist>
+		</concat>
+		<!-- invoke scanner generator -->
+		<mkdir dir="${gen.dir}/scanner"/>
+		<jflex file="${tmp.dir}/scanner/JavaScanner.flex"
+			outdir="${gen.dir}/scanner" nobak="yes"/>
+	</target>
+
+	<target name="parser">
+		<!-- compose parser specification -->
+		<mkdir dir="${tmp.dir}/parser"/>
+		<concat destfile="${tmp.dir}/parser/JavaParser.all"
+			binary="true" force="false">
+			<!-- we use filelist because the order is important -->
+			<filelist dir="${java4.dir}/parser">
+				<file name="Preamble.parser"/>
+				<file name="Java1.4.parser"/>
+				<file name="ErrorRecovery.parser"/>
+			</filelist>
+			<fileset dir="${java5.dir}/parser">
+				<include name="*.parser"/>
+			</fileset>
+		</concat>
+		<java classname="Main" fork="true">
+			<classpath>
+				<pathelement path="${tools.dir}/JastAddParser.jar"/>
+				<!--<pathelement path="${parser.root}/JastAddParser.jar"/>-->
+				<pathelement path="${tools.dir}/beaver-rt.jar"/>
+			</classpath>
+			<arg value="${tmp.dir}/parser/JavaParser.all"/>
+			<arg value="${tmp.dir}/parser/JavaParser.beaver"/>
+		</java>
+		<!-- invoke parser generator -->
+		<mkdir dir="${gen.dir}/parser"/>
+		<beaver file="${tmp.dir}/parser/JavaParser.beaver"
+			destdir="${gen.dir}/parser"
+			terminalNames="yes"
+			compress="no"
+			useSwitch="yes"/>
+	</target>
+
+	<target name="clean" description="remove generated source and class files">
+		<delete dir="${gen.dir}"/>
+		<delete dir="${tmp.dir}"/>
+		<delete dir="${bin.dir}"/>
+		<delete dir="${testtmp.dir}"/>
+	</target>
+	
+	<target name="test" description="Test Intraflow module" depends="build">
+		<junit fork="yes" printsummary="yes" dir="${basedir}">
+			<classpath>
+				<pathelement path="${bin.dir}"/>
+				<pathelement path="${ant.dir}/junit-4.11-SNAPSHOT.jar"/>
+			</classpath>
+			<test name="test.TestAll"/>
+			<formatter type="xml"/>
+		</junit>
+	</target>
+	
+	<target name="doc" description="generate ReRAG documentation">
+		<mkdir dir="${basedir}/doc"/>
+		<javadoc
+			destdir="${basedir}/doc"
+			docletpath="${tools.dir}/RagDoll.jar"
+			doclet="ragdoll.RagDollDoclet">
+			<classpath>
+				<pathelement path="${tools.dir}/beaver-rt.jar"/>
+				<!--<pathelement location="${bin.dir}"/>-->
+			</classpath>
+			<arg value="-linksource"/>
+			<packageset dir="${gen.dir}" defaultexcludes="yes">
+				<include name="${ast.dir}"/>
+			</packageset>
+		</javadoc>
+	</target>
+	
+</project>
+

@@ -1,0 +1,19 @@
+
+public class Test {	
+
+	void m5() {	
+		boolean b = false;
+		try {
+			int a;
+			while (b) {
+				int c;
+				break;
+			}
+			int d;
+		}
+		finally{
+			int e;
+		}
+		int f;
+	}
+}

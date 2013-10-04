@@ -1,0 +1,18 @@
+
+public class Test {
+
+	void m4() {
+		boolean d = false;
+		do {
+			int a;
+			try {
+				int b;
+				break;
+			}
+			finally {
+				int c;
+			}
+		} while (d);
+		int e;
+	}
+}

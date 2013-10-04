@@ -1,7 +1,3 @@
-/**
- * TODO add an extra option for choosing composition strategy.  This option can be used in combination with the -typechecker option.  Now the -fopRefs option is used, which actually has the same effect of choosing the family composition strategy, but it's misleading and is actually a hack. 
- * 
- */
 package fuji;
 
 import static fuji.Main.OptionName.*;
@@ -22,6 +18,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.jastadd.util.RobustMap;
 
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
@@ -369,7 +366,8 @@ public class Main implements CompositionContext {
                         SPL_HAS_NO_VARIABILITY));
         ops.addOption(OptionBuilder
                 .withDescription(
-                        "Measure time (in milliseconds) used for AST composition and a subsequent processing step. Output the measurements to stdout.").create(TIMER));
+                        "Measure time (in milliseconds) used for AST composition and a subsequent processing step. Output the measurements to stdout.")
+                .create(TIMER));
         ops.addOption(OptionBuilder
                 .withDescription(
                         "'original' method calls are treated as normal method calls (used in feature-based type checking). This option works only with '"
@@ -463,12 +461,34 @@ public class Main implements CompositionContext {
 
         @SuppressWarnings("unchecked")
         Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
+
+        /*
+         * Process source files.
+         */
         while (iter.hasNext()) {
             CompilationUnit cu = iter.next();
             if (cu.fromSource()) {
                 processCU(cu, errors, warnings);
             }
         }
+
+        /*
+         * Process library dependencies (i.e. types that are referenced in the
+         * code, but that were not explicitly supplied for compilation and are
+         * not available in compiled form.)
+         */
+        RobustMap<String, CompilationUnit> valueMap = (RobustMap<String, CompilationUnit>) ast
+                .getLibCompilationUnitValueMap();
+        if (valueMap != null) {
+            iter = valueMap.robustValueIterator();
+            while (iter.hasNext()) {
+                CompilationUnit cu = iter.next();
+                if (cu != null && cu.fromSource()) {
+                    processCU(cu, errors, warnings);
+                }
+            }
+        }
+
         throwErrorsAndWarnings();
 
         /* Do analysis on the whole AST. */
@@ -691,8 +711,8 @@ public class Main implements CompositionContext {
     }
 
     private static void printError(String message) {
-            System.err.println("Errors:");
-            System.err.print(message);
+        System.err.println("Errors:");
+        System.err.print(message);
     }
 
     private static void printHelp(Options options) {
@@ -709,7 +729,7 @@ public class Main implements CompositionContext {
     }
 
     private static String version() {
-        return "2013-07-08";
+        return "2013-07-17";
     }
 
     /**

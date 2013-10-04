@@ -1,0 +1,9 @@
+# included tests
+includes:\
+	block/block01
+
+# excluded tests
+#excludes:break/break05
+
+# location of beaver-rt.jar
+beaver-rt.jar=../jastaddj/tools/beaver-rt.jar

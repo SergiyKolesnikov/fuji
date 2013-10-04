@@ -1,0 +1,19 @@
+
+public class Test {
+
+	void m3() {
+		try {
+			int a = 0;
+			try {
+				if (a > 0)
+					return;
+			} finally {
+				int b;
+			}
+			int c;
+		} finally {
+			int d;
+		}
+		int e;		
+	}
+}
