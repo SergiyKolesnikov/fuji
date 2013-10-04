@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd Subsequent
-/bin/rm -rf classes 2>&1 >/dev/null
-java -Ddebug -jar ../../FujiCompiler/build/fuji.jar -fopStatistic -d classes Subsequent.features
+/bin/rm -rf "$TMPCLASSOUT" 2>&1 >/dev/null
+java -Ddebug -jar ../../FujiCompiler/build/fuji.jar -fopStatistic -d "$TMPCLASSOUT" Subsequent.features

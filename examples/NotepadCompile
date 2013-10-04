@@ -1,6 +1,6 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd Notepad
-/bin/rm -rf classes
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d classes NotepadComp.features \
-	&& /bin/cp -rf notepad_resources/* classes
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" NotepadComp.features \
+	&& /bin/cp -rf notepad_resources/* "$TMPCLASSOUT"

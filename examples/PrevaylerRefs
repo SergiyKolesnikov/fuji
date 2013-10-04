@@ -1,5 +1,6 @@
 #!/bin/sh
+. ../scripts/global_vars
 cd Prevayler
-/bin/rm -rf classes
-java -Xmx4000m -jar ../../FujiCompiler/build/fuji-nomod.jar -classpath ../lib/cide.jar:../lib/skaringa.jar:../lib/log4j.jar:../lib/xstream.jar:../lib/javamatch.jar -fopRefs -d classes PrevaylerComp.features >../$(basename $(pwd)).refs
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx4000m -jar ../../FujiCompiler/build/fuji-nomod.jar -classpath ../lib/cide.jar:../lib/skaringa.jar:../lib/log4j.jar:../lib/xstream.jar:../lib/javamatch.jar -fopRefs -d "$TMPCLASSOUT" PrevaylerComp.features >../$(basename $(pwd)).refs
 

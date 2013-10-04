@@ -1,6 +1,5 @@
 #!/bin/sh
-CL=classes
-
+. ../scripts/global_vars
 cd Bali
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar -d "$CL" Bali2JavaCCComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar -d "$TMPCLASSOUT" Bali2JavaCCComp.features

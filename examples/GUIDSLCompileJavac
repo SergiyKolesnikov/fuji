@@ -1,11 +1,10 @@
 #!/bin/sh
-CL=classes
-SR=sources
+../scripts/global_vars
 
 cd GUIDSL
-/bin/rm -rf "$CL" "$SR"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -classpath '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$CL" -src "$SR" GUIDSLComp.features
-/bin/rm -rf "$CL"
-mkdir classes
-javac -cp '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d classes \
+/bin/rm -rf "$TMPCLASSOUT" "$TMPSRCOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -classpath '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$TMPCLASSOUT" -src "$TMPSRCOUT" GUIDSLComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+mkdir "$TMPCLASSOUT"
+javac -cp '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$TMPCLASSOUT" \
     `find "$SR" -name '*.java'`

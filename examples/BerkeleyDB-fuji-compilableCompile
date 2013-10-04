@@ -1,8 +1,6 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-CL=classes
-
 cd BerkeleyDB-fuji-compilable
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" -cp ../lib/cide.jar BerkeleyDBComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" -cp ../lib/cide.jar BerkeleyDBComp.features

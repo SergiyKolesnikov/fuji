@@ -1,14 +1,12 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-CL="classes"
-PRODUCTS_DIR="products"
 CONFIGS_DIR="configs/all"
 cd ZipMe
-/bin/rm -rf "$CL"
-/bin/rm -rf "$PRODUCTS/*"
+/bin/rm -rf "$TMPCLASSOUT"
+/bin/rm -rf "$TMPPRODOUT"
 for CONFIG in $CONFIGS_DIR/*.equation; do
     echo "Compiling configuration $CONFIG..."
-    java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -basedir features -d "$PRODUCTS_DIR/$CONFIG" "$CONFIG"
+    java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -basedir features -d "$TMPPRODOUT/$CONFIG" "$CONFIG"
 done
 echo "Done."

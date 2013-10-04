@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd MultipleTopTypes
-/bin/rm -rf classes >/dev/null 2>&1
-java -jar ../../FujiCompiler/build/fuji.jar -d classes Test.features
+/bin/rm -rf "$TMPCLASSOUT" >/dev/null 2>&1
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features

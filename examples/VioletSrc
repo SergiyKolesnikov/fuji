@@ -1,11 +1,9 @@
 #!/bin/sh
-
-CL=classes
-SRC=sources
+. ../scripts/global_vars
 
 cd Violet
-rm -rf "$CL" "$SRC"
+rm -rf "$TMPCLASSOUT" "$TMPSRCOUT"
 java -Xmx1024m -jar ../../FujiCompiler/build/fuji.jar \
-        -d "$CL" -src "$SRC" VioletComp.features \
-        && /bin/cp -rf violet_resources/* "$CL" \
-        && /bin/cp -rf violet_resources/* "$SRC"
+        -d "$TMPCLASSOUT" -src "$TMPSRCOUT" VioletComp.features \
+        && /bin/cp -rf violet_resources/* "$TMPCLASSOUT" \
+        && /bin/cp -rf violet_resources/* "$TMPSRCOUT"

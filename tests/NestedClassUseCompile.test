@@ -1,6 +1,5 @@
 #!/bin/sh
-CL=classes
-
+. ../scripts/global_vars
 cd NestedClassUse
-/bin/rm -rf "$CL"
-java -jar ../../FujiCompiler/build/fuji.jar -d "$CL" Test.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features

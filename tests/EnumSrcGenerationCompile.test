@@ -1,7 +1,5 @@
 #!/bin/sh
-CL=classes
-SRC=sources
-
+. ../scripts/global_vars
 cd EnumSrcGeneration
-/bin/rm -rf "$CL" "$SRC"
-java -jar ../../FujiCompiler/build/fuji.jar -d "$CL" -src "$SRC" Test.features
+/bin/rm -rf "$TMPCLASSOUT" "$TMPSRCOUT"
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" -src "$TMPSRCOUT" Test.features

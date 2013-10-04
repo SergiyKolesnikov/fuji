@@ -1,4 +1,4 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-java -cp GPL/classes/ GPL.Main
+java -cp GPL/"$TMPCLASSOUT"/ GPL.Main

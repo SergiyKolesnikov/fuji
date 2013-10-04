@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd ASTSMeasure
-/bin/rm -rf classes 2>&1 >/dev/null
+/bin/rm -rf "$TMPCLASSOUT" 2>&1 >/dev/null
 java -jar ../../FujiCompiler/build/fuji.jar -mASTS Test.features >tmp.out

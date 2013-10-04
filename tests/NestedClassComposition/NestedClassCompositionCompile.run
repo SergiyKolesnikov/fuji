@@ -1,2 +1,3 @@
 #!/bin/sh
-java -classpath classes A >tmp.out
+. ../../scripts/global_vars
+java -classpath "$TMPCLASSOUT" A >tmp.out

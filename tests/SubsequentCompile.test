@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd Subsequent
-/bin/rm -rf classes 2>&1 >/dev/null
-java -jar ../../FujiCompiler/build/fuji.jar -d classes -classpath "." Test.features
+/bin/rm -rf "$TMPCLASSOUT" 2>&1 >/dev/null
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" -classpath "." Test.features

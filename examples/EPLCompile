@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd EPL
-/bin/rm -rf classes
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d classes EPLComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" EPLComp.features

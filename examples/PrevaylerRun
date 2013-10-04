@@ -1,5 +1,5 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-java -cp lib/cide.jar:lib/skaringa.jar:lib/log4j.jar:lib/xstream.jar:lib/javamatch.jar:Prevayler/classes org.prevayler.demos.demo2.Main
+java -cp lib/cide.jar:lib/skaringa.jar:lib/log4j.jar:lib/xstream.jar:lib/javamatch.jar:Prevayler/"$TMPCLASSOUT" org.prevayler.demos.demo2.Main
 rm -rf demo2

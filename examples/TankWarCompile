@@ -1,8 +1,6 @@
 #!/bin/sh
-
-CL=classes
-
+. ../scripts/global_vars
 cd TankWar
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$CL" TankWarComp.features \
-	&& cp Resources/* "$CL"
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" TankWarComp.features \
+	&& cp Resources/* "$TMPCLASSOUT"

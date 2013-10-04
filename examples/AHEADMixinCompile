@@ -1,6 +1,6 @@
 #!/bin/sh
-CL=classes
+. ../scripts/global_vars
 
 cd AHEAD
 /bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar:../lib/ant.jar -d "$CL" MixinComp.features
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar:../lib/ant.jar -d "$TMPCLASSOUT" MixinComp.features

@@ -1,7 +1,6 @@
 #!/bin/sh
-CL=classes
 . ../scripts/global_vars
 
 cd GUIDSL
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -classpath '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$CL" GUIDSLComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -classpath '../lib/jakarta.jar:../lib/jdom.jar:../lib/sat4j.jar' -d "$TMPCLASSOUT" GUIDSLComp.features

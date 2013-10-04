@@ -1,4 +1,4 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-java -cp GameOfLife/classes/ Main
+java -cp GameOfLife/"$TMPCLASSOUT"/ Main

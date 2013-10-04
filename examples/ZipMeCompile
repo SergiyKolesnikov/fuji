@@ -1,7 +1,6 @@
 #!/bin/sh
 . ../scripts/global_vars
 
-CL=classes
 cd ZipMe
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -basedir features -d "$CL" configs/ZipMeCompWithTest.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -basedir features -d "$TMPCLASSOUT" configs/ZipMeCompWithTest.features

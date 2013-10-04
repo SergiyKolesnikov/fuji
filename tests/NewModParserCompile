@@ -1,6 +1,5 @@
 #!/bin/sh
-CP="classes"
-
+. ../scripts/global_vars
 cd NewModParser
-/bin/rm -rf "$CP" >/dev/null 2>&1
-java -jar ../../FujiCompiler/build/fuji.jar -d "$CP" Test.features
+/bin/rm -rf "$TMPCLASSOUT" >/dev/null 2>&1
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features

@@ -1,1 +1,3 @@
-java -cp classes A >tmp.out
+#!/bin/sh
+. ../../scripts/global_vars
+java -cp "$TMPCLASSOUT" A >tmp.out

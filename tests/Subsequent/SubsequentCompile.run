@@ -1,3 +1,4 @@
 #!/bin/sh
-java -classpath classes p1.Accessor >tmp.out
-java -classpath classes p1.StandAlone >>tmp.out
+. ../../scripts/global_vars
+java -classpath "$TMPCLASSOUT" p1.Accessor >tmp.out
+java -classpath "$TMPCLASSOUT" p1.StandAlone >>tmp.out

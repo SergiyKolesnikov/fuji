@@ -1,4 +1,5 @@
 #!/bin/sh
-java -cp classes Asub >tmp.out
-java -cp classes Nsub >>tmp.out
-java -cp classes Rsub >>tmp.out
+. ../../scripts/global_vars
+java -cp "$TMPCLASSOUT" Asub >tmp.out
+java -cp "$TMPCLASSOUT" Nsub >>tmp.out
+java -cp "$TMPCLASSOUT" Rsub >>tmp.out

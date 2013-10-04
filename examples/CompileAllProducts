@@ -1,4 +1,5 @@
 #!/bin/sh
+. ../scripts/global_vars
 if [ -z "$1" ]; then
     echo Error: Wrong number of parameters.
     echo "Usage: ./CompileAllProducts SPL_dir [base_dir]"
@@ -14,8 +15,8 @@ else
 fi
 
 SPL_CLASSPATH=`cat "$SPL_DIR/$SPL_DIR.classpath" 2>/dev/null`
-CL="classes"
-PRODUCTS_DIR="tmp-fuji-products"
+CL="$TMPCLASSOUT"
+PRODUCTS_DIR="$TMPPRODOUT"
 CONFIGS_DIR="configs/all"
 UNCOMPILABLE="tmpe-fuji-uncompilable_configurations.txt"
 

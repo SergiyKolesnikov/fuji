@@ -1,6 +1,5 @@
 #!/bin/sh
-CL=classes
-
+. ../scripts/global_vars
 cd AHEAD
-/bin/rm -rf "$CL"
-java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar:../lib/ant.jar -d "$CL" Jak2JavaComp.features
+/bin/rm -rf "$TMPCLASSOUT"
+java -Xmx128m -jar ../../FujiCompiler/build/fuji.jar -cp ../lib/jakarta.jar:../lib/ant.jar -d "$TMPCLASSOUT" Jak2JavaComp.features

@@ -1,5 +1,5 @@
 #!/bin/sh
-
+. ../scripts/global_vars
 cd ImportDecls
-/bin/rm -rf classes 2>/dev/null
-java -jar ../../FujiCompiler/build/fuji.jar -d classes Test.features 2>tmp.out
+/bin/rm -rf "$TMPCLASSOUT" 2>/dev/null
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features 2>tmp.out

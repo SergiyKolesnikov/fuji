@@ -2,8 +2,8 @@
 . ../scripts/global_vars
 
 cd Prevayler
-/bin/rm -rf classes
-mkdir classes
+/bin/rm -rf "$TMPCLASSOUT"
+mkdir "$TMPCLASSOUT"
 javac -cp ../lib/cide.jar:../lib/skaringa.jar:../lib/log4j.jar:../lib/xstream.jar:../lib/javamatch.jar \
-        -d classes \
+        -d "$TMPCLASSOUT" \
         `find sources -name '*.java'`
