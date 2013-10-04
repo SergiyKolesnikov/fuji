@@ -1,0 +1,22 @@
+Raroscope/products/Variant0001/Variant0001.model done. AST: 130 ms, spl error check: 1050 ms.
+Raroscope/products/Variant0002/Variant0002.model done. AST: 120 ms, spl error check: 1210 ms.
+Raroscope/products/Variant0003/Variant0003.model done. AST: 130 ms, spl error check: 1200 ms.
+Raroscope/products/Variant0004/Variant0004.model done. AST: 130 ms, spl error check: 1300 ms.
+Raroscope/products/Variant0005/Variant0005.model done. AST: 120 ms, spl error check: 1210 ms.
+Raroscope/products/Variant0006/Variant0006.model done. AST: 130 ms, spl error check: 1300 ms.
+Raroscope/products/Variant0007/Variant0007.model done. AST: 130 ms, spl error check: 1290 ms.
+Raroscope/products/Variant0008/Variant0008.model done. AST: 130 ms, spl error check: 1480 ms.
+Raroscope/products/Variant0009/Variant0009.model done. AST: 120 ms, spl error check: 1180 ms.
+Raroscope/products/Variant0010/Variant0010.model done. AST: 140 ms, spl error check: 1280 ms.
+Raroscope/products/Variant0011/Variant0011.model done. AST: 120 ms, spl error check: 1320 ms.
+Raroscope/products/Variant0012/Variant0012.model done. AST: 130 ms, spl error check: 1450 ms.
+Raroscope/products/Variant0013/Variant0013.model done. AST: 130 ms, spl error check: 1280 ms.
+Raroscope/products/Variant0014/Variant0014.model done. AST: 130 ms, spl error check: 1450 ms.
+Raroscope/products/Variant0015/Variant0015.model done. AST: 130 ms, spl error check: 1440 ms.
+Raroscope/products/Variant0016/Variant0016.model done. AST: 130 ms, spl error check: 1640 ms.
+construct AST:   2050 ms
+spl error check: 21080 ms
+
+real	0m55.368s
+user	0m53.267s
+sys	0m1.952s

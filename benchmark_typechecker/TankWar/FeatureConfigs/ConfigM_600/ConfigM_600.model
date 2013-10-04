@@ -1,0 +1,1 @@
+ConfigM_600 : M_600_stubfix M_600 :: _ConfigM_600 ;

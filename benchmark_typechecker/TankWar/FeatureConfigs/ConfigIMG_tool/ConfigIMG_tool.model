@@ -1,0 +1,1 @@
+ConfigIMG_tool : IMG_tool_stubfix IMG_tool :: _ConfigIMG_tool ;
