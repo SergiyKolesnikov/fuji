@@ -1,1 +1,3 @@
-not all errors found
+Errors:
+/TypeAccess/innerClasses/static/01/FeatureA/A.java:3:
+  Semantic Error: no method named B.Inner.bar() found.

@@ -1,1 +1,5 @@
-not all errors found
+Errors:
+/OptInfoUpAndDownCast/01/FeatureA/C.java:3:
+  Semantic Error: A can not be cast into B
+/OptInfoUpAndDownCast/01/FeatureA/C.java:4:
+  Semantic Error: B can not be cast into A

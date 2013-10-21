@@ -1,1 +1,5 @@
-not all errors found
+Errors:
+/OptInfoMethodInSupertypeAccess/01/FeatureA/Z.java:3:
+  Semantic Error: can not assign a of type B a value of type A
+/OptInfoMethodInSupertypeAccess/01/FeatureA/Z.java:4:
+  Semantic Error: no method named foo() in A matches.

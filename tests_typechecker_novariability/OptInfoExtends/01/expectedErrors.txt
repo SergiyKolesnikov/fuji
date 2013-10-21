@@ -1,1 +1,21 @@
-not all errors found
+Errors:
+/OptInfoExtends/01/FeatureA/C.java:2:
+  Semantic Error: can not assign b of type B a value of type A
+/OptInfoExtends/01/FeatureA/C.java:4:
+  Semantic Error: can not assign a of type B a value of type A
+/OptInfoExtends/01/FeatureA/C.java:5:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:6:
+  Semantic Error: no method named bar() in B matches.
+/OptInfoExtends/01/FeatureA/C.java:7:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:8:
+  Semantic Error: no method named bar() in A matches.
+/OptInfoExtends/01/FeatureA/C.java:9:
+  Semantic Error: A can not be cast into B
+/OptInfoExtends/01/FeatureA/C.java:10:
+  Semantic Error: no method named foobar() in A matches.
+/OptInfoExtends/01/FeatureA/A.java:2,24:
+  Semantic Error: no field named i
+/OptInfoExtends/01/FeatureA/A.java:4:
+  Semantic Error: no method named bar() in A matches.

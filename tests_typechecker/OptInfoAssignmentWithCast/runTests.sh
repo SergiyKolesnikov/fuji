@@ -31,7 +31,8 @@ $Dir/model.m 2> $Dir/tmp.out
 # Clean output -> start path with "/$CurrentFolderName"
 # sed "s/^\/.*\(\/[^\/.]*\/[^\/.]*\/[^\/.]*\/[^\/.]*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
 CURRENTFOLDER=`basename $PWD`
-sed "s/^.*\(\/$CURRENTFOLDER\/.*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
+#sed "s/^.*\(\/$CURRENTFOLDER\/.*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
+sed "s:$PWD:/$CURRENTFOLDER:g" $Dir/tmp.out > $Dir/tmp2.out
 
 # Compare the cleaned output of the test case with the expected output.
 

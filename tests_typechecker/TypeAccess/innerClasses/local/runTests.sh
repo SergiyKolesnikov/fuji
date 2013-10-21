@@ -37,7 +37,8 @@ for Dir in [0-9][0-9]*; do
   CURRENTFOLDER=`basename $PWD`
   PREVFOLDER=`basename $(dirname $PWD)`
   PREVPREVFOLDER=`basename $(dirname $(dirname $PWD))` 
-  sed "s/^.*\(\/$PREVPREVFOLDER\/.*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
+  #sed "s/^.*\(\/$PREVPREVFOLDER\/.*\)/\1/" $Dir/tmp.out > $Dir/tmp2.out
+  sed "s:$PWD:/$PREVPREVFOLDER/$PREVFOLDER/$CURRENTFOLDER:g" $Dir/tmp.out > $Dir/tmp2.out
 
   # Compare the cleaned output of the test case with the expected output.
   OK=`diff "$Dir/tmp2.out" "$Dir/expectedErrors.txt"`

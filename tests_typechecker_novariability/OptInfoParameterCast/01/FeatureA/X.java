@@ -1,4 +1,4 @@
-public class X extends Y {
+public class X extends Y{
 	public X(B b) {
 		super(new A());
 	}

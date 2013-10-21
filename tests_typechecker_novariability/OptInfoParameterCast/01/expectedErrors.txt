@@ -1,1 +1,7 @@
-not all errors found
+Errors:
+/OptInfoParameterCast/01/FeatureA/Y.java:4:
+  Semantic Error: can not instantiate X no matching constructor found in X
+/OptInfoParameterCast/01/FeatureA/Y.java:5:
+  Semantic Error: no method named foo(A) in X matches.
+/OptInfoParameterCast/01/FeatureA/X.java:3:
+  Semantic Error: no constructor named super(A) in superclass matches.

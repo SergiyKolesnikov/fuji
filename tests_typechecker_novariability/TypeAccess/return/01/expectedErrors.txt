@@ -1,3 +1,5 @@
 Errors:
 /TypeAccess/return/01/FeatureA/A.java:3,3:
   Semantic Error: no visible type named C
+/TypeAccess/return/01/FeatureA/A.java:3:
+  Semantic Error: no method named B.bar() found.
