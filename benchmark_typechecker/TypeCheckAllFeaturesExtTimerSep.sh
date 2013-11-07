@@ -8,7 +8,7 @@
 (( CpuTimeCompositionCurrent=0 ))
 (( CpuTimeTypeCheckCurrent=0 ))
 
-echo 'variant	usertime	systemtime' > $1/exttimetypechecker_featurebased.csv
+echo 'variant	usertime	systemtime	memory' > $1/exttimetypechecker_featurebased.csv
 
 echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker_featurebased.csv
 
@@ -39,7 +39,7 @@ do
   do
 	variantname=`basename $variantmodel`
 	/usr/bin/time \
-			-f $variantname\\t%U\\t%S \
+			-f $variantname\\t%U\\t%S\\t%M \
 			-o $1/exttimetypechecker_featurebased.csv \
 			--append \
 			--quiet \

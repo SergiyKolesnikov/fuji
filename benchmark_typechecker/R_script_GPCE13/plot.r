@@ -1,5 +1,5 @@
 draft = F
-if (draft) dev.off()
+#if (draft) dev.off()
 
 
 options(width=180)
@@ -9,41 +9,55 @@ if (draft) ca=c("EPL", "GPL", "GUIDSL", "Prevayler")
 
 #interpret all elements of ca as names of case studies
 caseStudies = ca[!is.na(ca)]
-csInternalData = vector("list",length(caseStudies))
-csExternalData = vector("list",length(caseStudies))
-csExternalData_features = vector("list",length(caseStudies))
-csInternalData_features = vector("list",length(caseStudies))
-csInternalData_fam = vector("list",length(caseStudies))
+
+getRepetitionData <- function(repetitionNumber) {
+	csInternalData = vector("list",length(caseStudies))
+	csExternalData = vector("list",length(caseStudies))
+	csExternalData_features = vector("list",length(caseStudies))
+	csInternalData_features = vector("list",length(caseStudies))
+	csInternalData_fam = vector("list",length(caseStudies))
+	for (i in 1:length(caseStudies)) {
+	  cat(i, ") reading case study data (repetition ", repetitionNumber, ")  \"",caseStudies[i],"\"\n", sep="")
+	  int = read.csv(file=paste("../results_repetition",repetitionNumber,"/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+	  ext = read.csv(file=paste("../results_repetition",repetitionNumber,"/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+	  
+	  csInternalData_features[[i]] <- read.csv(file=paste("../results_repetition",repetitionNumber,"/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+	  csExternalData_features[[i]] <- read.csv(file=paste("../results_repetition",repetitionNumber,"/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+
+	  csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
+	  int[is.na(int)] <- c(0)
+		
+	  csInternalData_fam[[i]] = int[int$variant == "family", ]
+	  
+	  int = int[int$variant != "family", ]
+	  ext = ext[ext$variant != "family", ]
+	  
+	  if (nrow(int) != nrow(ext)) {
+		stop("inconsistent input tables")
+	  }
+	  #if (! all(int['variant'] == ext['variant'])) {
+	  #	stop("inconsistent variants in input tables")
+	  #}
+	  csInternalData[[i]]<-int
+	  csExternalData[[i]]<-ext
+	}
+	list(csInternalData=csInternalData, csExternalData=csExternalData, 
+				csExternalData_features=csExternalData_features, csInternalData_features=csInternalData_features,
+				csInternalData_fam=csInternalData_fam)
+}
+rep_data=list(getRepetitionData(1), getRepetitionData(2), getRepetitionData(3), 
+getRepetitionData(4), getRepetitionData(5), getRepetitionData(6), 
+getRepetitionData(7), getRepetitionData(8), getRepetitionData(9))
+
+#get data without optimization
 csInternalData_fam_noOpt = vector("list",length(caseStudies))
 for (i in 1:length(caseStudies)) {
-  cat(i, ") reading case study data \"",caseStudies[i],"\"\n", sep="")
-  int = read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/inttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext = read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  int_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),
-		colClasses=c("character",rep("numeric",3)),head=TRUE, sep="\t", na.strings=c("","NA"))
-  ext_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  
-  csInternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/inttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-  csExternalData_features[[i]] <- read.csv(file=paste("../resultBackup_with_optimization_rev_1148/",caseStudies[i],"/exttimetypechecker_featurebased.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
-
-  csInternalData_features[[i]][is.na(csInternalData_features[[i]])] <- c(0)
-  int[is.na(int)] <- c(0)
-  int_noOpt[is.na(int_noOpt)] <- c(0)
-    
-  csInternalData_fam[[i]] = int[int$variant == "family", ]
-  csInternalData_fam_noOpt[[i]] = int_noOpt[int_noOpt$variant=="family", ]
-  
-  int = int[int$variant != "family", ]
-  ext = ext[ext$variant != "family", ]
-  
-  if (nrow(int) != nrow(ext)) {
-    stop("inconsistent input tables")
-  }
-  #if (! all(int['variant'] == ext['variant'])) {
-  #	stop("inconsistent variants in input tables")
-  #}
-  csInternalData[[i]]<-int
-  csExternalData[[i]]<-ext
+	cat(i, ") reading case study data (noOptimization) \"",caseStudies[i],"\"\n", sep="")
+	int_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/inttimetypechecker.csv",sep=""),
+			colClasses=c("character",rep("numeric",3)),head=TRUE, sep="\t", na.strings=c("","NA"))
+	  ext_noOpt = read.csv(file=paste("../resultBackup_family-based_no_optimization_rev1102/",caseStudies[i],"/exttimetypechecker.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
+	  int_noOpt[is.na(int_noOpt)] <- c(0)
+	  csInternalData_fam_noOpt[[i]] = int_noOpt[int_noOpt$variant=="family", ]
 }
 
 bytecodeCompTimes = read.csv(file=paste("bytecode_typecheck_complete.csv",sep=""),head=TRUE, sep="\t", na.strings=c("","NA"))
@@ -51,21 +65,58 @@ print("bytecodecomp:")
 print(bytecodeCompTimes[bytecodeCompTimes$name=="GPL",])
 
 getFeatureTimeInt <- function(caseStudyID) {
-  prodlines = csInternalData_features[[caseStudyID]]
-  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+  astComp = c()
+  typecheck = c()
+	for (i in 1:length(rep_data)) {
+		prodlines = rep_data[[i]]$csInternalData_features[[caseStudyID]]
+		astComp[[i]] <- sum((prodlines$ASTcomp))
+		typecheck[[i]] <- sum((prodlines$typecheck))
+	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " featurebased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
+	c(mean(astComp), mean(typecheck))
 }
 getFeatureTimeInt_wBytecodeComp <- function(caseStudyID) {
-  bytecodeCompTime=bytecodeCompTimes[caseStudyID, "bytecode_typecheck"]
-  prodlines = csInternalData_features[[caseStudyID]]
-  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)),sum((bytecodeCompTime)))
+	bytecodeCompTime=bytecodeCompTimes[caseStudyID, "bytecode_typecheck"]
+	astComp = c()
+	typecheck = c()
+  for (i in 1:length(rep_data)) {
+		prodlines = rep_data[[i]]$csInternalData_features[[caseStudyID]]
+		astComp[[i]] <- sum((prodlines$ASTcomp))
+		typecheck[[i]] <- sum((prodlines$typecheck))
+	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " feature_wBytecodeComp\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
+		# bytecode comp is a single value, statically read out of a file, standard deviation makes no sense
+	c(mean(astComp), mean(typecheck),sum((bytecodeCompTime)))
 }
 getProdTimeInt <- function(caseStudyID) {
-  prodlines = csInternalData[[caseStudyID]]
-  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+	astComp = c()
+	typecheck = c()
+	for (i in 1:length(rep_data)) {
+		prodlines = rep_data[[i]]$csInternalData[[caseStudyID]]
+		astComp[[i]] <- sum((prodlines$ASTcomp))
+		typecheck[[i]] <- sum((prodlines$typecheck))
+	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " productbased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
+  c(mean(astComp), mean(typecheck))
 }
 getFamTimeInt <- function(caseStudyID) {
-  prodlines = csInternalData_fam[[caseStudyID]]
-  c(sum((prodlines$ASTcomp)),sum((prodlines$typecheck)))
+  astComp = c()
+  typecheck = c()
+	for (i in 1:length(rep_data)) {
+		prodlines = rep_data[[i]]$csInternalData_fam[[caseStudyID]]
+		astComp[[i]] <- sum((prodlines$ASTcomp))
+		typecheck[[i]] <- sum((prodlines$typecheck))
+	}
+	cat ("relativer Messfehler:sd/mean\n",
+		"cs ", caseStudies[[caseStudyID]], " familybased\n",
+		"astComp ", 100*sd(astComp)/mean(astComp), "%\ttypecheck ", 100*sd(typecheck)/mean(typecheck),"%\n")
+  c(mean(astComp), mean(typecheck))
 }
 
 getFamTimeInt_noOpt <- function(caseStudyID) {
@@ -118,24 +169,26 @@ if (draft) { # use colors
 	)
 	textcolor="firebrick3"
 } else { # use black/white
-	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.45, .45, .45)) # setup, typecheck, bytecodeComp
+	color <- c(rgb(0.75, 0.75, 0.75), rgb(1, 1, 1), rgb(.35, .35, .35)) # setup, typecheck, bytecodeComp
 	textcolor=rgb(0, 0, 0)
 }
-if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=8.5, height=11, onefile=TRUE, paper="special") 
+if (!draft) pdf(file=paste("plot_int.","pdf",sep=""), width=11, height=10, onefile=TRUE, paper="special") 
 
 layoutMat=matrix(c(
-	3,3,   6,6,   9,9,   #titles
-	1,2,   4,5,   7,8,   #plots
-	12,12, 15,15, 18,18, #titles
-	10,11, 13,14, 16,17, #plots
-	21,21, 24,24, 27,27, #titles
-	19,20, 22,23, 25,26, #plots
-	30,30, 33,33, 36,36, #titles
-	28,29, 31,32, 34,35, #plots
-	37,37, 37,37, 37,37  #legend
-), 9, 6, byrow = TRUE)
-layoutHeights=c(0.2,1, 0.2,1, 0.2,1, 0.2,1, 0.5)
-layoutWidths=c(1,0.8, 1,0.8, 1,0.8)
+	# 37 is the legend1
+	# 38 is the legend2
+	# 39 is free
+	3,3,   6,6,   9,9,   39, #titles
+	1,2,   4,5,   7,8,   37, #plots
+	12,12, 15,15, 18,18, 39, #titles
+	10,11, 13,14, 16,17, 38, #plots
+	21,21, 24,24, 27,27, 39, #titles
+	19,20, 22,23, 25,26, 39, #plots
+	30,30, 33,33, 36,36, 39, #titles
+	28,29, 31,32, 34,35, 39  #plots
+), 8, 7, byrow = TRUE)
+layoutHeights=c(0.2,1, 0.2,1, 0.2,1, 0.2,1)
+layoutWidths=c(1,0.8, 1,0.8, 1,0.8, 1.3)
 layout(mat=layoutMat, heights=layoutHeights, widths=layoutWidths)
 
 for (i in 1:length(caseStudies)) {  
@@ -300,9 +353,9 @@ for (i in 1:length(caseStudies)) {
 }
 
 # c(bottom, left, top, right)
-par(mar=c(0,1,0,0)) 
+par(mar=c(0,0,0,0)) 
 plot.new()
-legend("bottomleft",
+legend(x=-0.04,y=1,
        c(
        "PB   Product-based",
        "FT    Feature-based",
@@ -311,9 +364,8 @@ legend("bottomleft",
        "FM*  Family-based (no caching)"),
        inset = 0, cex=1)
        
-#par(mar=c(1,0,1,1)) 
-#plot.new()
-legend(x=0.21,y=0.515,
+par(mar=c(0,0,0,0)) 
+legend(x=-0.04,y=0.515,
        c('Setup',
        'Checking',
          'Compose'),

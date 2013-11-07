@@ -8,7 +8,7 @@
 (( CpuTimeCompositionCurrent=0 ))
 (( CpuTimeTypeCheckCurrent=0 ))
 
-echo 'variant	usertime	systemtime' > $1/exttimetypechecker.csv
+echo 'variant	usertime	systemtime	memory' > $1/exttimetypechecker.csv
 
 echo 'variant	ASTcomp	typecheck	errors' > $1/inttimetypechecker.csv
 
@@ -39,7 +39,7 @@ do
   do
 	variantname=`basename $variantmodel`
 	/usr/bin/time \
-			-f $variantname\\t%U\\t%S \
+			-f $variantname\\t%U\\t%S\\t%M \
 			-o $1/exttimetypechecker.csv \
 			--append \
 			--quiet \
@@ -64,7 +64,7 @@ done
 echo "typechecking family"
 # time option --quiet means do not report program status (error or normal termination)
  /usr/bin/time \
-			-f family\\t%U\\t%S \
+			-f family\\t%U\\t%S\\t%M \
 			-o $1/exttimetypechecker.csv \
 			--append \
 			--quiet \
