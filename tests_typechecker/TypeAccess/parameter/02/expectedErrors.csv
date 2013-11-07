@@ -1,0 +1,2 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{TypeAccess/parameter/02/FeatureA/A.java;2},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB}

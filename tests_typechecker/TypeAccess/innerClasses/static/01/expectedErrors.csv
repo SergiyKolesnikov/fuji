@@ -1,0 +1,4 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{TypeAccess/innerClasses/static/01/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method static void bar() { ... } of feature FeatureB}
+{TypeAccess/innerClasses/static/01/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).Inner of feature FeatureB},
+{TypeAccess/innerClasses/static/01/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},

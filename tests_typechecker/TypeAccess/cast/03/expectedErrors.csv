@@ -1,0 +1,5 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{TypeAccess/cast/03/FeatureA/A.java;4},Semantic Error,2 optional targets,FeatureA,{FeatureC:FeatureC2},{Feature FeatureA accesses by a cast the type public C() of feature FeatureC:Feature FeatureA accesses by a cast the type public C() of feature FeatureC2},
+{TypeAccess/cast/03/FeatureB/B.java;1},Semantic Error,2 optional targets,FeatureB,{FeatureC:FeatureC2},{Feature FeatureB accesses the super constructor public C() of feature FeatureC:Feature FeatureB accesses the super constructor public C() of feature FeatureC2},
+{TypeAccess/cast/03/FeatureA/A.java;4},Semantic Error,2 optional targets,FeatureA,{FeatureC:FeatureC2},{Feature FeatureA accesses the type (default package).C of feature FeatureC:Feature FeatureA accesses the type (default package).C of feature FeatureC2},
+{TypeAccess/cast/03/FeatureB/B.java;1},Semantic Error,2 optional targets,FeatureB,{FeatureC:FeatureC2},{Feature FeatureB accesses the type (default package).C of feature FeatureC:Feature FeatureB accesses the type (default package).C of feature FeatureC2},
