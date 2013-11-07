@@ -1,0 +1,4 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{TypeAccess/tryCatchThrows/03/FeatureB/B.java;3},Semantic Error,2 optional targets,FeatureB,{FeatureE:FeatureE2},{Feature FeatureB accesses the constructor public E() { ... } of feature FeatureE:Feature FeatureB accesses the constructor public E() { ... } of feature FeatureE2},
+{TypeAccess/tryCatchThrows/03/FeatureA/A.java;5},Semantic Error,2 optional targets,FeatureA,{FeatureE:FeatureE2},{Feature FeatureA accesses the type (default package).E of feature FeatureE:Feature FeatureA accesses the type (default package).E of feature FeatureE2},
+{TypeAccess/tryCatchThrows/03/FeatureB/B.java;3:TypeAccess/tryCatchThrows/03/FeatureB/B.java;2},Semantic Error,2 optional targets,FeatureB,{FeatureE:FeatureE2},{Feature FeatureB accesses the type (default package).E of feature FeatureE:Feature FeatureB accesses the type (default package).E of feature FeatureE2},

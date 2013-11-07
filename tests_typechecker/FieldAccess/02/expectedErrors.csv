@@ -1,0 +1,5 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{/FieldAccess/02/FeatureA/A.java;3;17},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the field public static int j = 23; of feature FeatureB}
+{/FieldAccess/02/FeatureA/A.java;6},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
+{/FieldAccess/02/FeatureA/A.java;7;16},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the field public int k = 42; of feature FeatureB}
+{/FieldAccess/02/FeatureA/A.java;3:/FieldAccess/02/FeatureA/A.java;6},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},

@@ -1,0 +1,2 @@
+{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
+{TypeAccess/generics/03/FeatureA/A.java;5},Semantic Error,2 optional targets,FeatureA,{FeatureB:FeatureB2},{Feature FeatureA accesses the type (default package).B of feature FeatureB:Feature FeatureA accesses the type (default package).B of feature FeatureB2},

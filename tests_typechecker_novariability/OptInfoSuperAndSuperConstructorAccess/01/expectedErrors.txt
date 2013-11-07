@@ -1,0 +1,5 @@
+Errors:
+/OptInfoSuperAndSuperConstructorAccess/01/FeatureA/A.java:2,23:
+  Semantic Error: no field named i
+/OptInfoSuperAndSuperConstructorAccess/01/FeatureA/A.java:7:
+  Semantic Error: no method named foo() in java.lang.Object matches.

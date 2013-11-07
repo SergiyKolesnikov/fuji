@@ -1,11 +1,21 @@
 Errors:
-/OptInfoExtends2Steps/01/FeatureA/A.java:2,24:
-  Semantic Error: no field named i
-/OptInfoExtends2Steps/01/FeatureA/A.java:4:
+/OptInfoExtends2Steps/01/FeatureA/D.java:2:
+  Semantic Error: can not assign c of type C a value of type A
+/OptInfoExtends2Steps/01/FeatureA/D.java:4:
+  Semantic Error: can not assign a of type C a value of type A
+/OptInfoExtends2Steps/01/FeatureA/D.java:5:
   Semantic Error: no method named bar() in A matches.
+/OptInfoExtends2Steps/01/FeatureA/D.java:6:
+  Semantic Error: no method named bar() in C matches.
 /OptInfoExtends2Steps/01/FeatureA/D.java:7:
   Semantic Error: no method named bar() in A matches.
 /OptInfoExtends2Steps/01/FeatureA/D.java:8:
   Semantic Error: no method named bar() in A matches.
+/OptInfoExtends2Steps/01/FeatureA/D.java:9:
+  Semantic Error: A can not be cast into C
 /OptInfoExtends2Steps/01/FeatureA/D.java:10:
   Semantic Error: no method named foobar() in A matches.
+/OptInfoExtends2Steps/01/FeatureA/A.java:2,24:
+  Semantic Error: no field named i
+/OptInfoExtends2Steps/01/FeatureA/A.java:4:
+  Semantic Error: no method named bar() in A matches.
