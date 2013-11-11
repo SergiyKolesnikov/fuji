@@ -1,0 +1,5 @@
+/FujiCompiler/build
+/FujiCompiler/src-generated
+
+/examples/ZipMe/tmp
+/examples/ZipMe/variants
