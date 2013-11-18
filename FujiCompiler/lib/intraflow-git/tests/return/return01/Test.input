@@ -1,9 +1,0 @@
-
-class Test {
-
-	void m(int a) {
-		if (a > 0)
-			return;
-		a++;
-	}
-}
