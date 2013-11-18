@@ -1,0 +1,3 @@
+[submodule "FujiCompiler/lib/jastaddj-git"]
+	path = FujiCompiler/lib/jastaddj-git
+	url = git@bitbucket.org:jastadd/jastaddj.git
