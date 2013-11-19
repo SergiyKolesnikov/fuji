@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="FujiCompiler/src"/>
+	<classpathentry including="test/**" kind="src" path="FujiCompiler/lib/intraflow-git/src/java"/>
+	<classpathentry kind="src" path="FujiCompiler/src-generated/tmp"/>
 	<classpathentry kind="src" path="FujiCompiler/src-generated/gen"/>
+	<classpathentry kind="src" path="FujiCompiler/src-generated/res"/>
+	<classpathentry kind="src" path="FujiCompiler/lib/jastaddj-git/src/res"/>
+	<classpathentry kind="src" path="FujiCompiler/lib/jastaddj-git/src/backend"/>
+	<classpathentry kind="src" path="FujiCompiler/lib/jastaddj-git/src/frontend"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="FujiCompiler/lib/commons-cli-1.2/commons-cli-1.2.jar" sourcepath="FujiCompiler/lib/commons-cli-1.2/commons-cli-1.2-sources.jar">
 		<attributes>
@@ -13,5 +19,7 @@
 	<classpathentry kind="lib" path="FujiCompiler/lib/guidsl/guidsl.jar"/>
 	<classpathentry kind="lib" path="FujiCompiler/lib/sat4j/org.sat4j.core.jar"/>
 	<classpathentry kind="lib" path="FujiCompiler/lib/jakarta/jakarta.jar"/>
+	<classpathentry kind="lib" path="FujiCompiler/lib/intraflow-git/lib/junit-4.11-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="FujiCompiler/lib/jastaddj-git/tools/ant-1.9.1.jar"/>
 	<classpathentry kind="output" path="FujiCompiler/build/"/>
 </classpath>
