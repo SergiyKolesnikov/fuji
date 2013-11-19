@@ -1,7 +1,7 @@
 #!/bin/sh
-if [ -d classes ]; then 
-    /bin/cp -rf violet_resources/* classes
+. ../../scripts/global_vars
+if [ -d "$TMPCLASSOUT" ]; then 
+    /bin/cp -rf violet_resources/* "$TMPCLASSOUT"
 else
-    echo "No classes directory found.  Compile with '-d classes' option."
-
+    echo "No classes directory found.  Compile with -d $TMPCLASSOUT"
 fi

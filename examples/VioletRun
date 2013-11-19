@@ -1,3 +1,3 @@
 #!/bin/sh
-../scripts/global_vars
+. ../scripts/global_vars
 java -cp Violet/"$TMPCLASSOUT"/ com.horstmann.violet.UMLEditor
