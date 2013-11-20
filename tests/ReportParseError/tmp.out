@@ -1,3 +1,3 @@
 Errors:
-/home/kolesnik/work/projects/fuji/FujiProject/trunk/tests/ReportParseError/F1/A.java:2,1:
+/home/kolesnik/work/projects/fuji/FujiProject/tests/ReportParseError/F1/A.java:2,1:
   Syntactic Error: unexpected token "cla"

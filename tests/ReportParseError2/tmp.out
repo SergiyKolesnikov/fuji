@@ -1,2 +1,2 @@
 Errors:
-Composition of '/home/kolesnik/work/projects/fuji/FujiProject/trunk/tests/ReportParseError2/F1/some/A.java' and '/home/kolesnik/work/projects/fuji/FujiProject/trunk/tests/ReportParseError2/F2/some/A.java failed! Package names do not match!
+Composition of '/home/kolesnik/work/projects/fuji/FujiProject/tests/ReportParseError2/F1/some/A.java' and '/home/kolesnik/work/projects/fuji/FujiProject/tests/ReportParseError2/F2/some/A.java failed! Package names do not match!
