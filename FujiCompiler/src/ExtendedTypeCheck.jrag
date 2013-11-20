@@ -1343,7 +1343,7 @@ aspect ExtendedTypeCheck {
 		ASTNode node = this.getParent();
 		if (node instanceof Dot){
 			ASTNode child = (ASTNode) node.getChild(0);
-			fullName = child.toString() + "." + name();
+			fullName = child.prettyPrint() + "." + name();
 		}
 		return fullName;
 	}
@@ -1717,7 +1717,7 @@ aspect ExtendedTypeCheck {
 		if ((!getSPLStructure().hasVariability()) || !variabilityError) {
 			if (!sourceType().assignConversionTo(getDest().type(), getSource())
 					&& !sourceType().isUnknown()) {
-				error("can not assign " + getDest() + " of type "
+				error("can not assign " + getDest().prettyPrint() + " of type "
 						+ getDest().type().typeName() + " a value of type "
 						+ sourceType().typeName());
 			}
@@ -1927,7 +1927,7 @@ aspect ExtendedTypeCheck {
 					+ "."
 					+ typeDecl.name();
 		} else {
-			String declString = node.toString();
+			String declString = node.prettyPrint();
 			if (node instanceof ConstructorDecl) {
 				ConstructorDecl cd = (ConstructorDecl) node;
 				/*
@@ -1936,7 +1936,7 @@ aspect ExtendedTypeCheck {
 				 */
 				if (cd.isDefaultConstructor()) {
 					StringBuffer s = new StringBuffer();
-					cd.getModifiers().toString(s);
+					cd.getModifiers().prettyPrint(s);
 					declString = s.toString() + cd.name() + "()";
 				}
 			}

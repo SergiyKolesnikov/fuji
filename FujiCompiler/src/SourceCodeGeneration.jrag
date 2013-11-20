@@ -23,7 +23,7 @@ aspect SourceCodeGeneration {
         if(parentFile != null)
             parentFile.mkdirs();
         FileWriter fw = new FileWriter(dest);
-        fw.write(this.toString());
+        fw.write(this.prettyPrint());
         fw.write('\n');
         fw.close();
     }
