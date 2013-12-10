@@ -1,0 +1,2 @@
+This test is a minimal example for a NullPointerException bug in the 
+type-checker. The bug led to an exception on checking a uninitialized field.
