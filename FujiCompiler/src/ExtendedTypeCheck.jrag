@@ -1276,6 +1276,7 @@ aspect ExtendedTypeCheck {
 				}
 			} else {
 				// Remove wrongly declared Declarations
+				
 				SimpleSet decls = decls();
 				String className = "";
 				if (isQualified()) {
@@ -1285,11 +1286,13 @@ aspect ExtendedTypeCheck {
 						if (varAc.decl() instanceof VariableDeclaration) {
 							VariableDeclaration vd = (VariableDeclaration) varAc
 									.decl();
-							TypeDecl source = vd.getInit().type();
-							TypeDecl dest = vd.type();
-							if (!source.assignConversionTo(dest, vd.getInit())) {
-								decls = SimpleSet.emptySet;
-								className = source.name();
+							if (vd.hasInit()) {
+								TypeDecl source = vd.getInit().type();
+								TypeDecl dest = vd.type();
+								if (!source.assignConversionTo(dest, vd.getInit())) {
+									decls = SimpleSet.emptySet;
+									className = source.name();
+								}
 							}
 						} else if (varAc.decl() instanceof FieldDeclaration) {
 							FieldDeclaration fd = (FieldDeclaration) varAc
