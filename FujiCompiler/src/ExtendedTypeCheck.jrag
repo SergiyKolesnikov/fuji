@@ -1579,8 +1579,8 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :FieldDeclaration.typeCheck()
 		 */
-		if ((hasInit() && !getSPLStructure().hasVariability())
-				|| !variabilityError) {
+		if (hasInit() && (!getSPLStructure().hasVariability()
+				|| !variabilityError)) {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
 			if (!source.assignConversionTo(dest, getInit())) {
@@ -1644,8 +1644,8 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :VariableDeclaration.splTypeCheck()
 		 */
-		if (hasInit() && (!getSPLStructure().hasVariability())
-				|| !variabilityError) {
+		if (hasInit() && (!getSPLStructure().hasVariability()
+				|| !variabilityError)) {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
 			if (!source.assignConversionTo(dest, getInit())) {
