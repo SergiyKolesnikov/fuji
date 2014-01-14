@@ -3,7 +3,8 @@
 
 # for all folders: call runTests.sh
 
-TESTCASES="FieldAccess \
+TESTCASES="FalsePositives \
+           FieldAccess \
            MethodAccess \
            TypeAccess \
            OptInfoAssignmentWithCast \

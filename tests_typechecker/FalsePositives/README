@@ -1,0 +1,17 @@
+OverwrittenMethod
+-----------------
+
+F1/A.java has method "bar" and uses it in method "foo".
+
+Feature F2 is optional and F2/A.java overwirtes method "bar".
+
+Fuji typechecker wrongly reports, that method "foo" access an optional method
+"bar":
+---
+/tmp/test/F1/A.java:3:
+  Semantic Error: MAYBE dependency:
+Feature F1 accesses the method
+  void bar() { ... }
+of feature F2.
+Feature F2 may not be present in every valid selection.
+---
