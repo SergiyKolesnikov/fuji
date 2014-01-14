@@ -20,6 +20,7 @@ for Dir in `find -maxdepth 1 -mindepth 1 -type d`; do
 
   # Run type checker on test case, save error output
   java -jar $PATH_TO_FUJI_JAR \
+       -compstrategy family \
        -typechecker \
        -basedir $Dir \
        $Dir/model.m 2> $Dir/tmp.out
