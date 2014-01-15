@@ -65,7 +65,19 @@ aspect ExtendedTypeCheck {
 	public boolean Program.ignoreOriginal() {
 		return ignoreOriginal;
 	}
-
+	
+	/*
+	 * The flag indicates to the spl-typechecker if it should output error
+	 * messages in CSV format. true -- output in CSV format.
+	 */
+	private boolean Program.tcOutputErrorsAsCsv = false;
+	public void Program.setTcOutputErrorsAsCsv(boolean value) {
+	    tcOutputErrorsAsCsv = value;
+	}
+	public boolean Program.tcOutputErrorsAsCsv() {
+	    return tcOutputErrorsAsCsv;
+	}
+	
 	/* --- */
 
 	/* get the feature model */
@@ -120,8 +132,6 @@ aspect ExtendedTypeCheck {
 			HashMap<ASTNode, TypeDecl> outputDeclsAndTargetHostTypes,
 			TypeDecl accessingType,
 			HashMap<ASTNode, TypeDecl> accessingDeclsAndTargetHostTypes) {
-		// Switch Output between csv / text
-		boolean csv = false;
 		// return-value
 		boolean errorFound = false;
 		/* get the feature model */
@@ -208,7 +218,7 @@ aspect ExtendedTypeCheck {
 						StringBuilder sbtei = new StringBuilder();
 						sbtei = buildSplTypeErrorInfo(fromFeatureID,
 								accessingType, accessingDeclsAndTargetHostTypes);
-						if (csv) {
+						if (getProgram().tcOutputErrorsAsCsv()) {
 							buildSplErrorCSVSingle(fromFeature, toFeature,
 									never, maybe, state, targetStructure,
 									sourceHostType, outputTargetHostType,
@@ -296,7 +306,7 @@ aspect ExtendedTypeCheck {
 				sbtei = buildSplTypeErrorInfo(fromFeatureID, accessingType,
 						accessingDeclsAndTargetHostTypes);
 				if (mayBeMissing) {
-					if (csv) {
+					if (getProgram().tcOutputErrorsAsCsv()) {
 						buildSplErrorCSVMultiple(fromFeature, state,
 								targetStructure, sourceHostType, toFeatureIDs,
 								mapDecls, listFeatures, outputMapDecls, sbtei);

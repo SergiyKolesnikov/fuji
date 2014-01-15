@@ -373,6 +373,11 @@ public class Main implements CompositionContext {
                         "'original' method calls are treated as normal method calls (used in feature-based type checking). This option works only with '"
                                 + TYPECHECKER + "' option.").create(
                         IGNORE_ORIGINAL));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "If the option is set fuji type checker outputs errors in CSV format. This option works only with '"
+                                + TYPECHECKER + "' option.")
+                .create(TYPECHECKER_CSV_MSG));
         return ops;
     }
 
@@ -440,6 +445,9 @@ public class Main implements CompositionContext {
 
         if (cmd.hasOption(IGNORE_ORIGINAL)) {
             ast.setIgnoreOriginal(true);
+        }
+        if (cmd.hasOption(TYPECHECKER_CSV_MSG)) {
+            ast.setTcOutputErrorsAsCsv(true);
         }
         ast.splErrorCheck(errors, warnings);
 
@@ -708,6 +716,7 @@ public class Main implements CompositionContext {
         public static final String SPL_HAS_NO_VARIABILITY = "novariability";
         public static final String TIMER = "timer";
         public static final String IGNORE_ORIGINAL = "ignoreOriginal";
+        public static final String TYPECHECKER_CSV_MSG = "tcCsvMsg";
     }
 
     private static void printError(String message) {
