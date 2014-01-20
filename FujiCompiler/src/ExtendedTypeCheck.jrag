@@ -51,33 +51,6 @@ aspect ExtendedTypeCheck {
 
 	/* /copy_&_modify */
 
-	/*
-	 * The flag indicates to the spl-typechecker if it should treat original
-	 * method calls as normal method calls. This is used during feature-based
-	 * type checking.
-	 */
-	private boolean Program.ignoreOriginal = false;
-
-	public void Program.setIgnoreOriginal(boolean ignore) {
-		ignoreOriginal = ignore;
-	}
-
-	public boolean Program.ignoreOriginal() {
-		return ignoreOriginal;
-	}
-	
-	/*
-	 * The flag indicates to the spl-typechecker if it should output error
-	 * messages in CSV format. true -- output in CSV format.
-	 */
-	private boolean Program.tcOutputErrorsAsCsv = false;
-	public void Program.setTcOutputErrorsAsCsv(boolean value) {
-	    tcOutputErrorsAsCsv = value;
-	}
-	public boolean Program.tcOutputErrorsAsCsv() {
-	    return tcOutputErrorsAsCsv;
-	}
-	
 	/* --- */
 
 	/* get the feature model */
@@ -218,7 +191,7 @@ aspect ExtendedTypeCheck {
 						StringBuilder sbtei = new StringBuilder();
 						sbtei = buildSplTypeErrorInfo(fromFeatureID,
 								accessingType, accessingDeclsAndTargetHostTypes);
-						if (getProgram().tcOutputErrorsAsCsv()) {
+						if (getProgram().cmd.hasOption(fuji.Main.OptionName.TYPECHECKER_CSV_MSG)) {
 							buildSplErrorCSVSingle(fromFeature, toFeature,
 									never, maybe, state, targetStructure,
 									sourceHostType, outputTargetHostType,
@@ -306,7 +279,7 @@ aspect ExtendedTypeCheck {
 				sbtei = buildSplTypeErrorInfo(fromFeatureID, accessingType,
 						accessingDeclsAndTargetHostTypes);
 				if (mayBeMissing) {
-					if (getProgram().tcOutputErrorsAsCsv()) {
+					if (getProgram().cmd.hasOption(fuji.Main.OptionName.TYPECHECKER_CSV_MSG)) {
 						buildSplErrorCSVMultiple(fromFeature, state,
 								targetStructure, sourceHostType, toFeatureIDs,
 								mapDecls, listFeatures, outputMapDecls, sbtei);
@@ -991,7 +964,7 @@ aspect ExtendedTypeCheck {
 			}
 
 			/* Variablility-aware type check */
-			if (getSPLStructure().hasVariability()) {
+			if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 				HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 				for (Iterator iter = decls().iterator(); iter.hasNext();) {
 					BodyDecl decl = (BodyDecl) iter.next();
@@ -1058,7 +1031,7 @@ aspect ExtendedTypeCheck {
 		String ORIGINAL_ACCESS = "original";
 
 		// Variability-aware type check.
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			// from java.ast: MethodAccess : Access ::= <ID:String> Arg:Expr*;
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 			// original-check: if the target method is named "original",
@@ -1257,9 +1230,9 @@ aspect ExtendedTypeCheck {
 		 * Name check. See
 		 * JastAddJ/Java1.4Frontend/NameCheck.jrag:MethodAccess.nameCheck()
 		 */
-		if (!getSPLStructure().hasVariability() || !variabilityError) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (name().equals(ORIGINAL_ACCESS)
-					&& !getProgram().ignoreOriginal()) {
+					&& !getProgram().cmd.hasOption(fuji.Main.OptionName.IGNORE_ORIGINAL)) {
 				/*
 				 * get context, i.e. method signature of the method where the
 				 * access comes from
@@ -1367,7 +1340,7 @@ aspect ExtendedTypeCheck {
 	public void TypeAccess.splTypeCheck() {
 
 		/* Variability-aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			/*
 			 * from java.ast: TypeAccess : Access ::= <Package:String>
 			 * <ID:String>;
@@ -1432,7 +1405,7 @@ aspect ExtendedTypeCheck {
 		 * JastAddJ/Java1.4Frontend/NameCheck.jrag:TypeAccess.nameCheck()
 		 */
 		/* Ignore default types */
-		if (!getSPLStructure().hasVariability() || !variabilityError) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (!(this.hostType() == null)) { // exclude ImportDecls
 				if (!(this instanceof PrimitiveTypeAccess)) {
 					if (!(this instanceof ArrayTypeAccess)) {
@@ -1464,7 +1437,7 @@ aspect ExtendedTypeCheck {
 		}
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			/*
 			 * from java.ast: ClassInstanceExpr : Access ::= Access Arg:Expr*
 			 * [TypeDecl];
@@ -1551,7 +1524,7 @@ aspect ExtendedTypeCheck {
 	public void FieldDeclaration.splTypeCheck() {
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			/*
 			 * from java.ast: FieldDeclaration : MemberDecl ::= Modifiers
 			 * TypeAccess:Access <ID:String> [Init:Expr]; // Simplified
@@ -1592,7 +1565,7 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :FieldDeclaration.typeCheck()
 		 */
-		if (hasInit() && (!getSPLStructure().hasVariability()
+		if (hasInit() && (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)
 				|| !variabilityError)) {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
@@ -1616,7 +1589,7 @@ aspect ExtendedTypeCheck {
 	public void VariableDeclaration.splTypeCheck() {
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			/*
 			 * from java.ast: VariableDeclaration : Stmt ::= Modifiers
 			 * TypeAccess:Access <ID:String> [Init:Expr]; // Simplified
@@ -1657,7 +1630,7 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :VariableDeclaration.splTypeCheck()
 		 */
-		if (hasInit() && (!getSPLStructure().hasVariability()
+		if (hasInit() && (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)
 				|| !variabilityError)) {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
@@ -1681,7 +1654,7 @@ aspect ExtendedTypeCheck {
 	public void AssignSimpleExpr.splTypeCheck() {
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 
 			/* from java.ast: AssignSimpleExpr : AssignExpr ; */
 			/*
@@ -1727,7 +1700,7 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :AssignSimpleExpr.splTypeCheck()
 		 */
-		if ((!getSPLStructure().hasVariability()) || !variabilityError) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (!sourceType().assignConversionTo(getDest().type(), getSource())
 					&& !sourceType().isUnknown()) {
 				error("can not assign " + getDest().prettyPrint() + " of type "
@@ -1748,7 +1721,7 @@ aspect ExtendedTypeCheck {
 	public void CastExpr.splTypeCheck() {
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 
 			/* from java.ast: CastExpr : Expr ::= TypeAccess:Access Expr; */
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
@@ -1820,7 +1793,7 @@ aspect ExtendedTypeCheck {
 		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
 		 * :CastExpr.splTypeCheck()
 		 */
-		if (!getSPLStructure().hasVariability() || !variabilityError) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			TypeDecl expr = getExpr().type();
 			TypeDecl type = getTypeAccess().type();
 			if (!expr.isUnknown()) {
@@ -1839,7 +1812,7 @@ aspect ExtendedTypeCheck {
 	public void SuperConstructorAccess.splTypeCheck() {
 
 		/* Variability aware type check. */
-		if (getSPLStructure().hasVariability()) {
+		if (!getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY)) {
 			HashMap<ASTNode, TypeDecl> declsAndTargetHostTypes = new HashMap<ASTNode, TypeDecl>();
 			// do not consider trivial super constructor accesses
 			// (i.e. class has no super class but Object)
@@ -1913,7 +1886,7 @@ aspect ExtendedTypeCheck {
 		/* Simple type check. */
 		/* Type check. See */
 
-		if (!getSPLStructure().hasVariability() || !variabilityError) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (decls().isEmpty()) {
 				System.out.println(enclosingInstance().name());
 				StringBuffer s = new StringBuffer();

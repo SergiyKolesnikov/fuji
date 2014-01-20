@@ -212,6 +212,7 @@ public class Main implements CompositionContext {
 
         Composition composition = new Composition(this);
         Program ast = composition.composeAST();
+        ast.setCmd(cmd);
 
         /* Setup timer stop. */
         if (cmd.hasOption(TIMER)) {
@@ -443,14 +444,7 @@ public class Main implements CompositionContext {
     public void typecheckAST(Program ast) throws SemanticErrorException,
             CompilerWarningException {
 
-        if (cmd.hasOption(IGNORE_ORIGINAL)) {
-            ast.setIgnoreOriginal(true);
-        }
-        if (cmd.hasOption(TYPECHECKER_CSV_MSG)) {
-            ast.setTcOutputErrorsAsCsv(true);
-        }
         ast.splErrorCheck(errors, warnings);
-
         throwErrorsAndWarnings();
     }
 

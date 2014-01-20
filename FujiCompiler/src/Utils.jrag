@@ -29,4 +29,12 @@ aspect Utils {
     public SPLStructure ASTNode.getSPLStructure() {
         return getProgram().getSPLStructure();
     }
+    
+    /*
+     * Allows AST nodes read Fuji's command line options.
+     */
+    protected org.apache.commons.cli.CommandLine Program.cmd;
+    public void Program.setCmd(org.apache.commons.cli.CommandLine cmd) {
+        this.cmd = cmd;
+    }
 }
