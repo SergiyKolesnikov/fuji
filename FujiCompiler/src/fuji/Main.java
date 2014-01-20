@@ -178,15 +178,13 @@ public class Main implements CompositionContext {
 
                 /* The provided file is a feature model. */
                 spl = new SPLStructure(basedir,
-                        featuresFileOrFeatureModelPathname, null,
-                        !cmd.hasOption(SPL_HAS_NO_VARIABILITY));
+                        featuresFileOrFeatureModelPathname, null);
 
             } else {
 
                 /* The provided file is a features list. */
                 spl = new SPLStructure(basedir, null,
-                        featuresFileOrFeatureModelPathname,
-                        !cmd.hasOption(SPL_HAS_NO_VARIABILITY));
+                        featuresFileOrFeatureModelPathname);
             }
 
         } else {
@@ -195,8 +193,7 @@ public class Main implements CompositionContext {
              * Take the features list and the model from the parameters supplied
              * to the constructor.
              */
-            spl = new SPLStructure(basedir, featureModel, featuresList,
-                    !cmd.hasOption(SPL_HAS_NO_VARIABILITY));
+            spl = new SPLStructure(basedir, featureModel, featuresList);
         }
 
         backboneCompilerArgs = constructBackboneCompilerArgs();
@@ -377,8 +374,8 @@ public class Main implements CompositionContext {
         ops.addOption(OptionBuilder
                 .withDescription(
                         "If the option is set fuji type checker outputs errors in CSV format. This option works only with '"
-                                + TYPECHECKER + "' option.")
-                .create(TYPECHECKER_CSV_MSG));
+                                + TYPECHECKER + "' option.").create(
+                        TYPECHECKER_CSV_MSG));
         return ops;
     }
 

@@ -40,12 +40,6 @@ public class SPLStructure {
 
     private FeatureModel featureModel;
 
-    /*
-     * The flag indicates if the SPL has variability or not (i.e. consists only
-     * of one product).
-     */
-    private boolean hasVariability = true;
-
     private Map<String, RoleGroup> roleGroups;
 
     /**
@@ -68,7 +62,7 @@ public class SPLStructure {
      * @throws IllegalArgumentException 
      */
     public SPLStructure(String bdPathname, String featureModelPathname,
-            String featuresFilePathname, boolean hasVariability)
+            String featuresFilePathname)
             throws IOException, FeatureDirNotFoundException,
             SyntacticErrorException, UnsupportedModelException, IllegalArgumentException {
 
@@ -92,7 +86,6 @@ public class SPLStructure {
             featureModulePathnames = parseFeautresFile(basedirPathname,
                     new File(featuresFilePathname).getCanonicalPath());
         }
-        this.hasVariability = hasVariability;
         initSPLStructure();
     }
 
@@ -115,7 +108,7 @@ public class SPLStructure {
      * @throws IllegalArgumentException 
      */
     public SPLStructure(String bdPathname, FeatureModel featureModel,
-            List<String> featuresList, boolean hasVariability)
+            List<String> featuresList)
             throws IOException, FeatureDirNotFoundException,
             SyntacticErrorException, IllegalArgumentException {
 
@@ -129,7 +122,6 @@ public class SPLStructure {
             featuresList = featureNamesFromModel(this.featureModel); 
         }
         featureModulePathnames = parseFeatureList(basedirPathname, featuresList);
-        this.hasVariability = hasVariability;
         initSPLStructure();
     }
 
