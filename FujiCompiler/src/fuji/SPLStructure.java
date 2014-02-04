@@ -51,10 +51,6 @@ public class SPLStructure {
      *            absolute pathname of the feature model file
      * @param featuresFilePathname
      *            absolute pathname of the features file
-     * @param hasVariability
-     *            indicates if the SPL has variability or not (i.e. consists
-     *            only of one product). <code>true</code> if the SPL has
-     *            variability or <code>false</code> otherwise
      * @throws IOException
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
@@ -98,10 +94,6 @@ public class SPLStructure {
      *            a feature model
      * @param featuresList
      *            a list of features to be composed.
-     * @param hasVariability
-     *            indicates if the SPL has variability or not (i.e. consists
-     *            only of one product). <code>true</code> if the SPL has
-     *            variability or <code>false</code> otherwise.
      * @throws IOException
      * @throws FeatureDirNotFoundException
      * @throws SyntacticErrorException
@@ -479,16 +471,5 @@ public class SPLStructure {
         public String toString() {
             return basePathname;
         }
-    }
-
-    /**
-     * The flag indicates if the SPL has variability or not (i.e. consists only
-     * of one product).
-     * 
-     * @return <code>true</code> if the SPL has variability or
-     *         <code>false</code> otherwise.
-     */
-    public boolean hasVariability() {
-        return hasVariability;
     }
 }
