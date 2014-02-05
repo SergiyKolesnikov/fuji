@@ -1888,7 +1888,6 @@ aspect ExtendedTypeCheck {
 
 		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (decls().isEmpty()) {
-				System.out.println(enclosingInstance().name());
 				StringBuffer s = new StringBuffer();
 				s.append("no constructor named " + name());
 				s.append("(");
