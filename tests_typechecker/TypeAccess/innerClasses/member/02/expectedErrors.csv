@@ -1,6 +1,5 @@
-{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
-{TypeAccess/innerClasses/member/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
-{TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor Inner() of feature FeatureB}
-{TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method void bar() { ... } of feature FeatureB}
-{TypeAccess/innerClasses/member/02/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},
-{TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).Inner of feature FeatureB},
+{/TypeAccess/innerClasses/member/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
+{/TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor Inner() of feature FeatureB}
+{/TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method void bar() { ... } of feature FeatureB}
+{/TypeAccess/innerClasses/member/02/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},
+{/TypeAccess/innerClasses/member/02/FeatureA/A.java;4},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).Inner of feature FeatureB},

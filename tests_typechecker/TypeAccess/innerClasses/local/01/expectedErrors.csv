@@ -1,3 +1,2 @@
-{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
-{TypeAccess/innerClasses/local/01/FeatureB/B.java;3},Semantic Error,MAYBE dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
-{TypeAccess/innerClasses/local/01/FeatureB/B.java;3},Semantic Error,MAYBE dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}
+{/TypeAccess/innerClasses/local/01/FeatureB/B.java;3},Semantic Error,MAYBE dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
+{/TypeAccess/innerClasses/local/01/FeatureB/B.java;3},Semantic Error,MAYBE dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}

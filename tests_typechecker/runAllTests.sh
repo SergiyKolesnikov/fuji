@@ -3,6 +3,13 @@
 
 # for all folders: call runTests.sh
 
+#checking input-parameters
+if [ $# -gt 1 ]; then
+    echo "wrong number of arguments!"
+    echo "    usage: sh runAllTests.sh [-csv]"
+    exit
+fi
+
 TESTCASES="FalsePositives \
            FieldAccess \
            MethodAccess \
@@ -26,7 +33,12 @@ TESTCASES="FalsePositives \
 for TESTCASE in $TESTCASES; do
   echo "Testing $TESTCASE ..."
   cd $TESTCASE
-  ./runTests.sh
+  
+  if [ "$1" == "-csv" ]; then
+    ./runTests.sh -csv
+  else
+    ./runTests.sh
+  fi
   cd ..
 done
 echo "All tests done."

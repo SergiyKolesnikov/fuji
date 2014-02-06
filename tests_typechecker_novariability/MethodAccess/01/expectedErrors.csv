@@ -1,0 +1,4 @@
+{/MethodAccess/01/FeatureA/A.java;3},Semantic Error,,FeatureA,{},{no method named B.getValue() found.}
+{/MethodAccess/01/FeatureA/A.java;6;6},Semantic Error,,FeatureA,{},{no visible type named B}
+{/MethodAccess/01/FeatureA/A.java;6;16},Semantic Error,,FeatureA,{},{no visible type named B}
+{/MethodAccess/01/FeatureA/A.java;7},Semantic Error,,FeatureA,{},{no method named b.getValue2() found.}

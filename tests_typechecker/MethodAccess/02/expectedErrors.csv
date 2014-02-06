@@ -1,4 +1,3 @@
-{Codefile; line[; column]}, Feature Relation, Source Feature, {Target Feature}, {Errortext}
 {/MethodAccess/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method public static int getValue() { ... } of feature FeatureB}
 {/MethodAccess/02/FeatureA/A.java;6},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
 {/MethodAccess/02/FeatureA/A.java;7},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method public int getValue2() { ... } of feature FeatureB}

@@ -1,0 +1,3 @@
+{/OptInfoAssignmentWithCast/01/FeatureA/Z.java;3},Semantic Error,,FeatureA,{},{can not assign b of type B a value of type A}
+{/OptInfoAssignmentWithCast/01/FeatureA/Z.java;6},Semantic Error,,FeatureA,{},{can not assign b of type B a value of type A}
+{/OptInfoAssignmentWithCast/01/FeatureA/Z.java;8},Semantic Error,,FeatureA,{},{can not assign b2 of type B a value of type A}
