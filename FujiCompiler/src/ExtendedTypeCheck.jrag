@@ -2209,7 +2209,6 @@ aspect ExtendedTypeCheck {
 
 	public String ASTNode.getTypeErrorPosition(String accessSourceInfo) {
 		accessSourceInfo = accessSourceInfo.replaceAll(":", ";");
-		//accessSourceInfo = accessSourceInfo.replaceAll("\n", ":");
 		//sort is needed for testing
 		String[] infos = accessSourceInfo.split("\n");
 		Arrays.sort(infos);
@@ -2230,9 +2229,9 @@ aspect ExtendedTypeCheck {
 			ArrayList<Feature> listFeatures = new ArrayList<Feature>();
 			listFeatures.addAll(getFeatureModel().getConcreteFeatures());
 			String sourceFeature = listFeatures.get(featureID()).getName();
-			//sourceFeature = getFeatureModel().getConcreteFeatures().get(fromFeatureID);
 			sb.append(sourceFeature + ",");
 			sb.append("{},"); //No-Target Feature(s)
+			errormsg = errormsg.replaceAll("\n", " ");
 			sb.append("{" + errormsg + "}");
 			System.err.println(sb.toString());
 		} else {
@@ -2385,6 +2384,9 @@ aspect ExtendedTypeCheck {
 					sb.append("Feature ");
 					sb.append(fromFeature.getName());
 					sb.append(" accesses ");
+					targetStructure = targetStructure.replaceAll("\n", " ");
+					targetStructure = targetStructure.replaceAll("   ", " ");
+					targetStructure = targetStructure.replaceAll("     ", " ");
 					sb.append(targetStructure);
 					String decl = mapDecls.get(toFeatureID);
 					sb.append(" ");

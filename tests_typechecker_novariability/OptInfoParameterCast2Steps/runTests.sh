@@ -75,9 +75,9 @@ for Dir in [0-9][0-9]*; do
     fi
     OKSorted=`diff "$Dir/tmp2Sorted.out" "$Dir/expectedSorted.txt"`
     if [ "$OKSorted" == "" ]; then
-      echoOK " $PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: OK   \t"
+      echoOK " $CURRENTFOLDER/$Dir - model with errors: OK   \t"
     else
-      echoFailed " $PREVFOLDER/$CURRENTFOLDER/$Dir - model with errors: FAILED\n"
+      echoFailed " $CURRENTFOLDER/$Dir - model with errors: FAILED\n"
       echo "$OK"
     fi
   fi

@@ -74,9 +74,9 @@ else
   fi
   OKSorted=`diff "$Dir/tmp2Sorted.out" "$Dir/expectedSorted.txt"`
   if [ "$OKSorted" == "" ]; then
-    echoOK " $PREVFOLDER/$CURRENTFOLDER/$Dir OK   \t"
+    echoOK " $CURRENTFOLDER/$Dir OK   \t"
   else
-    echoFailed " $PREVFOLDER/$CURRENTFOLDER/$Dir FAILED\n"
+    echoFailed " $CURRENTFOLDER/$Dir FAILED\n"
     echo "$OK"
   fi
 fi

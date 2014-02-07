@@ -30,13 +30,13 @@ for Dir in `find -maxdepth 1 -mindepth 1 -type d`; do
   if [ "$CSV" == "-csv" ]; then
     java -jar $PATH_TO_FUJI_JAR \
        -tcCsvMsg \
-       -fopRefs \
+       -compstrategy family \
        -typechecker \
        -basedir $Dir \
        $Dir/model.m 2> $Dir/tmp.out
   else
     java -jar $PATH_TO_FUJI_JAR \
-       -fopRefs \
+       -compstrategy family \
        -typechecker \
        -basedir $Dir \
        $Dir/model.m 2> $Dir/tmp.out
@@ -45,7 +45,7 @@ for Dir in `find -maxdepth 1 -mindepth 1 -type d`; do
   # Clean output -> start path with "/$PrevFolderName" 
   CURRENTFOLDER=`basename $PWD`
   PREVFOLDER=`basename $(dirname $PWD)`
-  sed "s:$PWD:/$PREVFOLDER/$CURRENTFOLDER:g" $Dir/tmp.out > $Dir/tmp2.out
+  sed "s:$PWD:/$CURRENTFOLDER:g" $Dir/tmp.out > $Dir/tmp2.out
 
   # Compare the cleaned output of the test case with the expected output.
   if [ "$CSV" == "-csv" ]; then
@@ -54,7 +54,7 @@ for Dir in `find -maxdepth 1 -mindepth 1 -type d`; do
     OK=`diff "$Dir/tmp2.out" "$Dir/expectedErrors.txt"`
   fi
   if [ "$OK" == "" ]; then
-    echoOK " $PREVFOLDER/$CURRENTFOLDER/$Dir OK   \t"
+    echoOK " $CURRENTFOLDER/$Dir OK   \t"
   else
     if [ "$CSV" == "-csv" ]; then
       sort $Dir/tmp2.out > $Dir/tmp2Sorted.out
@@ -72,9 +72,9 @@ for Dir in `find -maxdepth 1 -mindepth 1 -type d`; do
     fi
     OKSorted=`diff "$Dir/tmp2Sorted.out" "$Dir/expectedSorted.txt"`
     if [ "$OKSorted" == "" ]; then
-      echoOK " $PREVFOLDER/$CURRENTFOLDER/$Dir OK   \t"
+      echoOK " $CURRENTFOLDER/$Dir OK   \t"
     else
-      echoFailed " $PREVFOLDER/$CURRENTFOLDER/$Dir FAILED\n"
+      echoFailed " $CURRENTFOLDER/$Dir FAILED\n"
       echo "$OK"
     fi
   fi
