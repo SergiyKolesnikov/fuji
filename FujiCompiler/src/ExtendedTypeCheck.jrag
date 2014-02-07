@@ -2244,6 +2244,11 @@ aspect ExtendedTypeCheck {
 			String targetStructure, TypeDecl sourceHostType,
 			TypeDecl outputTargetHostType, StringBuilder sbtei,
 			String declFirstLine) {
+		
+		//remove newline and tabs
+		targetStructure = targetStructure.replaceAll("\n", " ");
+		targetStructure = targetStructure.replaceAll("   ", " ");
+		targetStructure = targetStructure.replaceAll("     ", " ");
 
 		StringBuilder sb = new StringBuilder();
 		if (this.isTypeAccess) {
@@ -2346,6 +2351,11 @@ aspect ExtendedTypeCheck {
 			ArrayList<Feature> listFeatures,
 			HashMap<Integer, String> outputMapDecls, StringBuilder sbtei) {
 
+		//remove newline and tabs
+		targetStructure = targetStructure.replaceAll("\n", " ");
+		targetStructure = targetStructure.replaceAll("   ", " ");
+		targetStructure = targetStructure.replaceAll("     ", " ");
+		
 		StringBuilder sb = new StringBuilder();
 		if (this.isTypeAccess) {
 			sb.append(getTypeErrorPosition(sbtei.toString()));
@@ -2384,9 +2394,6 @@ aspect ExtendedTypeCheck {
 					sb.append("Feature ");
 					sb.append(fromFeature.getName());
 					sb.append(" accesses ");
-					targetStructure = targetStructure.replaceAll("\n", " ");
-					targetStructure = targetStructure.replaceAll("   ", " ");
-					targetStructure = targetStructure.replaceAll("     ", " ");
 					sb.append(targetStructure);
 					String decl = mapDecls.get(toFeatureID);
 					sb.append(" ");
