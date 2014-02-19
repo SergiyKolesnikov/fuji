@@ -2226,9 +2226,7 @@ aspect ExtendedTypeCheck {
 			StringBuilder sb = new StringBuilder();
 			sb.append(getErrorPosition());
 			sb.append(","); //No dependency
-			ArrayList<Feature> listFeatures = new ArrayList<Feature>();
-			listFeatures.addAll(getFeatureModel().getConcreteFeatures());
-			String sourceFeature = listFeatures.get(featureID()).getName();
+			String sourceFeature = getFeatureName(featureID());
 			sb.append(sourceFeature + ",");
 			sb.append("{},"); //No-Target Feature(s)
 			errormsg = errormsg.replaceAll("\n", " ");
@@ -2236,6 +2234,17 @@ aspect ExtendedTypeCheck {
 			System.err.println(sb.toString());
 		} else {
 			error(errormsg);
+		}
+	}
+	
+	public String ASTNode.getFeatureName(int featureID){
+		if (featureID == -1){
+			return null;
+		}else{
+			ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+			listFeatures.addAll(getFeatureModel().getConcreteFeatures());
+			String featureName = listFeatures.get(featureID).getName();
+			return featureName;
 		}
 	}
 
@@ -2262,10 +2271,17 @@ aspect ExtendedTypeCheck {
 		} else if (maybe) {
 			sb.append("MAYBE dependency,");
 		}
-		// Source Feature
-		sb.append(fromFeature.getName() + ",");
-		// Target Feature
-		sb.append("{" + toFeature.getName() + "},");
+		if (this.isTypeAccess){
+			//Source Feature
+			sb.append(fromFeature.getName());
+			//Participating Features
+			sb.append(",{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+		}else{
+			// Source Feature is not necessarily from-Feature!
+			sb.append(getFeatureName(featureID()) + ",");
+			//Participating Features
+			sb.append("{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+		}
 		// Error-Text
 		sb.append("{");
 		if (state == FIRST_ROUND) {
@@ -2279,9 +2295,9 @@ aspect ExtendedTypeCheck {
 		} else {
 			if ((state == CLASS_EXTENDS_CLASS)
 					|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
-				sb.append(" Class ");
+				sb.append("Class ");
 			} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-				sb.append(" Interface ");
+				sb.append("Interface ");
 			}
 			sb.append(sourceHostType.name() + " of feature ");
 			sb.append(fromFeature.getName());
@@ -2372,7 +2388,7 @@ aspect ExtendedTypeCheck {
 		}
 		// Source Feature
 		sb.append(fromFeature.getName() + ",");
-		// Target Features
+		// Participating Features
 		sb.append("{");
 		delimiter = "";
 		for (int toFeatureID : mapDecls.keySet()) {

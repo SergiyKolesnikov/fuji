@@ -1,2 +1,2 @@
-{/TypeAccess/extends/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the super constructor public B() of feature FeatureB}
-{/TypeAccess/extends/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB}
+{/TypeAccess/extends/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the super constructor public B() of feature FeatureB}
+{/TypeAccess/extends/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB}

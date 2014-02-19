@@ -1,1 +1,1 @@
-{/TypeAccess/implements/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureI},{Feature FeatureA accesses the type (default package).I of feature FeatureI}
+{/TypeAccess/implements/01/FeatureA/A.java;1},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureI},{Feature FeatureA accesses the type (default package).I of feature FeatureI}

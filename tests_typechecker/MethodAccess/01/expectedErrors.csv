@@ -1,4 +1,4 @@
-{/MethodAccess/01/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method public static int getValue() { ... } of feature FeatureB}
-{/MethodAccess/01/FeatureA/A.java;6},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
-{/MethodAccess/01/FeatureA/A.java;7},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method public int getValue2() { ... } of feature FeatureB}
+{/MethodAccess/01/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the method public static int getValue() { ... } of feature FeatureB}
+{/MethodAccess/01/FeatureA/A.java;6},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
+{/MethodAccess/01/FeatureA/A.java;7},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the method public int getValue2() { ... } of feature FeatureB}
 {/MethodAccess/01/FeatureA/A.java;3:/MethodAccess/01/FeatureA/A.java;6},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},

@@ -1,5 +1,5 @@
-{/TypeAccess/innerClasses/local/02/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
-{/TypeAccess/innerClasses/local/02/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the method public void bar() { ... } of feature FeatureB}
-{/TypeAccess/innerClasses/local/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
+{/TypeAccess/innerClasses/local/02/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
+{/TypeAccess/innerClasses/local/02/FeatureA/A.java;3},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the method public void bar() { ... } of feature FeatureB}
+{/TypeAccess/innerClasses/local/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureB,FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
 {/TypeAccess/innerClasses/local/02/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},
-{/TypeAccess/innerClasses/local/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}
+{/TypeAccess/innerClasses/local/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureB,FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}

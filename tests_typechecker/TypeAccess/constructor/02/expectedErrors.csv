@@ -1,2 +1,2 @@
-{/TypeAccess/constructor/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
-{/TypeAccess/constructor/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB}
+{/TypeAccess/constructor/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the constructor public B() of feature FeatureB}
+{/TypeAccess/constructor/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB}
