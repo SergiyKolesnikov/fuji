@@ -1,0 +1,67 @@
+X ALWAYS Y := If X is selected then Y is selected in every valid configuration.
+X MAYBE  Y := If X is selected then Y is selected in at least one but not all valid configurations. 
+X NEVER  Y := If X is selected then Y cannot be selected in any valid configuration.
+
+Extended ALWAYS Base
+Extended ALWAYS Sudoku
+Extended MAYBE Undo
+Extended MAYBE States
+Extended MAYBE Generator
+Extended MAYBE Solver
+Extended MAYBE Color
+
+States ALWAYS Base
+States ALWAYS Sudoku
+States MAYBE Undo
+States MAYBE Generator
+States MAYBE Solver
+States MAYBE Extended
+States MAYBE Color
+
+Base ALWAYS Sudoku
+Base MAYBE Undo
+Base MAYBE States
+Base MAYBE Generator
+Base MAYBE Solver
+Base MAYBE Extended
+Base MAYBE Color
+
+Sudoku ALWAYS Base
+Sudoku MAYBE Undo
+Sudoku MAYBE States
+Sudoku MAYBE Generator
+Sudoku MAYBE Solver
+Sudoku MAYBE Extended
+Sudoku MAYBE Color
+
+Generator ALWAYS Base
+Generator ALWAYS Sudoku
+Generator MAYBE Undo
+Generator MAYBE States
+Generator MAYBE Solver
+Generator MAYBE Extended
+Generator MAYBE Color
+
+Solver ALWAYS Base
+Solver ALWAYS Sudoku
+Solver MAYBE Undo
+Solver MAYBE States
+Solver MAYBE Generator
+Solver MAYBE Extended
+Solver MAYBE Color
+
+Color ALWAYS Base
+Color ALWAYS Sudoku
+Color MAYBE Undo
+Color MAYBE States
+Color MAYBE Generator
+Color MAYBE Solver
+Color MAYBE Extended
+
+Undo ALWAYS Base
+Undo ALWAYS Sudoku
+Undo MAYBE States
+Undo MAYBE Generator
+Undo MAYBE Solver
+Undo MAYBE Extended
+Undo MAYBE Color

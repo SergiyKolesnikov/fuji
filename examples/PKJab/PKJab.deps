@@ -1,0 +1,147 @@
+X ALWAYS Y := If X is selected then Y is selected in every valid configuration.
+X MAYBE  Y := If X is selected then Y is selected in at least one but not all valid configurations. 
+X NEVER  Y := If X is selected then Y cannot be selected in any valid configuration.
+
+Composing ALWAYS XEP0085
+Composing ALWAYS ContactListSource
+Composing ALWAYS ServerRoster
+Composing ALWAYS PKJab
+Composing ALWAYS Base
+Composing MAYBE SendVersion
+Composing MAYBE History
+Composing MAYBE XEP0092
+Composing MAYBE Timestamps
+Composing MAYBE ThemeSelection
+Composing MAYBE SendComposing
+
+XEP0085 ALWAYS Composing
+XEP0085 ALWAYS ContactListSource
+XEP0085 ALWAYS ServerRoster
+XEP0085 ALWAYS PKJab
+XEP0085 ALWAYS Base
+XEP0085 MAYBE SendVersion
+XEP0085 MAYBE History
+XEP0085 MAYBE XEP0092
+XEP0085 MAYBE Timestamps
+XEP0085 MAYBE ThemeSelection
+XEP0085 MAYBE SendComposing
+
+ServerRoster ALWAYS ContactListSource
+ServerRoster ALWAYS PKJab
+ServerRoster ALWAYS Base
+ServerRoster MAYBE SendVersion
+ServerRoster MAYBE History
+ServerRoster MAYBE Composing
+ServerRoster MAYBE XEP0092
+ServerRoster MAYBE Timestamps
+ServerRoster MAYBE XEP0085
+ServerRoster MAYBE ThemeSelection
+ServerRoster MAYBE SendComposing
+
+History ALWAYS ContactListSource
+History ALWAYS ServerRoster
+History ALWAYS PKJab
+History ALWAYS Base
+History MAYBE SendVersion
+History MAYBE Composing
+History MAYBE XEP0092
+History MAYBE Timestamps
+History MAYBE XEP0085
+History MAYBE ThemeSelection
+History MAYBE SendComposing
+
+SendComposing ALWAYS Composing
+SendComposing ALWAYS XEP0085
+SendComposing ALWAYS ContactListSource
+SendComposing ALWAYS ServerRoster
+SendComposing ALWAYS PKJab
+SendComposing ALWAYS Base
+SendComposing MAYBE SendVersion
+SendComposing MAYBE History
+SendComposing MAYBE XEP0092
+SendComposing MAYBE Timestamps
+SendComposing MAYBE ThemeSelection
+
+SendVersion ALWAYS XEP0092
+SendVersion ALWAYS ContactListSource
+SendVersion ALWAYS ServerRoster
+SendVersion ALWAYS PKJab
+SendVersion ALWAYS Base
+SendVersion MAYBE History
+SendVersion MAYBE Composing
+SendVersion MAYBE Timestamps
+SendVersion MAYBE XEP0085
+SendVersion MAYBE ThemeSelection
+SendVersion MAYBE SendComposing
+
+Base ALWAYS ContactListSource
+Base ALWAYS ServerRoster
+Base ALWAYS PKJab
+Base MAYBE SendVersion
+Base MAYBE History
+Base MAYBE Composing
+Base MAYBE XEP0092
+Base MAYBE Timestamps
+Base MAYBE XEP0085
+Base MAYBE ThemeSelection
+Base MAYBE SendComposing
+
+PKJab ALWAYS ContactListSource
+PKJab ALWAYS ServerRoster
+PKJab ALWAYS Base
+PKJab MAYBE SendVersion
+PKJab MAYBE History
+PKJab MAYBE Composing
+PKJab MAYBE XEP0092
+PKJab MAYBE Timestamps
+PKJab MAYBE XEP0085
+PKJab MAYBE ThemeSelection
+PKJab MAYBE SendComposing
+
+Timestamps ALWAYS ContactListSource
+Timestamps ALWAYS ServerRoster
+Timestamps ALWAYS PKJab
+Timestamps ALWAYS Base
+Timestamps MAYBE SendVersion
+Timestamps MAYBE History
+Timestamps MAYBE Composing
+Timestamps MAYBE XEP0092
+Timestamps MAYBE XEP0085
+Timestamps MAYBE ThemeSelection
+Timestamps MAYBE SendComposing
+
+ThemeSelection ALWAYS ContactListSource
+ThemeSelection ALWAYS ServerRoster
+ThemeSelection ALWAYS PKJab
+ThemeSelection ALWAYS Base
+ThemeSelection MAYBE SendVersion
+ThemeSelection MAYBE History
+ThemeSelection MAYBE Composing
+ThemeSelection MAYBE XEP0092
+ThemeSelection MAYBE Timestamps
+ThemeSelection MAYBE XEP0085
+ThemeSelection MAYBE SendComposing
+
+XEP0092 ALWAYS ContactListSource
+XEP0092 ALWAYS ServerRoster
+XEP0092 ALWAYS PKJab
+XEP0092 ALWAYS Base
+XEP0092 MAYBE SendVersion
+XEP0092 MAYBE History
+XEP0092 MAYBE Composing
+XEP0092 MAYBE Timestamps
+XEP0092 MAYBE XEP0085
+XEP0092 MAYBE ThemeSelection
+XEP0092 MAYBE SendComposing
+
+ContactListSource ALWAYS ServerRoster
+ContactListSource ALWAYS PKJab
+ContactListSource ALWAYS Base
+ContactListSource MAYBE SendVersion
+ContactListSource MAYBE History
+ContactListSource MAYBE Composing
+ContactListSource MAYBE XEP0092
+ContactListSource MAYBE Timestamps
+ContactListSource MAYBE XEP0085
+ContactListSource MAYBE ThemeSelection
+ContactListSource MAYBE SendComposing
