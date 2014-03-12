@@ -36,8 +36,8 @@ for I in $RUNS; do
     ./$RUNSCRIPT
 
     # Compare the output of the test case with the expected output.
-    OK=`diff tmp.out "$RUNNAME.ok"`
-    if [ "$OK" == "" ]; then
+    OK=`diff tmp.out "$RUNNAME.ok" 2>&1`
+    if [ "$OK" = "" ]; then
 	echoOK "$TESTSCRIPT OK"
     else
 	echoFailed "$TESTSCRIPT FAILED"
