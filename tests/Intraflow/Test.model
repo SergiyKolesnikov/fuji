@@ -1,0 +1,2 @@
+Intraflow : Base Alt [Opt] :: p_Intraflow ;
+Alt : Alt1 | Alt2 ;
