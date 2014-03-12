@@ -22,7 +22,7 @@ import org.jastadd.util.RobustMap;
 
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
-
+import AST.BodyDecl;
 import AST.CompilationUnit;
 import AST.ComposingVisitor;
 import AST.Problem;
@@ -231,6 +231,17 @@ public class Main implements CompositionContext {
                 System.out.println("Found_Errors: " + errors.size());
             }
 
+        } else if (cmd.hasOption(INTRAFLOW)) {
+            /* Timer start. */
+            if (cmd.hasOption(TIMER)) {
+                startTimeNano = getCpuTime();
+            }
+            dumpIntraflowGraph(ast);
+            /* Timer stop. */
+            if (cmd.hasOption(TIMER)) {
+                System.out.println("Time_typecheck_ms: "
+                        + ((getCpuTime() - startTimeNano) / 1000000));
+            }
         } else {
             /* AST processing timer start. */
             if (cmd.hasOption(TIMER)) {
@@ -242,7 +253,6 @@ public class Main implements CompositionContext {
             if (cmd.hasOption(TIMER)) {
                 System.out.println("AST_processing_time_ms: "
                         + ((getCpuTime() - startTimeNano) / 1000000));
-                System.out.println("Found_Errors: " + errors.size());
             }
         }
     }
@@ -376,6 +386,10 @@ public class Main implements CompositionContext {
                         "If the option is set fuji type checker outputs errors in CSV format. This option works only with '"
                                 + TYPECHECKER + "' option.").create(
                         TYPECHECKER_CSV_MSG));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "Dump AST's intraflow graph in DotGraph format. Only source files from feature directories are processed (not included libraries or binary files).")
+                .create(INTRAFLOW));
         return ops;
     }
 
@@ -446,6 +460,35 @@ public class Main implements CompositionContext {
     }
 
     /**
+     * Dump AST's intraflow graph in DotGraph format. Only source files from
+     * feature directories are processed (not included libraries or binary
+     * files).
+     * 
+     * @param ast
+     */
+    public void dumpIntraflowGraph(Program ast) {
+        @SuppressWarnings("unchecked")
+        Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
+
+        /*
+         * Process source files.
+         */
+        while (iter.hasNext()) {
+            CompilationUnit cu = iter.next();
+            if (cu.fromSource()) {
+                // TODO there may be more than one TypeDecl in a
+                // CompilationUnit. For now, only the first one is analyzed.
+                for (BodyDecl bd : cu.getTypeDecl(0).getBodyDeclList()) {
+                    System.out.println("digraph {");
+                    System.out.print(bd.dumpDotGraph());
+                    System.out.println("}");
+                }
+                // System.out.println(cu.dumpASTDotGraph());
+            }
+        }
+    }
+
+    /**
      * Process the AST of the variant according to the user options.
      * 
      * @throws SyntacticErrorException
@@ -490,6 +533,7 @@ public class Main implements CompositionContext {
 
         throwErrorsAndWarnings();
 
+        // TODO move into separate method as with typechecking.
         /* Do analysis on the whole AST. */
         if (cmd.hasOption(EXT_MEASURE_ASTS_SOURCE)) {
             System.out.println(ast.measureASTSSource());
@@ -702,12 +746,16 @@ public class Main implements CompositionContext {
         public static final String COMPOSTION_STRATEGY_ARG_FAMILY = "family";
         public static final String COMPOSTION_STRATEGY_ARG_PRODUCT = "product";
 
-        /* TYPECHECKER */
+        /* Typechecker */
         public static final String TYPECHECKER = "typechecker";
         public static final String SPL_HAS_NO_VARIABILITY = "novariability";
         public static final String TIMER = "timer";
         public static final String IGNORE_ORIGINAL = "ignoreOriginal";
         public static final String TYPECHECKER_CSV_MSG = "tcCsvMsg";
+
+        /* Intraprocedural Flow Analysis */
+        public static final String INTRAFLOW = "intraflow";
+
     }
 
     private static void printError(String message) {
@@ -729,7 +777,7 @@ public class Main implements CompositionContext {
     }
 
     private static String version() {
-        return "2013-07-17";
+        return "2014-02-25";
     }
 
     /**
