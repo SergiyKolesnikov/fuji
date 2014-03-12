@@ -1,0 +1,39 @@
+X ALWAYS Y := If X is selected then Y is selected in every valid configuration.
+X MAYBE  Y := If X is selected then Y is selected in at least one but not all valid configurations. 
+X NEVER  Y := If X is selected then Y cannot be selected in any valid configuration.
+
+HostOS ALWAYS Base
+HostOS ALWAYS Raroscope
+HostOS MAYBE CRC
+HostOS MAYBE Version
+HostOS MAYBE Entries
+
+CRC ALWAYS Base
+CRC ALWAYS Raroscope
+CRC MAYBE HostOS
+CRC MAYBE Version
+CRC MAYBE Entries
+
+Base ALWAYS Raroscope
+Base MAYBE CRC
+Base MAYBE HostOS
+Base MAYBE Version
+Base MAYBE Entries
+
+Raroscope ALWAYS Base
+Raroscope MAYBE CRC
+Raroscope MAYBE HostOS
+Raroscope MAYBE Version
+Raroscope MAYBE Entries
+
+Version ALWAYS Base
+Version ALWAYS Raroscope
+Version MAYBE CRC
+Version MAYBE HostOS
+Version MAYBE Entries
+
+Entries ALWAYS Base
+Entries ALWAYS Raroscope
+Entries MAYBE CRC
+Entries MAYBE HostOS
+Entries MAYBE Version

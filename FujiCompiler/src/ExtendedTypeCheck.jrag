@@ -16,6 +16,7 @@ import de.ovgu.featureide.fm.core.Feature;
 import de.ovgu.featureide.fm.core.FeatureDependencies;
 import de.ovgu.featureide.fm.core.io.guidsl.GuidslReader;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+import java.util.Arrays;
 
 import org.sat4j.specs.TimeoutException;
 
@@ -959,7 +960,7 @@ aspect ExtendedTypeCheck {
 			if (decls().isEmpty()
 					&& (!isQualified() || !qualifier().type().isUnknown() || qualifier()
 							.isPackageAccess())) {
-				error("no field named " + name());
+				buildNovarError("no field named " + name());
 				return;
 			}
 
@@ -1254,7 +1255,7 @@ aspect ExtendedTypeCheck {
 					}
 				}
 				if (!isThereOrigialTarget) {
-					error("no original-method found in " + methodHost() + ".");
+					buildNovarError("no original-method found in " + methodHost() + ".");
 					return;
 				}
 			} else {
@@ -1317,7 +1318,7 @@ aspect ExtendedTypeCheck {
 					}else{
 						s.append(" found.");
 					}
-					error(s.toString());
+					buildNovarError(s.toString());
 					return;
 				}
 			}
@@ -1410,7 +1411,7 @@ aspect ExtendedTypeCheck {
 				if (!(this instanceof PrimitiveTypeAccess)) {
 					if (!(this instanceof ArrayTypeAccess)) {
 						if (decls().isEmpty()) {
-							error("no visible type named " + typeName());
+							buildNovarError("no visible type named " + typeName());
 							return;
 						}
 					}
@@ -1431,7 +1432,7 @@ aspect ExtendedTypeCheck {
 		 * JastAddJ/Java1.4Frontend/NameCheck.jrag:ClassInstanceExpr.nameCheck()
 		 */
 		if (decls().isEmpty() && !type().isUnknown()) {
-			error("can not instantiate " + type().typeName()
+			buildNovarError("can not instantiate " + type().typeName()
 					+ " no matching constructor found in " + type().typeName());
 			return;
 		}
@@ -1570,7 +1571,7 @@ aspect ExtendedTypeCheck {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
 			if (!source.assignConversionTo(dest, getInit())) {
-				error("can not assign " + name() + " of type "
+				buildNovarError("can not assign " + name() + " of type "
 						+ dest.typeName() + " a value of type "
 						+ source.typeName());
 				return;
@@ -1635,7 +1636,7 @@ aspect ExtendedTypeCheck {
 			TypeDecl source = getInit().type();
 			TypeDecl dest = type();
 			if (!source.assignConversionTo(dest, getInit())) {
-				error("can not assign " + name() + " of type "
+				buildNovarError("can not assign " + name() + " of type "
 						+ dest.typeName() + " a value of type "
 						+ source.typeName());
 				return;
@@ -1703,7 +1704,7 @@ aspect ExtendedTypeCheck {
 		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (!sourceType().assignConversionTo(getDest().type(), getSource())
 					&& !sourceType().isUnknown()) {
-				error("can not assign " + getDest().prettyPrint() + " of type "
+				buildNovarError("can not assign " + getDest().prettyPrint() + " of type "
 						+ getDest().type().typeName() + " a value of type "
 						+ sourceType().typeName());
 			}
@@ -1798,7 +1799,7 @@ aspect ExtendedTypeCheck {
 			TypeDecl type = getTypeAccess().type();
 			if (!expr.isUnknown()) {
 				if (!expr.castingConversionTo(type)) {
-					error(expr.typeName() + " can not be cast into "
+					buildNovarError(expr.typeName() + " can not be cast into "
 							+ type.typeName());
 				}
 			}
@@ -1888,7 +1889,6 @@ aspect ExtendedTypeCheck {
 
 		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
 			if (decls().isEmpty()) {
-				System.out.println(enclosingInstance().name());
 				StringBuffer s = new StringBuffer();
 				s.append("no constructor named " + name());
 				s.append("(");
@@ -1898,7 +1898,7 @@ aspect ExtendedTypeCheck {
 					s.append(getArg(i).type().typeName());
 				}
 				s.append(") in superclass matches.");
-				error(s.toString());
+				buildNovarError(s.toString());
 				return;
 			}
 		}
@@ -2209,8 +2209,43 @@ aspect ExtendedTypeCheck {
 
 	public String ASTNode.getTypeErrorPosition(String accessSourceInfo) {
 		accessSourceInfo = accessSourceInfo.replaceAll(":", ";");
-		accessSourceInfo = accessSourceInfo.replaceAll("\n", ":");
+		//sort is needed for testing
+		String[] infos = accessSourceInfo.split("\n");
+		Arrays.sort(infos);
+		accessSourceInfo = "";
+		for (int i = 0; i < infos.length; i++){
+			accessSourceInfo = accessSourceInfo + infos[i] + ":";
+		}
+		accessSourceInfo = accessSourceInfo.substring(0, accessSourceInfo.length()-1); 
 		return "{" + accessSourceInfo + "}" + ",Semantic Error,";
+	}
+	
+	public void ASTNode.buildNovarError(String errormsg) {
+		if (getProgram().cmd.hasOption(fuji.Main.OptionName.TYPECHECKER_CSV_MSG)) {
+			//csv-output:
+			StringBuilder sb = new StringBuilder();
+			sb.append(getErrorPosition());
+			sb.append(","); //No dependency
+			String sourceFeature = getFeatureName(featureID());
+			sb.append(sourceFeature + ",");
+			sb.append("{},"); //No-Target Feature(s)
+			errormsg = errormsg.replaceAll("\n", " ");
+			sb.append("{" + errormsg + "}");
+			System.err.println(sb.toString());
+		} else {
+			error(errormsg);
+		}
+	}
+	
+	public String ASTNode.getFeatureName(int featureID){
+		if (featureID == -1){
+			return null;
+		}else{
+			ArrayList<Feature> listFeatures = new ArrayList<Feature>();
+			listFeatures.addAll(getFeatureModel().getConcreteFeatures());
+			String featureName = listFeatures.get(featureID).getName();
+			return featureName;
+		}
 	}
 
 	private void ASTNode.buildSplErrorCSVSingle(Feature fromFeature,
@@ -2218,6 +2253,11 @@ aspect ExtendedTypeCheck {
 			String targetStructure, TypeDecl sourceHostType,
 			TypeDecl outputTargetHostType, StringBuilder sbtei,
 			String declFirstLine) {
+		
+		//remove newline and tabs
+		targetStructure = targetStructure.replaceAll("\n", " ");
+		targetStructure = targetStructure.replaceAll("   ", " ");
+		targetStructure = targetStructure.replaceAll("     ", " ");
 
 		StringBuilder sb = new StringBuilder();
 		if (this.isTypeAccess) {
@@ -2231,10 +2271,17 @@ aspect ExtendedTypeCheck {
 		} else if (maybe) {
 			sb.append("MAYBE dependency,");
 		}
-		// Source Feature
-		sb.append(fromFeature.getName() + ",");
-		// Target Feature
-		sb.append("{" + toFeature.getName() + "},");
+		if (this.isTypeAccess){
+			//Source Feature
+			sb.append(fromFeature.getName());
+			//Participating Features
+			sb.append(",{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+		}else{
+			// Source Feature is not necessarily from-Feature!
+			sb.append(getFeatureName(featureID()) + ",");
+			//Participating Features
+			sb.append("{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+		}
 		// Error-Text
 		sb.append("{");
 		if (state == FIRST_ROUND) {
@@ -2248,9 +2295,9 @@ aspect ExtendedTypeCheck {
 		} else {
 			if ((state == CLASS_EXTENDS_CLASS)
 					|| (state == CLASS_IMPLEMENTS_INTERFACE)) {
-				sb.append(" Class ");
+				sb.append("Class ");
 			} else if (state == INTERFACE_EXTENDS_INTERFACE) {
-				sb.append(" Interface ");
+				sb.append("Interface ");
 			}
 			sb.append(sourceHostType.name() + " of feature ");
 			sb.append(fromFeature.getName());
@@ -2311,7 +2358,7 @@ aspect ExtendedTypeCheck {
 			sb.append(toFeature.getName() + ".");
 		}
 		sb.append("}");
-		System.out.println(sb.toString());
+		System.err.println(sb.toString());
 	}
 
 	private void ASTNode.buildSplErrorCSVMultiple(Feature fromFeature,
@@ -2320,6 +2367,11 @@ aspect ExtendedTypeCheck {
 			ArrayList<Feature> listFeatures,
 			HashMap<Integer, String> outputMapDecls, StringBuilder sbtei) {
 
+		//remove newline and tabs
+		targetStructure = targetStructure.replaceAll("\n", " ");
+		targetStructure = targetStructure.replaceAll("   ", " ");
+		targetStructure = targetStructure.replaceAll("     ", " ");
+		
 		StringBuilder sb = new StringBuilder();
 		if (this.isTypeAccess) {
 			sb.append(getTypeErrorPosition(sbtei.toString()));
@@ -2336,7 +2388,7 @@ aspect ExtendedTypeCheck {
 		}
 		// Source Feature
 		sb.append(fromFeature.getName() + ",");
-		// Target Features
+		// Participating Features
 		sb.append("{");
 		delimiter = "";
 		for (int toFeatureID : mapDecls.keySet()) {
@@ -2419,6 +2471,6 @@ aspect ExtendedTypeCheck {
 			}
 			sb.append("}");
 		}
-		System.out.println(sb.toString());
+		System.err.println(sb.toString());
 	}
 }

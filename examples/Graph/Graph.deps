@@ -1,0 +1,39 @@
+X ALWAYS Y := If X is selected then Y is selected in every valid configuration.
+X MAYBE  Y := If X is selected then Y is selected in at least one but not all valid configurations. 
+X NEVER  Y := If X is selected then Y cannot be selected in any valid configuration.
+
+Graph ALWAYS BasicGraph
+Graph MAYBE PrintHeader
+Graph MAYBE Color
+Graph MAYBE Weight
+Graph MAYBE Recursive
+
+Recursive ALWAYS Graph
+Recursive ALWAYS BasicGraph
+Recursive MAYBE PrintHeader
+Recursive MAYBE Color
+Recursive MAYBE Weight
+
+BasicGraph ALWAYS Graph
+BasicGraph MAYBE PrintHeader
+BasicGraph MAYBE Color
+BasicGraph MAYBE Weight
+BasicGraph MAYBE Recursive
+
+Weight ALWAYS Graph
+Weight ALWAYS BasicGraph
+Weight MAYBE PrintHeader
+Weight MAYBE Color
+Weight MAYBE Recursive
+
+Color ALWAYS Graph
+Color ALWAYS BasicGraph
+Color MAYBE PrintHeader
+Color MAYBE Weight
+Color MAYBE Recursive
+
+PrintHeader ALWAYS Graph
+PrintHeader ALWAYS BasicGraph
+PrintHeader MAYBE Color
+PrintHeader MAYBE Weight
+PrintHeader MAYBE Recursive
