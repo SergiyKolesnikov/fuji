@@ -1,0 +1,12 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Test description:
+
+A field wirte is triggered transitivelly by the constructor of Original/Edge:
+Original/Edge.Edge(int, Node) -> Original/Edge.setHead(Node) -> 
+Base/Edge.setHead(Node) -> write access to Edge.head.
+
+The analysis must detect this field write access.
