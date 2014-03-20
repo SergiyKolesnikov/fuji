@@ -1,0 +1,32 @@
+//TODO remove this aspect after fix is upstream.
+//https://bitbucket.org/jastadd/jastaddj/issue/71/signature-attribute-has-wrong-value-for
+/**
+ * Example code:
+ *
+ * class Node {
+ *     Node(String name) {}
+ * }
+ *
+ * The value of the signature attribute for the Node-constructor is 
+ * Node(AST.ParameterDeclaration) instead of the correct one Node(java.lang.String).
+ *
+ * It is a regression after commit 8dbee0d, after which ASTNode.toString() does
+ * not pretty print AST nodes any more.
+ */
+aspect ConstructorSignaturePatch {
+    refine LookupConstructor eq ConstructorDecl.signature() {
+        StringBuffer s = new StringBuffer();
+        s.append(name() + "(");
+        for(int i = 0; i < getNumParameter(); i++) {
+            
+            // Here only getParameter(i) is used in the original code
+            // that results in String with the ASTNode class name and not type name
+            // as intended.
+            s.append(getParameter(i).type().typeName());
+            if(i != getNumParameter() - 1)
+                s.append(", ");
+        }
+        s.append(")");
+        return s.toString();
+    }
+}
