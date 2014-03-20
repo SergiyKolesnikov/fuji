@@ -22,7 +22,7 @@ aspect ExtendedErrorCheck {
             cu.errors.add(new Problem(sourceFile(), s, lineNumber(), Problem.Severity.ERROR, Problem.Kind.SEMANTIC));
     } */
 
-    refine ErrorCheck String ASTNode.sourceFile() {
+    refine ErrorCheck protected String ASTNode.sourceFile() {
         ASTNode node = this;
         while(node != null && !(node instanceof CompilationUnit))
             node = node.getOldParent();
