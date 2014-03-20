@@ -1016,7 +1016,7 @@ aspect ComposingVisitorRSF {
 /*
  * Utility methods and fields for composition process.
  */
-aspect ComposeUtil {
+aspect ComposeUtils {
 
     /*
      * Like original flushCaches() but uses NoTransform methods.
@@ -1065,7 +1065,10 @@ aspect ComposeUtil {
     public void Program.setClassQNames(java.util.Set<String> qNames) {
         classQNames = qNames;
     }
+}
 
+aspect ComposeUtilsRsf {
+    
     /*
      * Contains all the refining roles of the base role the compilation unit
      * belongs to. Information in this roles is used while generating introduces
@@ -1106,5 +1109,103 @@ aspect ComposeUtil {
     }
     public Collection<Access> ClassDecl.getPreservedSuperClassAccess() {
         return preservedSuperClassAccesses;
+    }
+    
+    /**
+     * Family AST can have more than one declaration for a method, field, etc. 
+     * (introduced by different features).  This attribute is an alternative to 
+     * JastAddJ decl-attribute.  It returns all declarations for a given access.
+     */
+    syn SmallSet<MethodDecl> MethodAccess.alternativeDecls() {
+        BodyDecl originalDecl = null;
+        BodyDecl searchDecl;
+        String searchDeclSignature;
+        if (name().equals(ComposingVisitor.ORIGINAL_OPERATOR)) {
+            originalDecl = searchDecl = enclosingBodyDecl();
+            if (! (searchDecl instanceof MethodDecl)) {
+                
+                /*
+                 * Error: original-calls are only allowed inside method declarations.
+                 * TODO add the location of the error to the exception msg. 
+                 */
+                throw new RuntimeException("Encountered an orginal-call outside of method declaration.");
+            }
+        } else {
+            searchDecl = (BodyDecl) decls().iterator().next();
+        }
+        searchDeclSignature = ((MethodDecl) searchDecl).signature();
+
+        SmallSet<MethodDecl> alternativeDecls = SmallSet.<MethodDecl>mutable();
+        TypeDecl hostType = searchDecl.hostType();
+        for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+            if(candidateBodyDecl instanceof MethodDecl) {
+                MethodDecl candidateMethodDecl = (MethodDecl) candidateBodyDecl;
+                
+                /*
+                 * An original-call can not recursivelly call the method in which
+                 * this call is made (hence candidateMethodDecl != originalDecl) 
+                 */
+                if (candidateMethodDecl != originalDecl 
+                        && candidateMethodDecl.signature().equals(searchDeclSignature)) {
+                    alternativeDecls.add(candidateMethodDecl);
+                }
+            }
+        }
+        if (alternativeDecls.isEmpty()) {
+            alternativeDecls.add(unknownMethod());
+        }
+        return alternativeDecls;
+    }
+
+    /**
+     * Family AST can have more than one declaration for a method, field, etc. 
+     * (introduced by different features).  This attribute is an alternative to 
+     * JastAddJ decl-attribute.  It returns all declarations for a given access.
+     */
+    syn SmallSet<ConstructorDecl> ConstructorAccess.alternativeDecls() {
+        BodyDecl searchDecl = (BodyDecl) decls().iterator().next();
+        String searchDeclSignature = ((ConstructorDecl) searchDecl).signature();
+        SmallSet<ConstructorDecl> alternativeDecls = SmallSet.<ConstructorDecl>mutable();
+        TypeDecl hostType = searchDecl.hostType();
+        for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+            if(candidateBodyDecl instanceof ConstructorDecl) {
+                ConstructorDecl candidateConstructorDecl = (ConstructorDecl) candidateBodyDecl;
+                if (candidateConstructorDecl.signature().equals(searchDeclSignature)) {
+                    alternativeDecls.add(candidateConstructorDecl);
+                }
+            }
+        }
+        if (alternativeDecls.isEmpty()) {
+            alternativeDecls.add(unknownConstructor());
+        }
+        return alternativeDecls;
+    }
+
+    /**
+     * Family AST can have more than one declaration for a method, field, etc. 
+     * (introduced by different features).  This attribute is an alternative to 
+     * JastAddJ decl-attribute.  It returns all declarations for a given access.
+     */
+    syn SmallSet<Variable> VarAccess.alternativeDecls() {
+        Variable searchDecl = (Variable) decls().iterator().next();
+        SmallSet<Variable> alternativeDecls = SmallSet.<Variable>mutable();
+        if (isFieldAccess()) {
+            String searchDeclName = ((FieldDeclaration) searchDecl).name();
+            TypeDecl hostType = searchDecl.hostType();
+            for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+                if(candidateBodyDecl instanceof FieldDeclaration) {
+                    FieldDeclaration candidateFieldDeclaration = (FieldDeclaration) candidateBodyDecl;
+                    if (candidateFieldDeclaration.name().equals(searchDeclName)) {
+                        alternativeDecls.add(candidateFieldDeclaration);
+                    }
+                }
+            }
+            if (alternativeDecls.isEmpty()) {
+                alternativeDecls.add(unknownField());
+            }
+        } else {
+            alternativeDecls.add(searchDecl);
+        }
+        return alternativeDecls;
     }
 }
