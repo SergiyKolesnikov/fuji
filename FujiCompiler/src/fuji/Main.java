@@ -22,11 +22,14 @@ import org.jastadd.util.RobustMap;
 
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+import AST.Access;
 import AST.BodyDecl;
 import AST.CompilationUnit;
 import AST.ComposingVisitor;
+import AST.ConstructorDecl;
 import AST.Problem;
 import AST.Program;
+import AST.VarAccess;
 
 /**
  * The main fuji class. Manages all the work.
@@ -34,6 +37,10 @@ import AST.Program;
  * @author kolesnik
  */
 // TODO rename in Fuji
+/**
+ * @author kolesnik
+ *
+ */
 public class Main implements CompositionContext {
 
     private Options options; // available fuji command line options
@@ -237,9 +244,22 @@ public class Main implements CompositionContext {
                 startTimeNano = getCpuTime();
             }
             dumpIntraflowGraph(ast);
+            
             /* Timer stop. */
             if (cmd.hasOption(TIMER)) {
-                System.out.println("Time_typecheck_ms: "
+                System.out.println("IntraflowGraph dump (ms): "
+                        + ((getCpuTime() - startTimeNano) / 1000000));
+            }
+        } else if (cmd.hasOption(CONSTWRITES)) {
+            /* Timer start. */
+            if (cmd.hasOption(TIMER)) {
+                startTimeNano = getCpuTime();
+            }
+            outpuConstructorFiledWrites(ast);
+            
+            /* Timer stop. */
+            if (cmd.hasOption(TIMER)) {
+                System.out.println("Output constructor field writes (ms): "
                         + ((getCpuTime() - startTimeNano) / 1000000));
             }
         } else {
@@ -390,6 +410,10 @@ public class Main implements CompositionContext {
                 .withDescription(
                         "Dump AST's intraflow graph in DotGraph format. Only source files from feature directories are processed (not included libraries or binary files).")
                 .create(INTRAFLOW));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "Output fields (transitively) written by a constructor.")
+                .create(CONSTWRITES));
         return ops;
     }
 
@@ -484,6 +508,35 @@ public class Main implements CompositionContext {
                     System.out.println("}");
                 }
                 // System.out.println(cu.dumpASTDotGraph());
+            }
+        }
+    }
+    
+    /**
+     * Output fields that can be (transitively) written by a constructor.
+     * 
+     * @param ast
+     */
+    private void outpuConstructorFiledWrites(Program ast) { 
+        @SuppressWarnings("unchecked")
+        Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
+
+        /*
+         * Process source files.
+         */
+        while (iter.hasNext()) {
+            CompilationUnit cu = iter.next();
+            if (cu.fromSource()) {
+                // TODO there may be more than one TypeDecl in a
+                // CompilationUnit. For now, only the first one is analyzed.
+                System.out.println("===" + cu.pathName() + "===");
+                for (BodyDecl bd : cu.getTypeDecl(0).getBodyDeclList()) {
+                    if (bd instanceof ConstructorDecl) {
+                        for (VarAccess va : bd.fieldWritesClosure()) {
+                            System.out.println(va.warningPrefix() + "" +  va.dumpString());
+                        }
+                    }
+                }
             }
         }
     }
@@ -755,6 +808,7 @@ public class Main implements CompositionContext {
 
         /* Intraprocedural Flow Analysis */
         public static final String INTRAFLOW = "intraflow";
+        public static final String CONSTWRITES = "constWrites";
 
     }
 

@@ -1,0 +1,118 @@
+/**
+ * This aspect implements BodyDecl.fieldWritesClosure() attribute.
+ * 
+ * IMPORTANT NOTE: This analysis does not consider the implicit original-ConstructorAccess
+ * in the case of a constructor refinement.  Thus, to get a transitive
+ * closure over all field writes that can be trigered by a given consturctor, you
+ * have to join the output of fieldWritesClosure() for this constructor with the
+ * outputs of fieldWritesClouser() for all other constructors that might be
+ * composed before the given constructor.
+ */
+aspect fieldWritesClosure {
+    
+    /**
+     * Variable accesses (VarAccess) in this attribute represent all write accesses to fields, that are
+     * present in this body declaration and that can be transitivelly reached from this body declaration
+     * (e.g., over method, constructor, and super-constructor calls).  I.e. the attribute is a transitive
+     * closure over all field writes that can be trigered by executing this body declaration.
+     */
+    syn SmallSet<VarAccess> BodyDecl.fieldWritesClosure() circular [SmallSet.<VarAccess>mutable()];
+    eq BodyDecl.fieldWritesClosure() {
+        SmallSet<VarAccess> result = SmallSet.<VarAccess>mutable();
+        result.add(fieldWrites());
+        for (Access acc : outgoingCalls()) {
+            for (BodyDecl bd : acc.declsFromSource()) {
+                result.add(bd.fieldWritesClosure());
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * Collect all write access to fields in this BodyDecl (i.e. constructor, method, initializer, ...).
+     * An access is collected only if at least one declaration for the corresponding field comes from a
+     * source file (i.e. accesses to fileds declared in libraries or Java-runtime liebraries are 
+     * excluded). 
+     */
+    coll SmallSet<VarAccess> BodyDecl.fieldWrites() 
+        [SmallSet.<VarAccess>mutable()] with add root BodyDecl;
+    VarAccess contributes this
+        when isFieldAccess() && isDest() && hasDeclFromSource()
+        to BodyDecl.fieldWrites()
+        for enclosingBodyDecl();               
+    syn boolean VarAccess.hasDeclFromSource() {
+        java.util.Iterator<Variable> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            Variable var = declIterator.next();
+            if (var.hostType().compilationUnit().fromSource()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Collect all calls to constructors, super-constructors and methods in this BodyDecl
+     * (i.e. constructor, method, initializer, ...).
+     * A call is collected only if at least one declaration for the corresponding method or cunstructor 
+     * comes from a source file (i.e. calls to methods/constructors declared in libraries or Java-runtime
+     * liebraries are excluded). 
+     */
+    coll SmallSet<Access> BodyDecl.outgoingCalls()
+        [SmallSet.<Access>mutable()] with add root BodyDecl;
+    ConstructorAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+    SuperConstructorAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+    MethodAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+                
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. calls to methods/constructors declared in libraries or Java-runtime liebraries are excluded).
+     */
+    syn SmallSet<? extends BodyDecl> Access.declsFromSource() {
+        throw new UnsupportedOperationException("Operation not supported by this ASTNode type.");
+    }
+
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. calls to methods/constructors declared in libraries or Java-runtime liebraries are excluded).
+     * 
+     * SuperConstructorAccess is a subclass of ConstructorAccess, thus SuperConstructorAccess will inherit
+     * the definition of this attribute. 
+     */
+    syn SmallSet<ConstructorDecl> ConstructorAccess.declsFromSource() {
+        SmallSet<ConstructorDecl> result = SmallSet.<ConstructorDecl>mutable();
+        java.util.Iterator<ConstructorDecl> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            ConstructorDecl cd = declIterator.next();
+            if (cd.hostType().compilationUnit().fromSource()) {
+                result.add(cd);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. calls to methods/constructors declared in libraries or Java-runtime liebraries are excluded).
+     */
+    syn SmallSet<MethodDecl> MethodAccess.declsFromSource() {
+        SmallSet<MethodDecl> result = SmallSet.<MethodDecl>mutable();
+        java.util.Iterator<MethodDecl> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            MethodDecl md = declIterator.next();
+            if (md.hostType().compilationUnit().fromSource()) {
+                result.add(md);
+            }
+        }
+        return result;
+    }
+}
