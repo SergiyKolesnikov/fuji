@@ -12,6 +12,8 @@
  *
  * It is a regression after commit 8dbee0d, after which ASTNode.toString() does
  * not pretty print AST nodes any more.
+ * 
+ * Tests: tests/FieldWritesClosure*
  */
 aspect ConstructorSignaturePatch {
     refine LookupConstructor eq ConstructorDecl.signature() {
