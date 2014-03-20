@@ -1,4 +1,6 @@
 /*
+ * TODO remove this aspect when patched upstream.
+ * 
  * In the following Java code:
  *
  * class Foo<T extends Number> {}
