@@ -1,3 +1,17 @@
+aspect constructors {
+    
+    /**
+     * The attribute collects all constructors of the comilation unit.
+     * (It is used in collection field writes closures for all constructors,
+     * see fieldWritesClosure aspect and Fuji's -constWrites option.)
+     */
+    coll SmallSet<ConstructorDecl> CompilationUnit.constructors() 
+        [SmallSet.<ConstructorDecl>mutable()] with add root CompilationUnit;
+    ConstructorDecl contributes this
+        to CompilationUnit.constructors()
+        for hostType().compilationUnit();
+}
+
 /**
  * This aspect implements BodyDecl.fieldWritesClosure() attribute.
  * 

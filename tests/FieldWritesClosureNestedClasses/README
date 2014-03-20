@@ -1,0 +1,10 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Test description:
+
+Field wirtes are triggered by constructors in nested classes.
+
+The analysis must detect this field write access.

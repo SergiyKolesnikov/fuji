@@ -1117,12 +1117,10 @@ aspect ComposeUtilsRsf {
      * JastAddJ decl-attribute.  It returns all declarations for a given access.
      */
     syn SmallSet<MethodDecl> MethodAccess.alternativeDecls() {
-        BodyDecl originalDecl = null;
-        BodyDecl searchDecl;
-        String searchDeclSignature;
+        MethodDecl originalDecl = null;
+        MethodDecl searchDecl;
         if (name().equals(ComposingVisitor.ORIGINAL_OPERATOR)) {
-            originalDecl = searchDecl = enclosingBodyDecl();
-            if (! (searchDecl instanceof MethodDecl)) {
+            if (! (enclosingBodyDecl() instanceof MethodDecl)) {
                 
                 /*
                  * Error: original-calls are only allowed inside method declarations.
@@ -1130,10 +1128,10 @@ aspect ComposeUtilsRsf {
                  */
                 throw new RuntimeException("Encountered an orginal-call outside of method declaration.");
             }
+            originalDecl = searchDecl = (MethodDecl) enclosingBodyDecl();
         } else {
-            searchDecl = (BodyDecl) decls().iterator().next();
+            searchDecl = (MethodDecl) decls().iterator().next();
         }
-        searchDeclSignature = ((MethodDecl) searchDecl).signature();
 
         SmallSet<MethodDecl> alternativeDecls = SmallSet.<MethodDecl>mutable();
         TypeDecl hostType = searchDecl.hostType();
@@ -1145,8 +1143,9 @@ aspect ComposeUtilsRsf {
                  * An original-call can not recursivelly call the method in which
                  * this call is made (hence candidateMethodDecl != originalDecl) 
                  */
+                // TODO use same signature attribute to compare signatures.
                 if (candidateMethodDecl != originalDecl 
-                        && candidateMethodDecl.signature().equals(searchDeclSignature)) {
+                        && candidateMethodDecl.sameSignature(searchDecl)) {
                     alternativeDecls.add(candidateMethodDecl);
                 }
             }
@@ -1163,14 +1162,13 @@ aspect ComposeUtilsRsf {
      * JastAddJ decl-attribute.  It returns all declarations for a given access.
      */
     syn SmallSet<ConstructorDecl> ConstructorAccess.alternativeDecls() {
-        BodyDecl searchDecl = (BodyDecl) decls().iterator().next();
-        String searchDeclSignature = ((ConstructorDecl) searchDecl).signature();
+        ConstructorDecl searchDecl = (ConstructorDecl) decls().iterator().next();
         SmallSet<ConstructorDecl> alternativeDecls = SmallSet.<ConstructorDecl>mutable();
         TypeDecl hostType = searchDecl.hostType();
         for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
             if(candidateBodyDecl instanceof ConstructorDecl) {
                 ConstructorDecl candidateConstructorDecl = (ConstructorDecl) candidateBodyDecl;
-                if (candidateConstructorDecl.signature().equals(searchDeclSignature)) {
+                if (candidateConstructorDecl.sameSignature(searchDecl)) {
                     alternativeDecls.add(candidateConstructorDecl);
                 }
             }

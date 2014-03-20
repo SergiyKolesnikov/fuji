@@ -39,7 +39,7 @@ import AST.VarAccess;
 // TODO rename in Fuji
 /**
  * @author kolesnik
- *
+ * 
  */
 public class Main implements CompositionContext {
 
@@ -244,7 +244,7 @@ public class Main implements CompositionContext {
                 startTimeNano = getCpuTime();
             }
             dumpIntraflowGraph(ast);
-            
+
             /* Timer stop. */
             if (cmd.hasOption(TIMER)) {
                 System.out.println("IntraflowGraph dump (ms): "
@@ -255,8 +255,8 @@ public class Main implements CompositionContext {
             if (cmd.hasOption(TIMER)) {
                 startTimeNano = getCpuTime();
             }
-            outpuConstructorFiledWrites(ast);
-            
+            printConstructorFiledWrites(ast);
+
             /* Timer stop. */
             if (cmd.hasOption(TIMER)) {
                 System.out.println("Output constructor field writes (ms): "
@@ -412,7 +412,7 @@ public class Main implements CompositionContext {
                 .create(INTRAFLOW));
         ops.addOption(OptionBuilder
                 .withDescription(
-                        "Output fields (transitively) written by a constructor.")
+                        "Print fields (transitively) written by all constructors (only compilation units compiled from source are analyzed).")
                 .create(CONSTWRITES));
         return ops;
     }
@@ -511,13 +511,13 @@ public class Main implements CompositionContext {
             }
         }
     }
-    
+
     /**
      * Output fields that can be (transitively) written by a constructor.
      * 
      * @param ast
      */
-    private void outpuConstructorFiledWrites(Program ast) { 
+    public void printConstructorFiledWrites(Program ast) {
         @SuppressWarnings("unchecked")
         Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
 
@@ -529,12 +529,12 @@ public class Main implements CompositionContext {
             if (cu.fromSource()) {
                 // TODO there may be more than one TypeDecl in a
                 // CompilationUnit. For now, only the first one is analyzed.
-                System.out.println("===" + cu.pathName() + "===");
-                for (BodyDecl bd : cu.getTypeDecl(0).getBodyDeclList()) {
-                    if (bd instanceof ConstructorDecl) {
-                        for (VarAccess va : bd.fieldWritesClosure()) {
-                            System.out.println(va.warningPrefix() + "" +  va.dumpString());
-                        }
+                System.out.println("=== Compilation unit: " + cu.pathName());
+                for (ConstructorDecl cd : cu.constructors()) {
+                    System.out.println("====== Constructor: " + cd.signature());
+                    for (VarAccess va : cd.fieldWritesClosure()) {
+                        System.out.println(va.warningPrefix() + ""
+                                + va.dumpString());
                     }
                 }
             }
