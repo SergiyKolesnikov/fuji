@@ -22,6 +22,7 @@ import org.jastadd.util.RobustMap;
 
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
+import AST.ASTNode;
 import AST.Access;
 import AST.BodyDecl;
 import AST.CompilationUnit;
@@ -224,7 +225,9 @@ public class Main implements CompositionContext {
                     + ((getCpuTime() - startTimeNano) / 1000000));
         }
 
-        if (cmd.hasOption(TYPECHECKER)) {
+        if (cmd.hasOption(TEST)) {
+            processTest(ast);
+        } else if (cmd.hasOption(TYPECHECKER)) {
             /* Type check timer start. */
             if (cmd.hasOption(TIMER)) {
                 startTimeNano = getCpuTime();
@@ -414,6 +417,7 @@ public class Main implements CompositionContext {
                 .withDescription(
                         "Print fields (transitively) written by all constructors (only compilation units compiled from source are analyzed).")
                 .create(CONSTWRITES));
+        ops.addOption(OptionBuilder.create(TEST));
         return ops;
     }
 
@@ -542,8 +546,37 @@ public class Main implements CompositionContext {
     }
 
     /**
+     * A method used for testing and debugging purposes (fuji's -test option
+     * runs this method).
+     * 
+     * @param ast
+     */
+    @SuppressWarnings("rawtypes")
+    private void processTest(ASTNode node) {
+        for (int i = 0; i < node.getNumChild(); ++i) {
+            ASTNode child = node.getChild(i);
+            if (child instanceof AST.GenericClassDecl) {
+                System.out.println("======================================");
+                AST.GenericClassDecl gcd = (AST.GenericClassDecl) child;
+                for (AST.TypeVariable tvar : gcd.getTypeParameterList()) {
+                    System.out.println(tvar.prettyPrint().toString());
+                    System.out.println(tvar.hostType().prettyPrint().toString());
+                }
+            }
+            if (child instanceof AST.TypeVariable) {
+                System.out.println("--------------------------------------");
+                AST.TypeVariable tvar = (AST.TypeVariable) child;
+                System.out.println(tvar.prettyPrint().toString());
+                System.out.println(tvar.hostType().prettyPrint().toString());
+            }
+            processTest(child);
+        }
+    }
+
+    /**
      * Process the AST of the variant according to the user options.
      * 
+     * @param ast
      * @throws SyntacticErrorException
      * @throws IllegalArgumentException
      * @throws IOException
@@ -809,6 +842,7 @@ public class Main implements CompositionContext {
         /* Intraprocedural Flow Analysis */
         public static final String INTRAFLOW = "intraflow";
         public static final String CONSTWRITES = "constWrites";
+        public static final String TEST = "test";
 
     }
 
