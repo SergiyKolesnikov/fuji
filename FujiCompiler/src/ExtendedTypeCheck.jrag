@@ -1696,18 +1696,17 @@ aspect ExtendedTypeCheck {
 		/* Simple type check. */
 		/*
 		 * Type check. See
-		 * /home/kolesnik/work/projects/fuji/FujiProject/branches
-		 * /fuji-typesystem
-		 * /FujiCompiler/lib/JastAddJ/Java1.4Frontend/TypeCheck.jrag
+		 * /home/kolesnik/work/projects/fuji/FujiProject/FujiCompiler/lib/jastaddj-git/java4/frontend/TypeCheck.jrag
 		 * :AssignSimpleExpr.splTypeCheck()
 		 */
 		if (getProgram().cmd.hasOption(fuji.Main.OptionName.SPL_HAS_NO_VARIABILITY) || !variabilityError) {
-			if (!sourceType().assignConversionTo(getDest().type(), getSource())
-					&& !sourceType().isUnknown()) {
-				buildNovarError("can not assign " + getDest().prettyPrint() + " of type "
-						+ getDest().type().typeName() + " a value of type "
-						+ sourceType().typeName());
-			}
+		    if (!getDest().isVariable()) {
+		        error("left hand side is not a variable");
+		    } else if (!getSource().type().assignConversionTo(getDest().type(), getSource()) &&
+		            !getSource().type().isUnknown()) {
+		        error("can not assign " + getDest().prettyPrint() + " of type " + getDest().type().typeName() +
+		                " a value of type " + getSource().type().typeName());
+		    }
 		}
 	}
 

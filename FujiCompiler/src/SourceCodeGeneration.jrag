@@ -10,8 +10,8 @@ aspect SourceCodeGeneration {
         /* Build a filepath for the source file. */
         String relativePath = getPackageDecl().replaceAll("[.]", File.separator) 
             + File.separator;
-        int idx = relativeName.lastIndexOf(File.separatorChar);
-        String name = relativeName.substring(idx+1);
+        int idx = relativeName().lastIndexOf(File.separatorChar);
+        String name = relativeName().substring(idx+1);
         String destinationPathName = destination + File.separator + relativePath + name;
         
         if(options().verbose()) System.out.println("Writing source file to"

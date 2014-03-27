@@ -1046,11 +1046,11 @@ aspect ComposeUtils {
      * TODO  used by AccessCounter extension but can be avoided!
      */
     public String CompilationUnit.classQName() {
-        if (relativeName == null)
+        if (relativeName() == null)
             return null;
         String qName = getPackageDecl();
-        int idx = relativeName.lastIndexOf(File.separatorChar);
-        String id = relativeName.substring(idx+1);
+        int idx = relativeName().lastIndexOf(File.separatorChar);
+        String id = relativeName().substring(idx+1);
         idx = id.indexOf(".");
         id = id.substring(0, idx);
         return qName.isEmpty() ? id : qName + "." + id;
