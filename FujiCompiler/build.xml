@@ -39,6 +39,13 @@
     <antcall target="build-mod"/> 
   </target>
 
+  <target name="gen" description="generate fuji sources (without FOP access modifiers).  Run 'ant clean' first, if you have build fuji with access modifiers before.  This target only generates java files but does not compile them.">
+    <defaultexcludes add="FOPModifiers.flex"/>
+    <defaultexcludes add="FOPModifiers.parser"/>
+    <defaultexcludes add="FOPModifiers.jrag"/>
+    <antcall target="backend-gen-java7"/> 
+  </target>
+
   <target name="build-mod" depends="backend-gen-java7" description="compile JastAddJ">
     <mkdir dir="${bin.dir}"/>
     <!-- <copy todir="${src.dir}" preservelastmodified="true"> -->
