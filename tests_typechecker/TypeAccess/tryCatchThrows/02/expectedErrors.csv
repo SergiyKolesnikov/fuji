@@ -1,5 +1,5 @@
-{/TypeAccess/tryCatchThrows/02/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the method public static void bar() throws E { ... } of feature FeatureB}
-{/TypeAccess/tryCatchThrows/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureB,FeatureE},{Feature FeatureB accesses the constructor public E() { ... } of feature FeatureE}
-{/TypeAccess/tryCatchThrows/02/FeatureA/A.java;5},Semantic Error,1 optional target,FeatureA,{FeatureE},{Feature FeatureA accesses the type (default package).E of feature FeatureE},
+{/TypeAccess/tryCatchThrows/02/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA:FeatureB},{Feature FeatureA accesses the method public static void bar() throws E { ... } of feature FeatureB}
+{/TypeAccess/tryCatchThrows/02/FeatureB/B.java;3},Semantic Error,NEVER dependency,FeatureB,{FeatureB:FeatureE},{Feature FeatureB accesses the constructor public E() { ... } of feature FeatureE}
 {/TypeAccess/tryCatchThrows/02/FeatureA/A.java;4},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},
+{/TypeAccess/tryCatchThrows/02/FeatureA/A.java;5},Semantic Error,1 optional target,FeatureA,{FeatureE},{Feature FeatureA accesses the type (default package).E of feature FeatureE},
 {/TypeAccess/tryCatchThrows/02/FeatureB/B.java;2:/TypeAccess/tryCatchThrows/02/FeatureB/B.java;3},Semantic Error,1 optional target,FeatureB,{FeatureE},{Feature FeatureB accesses the type (default package).E of feature FeatureE},

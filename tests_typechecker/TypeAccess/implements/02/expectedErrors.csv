@@ -1,1 +1,1 @@
-{/TypeAccess/implements/02/FeatureA/A.java;1},Semantic Error,NEVER dependency,FeatureA,{FeatureA,FeatureI},{Feature FeatureA accesses the type (default package).I of feature FeatureI}
+{/TypeAccess/implements/02/FeatureA/A.java;1},Semantic Error,NEVER dependency,FeatureA,{FeatureA:FeatureI},{Feature FeatureA accesses the type (default package).I of feature FeatureI}

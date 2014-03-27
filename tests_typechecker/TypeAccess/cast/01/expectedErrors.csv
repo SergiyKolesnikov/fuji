@@ -1,4 +1,4 @@
-{/TypeAccess/cast/01/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureC},{Feature FeatureA accesses by a cast the type public class C { ... } of feature FeatureC}
-{/TypeAccess/cast/01/FeatureB/B.java;1},Semantic Error,MAYBE dependency,FeatureB,{FeatureB,FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
-{/TypeAccess/cast/01/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA,FeatureC},{Feature FeatureA accesses the type (default package).C of feature FeatureC}
-{/TypeAccess/cast/01/FeatureB/B.java;1},Semantic Error,MAYBE dependency,FeatureB,{FeatureB,FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}
+{/TypeAccess/cast/01/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA:FeatureC},{Feature FeatureA accesses by a cast the type public class C { ... } of feature FeatureC}
+{/TypeAccess/cast/01/FeatureB/B.java;1},Semantic Error,MAYBE dependency,FeatureB,{FeatureB:FeatureC},{Feature FeatureB accesses the super constructor public C() of feature FeatureC}
+{/TypeAccess/cast/01/FeatureA/A.java;4},Semantic Error,MAYBE dependency,FeatureA,{FeatureA:FeatureC},{Feature FeatureA accesses the type (default package).C of feature FeatureC}
+{/TypeAccess/cast/01/FeatureB/B.java;1},Semantic Error,MAYBE dependency,FeatureB,{FeatureB:FeatureC},{Feature FeatureB accesses the type (default package).C of feature FeatureC}
