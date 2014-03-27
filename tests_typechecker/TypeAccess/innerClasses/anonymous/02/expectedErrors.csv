@@ -1,2 +1,2 @@
-{/TypeAccess/innerClasses/anonymous/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureA,FeatureB},{Feature FeatureA accesses the super constructor public B() of feature FeatureB}
+{/TypeAccess/innerClasses/anonymous/02/FeatureA/A.java;3},Semantic Error,NEVER dependency,FeatureA,{FeatureA:FeatureB},{Feature FeatureA accesses the super constructor public B() of feature FeatureB}
 {/TypeAccess/innerClasses/anonymous/02/FeatureA/A.java;3},Semantic Error,1 optional target,FeatureA,{FeatureB},{Feature FeatureA accesses the type (default package).B of feature FeatureB},

@@ -2275,12 +2275,12 @@ aspect ExtendedTypeCheck {
 			//Source Feature
 			sb.append(fromFeature.getName());
 			//Participating Features
-			sb.append(",{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+			sb.append(",{" + fromFeature.getName() + ":" + toFeature.getName() + "},");
 		}else{
 			// Source Feature is not necessarily from-Feature!
 			sb.append(getFeatureName(featureID()) + ",");
 			//Participating Features
-			sb.append("{" + fromFeature.getName() + "," + toFeature.getName() + "},");
+			sb.append("{" + fromFeature.getName() + ":" + toFeature.getName() + "},");
 		}
 		// Error-Text
 		sb.append("{");
