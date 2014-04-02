@@ -2,4 +2,4 @@
 . ../scripts/global_vars
 cd ConstructorNotFound
 /bin/rm -rf "$TMPCLASSOUT" >/dev/null 2>&1
-java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features 2>tmp.out
+java -jar ../../FujiCompiler/build/fuji.jar -d "$TMPCLASSOUT" Test.features 2>&1 >/dev/null | sed 's$'`pwd`'$$' >tmp.out
