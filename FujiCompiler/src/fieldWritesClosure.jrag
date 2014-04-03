@@ -51,7 +51,7 @@ aspect fieldWritesClosure {
     coll SmallSet<VarAccess> BodyDecl.fieldWrites() 
         [SmallSet.<VarAccess>mutable()] with add root BodyDecl;
     VarAccess contributes this
-        when isFieldAccess() && isDest() && hasDeclFromSource()
+        when isFieldAccess() && (isDest() || (hasNextAccess() && nextAccess().isArrayAccess() && nextAccess().isDest())) && hasDeclFromSource()
         to BodyDecl.fieldWrites()
         for enclosingBodyDecl();               
     syn boolean VarAccess.hasDeclFromSource() {
