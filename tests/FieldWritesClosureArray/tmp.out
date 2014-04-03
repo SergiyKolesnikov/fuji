@@ -1,0 +1,8 @@
+/Base/Node.java:10:
+/Base/Node.java:15:
+/Base/Node.java:6:
+=== Compilation unit: /Base/Node.java
+====== Constructor: Node()
+  *** WARNING: AST.VarAccess [name]
+  *** WARNING: AST.VarAccess [name]
+  *** WARNING: AST.VarAccess [name]

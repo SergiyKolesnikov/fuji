@@ -1,0 +1,12 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Test description:
+
+The field in the test case is an array.  First the array is initialized (first 
+field write), then the first element of the array is written (second filed
+write).
+
+Both field write access must be detected by the analysis.
