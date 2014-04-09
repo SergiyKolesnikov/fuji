@@ -1,25 +1,9 @@
-/Base/Edge.java:8:
-/Base/Edge.java:8:
-/Base/Edge.java:9:
-/Base/Edge.java:9:
-=== Compilation unit: /Base/Edge.java
-=== Compilation unit: /Base/Node.java
-=== Compilation unit: /ConstructorCall/LabeledEdge.java
-/ConstructorCall/LabeledEdge.java:19:
-====== Constructor: Edge(Node, Node)
-====== Constructor: Edge(Node, Node)
-====== Constructor: LabeledEdge(int)
-====== Constructor: Node()
-/ConstructorRefinement/Edge.java:8:
-/ConstructorRefinement/Edge.java:8:
-/ConstructorRefinement/Edge.java:9:
-/ConstructorRefinement/Edge.java:9:
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [newHead]
-  *** WARNING: AST.VarAccess [newHead]
-  *** WARNING: AST.VarAccess [newTail]
-  *** WARNING: AST.VarAccess [newTail]
-  *** WARNING: AST.VarAccess [tail]
-  *** WARNING: AST.VarAccess [tail]
-  *** WARNING: AST.VarAccess [weight]
+Base|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.head|Node|h
+Base|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.tail|Node|t
+ConstructorCall|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.head|Node|h
+ConstructorCall|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.tail|Node|t
+ConstructorCall|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|ConstructorRefinement|Edge.newHead|Node|h
+ConstructorCall|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|ConstructorRefinement|Edge.newTail|Node|t
+ConstructorCall|LabeledEdge(int)|AST.ConstructorDecl|LabeledEdge.LabeledEdge(int)|ConstructorCall|LabeledEdge.weight|int|w
+ConstructorRefinement|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|ConstructorRefinement|Edge.newHead|Node|h
+ConstructorRefinement|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|ConstructorRefinement|Edge.newTail|Node|t

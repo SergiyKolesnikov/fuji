@@ -1,42 +1,13 @@
-/Base/Edge.java:13:
-/Base/Edge.java:8:
-/Base/Edge.java:8:
-/Base/Edge.java:8:
-/Base/Edge.java:9:
-/Base/Edge.java:9:
-/Base/Edge.java:9:
-=== Compilation unit: /Base/Edge.java
-=== Compilation unit: /Base/Graph.java
-=== Compilation unit: /Base/LabeledEdge.java
-=== Compilation unit: /Base/Node.java
-=== Compilation unit: /WeightedDirect/Weight.java
-====== Constructor: Edge()
-====== Constructor: Edge(int)
-====== Constructor: Edge(int, Node)
-====== Constructor: Edge(Node, Node)
-====== Constructor: Graph()
-====== Constructor: LabeledEdge()
-====== Constructor: LabeledEdge(int)
-====== Constructor: LabeledEdge(Node, Node)
-====== Constructor: Node()
-====== Constructor: Weight(int)
-====== Constructor: Weight(int)
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [tail]
-  *** WARNING: AST.VarAccess [tail]
-  *** WARNING: AST.VarAccess [tail]
-  *** WARNING: AST.VarAccess [value]
-  *** WARNING: AST.VarAccess [value]
-  *** WARNING: AST.VarAccess [weight]
-  *** WARNING: AST.VarAccess [weight]
-  *** WARNING: AST.VarAccess [weight]
-  *** WARNING: AST.VarAccess [weight]
-/WeightedDirect/Edge.java:10:
-/WeightedDirect/Weight.java:7:
-/WeightedIndirect/Edge.java:22:
-/WeightedIndirect/Edge.java:22:
-/WeightedIndirect/Weight.java:7:
-/WeightedSuperConstructor/LabeledEdge.java:18:
+Base|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.head|Node|h
+Base|Edge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.tail|Node|t
+Base|LabeledEdge()|AST.MethodDecl|Edge.m2(int)|WeightedDirect,WeightedIndirect|Edge.weight|Weight|new Weight(w)
+Base|LabeledEdge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.head|Node|h
+Base|LabeledEdge(Node, Node)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.tail|Node|t
+WeightedDirect|Edge(int)|AST.ConstructorDecl|Edge.Edge(int)|WeightedDirect,WeightedIndirect|Edge.weight|Weight|new Weight(weight)
+WeightedDirect|Weight(int)|AST.ConstructorDecl|Weight.Weight(int)|WeightedDirect,WeightedIndirect|Weight.value|int|v
+WeightedIndirect|Edge()|AST.MethodDecl|Edge.m2(int)|WeightedDirect,WeightedIndirect|Edge.weight|Weight|new Weight(w)
+WeightedIndirect|Weight(int)|AST.ConstructorDecl|Weight.Weight(int)|WeightedDirect,WeightedIndirect|Weight.value|int|v
+WeightedOriginalCall|Edge(int, Node)|AST.MethodDecl|Edge.setHead(Node)|Base|Edge.head|Node|h
+WeightedSuperConstructor|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.head|Node|h
+WeightedSuperConstructor|LabeledEdge(int)|AST.ConstructorDecl|Edge.Edge(Node, Node)|Base|Edge.tail|Node|t
+WeightedSuperConstructor|LabeledEdge(int)|AST.ConstructorDecl|LabeledEdge.LabeledEdge(int)|WeightedSuperConstructor|LabeledEdge.weight|int|w

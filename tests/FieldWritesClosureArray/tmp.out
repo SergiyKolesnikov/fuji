@@ -1,8 +1,3 @@
-/Base/Node.java:10:
-/Base/Node.java:15:
-/Base/Node.java:6:
-=== Compilation unit: /Base/Node.java
-====== Constructor: Node()
-  *** WARNING: AST.VarAccess [name]
-  *** WARNING: AST.VarAccess [name]
-  *** WARNING: AST.VarAccess [name]
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.name|java.lang.String[]|n
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.name|java.lang.String[]|new String[1]
+Base|p1.p2.Node()|AST.MethodDecl|p1.p2.Node.init()|Base|p1.p2.Node.name|java.lang.String[]|"init"

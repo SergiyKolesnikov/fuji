@@ -1,9 +1,3 @@
-/Base/Node.java:14:
-/Base/Node.java:15:
-/Base/Node.java:6:
-=== Compilation unit: /Base/Node.java
-====== Constructor: Edge(Node, Node)
-====== Constructor: Node(java.lang.String)
-  *** WARNING: AST.VarAccess [head]
-  *** WARNING: AST.VarAccess [name]
-  *** WARNING: AST.VarAccess [tail]
+Base|Edge(Node, Node)|AST.ConstructorDecl|Node.Edge.Edge(Node, Node)|Base|Node.Edge.head|Node|h
+Base|Edge(Node, Node)|AST.ConstructorDecl|Node.Edge.Edge(Node, Node)|Base|Node.Edge.tail|Node|t
+Base|Node(java.lang.String)|AST.ConstructorDecl|Node.Node(java.lang.String)|Base|Node.name|java.lang.String|name
