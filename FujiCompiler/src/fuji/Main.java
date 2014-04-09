@@ -521,25 +521,14 @@ public class Main implements CompositionContext {
      * 
      * @param ast
      */
-    public void printConstructorFiledWrites(Program ast) {
-        @SuppressWarnings("unchecked")
-        Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
 
-        /*
-         * Process source files.
-         */
+    public void printConstructorFiledWrites(Program ast) {
+        Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
         while (iter.hasNext()) {
             CompilationUnit cu = iter.next();
             if (cu.fromSource()) {
-                // TODO there may be more than one TypeDecl in a
-                // CompilationUnit. For now, only the first one is analyzed.
-                System.out.println("=== Compilation unit: " + cu.pathName());
                 for (ConstructorDecl cd : cu.constructors()) {
-                    System.out.println("====== Constructor: " + cd.signature());
-                    for (VarAccess va : cd.fieldWritesClosure()) {
-                        System.out.println(va.warningPrefix() + ""
-                                + va.dumpString());
-                    }
+                    System.out.print(cd.printFieldWritesClosure().toString());
                 }
             }
         }
@@ -560,7 +549,8 @@ public class Main implements CompositionContext {
                 AST.GenericClassDecl gcd = (AST.GenericClassDecl) child;
                 for (AST.TypeVariable tvar : gcd.getTypeParameterList()) {
                     System.out.println(tvar.prettyPrint().toString());
-                    System.out.println(tvar.hostType().prettyPrint().toString());
+                    System.out
+                            .println(tvar.hostType().prettyPrint().toString());
                 }
             }
             if (child instanceof AST.TypeVariable) {
