@@ -44,12 +44,17 @@ aspect Output {
             }
             
             /* target features */
-            String delimFeature = "";
+            /* First, sort the featue names. */
+            SortedSet<String> targetFeatureNames = new TreeSet<String>();
             FieldDeclaration lastFieldDecl = null;
             for (Variable varDecl : varAccess.varDeclsFromSource()) {
                 lastFieldDecl = (FieldDeclaration) varDecl;
                 String featureName = new File(featureModulePathnames.get(lastFieldDecl
                         .featureID())).getName();
+                targetFeatureNames.add(featureName);
+            }
+            String delimFeature = "";
+            for (String featureName : targetFeatureNames) {
                 output.append(delimFeature).append(featureName);
                 delimFeature = DELIM_FEATURE;
             }
@@ -70,7 +75,7 @@ aspect Output {
             while (! (node instanceof AssignExpr)) {
                 node = node.getParent();
             }
-            output.append(((AssignExpr) node).getSource().prettyPrint());
+            output.append(((AssignExpr) node).getSource().prettyPrint().replace("\n", "").replace("\r", ""));
             output.append("\n");
         }
         return output;
