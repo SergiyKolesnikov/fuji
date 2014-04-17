@@ -12,10 +12,6 @@ public class LabeledEdge extends Edge {
         // newHead, newTail in ConstructorRefinement/Edge).
         super(new Node(),new Node());
 
-        // dieser Aufruf ist egal da hier im Super-Konstruktor keine
-        // Instanzvariablen geschrieben werden.
-        super();
-
         weight = w;
     }
 }
