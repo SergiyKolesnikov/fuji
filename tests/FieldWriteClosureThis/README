@@ -1,0 +1,10 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+Test description:
+Field writes are triggered transitivelly by a super-call in 
+ConstructorCall/Edge constructor:
+ConstructorCall/LabeledEdge.Edge --> Base/Edge -> write accesses to head and tail
+                                 `-> ConstructorRefinement/Edge -> write accesses to newHead and newTail
+
+The analysis must detect this field write access.

@@ -1,0 +1,7 @@
+
+Test description:
+Field write via an inner class.
+Field write via Edge() -> new Inner Class.write(this) -> Edge.setW() 
+
+
+The analysis must detect this field write access.

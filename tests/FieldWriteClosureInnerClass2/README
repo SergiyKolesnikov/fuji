@@ -1,0 +1,6 @@
+
+Test description:
+Field write with a method that includes an anonymous actionlistener class.
+
+Question: shoud the output include the listing of the anonymous class?
+

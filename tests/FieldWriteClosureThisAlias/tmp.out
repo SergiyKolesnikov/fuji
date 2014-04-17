@@ -1,0 +1,1 @@
+FieldWriteViaThisAlias|Edge()|AST.MethodDecl|Edge.setW(int)|FieldWriteViaThisAlias|Edge.w|int|x

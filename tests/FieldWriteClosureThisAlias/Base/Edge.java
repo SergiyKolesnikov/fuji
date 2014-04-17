@@ -1,0 +1,4 @@
+// Base
+public class Edge {
+
+}

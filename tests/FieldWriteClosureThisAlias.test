@@ -1,0 +1,4 @@
+#!/bin/sh
+. ../scripts/global_vars
+cd FieldWriteClosureThisAlias
+java -jar ../../FujiCompiler/build/fuji.jar -compstrategy family -constWrites Test.features | sed 's|'`pwd`'||' | sort >tmp.out

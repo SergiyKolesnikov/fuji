@@ -1,0 +1,4 @@
+        }
+    })
+FieldWriteInnerClass|Edge()|AST.ConstructorDecl|Edge.Edge()|FieldWriteInnerClass|Edge.play|javax.swing.JButton|makeNavigationButton(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
