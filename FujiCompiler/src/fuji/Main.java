@@ -520,13 +520,15 @@ public class Main implements CompositionContext {
      * Output fields that can be (transitively) written by a constructor.
      * 
      * @param ast
+     * @throws SyntacticErrorException 
      */
 
-    public void printConstructorFiledWrites(Program ast) {
+    public void printConstructorFiledWrites(Program ast) throws SyntacticErrorException {
         Iterator<CompilationUnit> iter = ast.compilationUnitIterator();
         while (iter.hasNext()) {
             CompilationUnit cu = iter.next();
             if (cu.fromSource()) {
+            	checkParseErrors(cu);
                 for (ConstructorDecl cd : cu.constructors()) {
                     System.out.print(cd.printFieldWritesClosure().toString());
                 }
@@ -666,23 +668,7 @@ public class Main implements CompositionContext {
             cu.printRefs(spl.getFeatureModulePathnames());
         }
         if (generateClassFiles) {
-
-            /*
-             * Check for syntactical errors. (They have been checked in
-             * SPLStructure before while creating dependency graphs.
-             * 
-             * TODO: collect syntactical errors for _all_ CUs before
-             * composition. See also bug revealed by
-             * ReportParseError2Compile.test
-             */
-            Collection parseErrors = cu.parseErrors();
-            if (!parseErrors.isEmpty()) {
-                StringBuilder message = new StringBuilder();
-                for (Object o : parseErrors) {
-                    message.append(o + "\n");
-                }
-                throw new SyntacticErrorException(message.toString());
-            }
+        	checkParseErrors(cu);
 
             /*
              * Check for static semantic errors.
@@ -709,7 +695,24 @@ public class Main implements CompositionContext {
         processedCUs.add(cu.pathName());
     }
 
-    /**
+	/*
+	 * Check for syntactical errors.
+	 * 
+	 * TODO: collect syntactical errors for _all_ CUs before composition. See
+	 * also bug revealed by ReportParseError2Compile.test
+	 */
+	private void checkParseErrors(CompilationUnit cu) throws SyntacticErrorException {
+		Collection parseErrors = cu.parseErrors();
+		if (!parseErrors.isEmpty()) {
+			StringBuilder message = new StringBuilder();
+			for (Object o : parseErrors) {
+				message.append(o + "\n");
+			}
+			throw new SyntacticErrorException(message.toString());
+		}
+	}
+
+	/**
      * Generate source code from the compilation unit and write it to a file in
      * the destination directory.
      * 
