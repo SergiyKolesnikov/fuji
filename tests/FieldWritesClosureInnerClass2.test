@@ -1,4 +1,4 @@
 #!/bin/sh
 . ../scripts/global_vars
-cd FieldWriteClosureInnerClass2
+cd FieldWritesClosureInnerClass2
 java -jar ../../FujiCompiler/build/fuji.jar -compstrategy family -constWrites Test.features | sed 's|'`pwd`'||' | sort >tmp.out
