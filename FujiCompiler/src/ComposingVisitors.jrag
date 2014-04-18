@@ -1118,37 +1118,38 @@ aspect ComposeUtilsRsf {
      */
     syn SmallSet<MethodDecl> MethodAccess.alternativeDecls() {
         MethodDecl originalDecl = null;
-        MethodDecl searchDecl;
+        MethodDecl searchDecl = null;
         if (name().equals(ComposingVisitor.ORIGINAL_OPERATOR)) {
-            if (! (enclosingBodyDecl() instanceof MethodDecl)) {
-                
-                /*
-                 * Error: original-calls are only allowed inside method declarations.
-                 * TODO add the location of the error to the exception msg. 
+            if (enclosingBodyDecl() instanceof MethodDecl) {
+
+            	/*
+                 * Original-calls are only allowed inside method declarations.
                  */
-                throw new RuntimeException("Encountered an orginal-call outside of method declaration.");
+            	originalDecl = searchDecl = (MethodDecl) enclosingBodyDecl();
             }
-            originalDecl = searchDecl = (MethodDecl) enclosingBodyDecl();
         } else {
-            searchDecl = (MethodDecl) decls().iterator().next();
+        	if (! decls().isEmpty()) {
+        		searchDecl = (MethodDecl) decls().iterator().next();
+        	}
         }
 
         SmallSet<MethodDecl> alternativeDecls = SmallSet.<MethodDecl>mutable();
-        TypeDecl hostType = searchDecl.hostType();
-        for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
-            if(candidateBodyDecl instanceof MethodDecl) {
-                MethodDecl candidateMethodDecl = (MethodDecl) candidateBodyDecl;
-                
-                /*
-                 * An original-call can not recursivelly call the method in which
-                 * this call is made (hence candidateMethodDecl != originalDecl) 
-                 */
-                // TODO use same signature attribute to compare signatures.
-                if (candidateMethodDecl != originalDecl 
-                        && candidateMethodDecl.sameSignature(searchDecl)) {
-                    alternativeDecls.add(candidateMethodDecl);
-                }
-            }
+        if (searchDecl != null) {
+        	TypeDecl hostType = searchDecl.hostType();
+        	for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+        		if(candidateBodyDecl instanceof MethodDecl) {
+        			MethodDecl candidateMethodDecl = (MethodDecl) candidateBodyDecl;
+        			
+        			/*
+        			 * An original-call can not recursivelly call the method in which
+        			 * this call is made (hence candidateMethodDecl != originalDecl) 
+        			 */
+        			if (candidateMethodDecl != originalDecl 
+        					&& candidateMethodDecl.sameSignature(searchDecl)) {
+        				alternativeDecls.add(candidateMethodDecl);
+        			}
+        		}
+        	}
         }
         if (alternativeDecls.isEmpty()) {
             alternativeDecls.add(unknownMethod());
@@ -1162,17 +1163,20 @@ aspect ComposeUtilsRsf {
      * JastAddJ decl-attribute.  It returns all declarations for a given access.
      */
     syn SmallSet<ConstructorDecl> ConstructorAccess.alternativeDecls() {
-        ConstructorDecl searchDecl = (ConstructorDecl) decls().iterator().next();
+    	ConstructorDecl searchDecl = null;
         SmallSet<ConstructorDecl> alternativeDecls = SmallSet.<ConstructorDecl>mutable();
-        TypeDecl hostType = searchDecl.hostType();
-        for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
-            if(candidateBodyDecl instanceof ConstructorDecl) {
-                ConstructorDecl candidateConstructorDecl = (ConstructorDecl) candidateBodyDecl;
-                if (candidateConstructorDecl.sameSignature(searchDecl)) {
-                    alternativeDecls.add(candidateConstructorDecl);
-                }
-            }
-        }
+    	if (! decls().isEmpty()) {
+    		searchDecl = (ConstructorDecl) decls().iterator().next();
+    		TypeDecl hostType = searchDecl.hostType();
+    		for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+    			if(candidateBodyDecl instanceof ConstructorDecl) {
+    				ConstructorDecl candidateConstructorDecl = (ConstructorDecl) candidateBodyDecl;
+    				if (candidateConstructorDecl.sameSignature(searchDecl)) {
+    					alternativeDecls.add(candidateConstructorDecl);
+    				}
+    			}
+    		}
+    	}
         if (alternativeDecls.isEmpty()) {
             alternativeDecls.add(unknownConstructor());
         }
@@ -1185,24 +1189,31 @@ aspect ComposeUtilsRsf {
      * JastAddJ decl-attribute.  It returns all declarations for a given access.
      */
     syn SmallSet<Variable> VarAccess.alternativeDecls() {
-        Variable searchDecl = (Variable) decls().iterator().next();
+        Variable searchDecl = null;
         SmallSet<Variable> alternativeDecls = SmallSet.<Variable>mutable();
-        if (isFieldAccess()) {
-            String searchDeclName = ((FieldDeclaration) searchDecl).name();
-            TypeDecl hostType = searchDecl.hostType();
-            for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
-                if(candidateBodyDecl instanceof FieldDeclaration) {
-                    FieldDeclaration candidateFieldDeclaration = (FieldDeclaration) candidateBodyDecl;
-                    if (candidateFieldDeclaration.name().equals(searchDeclName)) {
-                        alternativeDecls.add(candidateFieldDeclaration);
-                    }
-                }
-            }
-            if (alternativeDecls.isEmpty()) {
-                alternativeDecls.add(unknownField());
-            }
-        } else {
-            alternativeDecls.add(searchDecl);
+        if (! decls().isEmpty()) {
+        	searchDecl = (Variable) decls().iterator().next();
+        	if (isFieldAccess()) {
+        		String searchDeclName = ((FieldDeclaration) searchDecl).name();
+        		TypeDecl hostType = searchDecl.hostType();
+        		for(BodyDecl candidateBodyDecl : hostType.getBodyDeclList()) {
+        			if(candidateBodyDecl instanceof FieldDeclaration) {
+        				FieldDeclaration candidateFieldDeclaration = (FieldDeclaration) candidateBodyDecl;
+        				if (candidateFieldDeclaration.name().equals(searchDeclName)) {
+        					alternativeDecls.add(candidateFieldDeclaration);
+        				}
+        			}
+        		}
+        	} else {
+        		
+        		/*
+        		 * A local variable can have only one declaration.
+        		 */
+        		alternativeDecls.add(searchDecl);
+        	}
+        }
+        if (alternativeDecls.isEmpty()) {
+        	alternativeDecls.add(unknownField());
         }
         return alternativeDecls;
     }

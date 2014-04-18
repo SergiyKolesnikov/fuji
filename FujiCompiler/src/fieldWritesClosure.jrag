@@ -72,10 +72,18 @@ aspect Output {
             
             /* target-field value */
             ASTNode<ASTNode> node = varAccess;
-            while (! (node instanceof AssignExpr)) {
-                node = node.getParent();
+            while (true) {
+            	if (node instanceof AssignExpr) {
+            		output.append(((AssignExpr) node).getSource().prettyPrint().replace("\n", "").replace("\r", ""));
+            		break;
+            	} else if ((node instanceof PostfixExpr) ||
+            			(node instanceof PreDecExpr) || 
+            			(node instanceof PreIncExpr)) {
+            		output.append(node.prettyPrint().replace("\n", "").replace("\r", ""));
+            		break;
+            	}
+            	node = node.getParent();
             }
-            output.append(((AssignExpr) node).getSource().prettyPrint().replace("\n", "").replace("\r", ""));
             output.append("\n");
         }
         return output;
