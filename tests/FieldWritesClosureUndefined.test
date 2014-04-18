@@ -1,4 +1,4 @@
 #!/bin/sh
 . ../scripts/global_vars
 cd FieldWritesClosureUndefined
-java -jar ../../FujiCompiler/build/fuji.jar -compstrategy family -constWrites Test.features | sed 's|'`pwd`'||' | sort >tmp.out
+java -jar ../../FujiCompiler/build/fuji.jar -compstrategy family -constWrites Test.features 2>&1 | sed 's|'`pwd`'||' | sort >tmp.out
