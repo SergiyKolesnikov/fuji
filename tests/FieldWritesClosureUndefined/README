@@ -1,0 +1,11 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Test description:
+
+This test case tests the correct behaviour on undefined fields, methods
+and constructors.
+
+The analysis should ignore undefined elements or print them as unknown.

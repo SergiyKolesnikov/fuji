@@ -1,0 +1,4 @@
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.i|int|--i
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.i|int|++i
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.i|int|i--
+Base|p1.p2.Node()|AST.ConstructorDecl|p1.p2.Node.Node()|Base|p1.p2.Node.i|int|i++

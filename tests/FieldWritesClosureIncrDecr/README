@@ -1,0 +1,9 @@
+Test case for the field writes closure analysis used in Fuji's -constWrites
+option (that outputs fields (transitively) written by a constructor).
+
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Test description:
+
+Increment and decrement assingments (i++, --i, ...), which are not AssignExpr
+should be correctly output.
