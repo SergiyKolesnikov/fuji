@@ -1,0 +1,27 @@
+
+
+import crypt.Crypt;
+
+public refines  class TextMessage {
+	
+	protected byte[] contentCrypted;
+	
+	public void encode(Crypt crypt) {
+        byte[] array = crypt.encode(this.content);
+        if (array != null) {
+            this.content = "";
+            this.contentCrypted = array;
+        }
+    }
+
+    public void decode(Crypt crypt) {
+        Object obj = crypt.decode(this.contentCrypted);
+        if (obj != null) {
+            if (obj instanceof String) {
+                this.content = (String) obj;
+            } else {
+                throw new RuntimeException("Failed to decode a textmessage.");
+            }
+        }
+    }
+}

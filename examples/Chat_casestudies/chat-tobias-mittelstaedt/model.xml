@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="FeatureChat">
+				<feature name="Logging"/>
+				<feature name="SpamFilter"/>
+				<feature name="GUI"/>
+				<feature name="TextColor"/>
+				<feature name="Encryption"/>
+				<feature name="UserCommands"/>
+				<feature name="Authentification"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

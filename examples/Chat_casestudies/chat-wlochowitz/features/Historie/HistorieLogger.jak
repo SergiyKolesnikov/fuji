@@ -1,0 +1,68 @@
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
+/** Klasse HistorieLogger zum Schreiben der Chat-Historie in eine Log-Datei. */
+public class HistorieLogger {
+	
+	/** Format des Datums fuer den Log-Record */
+	public static final String dateFormat = "EEEE, d. MMMM yyyy HH:mm:ss";
+	
+	/** Name der Log-Datei */
+	private String file;
+	
+	/** Erzeugt einen neue Logger fuer die Historie und die entsprechende Log-Datei.
+     *@param file der Name der Log-Datei 
+	 */
+	public HistorieLogger(String file) {
+		this.file = file;
+		new File(file);
+	}	
+	
+	/** Methode zum Schreiben eines Textes in die Log-Datei.
+      *@param text eine beliebige Zeichenkette 
+      */
+	public void log(String text) {
+		write(file, text);
+	}	
+	
+	/** Methode zum Schreiben eines Textes in die Log-Datei.
+      * @param text eine beliebige Zeichenkette 
+      * @param path der Pfad zur Log-Datei
+      */
+	private void write(String path, String text) {
+		BufferedWriter out = null;
+		try {
+		    out = new BufferedWriter(new FileWriter(path, true));
+			out.write(format(text));
+		} catch	(IOException e) {
+			System.err.println(e.getMessage());	
+		} finally { 
+			if(out != null) {
+				try { 
+					out.flush();
+					out.close();
+				} catch(IOException e) {
+					System.err.println(e.getMessage());
+				}
+			}			
+		}			
+	}	
+	
+	/** Liefert einen formatierten Log-Record mit Datum.
+	 * @param text der Text-Inhalt des Log-Records
+	 * @return ein formatierter Log-Record 
+	 */
+	public String format(String text) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(new SimpleDateFormat(dateFormat).format(new Date()));
+		sb.append(" - ");
+		sb.append(text);
+		sb.append(System.getProperty("line.separator"));
+		return sb.toString();
+	}
+}

@@ -1,0 +1,9 @@
+
+
+/**
+ * Interface um eine Nachrichtenklasse als solche zu Kennzeichnen.
+ * @author Ralf Beczkowiak
+ *
+ */
+public interface IMessage {
+}

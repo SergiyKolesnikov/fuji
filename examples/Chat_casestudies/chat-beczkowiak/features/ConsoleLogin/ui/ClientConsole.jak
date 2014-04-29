@@ -1,0 +1,43 @@
+
+import common.LoginMessage;
+
+public refines  class ClientConsole {
+	protected boolean sleepy = false;
+	
+	protected void afterConnecting() {
+		String input;
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            newChatLine("Please enter your username and press return.");
+            input = scan.nextLine();
+            if (input != "") {
+                newChatLine("Please enter your password and press return.");
+                char[] pw = scan.nextLine().toCharArray();
+                LoginMessage msg = new LoginMessage(input, pw);
+                this.sleepy = true;
+                send(msg);
+                try {
+                    synchronized (this) {
+                        this.wait(60);
+                    }
+                } catch (InterruptedException e) {
+
+                }
+                if (this.client.isConfirmedUser()) {
+                    break;
+                }
+            }
+        }
+	}
+	
+	public void newChatLine(String line) {
+		Super(String).newChatLine(line);
+        synchronized (this) {
+            if (sleepy) {
+                this.notify();
+                this.sleepy = false;
+            }
+        }
+    }
+	
+}

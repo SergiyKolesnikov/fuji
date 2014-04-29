@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="LittleChat">
+				<feature mandatory="true" name="Base"/>
+				<and abstract="true" mandatory="true" name="Features">
+					<alt abstract="true" mandatory="true" name="System">
+						<and mandatory="true" name="Client">
+							<alt abstract="true" mandatory="true" name="View">
+								<and mandatory="true" name="GUI">
+									<feature mandatory="true" name="Authentication"/>
+									<feature name="Color"/>
+								</and>
+								<feature mandatory="true" name="Console"/>
+							</alt>
+							<feature name="History"/>
+							<feature name="ChangeName"/>
+						</and>
+						<and mandatory="true" name="Server">
+							<feature mandatory="true" name="SpamFilter"/>
+							<feature name="PrivateMessage"/>
+						</and>
+					</alt>
+					<alt abstract="true" name="Cryptography">
+						<feature mandatory="true" name="ROT13"/>
+						<feature mandatory="true" name="SwapChars"/>
+					</alt>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>SpamFilter</var>
+					<not>
+						<var>Cryptography</var>
+					</not>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Client"/>
+			<feature name="GUI"/>
+			<feature name="Authentication"/>
+			<feature name="Color"/>
+			<feature name="Console"/>
+			<feature name="History"/>
+			<feature name="Server"/>
+			<feature name="SpamFilter"/>
+			<feature name="PrivateMessage"/>
+			<feature name="ROT13"/>
+			<feature name="SwapChars"/>
+			<feature name="ChangeName"/>
+		</featureOrder>
+	</featureModel>

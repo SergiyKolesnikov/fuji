@@ -1,0 +1,95 @@
+package server;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import javax.swing.JRadioButton;
+
+
+
+public class GUI {
+
+	private JFrame frame;
+	private JTextField txtPort;
+	private JButton btnStop;
+	private Server server;
+	private JRadioButton rdbtnLuft;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public GUI() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblPort = new JLabel("Port:");
+		lblPort.setBounds(6, 27, 61, 16);
+		frame.getContentPane().add(lblPort);
+		
+		txtPort = new JTextField();
+		txtPort.setText("Port");
+		txtPort.setBounds(79, 21, 134, 28);
+		frame.getContentPane().add(txtPort);
+		txtPort.setColumns(10);
+		
+		rdbtnLuft = new JRadioButton("LÃ¤uft");
+		rdbtnLuft.setEnabled(false);
+		rdbtnLuft.setBounds(6, 71, 141, 23);
+		frame.getContentPane().add(rdbtnLuft);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				try {
+					server = new Server(Integer.parseInt(txtPort.getText()));
+					rdbtnLuft.setSelected(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				} 
+			}
+		});
+		btnStart.setBounds(312, 226, 117, 29);
+		frame.getContentPane().add(btnStart);
+		
+		btnStop = new JButton("Stop");
+		btnStop.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				server.shutdown();
+				rdbtnLuft.setSelected(false);
+			}
+		});
+		btnStop.setBounds(183, 226, 117, 29);
+		frame.getContentPane().add(btnStop);
+	}
+}

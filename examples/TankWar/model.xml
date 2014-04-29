@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="TankWar">
+				<alt mandatory="true" name="Platform">
+					<feature mandatory="true" name="PC"/>
+					<feature mandatory="true" name="Handy"/>
+				</alt>
+				<or name="Tools">
+					<feature mandatory="true" name="Beschleunigung"/>
+					<feature mandatory="true" name="einfrieren"/>
+					<feature mandatory="true" name="Bombe"/>
+					<feature mandatory="true" name="Energie"/>
+					<feature mandatory="true" name="Feuerkraft"/>
+					<feature mandatory="true" name="Mars"/>
+				</or>
+				<feature name="explodieren"/>
+				<and mandatory="true" name="GUI">
+					<alt mandatory="true" name="Map">
+						<feature mandatory="true" name="M_240"/>
+						<feature mandatory="true" name="M_600"/>
+						<feature mandatory="true" name="M_780"/>
+					</alt>
+					<and name="Image">
+						<feature name="fuer_PC"/>
+						<feature name="fuer_Handy"/>
+						<feature name="IMG_tool"/>
+					</and>
+				</and>
+				<alt name="Record">
+					<feature mandatory="true" name="Re_fuer_PC"/>
+					<feature mandatory="true" name="Re_fuer_Handy"/>
+				</alt>
+				<alt name="Soundeffekt">
+					<feature mandatory="true" name="Sound_fuer_pc"/>
+					<feature mandatory="true" name="Sound_fuer_Handy"/>
+				</alt>
+				<alt mandatory="true" name="Language">
+					<feature mandatory="true" name="EN"/>
+					<feature mandatory="true" name="DE"/>
+				</alt>
+				<or mandatory="true" name="Tanks">
+					<feature mandatory="true" name="USA_M1Abrams"/>
+					<feature mandatory="true" name="Germany_Leopard"/>
+					<feature mandatory="true" name="China_Type99"/>
+				</or>
+				<alt mandatory="true" name="AI">
+					<feature mandatory="true" name="Easy"/>
+					<feature mandatory="true" name="Hard"/>
+				</alt>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

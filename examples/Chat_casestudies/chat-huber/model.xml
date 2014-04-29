@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and mandatory="true" name="Base">
+					<feature name="server"/>
+					<alt name="client">
+						<feature mandatory="true" name="clientgui"/>
+					</alt>
+					<feature name="authentication"/>
+					<feature name="history"/>
+					<and name="messages">
+						<feature name="colored"/>
+						<feature name="private"/>
+					</and>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<disj>
+					<conj>
+						<var>server</var>
+						<not>
+							<var>client</var>
+						</not>
+					</conj>
+					<conj>
+						<not>
+							<var>server</var>
+						</not>
+						<var>client</var>
+					</conj>
+				</disj>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="server"/>
+			<feature name="client"/>
+			<feature name="clientgui"/>
+			<feature name="authentication"/>
+			<feature name="history"/>
+			<feature name="messages"/>
+			<feature name="colored"/>
+			<feature name="private"/>
+		</featureOrder>
+	</featureModel>

@@ -1,0 +1,9 @@
+public refines  class Crypt {
+	public byte[] encode(Object obj) {
+        return encode(obj, "AES", "einszweidreivier".getBytes());
+	}
+
+	public Object decode(byte[] array) {
+        return decode(array, "AES", "einszweidreivier".getBytes());
+    }
+}

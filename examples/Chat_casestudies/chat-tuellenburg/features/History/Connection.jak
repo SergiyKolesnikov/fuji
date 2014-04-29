@@ -1,0 +1,19 @@
+public refines  class Connection {
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+      Super(String,Object).handleIncomingMessage(name, msg);
+      
+      String line;
+		if (msg instanceof TextMessage) {
+			line = ((TextMessage) msg).getContent();
+			server.addToHistory(line);
+		}
+		//what to do with Encrypted Messages
+		else if (msg instanceof EncryptedMessage) {
+			line = enc.decrypt((EncryptedMessage) msg);
+			server.addToHistory(line);
+		}
+		
+	}
+
+}

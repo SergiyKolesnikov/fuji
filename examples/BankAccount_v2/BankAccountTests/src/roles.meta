@@ -1,0 +1,33 @@
+{
+	"features" : [
+		"BankAccount",
+		"Overdraft",
+		"Interest",
+		"InterestEstimation",
+		"CreditWorthiness",
+		"DailyLimit",
+		"Lock",
+		"Transaction"
+	],
+	"roles": {
+		"nextDay": {
+			"Overdraft": "nextDay__wrappee__Overdraft",
+			"Interest": "nextDay__wrappee__CreditWorthiness",
+			"CreditWorthiness": "nextDay__wrappee__CreditWorthiness",
+			"DailyLimit": "nextDay"
+		},
+		"nextYear": {
+			"Overdraft": "nextYear__wrappee__Overdraft",
+			"Interest": "nextYear"
+		},
+		"update": {
+			"CreditWorthiness": "update__wrappee__CreditWorthiness",
+			"DailyLimit": "update"
+		},
+		"undoUpdate": {
+			"CreditWorthiness": "undoUpdate__wrappee__CreditWorthiness",
+			"DailyLimit": "undoUpdate"
+		}
+	}
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="AJStats">
+				<feature mandatory="true" name="Base"/>
+				<feature name="CodeFormatter"/>
+				<feature name="Classes"/>
+				<feature name="Interfaces"/>
+				<feature mandatory="true" name="Aspects"/>
+				<feature mandatory="true" name="States"/>
+				<feature name="ClassMethods"/>
+				<feature name="ClassConstructors"/>
+				<feature name="InterfaceMethods"/>
+				<feature name="AspectMethods"/>
+				<feature name="AspectConstructors"/>
+				<feature name="ClassFields"/>
+				<feature name="InterfaceFields"/>
+				<feature name="AspectFields"/>
+				<feature name="Advice"/>
+				<feature name="Pointcuts"/>
+				<feature name="InterTypeMethods"/>
+				<feature name="InterTypeConstructors"/>
+				<feature name="InterTypeFields"/>
+				<feature name="InterTypeDeclare"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

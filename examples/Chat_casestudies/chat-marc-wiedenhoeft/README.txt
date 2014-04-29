@@ -1,0 +1,3 @@
+- Passwort für die GUI-Anmeldung: password
+- Server hat immer beide Verschlüsselungstypen aktiv, da ich nicht herausgefunden habe, wie ich die Crypto-Feature mit Server und Client sinnvoll verbinden kann (es wurden bei der Server-Konfig. auch immer Dateien der Verschlüsselung für die Client-Konfig. erzeugt und umgekehrt)
+- Allgemein finde ich Feature-Orientiertes Programmieren bisher am schwersten und aufwendigsten (2 komplette Tage)

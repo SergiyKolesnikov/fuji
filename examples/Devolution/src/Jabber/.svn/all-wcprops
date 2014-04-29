@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/devolution/!svn/ver/60/trunk/src/Jabber
+END
+JabberListener.jak
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/devolution/!svn/ver/50/trunk/src/Jabber/JabberListener.jak
+END
+IMBuddy.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/48/trunk/src/Jabber/IMBuddy.jak
+END
+IMTabs.jak
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/devolution/!svn/ver/48/trunk/src/Jabber/IMTabs.jak
+END
+IMView.jak
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/devolution/!svn/ver/60/trunk/src/Jabber/IMView.jak
+END
+JabberRoster.jak
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/devolution/!svn/ver/59/trunk/src/Jabber/JabberRoster.jak
+END
+JabberConnection.jak
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/devolution/!svn/ver/59/trunk/src/Jabber/JabberConnection.jak
+END
+IMPreferences.jak
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/devolution/!svn/ver/57/trunk/src/Jabber/IMPreferences.jak
+END
+JabberRosterListener.jak
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/devolution/!svn/ver/48/trunk/src/Jabber/JabberRosterListener.jak
+END

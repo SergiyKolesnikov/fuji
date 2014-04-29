@@ -1,0 +1,24 @@
+
+import java.awt.Toolkit;
+
+public refines class Client {
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {		
+		beep();
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		beep();
+		
+		return msg;
+	}
+	
+	private void beep() {
+		Toolkit.getDefaultToolkit().beep();
+	}
+
+} 

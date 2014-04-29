@@ -1,0 +1,25 @@
+
+import crypt.Crypt;
+
+public refines  class UserConfirmedMessage {
+	protected byte[] confirmedCrypted;
+	
+	public void encode(Crypt crypt) {
+        byte[] array = crypt.encode(String.valueOf(this.confirmed));
+        if (array != null) {
+            this.confirmed = false;
+            this.confirmedCrypted = array;
+        }
+    }
+
+    public void decode(Crypt crypt) {
+        Object obj = crypt.decode(this.confirmedCrypted);
+        if (obj != null) {
+            if (obj instanceof String){
+                this.confirmed = Boolean.parseBoolean((String)obj);
+            } else {
+                throw new RuntimeException("Failed to decode an login request.");
+            }
+        }
+    }
+}

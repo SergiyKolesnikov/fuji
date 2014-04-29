@@ -1,0 +1,56 @@
+
+import java.io.Serializable;
+
+/** Text-Nachricht, die zwischen dem Client und dem Server hin und her geschickt
+ * werden kann.
+ */
+public class TextMessage implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	
+	/** Versender der Nachricht */
+	protected String sender;
+
+	/** Inhalt der Nachricht */
+	protected String content;
+	
+	/** Erzeugt eine neue Text-Nachricht.
+	 * @param content der Inhalt der Nachricht
+	 */
+	public TextMessage(String content, String sender) {
+		this.content = content;
+		this.sender = sender;	
+	}	
+
+	/** Liefert den Inhalt der Text-Nachricht.
+	 * @return der Inhalt der Text-Nachricht
+	 */
+	public String getContent() {
+		return content;
+	}
+	
+	/** Liefert den Versender der Text-Nachricht.
+	 * @return der Versender der Text-Nachricht
+	 */
+	public String getSender() {
+		return sender;
+	}	
+	
+	/** Setzt den Sender der Nachricht.
+     *@param sender der Sender der Nachricht
+     */
+	public void setSender(String sender) {
+		this.sender = sender;
+	}	
+	
+	public void setContent(String content) {
+		this.content = content;	
+	}		
+	
+	/** Liefert die Text-Nachricht mit Versender und Inhalt.
+	 * @return die Text-Nachricht
+	 */
+	public String toString() {
+		return sender + " - " + content; 
+	}	
+}

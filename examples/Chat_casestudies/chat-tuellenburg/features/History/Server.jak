@@ -1,0 +1,29 @@
+public refines  class Server {
+	
+   protected File history;
+   protected BufferedWriter writer;
+
+   protected void setup() {
+   		Super().setup();
+   		try {
+      		new File("ServerLogs" + System.getProperty("file.separator")).mkdir();
+			history = new File("ServerLogs" + System.getProperty("file.separator") 
+					      + "server_history" + (System.currentTimeMillis()/1000));
+			writer = new BufferedWriter(new FileWriter(history));
+			writer.write("Chat-Session: " + Calendar.getInstance().getTime());
+			writer.newLine();
+   		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+	
+	public void addToHistory(String line){
+		try {
+			writer.write(line);
+			writer.newLine();
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

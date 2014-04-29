@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Chat">
+				<and mandatory="true" name="Client">
+					<or mandatory="true" name="UI">
+						<feature mandatory="true" name="Console"/>
+						<feature mandatory="true" name="Gui"/>
+					</or>
+					<and mandatory="true" name="SendMessage">
+						<or name="Encryption">
+							<feature mandatory="true" name="ROT13"/>
+							<feature mandatory="true" name="Swapped"/>
+						</or>
+						<feature name="Color"/>
+					</and>
+					<feature name="ReceiveMessage"/>
+					<feature name="UserName"/>
+					<feature mandatory="true" name="ClientLauncher"/>
+				</and>
+				<feature mandatory="true" name="Common"/>
+				<and mandatory="true" name="Server">
+					<feature name="MessageHistory"/>
+					<feature name="Authentification"/>
+					<feature name="Spamfilter"/>
+					<feature mandatory="true" name="ServerLauncher"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

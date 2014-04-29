@@ -1,0 +1,22 @@
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+public refines  class Server {
+
+	public void history(String msg){
+
+		try {
+        	RandomAccessFile raf = new RandomAccessFile("/home/rene/serverHistory.log", "rws");
+        	raf.skipBytes( (int)raf.length() );
+        	raf.writeBytes(msg+"\n");
+		}
+		catch (IOException e){}
+    }
+    
+    public void broadcast(String name, String text) throws FileNotFoundException, IOException {
+		
+		Super().broadcast(name, text);
+	}	
+}

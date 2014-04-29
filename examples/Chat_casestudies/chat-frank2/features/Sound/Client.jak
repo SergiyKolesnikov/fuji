@@ -1,0 +1,47 @@
+
+import javax.sound.sampled.*;
+//Toolkit.getDefaultToolkit().beep(); hat unter Linux nicht so richtig funktioniert
+
+public refines  class Client {
+
+	private void sound(int hz,int msecs) throws LineUnavailableException {
+
+		byte[] buf = new byte[msecs*8];
+
+		for (int i=0; i<buf.length; i++) {
+			double angle = i / (8000.0 / hz) * 2.0 * Math.PI;
+			buf[i] = (byte)(Math.sin(angle) * 80.0);
+		}
+
+		AudioFormat af = new AudioFormat(8000f,8,1,true,false);
+		SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
+		sdl.open(af);
+		sdl.start();
+		sdl.write(buf,0,buf.length);
+		sdl.drain();
+		sdl.close();
+	}
+
+	public void playSound(){
+		
+		try {sound(2000, 150);} 
+		catch (LineUnavailableException e) {}
+	}
+	
+//	public void fireAddLine(String line) {
+		
+//		Super().fireAddLine(line);
+//	}
+
+	public void send(TextMessage msg) {
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+			playSound();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+}	

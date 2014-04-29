@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="userSend">chetan-ska@gmx.de</entry>
+<entry key="pop3Server">pop.gmx.net</entry>
+<entry key="sslSend">false</entry>
+<entry key="realName">Hans</entry>
+<entry key="receiveProtocol">pop3</entry>
+<entry key="saveSend">false</entry>
+<entry key="response">no one</entry>
+<entry key="saveReceive">false</entry>
+<entry key="sslReceive">false</entry>
+<entry key="sendProtocol">smtp</entry>
+<entry key="userReceive">chetan-ska@gmx.de</entry>
+<entry key="address">chetan-ska@gmx.de</entry>
+<entry key="password">92H&lt;a__a</entry>
+<entry key="smtpServer">mail.gmx.net</entry>
+</properties>

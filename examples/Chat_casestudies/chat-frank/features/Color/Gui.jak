@@ -1,0 +1,27 @@
+
+
+public refines  class Gui   {
+ 	
+ 	protected JComboBox colorBox;
+ 	
+ 	
+	public void addColor(){
+		
+		colorBox = new JComboBox();
+        colorBox.addItem("black");
+        colorBox.addItem("red");
+        colorBox.addItem("yellow");
+        colorBox.addItem("blue");
+		add("North", colorBox);	
+		
+		
+		colorBox.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+
+               color = colorBox.getSelectedItem().toString();
+            }
+        });
+	}
+
+}

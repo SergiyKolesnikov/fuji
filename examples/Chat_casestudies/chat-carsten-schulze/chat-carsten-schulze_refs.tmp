@@ -1,0 +1,941 @@
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+IMP {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+IMP {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}Authentication{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}Authentication{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}CLI{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}CLI{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}GUI{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}GUI{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}History{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}History{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}ROT{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}ROT{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}Spamfilter{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}Spamfilter{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}XOR{package}client{type}Client {package}java.lang{type}Runnable
+REF {feature}XOR{package}client{type}Client {package}client{type}ChatObserver
+REF {feature}Authentication{static}{package}client{type}Client{field}password{type}java.lang.String {package}java.lang{type}String
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{method}send(common.Message){type}void
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}common{type}Message
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {static}{package}client{type}Client{field}password{type}java.lang.String
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Object
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}common{type}Message
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}common{type}Message
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String{method}equals(java.lang.Object){type}boolean
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String{constructor}/init/(java.lang.String)
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}RuntimeException{constructor}/init/(java.lang.String)
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}RuntimeException
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}System
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Exception
+REF {feature}Authentication{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream {package}java.io{type}ObjectInputStream
+REF {feature}CLI{package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream {package}java.io{type}ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{field}thread{type}java.lang.Thread {package}java.lang{type}Thread
+REF {feature}CLI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList
+REF {feature}CLI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList{constructor}/init/()
+REF {feature}CLI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList
+REF {feature}CLI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}client{type}ChatPlugin
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}String
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.io{type}IOException
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}String[]{field}length{type}int
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}Integer
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {static}{package}java.lang{type}Integer{method}parseInt(java.lang.String){type}int
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException{constructor}/init/(java.lang.String)
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}System
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Cli{constructor}Cli(client.Client)
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Cli
+REF {feature}CLI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}@primitive{type}Unknown{field}client{type}Unknown
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Thread
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Thread
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {static}{package}java.lang{type}Thread{method}currentThread(){type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Object
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{method}newMessage(java.lang.Object){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.io{type}EOFException
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{method}stop(){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}ClassNotFoundException
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.io{type}IOException
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.io{type}ObjectOutputStream{method}close(){type}void
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.io{type}IOException
+REF {feature}CLI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}CLI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}CLI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message
+REF {feature}CLI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}flush(){type}void
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}IOException
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}CLI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{method}stop(){type}void
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}ArrayList{method}add(client.ChatPlugin){type}boolean
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Collections
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {static}{package}java.util{type}Collections{method}sort(java.util.List<client.ChatPlugin>, java.util.Comparator<wildcards.? super client.ChatPlugin>){type}void
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Comparator
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.lang{type}Object
+REF {feature}CLI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Comparator
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}CLI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}CLI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}CLI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}java.util{type}ArrayList{method}remove(java.lang.Object){type}boolean
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}CLI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}ChatPlugin{method}process(common.Message){type}common.Message
+REF {feature}CLI{package}client{type}Client{method}stop(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}System
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{constructor}/init/(java.lang.String, int)
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectOutputStream{constructor}/init/(java.io.OutputStream)
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectOutputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{method}getOutputStream(){type}java.io.OutputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectInputStream{constructor}/init/(java.io.InputStream)
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectInputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{method}getInputStream(){type}java.io.InputStream
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread{constructor}/init/(java.lang.Runnable)
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread{method}start(){type}void
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Exception
+REF {feature}CLI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream {package}java.io{type}ObjectInputStream
+REF {feature}GUI{package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream {package}java.io{type}ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{field}thread{type}java.lang.Thread {package}java.lang{type}Thread
+REF {feature}GUI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList
+REF {feature}GUI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList{constructor}/init/()
+REF {feature}GUI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}java.util{type}ArrayList
+REF {feature}GUI{package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin> {package}client{type}ChatPlugin
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}String
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.io{type}IOException
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}String[]{field}length{type}int
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException{constructor}/init/(java.lang.String)
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}Integer
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {static}{package}java.lang{type}Integer{method}parseInt(java.lang.String){type}int
+REF {feature}GUI{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Client{method}init(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Thread
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Thread
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {static}{package}java.lang{type}Thread{method}currentThread(){type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{method}newMessage(java.lang.Object){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.io{type}EOFException
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{method}stop(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}ClassNotFoundException
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.io{type}ObjectOutputStream{method}close(){type}void
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}client{type}Client{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}GUI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message
+REF {feature}GUI{package}client{type}Client{method}newMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}flush(){type}void
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{method}stop(){type}void
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}ArrayList{method}add(client.ChatPlugin){type}boolean
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Collections
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {static}{package}java.util{type}Collections{method}sort(java.util.List<client.ChatPlugin>, java.util.Comparator<wildcards.? super client.ChatPlugin>){type}void
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Comparator
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void {package}java.util{type}Comparator
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}GUI{package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int {package}client{type}ChatPlugin{method}getType(){type}byte
+REF {feature}GUI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}GUI{package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void {package}java.util{type}ArrayList{method}remove(java.lang.Object){type}boolean
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}GUI{package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message {package}client{type}ChatPlugin{method}process(common.Message){type}common.Message
+REF {feature}GUI{package}client{type}Client{method}stop(){type}void {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}System
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{constructor}/init/(java.lang.String, int)
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectOutputStream{constructor}/init/(java.io.OutputStream)
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectOutputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{method}getOutputStream(){type}java.io.OutputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectInputStream{constructor}/init/(java.io.InputStream)
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}ObjectInputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.net{type}Socket{method}getInputStream(){type}java.io.InputStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread{constructor}/init/(java.lang.Runnable)
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Client{field}thread{type}java.lang.Thread
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Thread{method}start(){type}void
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Exception
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}System
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Gui{constructor}Gui(java.lang.String, client.Client)
+REF {feature}GUI{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Gui
+REF {feature}History{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}History{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}History{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}History{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}History{constructor}History(java.lang.String, client.Client)
+REF {feature}History{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}History
+REF {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.lang{type}String
+REF {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}java.io{type}IOException
+ORI {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {static}{package}client{type}Client{method}original(java.lang.String[]){type}void
+REF {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client)
+REF {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}client{type}Encryption
+REF {feature}ROT{static}{package}client{type}Client{method}main(java.lang.String[]){type}void {package}@primitive{type}Unknown{field}client{type}Unknown
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}ChatPlugin
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{method}getStatus(){type}byte
+ORI {feature}ROT{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{method}original(common.Message){type}void
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList{constructor}/init/()
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList{method}add(java.lang.String){type}boolean
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList{method}add(java.lang.String){type}boolean
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}ArrayList{method}add(java.lang.String){type}boolean
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client)
+REF {feature}Spamfilter{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Spamfilter
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}ChatPlugin
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}common{type}Message{method}getStatus(){type}byte
+ORI {feature}XOR{package}client{type}Client{method}send(common.Message){type}void {package}client{type}Client{method}original(common.Message){type}void
+REF {feature}XOR{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}java.util{type}List
+REF {feature}XOR{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}ChatPlugin
+REF {feature}XOR{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client)
+REF {feature}XOR{package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>) {package}client{type}Encryption
+EXT {feature}Authentication{package}server{type}Connection {package}java.lang{type}Thread
+EXT {feature}Authentication{package}server{type}Connection {package}java.lang{type}Thread
+EXT {feature}Authentication{package}server{type}Connection {package}java.lang{type}Thread
+REF {feature}Usernames{package}server{type}Connection {package}java.lang{type}Thread
+REF {feature}Authentication{static}{package}server{type}Connection{field}password{type}java.lang.String {package}java.lang{type}String
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Server
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream{constructor}/init/(java.io.InputStream)
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getInputStream(){type}java.io.InputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream{constructor}/init/(java.io.OutputStream)
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getOutputStream(){type}java.io.OutputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Object
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}String{method}equals(java.lang.Object){type}boolean
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {static}{package}server{type}Connection{field}password{type}java.lang.String
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}System
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getInetAddress(){type}java.net.InetAddress
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}InetAddress{method}toString(){type}java.lang.String
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}common{type}Message
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}close(){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}IOException
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}IOException
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}ClassNotFoundException
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Authentication{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{field}socket{type}java.net.Socket {package}java.net{type}Socket
+REF {feature}GUI{package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream {package}java.io{type}ObjectInputStream
+REF {feature}GUI{package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream {package}java.io{type}ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{field}server{type}server.Server {package}server{type}Server
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}String
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.net{type}Socket{method}getInetAddress(){type}java.net.InetAddress
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.net{type}InetAddress{method}toString(){type}java.lang.String
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.net{type}SocketException
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.io{type}EOFException
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}ClassNotFoundException
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}removeConnection(server.Connection){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.net{type}Socket{method}close(){type}void
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getDestination(){type}java.lang.String
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Server{method}unicast(common.Message){type}void
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}GUI{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}GUI{package}server{type}Connection{method}send(java.lang.String){type}void {package}java.lang{type}String
+REF {feature}GUI{package}server{type}Connection{method}send(java.lang.String){type}void {package}server{type}Connection{method}send(common.Message){type}void
+REF {feature}GUI{package}server{type}Connection{method}send(java.lang.String){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}GUI{package}server{type}Connection{method}send(java.lang.String){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}flush(){type}void
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}IOException
+REF {feature}GUI{package}server{type}Connection{method}send(common.Message){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Server
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream{constructor}/init/(java.io.InputStream)
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getInputStream(){type}java.io.InputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream{constructor}/init/(java.io.OutputStream)
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getOutputStream(){type}java.io.OutputStream
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}IOException
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}GUI{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{field}socket{type}java.net.Socket {package}java.net{type}Socket
+REF {feature}Usernames{package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream {package}java.io{type}ObjectInputStream
+REF {feature}Usernames{package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream {package}java.io{type}ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{field}server{type}server.Server {package}server{type}Server
+REF {feature}Usernames{package}server{type}Connection{field}clientName{type}java.lang.String {package}java.lang{type}String
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}clientName{type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.net{type}Socket{method}getInetAddress(){type}java.net.InetAddress
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.net{type}InetAddress{method}toString(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}clientName{type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Object
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.io{type}ObjectInputStream{method}readObject(){type}java.lang.Object
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.net{type}SocketException
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.io{type}EOFException
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.lang{type}ClassNotFoundException
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.io{type}IOException
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}removeConnection(server.Connection){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}clientName{type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.net{type}Socket{method}close(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.io{type}IOException
+REF {feature}Usernames{package}server{type}Connection{method}run(){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String{method}matches(java.lang.String){type}boolean
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Connection{method}setclientName(java.lang.String){type}void
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String{method}replaceAll(java.lang.String, java.lang.String){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String{method}matches(java.lang.String){type}boolean
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Server{method}unicast(common.Message){type}void
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String)
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String{method}replaceAll(java.lang.String, java.lang.String){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}java.lang{type}String{method}replaceAll(java.lang.String, java.lang.String){type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Connection{field}server{type}server.Server
+REF {feature}Usernames{package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void {package}server{type}Server{method}broadcast(common.Message){type}void
+REF {feature}Usernames{package}server{type}Connection{method}send(java.lang.String){type}void {package}java.lang{type}String
+REF {feature}Usernames{package}server{type}Connection{method}send(java.lang.String){type}void {package}server{type}Connection{method}send(common.Message){type}void
+REF {feature}Usernames{package}server{type}Connection{method}send(java.lang.String){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}Usernames{package}server{type}Connection{method}send(java.lang.String){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}common{type}Message
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}writeObject(java.lang.Object){type}void
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}ObjectOutputStream{method}flush(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}java.io{type}IOException
+REF {feature}Usernames{package}server{type}Connection{method}send(common.Message){type}void {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Usernames{package}server{type}Connection{method}setclientName(java.lang.String){type}void {package}java.lang{type}String
+REF {feature}Usernames{package}server{type}Connection{method}setclientName(java.lang.String){type}void {package}server{type}Connection{field}clientName{type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{method}getclientName(){type}java.lang.String {package}java.lang{type}String
+REF {feature}Usernames{package}server{type}Connection{method}getclientName(){type}java.lang.String {package}server{type}Connection{field}clientName{type}java.lang.String
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Server
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream{constructor}/init/(java.io.InputStream)
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectInputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getInputStream(){type}java.io.InputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream{constructor}/init/(java.io.OutputStream)
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}ObjectOutputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.net{type}Socket{method}getOutputStream(){type}java.io.OutputStream
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.io{type}IOException
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}java.lang{type}Throwable{method}printStackTrace(){type}void
+REF {feature}Usernames{package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server) {package}server{type}Connection{field}server{type}server.Server
+IMP {feature}CLI{package}common{type}Message {package}java.io{type}Serializable
+IMP {feature}CLI{package}common{type}Message {package}java.io{type}Serializable
+REF {feature}CLI{package}common{type}Message {package}java.io{type}Serializable
+REF {feature}GUI{package}common{type}Message {package}java.io{type}Serializable
+REF {feature}CLI{package}common{type}Message{field}text{type}java.lang.String {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{field}dest{type}java.lang.String {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{field}src{type}java.lang.String {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}status{type}byte
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}src{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}status{type}byte
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}src{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{method}getText(){type}java.lang.String {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{method}getText(){type}java.lang.String {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}CLI{package}common{type}Message{method}getStatus(){type}byte {package}common{type}Message{field}status{type}byte
+REF {feature}CLI{package}common{type}Message{method}setStatus(byte){type}void {package}common{type}Message{field}status{type}byte
+REF {feature}CLI{package}common{type}Message{method}getDestination(){type}java.lang.String {package}java.lang{type}String
+REF {feature}CLI{package}common{type}Message{method}getDestination(){type}java.lang.String {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{field}text{type}java.lang.String {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{field}dest{type}java.lang.String {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{field}src{type}java.lang.String {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{method}getText(){type}java.lang.String {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{method}getText(){type}java.lang.String {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{method}getStatus(){type}byte {package}common{type}Message{field}status{type}byte
+REF {feature}GUI{package}common{type}Message{method}setStatus(byte){type}void {package}common{type}Message{field}status{type}byte
+REF {feature}GUI{package}common{type}Message{method}getDestination(){type}java.lang.String {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{method}getDestination(){type}java.lang.String {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}status{type}byte
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}src{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte) {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}java.lang{type}String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}text{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}status{type}byte
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}src{type}java.lang.String
+REF {feature}GUI{package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String) {package}common{type}Message{field}dest{type}java.lang.String
+REF {feature}CLI{package}client{type}ChatPlugin{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}ChatPlugin{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}ChatPlugin{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}ChatPlugin{method}process(common.Message){type}common.Message {package}common{type}Message
+IMP {feature}CLI{package}client{type}Cli {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Cli {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}Cli{constructor}Cli(client.Client) {package}client{type}Client
+REF {feature}CLI{package}client{type}Cli{constructor}Cli(client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}CLI{package}client{type}Cli{constructor}Cli(client.Client) {package}java.lang{type}System
+REF {feature}CLI{package}client{type}Cli{constructor}Cli(client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}CLI{package}client{type}Cli{constructor}Cli(client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}CLI{package}client{type}Cli{method}getType(){type}byte {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Cli{method}getType(){type}byte {package}client{type}Cli{field}type{type}byte
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}java.lang{type}System
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}CLI{package}client{type}Cli{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}CLI{package}client{type}ChatObserver{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}CLI{package}client{type}ChatObserver{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}ChatObserver{method}removePlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}CLI{package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}CLI{package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}ChatObserver{method}newMessage(java.lang.Object){type}void {package}java.lang{type}Object
+REF {feature}GUI{package}client{type}ChatObserver{method}loadPlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}ChatObserver{method}removePlugin(client.ChatPlugin){type}void {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message {package}common{type}Message
+EXT {feature}FormatText{package}client{type}Gui {package}javax.swing{type}JFrame
+EXT {feature}FormatText{package}client{type}Gui {package}javax.swing{type}JFrame
+IMP {feature}FormatText{package}client{type}Gui {package}client{type}ChatPlugin
+IMP {feature}FormatText{package}client{type}Gui {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Gui {package}javax.swing{type}JFrame
+REF {feature}FormatText{package}client{type}Gui {package}client{type}ChatPlugin
+REF {feature}GUI{package}client{type}Gui {package}client{type}ChatPlugin
+REF {feature}FormatText{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.lang{type}String
+REF {feature}FormatText{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Client
+REF {feature}FormatText{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}FormatText{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JEditorPane{constructor}/init/(java.lang.String, java.lang.String)
+REF {feature}FormatText{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JEditorPane
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing{type}JEditorPane{method}setText(java.lang.String){type}void
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing{type}JEditorPane{method}getText(){type}java.lang.String
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}java.lang{type}String{method}replaceAll(java.lang.String, java.lang.String){type}java.lang.String
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}JTextComponent{method}setCaretPosition(int){type}void
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}JTextComponent{method}getDocument(){type}javax.swing.text.Document
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}Document{method}getLength(){type}int
+REF {feature}FormatText{package}client{type}Gui{method}process(common.Message){type}common.Message {package}java.lang{type}IllegalArgumentException
+REF {feature}GUI{package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane {package}javax.swing{type}JEditorPane
+REF {feature}GUI{package}client{type}Gui{field}inputField{type}javax.swing.JTextField {package}javax.swing{type}JTextField
+REF {feature}GUI{package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane {package}javax.swing{type}JScrollPane
+REF {feature}GUI{package}client{type}Gui{field}chatClient{type}client.Client {package}client{type}Client
+REF {feature}GUI{package}client{type}Gui{method}getType(){type}byte {static}{package}client{type}Gui{field}type{type}byte
+REF {feature}GUI{package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener {package}java.awt.event{type}ActionListener
+REF {feature}GUI{package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener {package}java.awt.event{type}ActionListener
+REF {feature}GUI{package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener {package}java.lang{type}Object
+REF {feature}GUI{package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener {package}java.awt.event{type}ActionListener
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}java.awt.event{type}ActionEvent
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}java.lang{type}String
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}javax.swing.text{type}JTextComponent{method}getText(){type}java.lang.String
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}client{type}Gui{field}chatClient{type}client.Client
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}client{type}Client{method}send(common.Message){type}void
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}common{type}Message
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void {package}javax.swing.text{type}JTextComponent{method}setText(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing{type}JEditorPane{method}setText(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing{type}JEditorPane{method}getText(){type}java.lang.String
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}JTextComponent{method}setCaretPosition(int){type}void
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}JTextComponent{method}getDocument(){type}javax.swing.text.Document
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}javax.swing.text{type}Document{method}getLength(){type}int
+REF {feature}GUI{package}client{type}Gui{method}process(common.Message){type}common.Message {package}java.lang{type}IllegalArgumentException
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.lang{type}String
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Client
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.lang{type}System
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JEditorPane{constructor}/init/(java.lang.String, java.lang.String)
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JEditorPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing.text{type}JTextComponent{method}setEditable(boolean){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JScrollPane{constructor}/init/(java.awt.Component, int, int)
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}javax.swing{type}ScrollPaneConstants{field}VERTICAL_SCROLLBAR_ALWAYS{type}int
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}javax.swing{type}ScrollPaneConstants{field}HORIZONTAL_SCROLLBAR_AS_NEEDED{type}int
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JComponent{method}setEnabled(boolean){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JScrollPane{method}createVerticalScrollBar(){type}javax.swing.JScrollBar
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JComponent{method}setMinimumSize(java.awt.Dimension){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Dimension{constructor}/init/(int, int)
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Dimension
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JTextField{constructor}/init/()
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JTextField
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JTextField{method}addActionListener(java.awt.event.ActionListener){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{constructor}/init/(java.awt.Container)
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JFrame{method}getContentPane(){type}java.awt.Container
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JFrame{method}getContentPane(){type}java.awt.Container
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Container{method}setLayout(java.awt.LayoutManager){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}setAutoCreateGaps(boolean){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}setAutoCreateContainerGaps(boolean){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}setHorizontalGroup(javax.swing.GroupLayout.Group){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}createSequentialGroup(){type}javax.swing.GroupLayout.SequentialGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}SequentialGroup{method}addGroup(javax.swing.GroupLayout.Group){type}javax.swing.GroupLayout.SequentialGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}createParallelGroup(javax.swing.GroupLayout.Alignment){type}javax.swing.GroupLayout.ParallelGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}Alignment
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}javax.swing{type}GroupLayout{type}Alignment{field}LEADING{type}javax.swing.GroupLayout.Alignment
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}ParallelGroup{method}addComponent(java.awt.Component){type}javax.swing.GroupLayout.ParallelGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}ParallelGroup{method}addComponent(java.awt.Component){type}javax.swing.GroupLayout.ParallelGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}setVerticalGroup(javax.swing.GroupLayout.Group){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{method}createSequentialGroup(){type}javax.swing.GroupLayout.SequentialGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}SequentialGroup{method}addComponent(java.awt.Component){type}javax.swing.GroupLayout.SequentialGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}GroupLayout{type}SequentialGroup{method}addComponent(java.awt.Component){type}javax.swing.GroupLayout.SequentialGroup
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Frame{method}setTitle(java.lang.String){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Window{method}pack(){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.awt{type}Window{method}setVisible(boolean){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JFrame{method}setDefaultCloseOperation(int){type}void
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}javax.swing{type}JFrame
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}javax.swing{type}JFrame{field}EXIT_ON_CLOSE{type}int
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}client{type}Gui{field}chatClient{type}client.Client
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.lang{type}System
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}client{type}Gui{constructor}Gui(java.lang.String, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.lang{type}String
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.io{type}IOException
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.lang{type}String[]{field}length{type}int
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException{constructor}/init/(java.lang.String)
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.lang{type}RuntimeException
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}server{type}Server{constructor}Server(int)
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}server{type}Server
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {package}java.lang{type}Integer
+REF {feature}GUI{static}{package}server{type}Server{method}main(java.lang.String[]){type}void {static}{package}java.lang{type}Integer{method}parseInt(java.lang.String){type}int
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.io{type}IOException
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}ServerSocket
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}ServerSocket{constructor}/init/(int)
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}ServerSocket
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.lang{type}System
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}Socket
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}ServerSocket{method}accept(){type}java.net.Socket
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.lang{type}System
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.net{type}Socket{method}getInetAddress(){type}java.net.InetAddress
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection
+REF {feature}GUI{package}server{type}Server{constructor}Server(int) {package}java.lang{type}Thread{method}start(){type}void
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}java.net{type}Socket
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server)
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection {package}java.util{type}HashSet{method}add(server.Connection){type}boolean
+REF {feature}GUI{package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection> {package}java.util{type}HashSet
+REF {feature}GUI{package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection> {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection> {package}java.util{type}HashSet{constructor}/init/()
+REF {feature}GUI{package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection> {package}java.util{type}HashSet
+REF {feature}GUI{package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection> {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}java.util{type}Iterator
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}java.util{type}HashSet{method}iterator(){type}java.util.Iterator<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}java.util{type}Iterator{method}hasNext(){type}boolean
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}java.util{type}Iterator{method}next(){type}server.Connection
+REF {feature}GUI{package}server{type}Server{method}broadcast(common.Message){type}void {package}server{type}Connection{method}send(common.Message){type}void
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}common{type}Message
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}server{type}Connection{field}socket{type}java.net.Socket
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}java.net{type}Socket{method}getInetAddress(){type}java.net.InetAddress
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}java.net{type}InetAddress{method}toString(){type}java.lang.String
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}java.lang{type}String{method}equals(java.lang.Object){type}boolean
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}common{type}Message{method}getDestination(){type}java.lang.String
+REF {feature}GUI{package}server{type}Server{method}unicast(common.Message){type}void {package}server{type}Connection{method}send(common.Message){type}void
+REF {feature}GUI{package}server{type}Server{method}removeConnection(server.Connection){type}void {package}server{type}Connection
+REF {feature}GUI{package}server{type}Server{method}removeConnection(server.Connection){type}void {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+REF {feature}GUI{package}server{type}Server{method}removeConnection(server.Connection){type}void {package}java.util{type}HashSet{method}remove(java.lang.Object){type}boolean
+IMP {feature}History{package}client{type}History {package}client{type}ChatPlugin
+REF {feature}History{package}client{type}History {package}client{type}ChatPlugin
+REF {feature}History{package}client{type}History{field}path{type}java.lang.String {package}java.lang{type}String
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}java.lang{type}String
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}client{type}Client
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}client{type}History{field}path{type}java.lang.String
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}java.lang{type}System
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}History{package}client{type}History{constructor}History(java.lang.String, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}History{package}client{type}History{method}getType(){type}byte {package}java.lang{type}Override
+REF {feature}History{package}client{type}History{method}getType(){type}byte {package}client{type}History{field}type{type}byte
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}client{type}History{field}type{type}byte
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}FileWriter
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}FileWriter{constructor}/init/(java.lang.String, boolean)
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}FileWriter
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}client{type}History{field}path{type}java.lang.String
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.lang{type}String{method}length(){type}int
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}OutputStreamWriter{method}write(int){type}void
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.lang{type}String{method}charAt(int){type}char
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}OutputStreamWriter{method}write(int){type}void
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}OutputStreamWriter{method}close(){type}void
+REF {feature}History{package}client{type}History{method}process(common.Message){type}common.Message {package}java.io{type}IOException
+IMP {feature}ROT{package}client{type}Encryption {package}client{type}ChatPlugin
+IMP {feature}ROT{package}client{type}Encryption {package}client{type}ChatPlugin
+REF {feature}ROT{package}client{type}Encryption {package}client{type}ChatPlugin
+REF {feature}XOR{package}client{type}Encryption {package}client{type}ChatPlugin
+REF {feature}ROT{package}client{type}Encryption{field}cipher{type}java.lang.String {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Client
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Encryption{field}cipher{type}java.lang.String
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Encryption{field}key{type}char
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.lang{type}System
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}ROT{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}ROT{package}client{type}Encryption{method}getType(){type}byte {package}java.lang{type}Override
+REF {feature}ROT{package}client{type}Encryption{method}getType(){type}byte {package}client{type}Encryption{field}type{type}byte
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}client{type}Encryption{field}type{type}byte
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}ROT{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{constructor}/init/(java.lang.String)
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}length(){type}int
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}setCharAt(int, char){type}void
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}charAt(int){type}char
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}client{type}Encryption{field}key{type}char
+REF {feature}ROT{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}toString(){type}java.lang.String
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{constructor}/init/(java.lang.String)
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}length(){type}int
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}setCharAt(int, char){type}void
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}charAt(int){type}char
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}client{type}Encryption{field}key{type}char
+REF {feature}ROT{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}toString(){type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{field}cipher{type}java.lang.String {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{method}getType(){type}byte {package}java.lang{type}Override
+REF {feature}XOR{package}client{type}Encryption{method}getType(){type}byte {package}client{type}Encryption{field}type{type}byte
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}client{type}Encryption{field}type{type}byte
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{constructor}Message(java.lang.String, byte)
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{method}process(common.Message){type}common.Message {package}common{type}Message{method}getStatus(){type}byte
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{constructor}/init/(java.lang.String)
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}length(){type}int
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}setCharAt(int, char){type}void
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}charAt(int){type}char
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}client{type}Encryption{field}key{type}char
+REF {feature}XOR{package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}toString(){type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{constructor}/init/(java.lang.String)
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}length(){type}int
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}setCharAt(int, char){type}void
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}charAt(int){type}char
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}client{type}Encryption{field}key{type}char
+REF {feature}XOR{package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String {package}java.lang{type}StringBuffer{method}toString(){type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.lang{type}String
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Client
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Encryption{field}cipher{type}java.lang.String
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Encryption{field}key{type}char
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.lang{type}System
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}XOR{package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+IMP {feature}Spamfilter{package}client{type}Spamfilter {package}client{type}ChatPlugin
+REF {feature}Spamfilter{package}client{type}Spamfilter {package}client{type}ChatPlugin
+REF {feature}Spamfilter{package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String> {package}java.util{type}TreeSet
+REF {feature}Spamfilter{package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String> {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.util{type}List
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}client{type}Client
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String>
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.util{type}TreeSet{constructor}/init/(java.util.Collection<wildcards.? extends java.lang.String>)
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.util{type}TreeSet
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.lang{type}System
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {static}{package}java.lang{type}System{field}out{type}java.io.PrintStream
+REF {feature}Spamfilter{package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client) {package}java.io{type}PrintStream{method}println(java.lang.String){type}void
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}getType(){type}byte {package}java.lang{type}Override
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}getType(){type}byte {package}client{type}Spamfilter{field}type{type}byte
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}java.lang{type}Override
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}common{type}Message
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String>
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}common{type}Message{method}getText(){type}java.lang.String
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}process(common.Message){type}common.Message {package}java.lang{type}String{method}matches(java.lang.String){type}boolean
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}add(java.lang.String){type}void {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}add(java.lang.String){type}void {package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String>
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}add(java.lang.String){type}void {package}java.util{type}TreeSet{method}add(java.lang.String){type}boolean
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}remove(java.lang.String){type}void {package}java.lang{type}String
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}remove(java.lang.String){type}void {package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String>
+REF {feature}Spamfilter{package}client{type}Spamfilter{method}remove(java.lang.String){type}void {package}java.util{type}TreeSet{method}remove(java.lang.Object){type}boolean

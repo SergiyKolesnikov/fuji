@@ -1,0 +1,56 @@
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+
+import swpl.chat.common.TextMessage;
+
+public refines class ClientWindow {
+
+	private JComboBox cBColors;
+
+	protected void initialize() {
+		Super().initialize();
+
+		JLabel lblColor = new JLabel("Color");
+		frame.getContentPane().add(lblColor, "1, 3, right, default");
+
+		cBColors = new JComboBox();
+		frame.getContentPane().add(cBColors, "3, 3, left, default");
+
+		// fill colors combobox
+		ColorComboBoxRenderer renderer = new ColorComboBoxRenderer();
+		renderer.setPreferredSize(new Dimension(20, 20));
+		cBColors.setRenderer(renderer);
+
+		cBColors.addItem(Color.BLACK);
+		cBColors.addItem(Color.BLUE);
+		cBColors.addItem(Color.RED);
+		cBColors.addItem(Color.YELLOW);
+		cBColors.setSelectedIndex(0);
+	}
+
+	public TextMessage getTextMessage(String text) {
+		return new ColorTextMessage(text, (Color) cBColors.getSelectedItem());
+	}
+
+	public void showMessage(Document textBox, TextMessage textMsg) throws BadLocationException {
+		SimpleAttributeSet attributes = new SimpleAttributeSet();
+		
+		if (textMsg instanceof ColorTextMessage) {
+			ColorTextMessage colorMsg = (ColorTextMessage) textMsg;
+		    attributes.addAttribute(StyleConstants.CharacterConstants.Foreground, colorMsg.getColor());
+		}
+		
+	    textBox.insertString(textBox.getLength(), textMsg.getContent() + "\n", attributes);
+	}
+}

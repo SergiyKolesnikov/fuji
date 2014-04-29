@@ -1,0 +1,15 @@
+
+import java.awt.Toolkit;
+import java.awt.AWTError;
+
+public refines class Client {
+	
+	protected void process(TextMessage msg) {
+		try {
+			Toolkit.getDefaultToolkit().beep();
+		} catch (AWTError e) { 
+			System.err.println(e.getMessage());
+		}		
+		Super().process(msg);
+	}	
+}

@@ -1,0 +1,15 @@
+{
+	"features" : [
+		"Logging",
+		"SpamFilter",
+		"GUI",
+		"TextColor",
+		"Encryption"
+	],
+	"roles": {
+		"broadcast": {
+			"SpamFilter": "broadcast"
+		}
+	}
+
+}

@@ -1,0 +1,7 @@
+
+
+SoUrCe RooT Base "../features/Base/Console.jak";public  class Console {
+
+	public Console(Client client) {
+	}
+}

@@ -1,0 +1,11 @@
+
+import java.awt.Toolkit;
+
+public refines  class Gui {
+	
+	public void newChatLine(String line) {
+		outputTextbox.append(line);
+		//Toolkit.getDefaultToolkit().beep(); // Deaktiviert,da auf ein PC
+	}
+
+}

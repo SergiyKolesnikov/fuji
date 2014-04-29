@@ -1,0 +1,417 @@
+{
+	"features" : [
+		"FOP_Chat_Client",
+		"Krypto",
+		"reverse",
+		"ascii",
+		"GUI",
+		"Farbe",
+		"Spamfilter",
+		"Authent",
+		"Logging",
+		"GUI"
+	],
+	"roles": {
+		"broadcast": {
+			"Authentication": "broadcast__wrappee__Name",
+			"Name": "broadcast__wrappee__Name",
+			"PrivateMSG": "broadcast__wrappee__PrivateMsg",
+			"PrivateMsg": "broadcast__wrappee__PrivateMsg",
+			"History": "broadcast__wrappee__Encryption",
+			"Encryption": "broadcast__wrappee__Encryption",
+			"Log": "broadcast__wrappee__Color",
+			"Color": "broadcast__wrappee__Color",
+			"UserNames": "broadcast__wrappee__Base",
+			"Base": "broadcast__wrappee__Base",
+			"history": "broadcast__wrappee__history",
+			"authentication": "broadcast",
+			"color": "broadcast"
+		},
+		"loginClient": {
+			"Authentication": "loginClient"
+		},
+		"handleIncomingMessage": {
+			"Authentication": "handleIncomingMessage__wrappee__Authentication",
+			"Spamfilter": "handleIncomingMessage__wrappee__Spamfilter",
+			"Color": "handleIncomingMessage__wrappee__Color",
+			"Name": "handleIncomingMessage__wrappee__Name",
+			"PrivateMSG": "handleIncomingMessage__wrappee__PrivateMSG",
+			"Encryption": "handleIncomingMessage__wrappee__Encryption",
+			"Logging": "handleIncomingMessage__wrappee__Logging",
+			"_Base": "handleIncomingMessage__wrappee___Base",
+			"SpamFilter": "handleIncomingMessage__wrappee__Logging",
+			"MD5": "handleIncomingMessage__wrappee__MD5",
+			"ServerCommands": "handleIncomingMessage__wrappee__ServerCommands",
+			"SendUserSpecificMessage": "handleIncomingMessage__wrappee__SendUserSpecificMessage",
+			"UsernameSupport": "handleIncomingMessage__wrappee__Base",
+			"Base": "handleIncomingMessage__wrappee__Base",
+			"UserNames": "handleIncomingMessage__wrappee__Authentication",
+			"History": "handleIncomingMessage__wrappee__Base",
+			"history": "handleIncomingMessage__wrappee__history",
+			"authentication": "handleIncomingMessage__wrappee__GUI",
+			"GUI": "handleIncomingMessage__wrappee__GUI",
+			"color": "handleIncomingMessage__wrappee__color",
+			"usernames": "handleIncomingMessage__wrappee__Color",
+			"Usernames": "handleIncomingMessage__wrappee__Color",
+			"Swap": "handleIncomingMessage__wrappee__Graphical",
+			"Graphical": "handleIncomingMessage__wrappee__Graphical",
+			"Username": "handleIncomingMessage"
+		},
+		"registerConnection": {
+			"Authentication": "registerConnection"
+		},
+		"send": {
+			"Authentication": "send__wrappee__Authentication",
+			"Spamfilter": "send__wrappee__Spamfilter",
+			"Color": "send__wrappee__Username",
+			"Name": "send__wrappee__PrivateMSG",
+			"PrivateMSG": "send__wrappee__PrivateMSG",
+			"Encryption": "send__wrappee__MD5",
+			"MD5": "send__wrappee__MD5",
+			"ServerCommands": "send__wrappee__UserNames",
+			"UserNames": "send__wrappee__UserNames",
+			"color": "send__wrappee__color",
+			"usernames": "send__wrappee__Username",
+			"Username": "send",
+			"Authentification": "send__wrappee__Authentication",
+			"XOR": "send",
+			"Usernames": "send"
+		},
+		"init": {
+			"GUI": "init__wrappee__GUI",
+			"Authentication": "init__wrappee__Spamfilter",
+			"Spamfilter": "init__wrappee__Spamfilter",
+			"Color": "init__wrappee__PrivateMSG",
+			"PrivateMSG": "init__wrappee__PrivateMSG",
+			"Encryption": "init__wrappee__Unicast",
+			"Unicast": "init__wrappee__Unicast",
+			"Smilies": "init__wrappee__Ciphering",
+			"Ciphering": "init__wrappee__Ciphering",
+			"Rot13": "init__wrappee__Rot13",
+			"AlphaBeta": "init__wrappee__Chat",
+			"Chat": "init__wrappee__Chat",
+			"Console": "init__wrappee__authentication",
+			"authentication": "init__wrappee__authentication",
+			"history": "init__wrappee__Username",
+			"Username": "init__wrappee__Username",
+			"Authentification": "init__wrappee__Spamfilter",
+			"Authent": "init"
+		},
+		"startup": {
+			"GUI": "startup"
+		},
+		"finish": {
+			"GUI": "finish"
+		},
+		"modifyExtensionPanel": {
+			"GUI": "modifyExtensionPanel__wrappee__GUI",
+			"Color": "modifyExtensionPanel__wrappee__Unicast",
+			"Unicast": "modifyExtensionPanel__wrappee__Unicast",
+			"Smilies": "modifyExtensionPanel"
+		},
+		"actionPerformed": {
+			"GUI": "actionPerformed__wrappee__GUI",
+			"Color": "actionPerformed__wrappee__Unicast",
+			"Unicast": "actionPerformed__wrappee__Unicast",
+			"Smilies": "actionPerformed__wrappee__Smilies",
+			"PrivateMsg": "actionPerformed",
+			"Authent": "actionPerformed"
+		},
+		"handlePacketIn": {
+			"GUI": "handlePacketIn__wrappee__GUI",
+			"Color": "handlePacketIn__wrappee__Color",
+			"Unicast": "handlePacketIn__wrappee__Smilies",
+			"Smilies": "handlePacketIn__wrappee__Smilies",
+			"PrivateMsg": "handlePacketIn__wrappee__PrivateMsg",
+			"History": "handlePacketIn__wrappee__History",
+			"Authentication": "handlePacketIn__wrappee__Authentication",
+			"Spamfilter": "handlePacketIn"
+		},
+		"handleClientSocketStatusChanged": {
+			"Color": "handleClientSocketStatusChanged__wrappee__Color",
+			"Unicast": "handleClientSocketStatusChanged__wrappee__History",
+			"History": "handleClientSocketStatusChanged__wrappee__History",
+			"Authentication": "handleClientSocketStatusChanged"
+		},
+		"initChatView": {
+			"Unicast": "initChatView__wrappee__Unicast",
+			"Smilies": "initChatView__wrappee__Smilies",
+			"PrivateMsg": "initChatView"
+		},
+		"handleMessage": {
+			"chat": "handleMessage__wrappee__chat",
+			"Spamfilter": "handleMessage__wrappee__Spamfilter",
+			"username": "handleMessage__wrappee__username",
+			"PrivateMessaging": "handleMessage__wrappee__PrivateMessaging",
+			"Authentication": "handleMessage__wrappee__Authentication",
+			"Encryption": "handleMessage__wrappee__Encryption",
+			"GUI": "handleMessage__wrappee__GUI",
+			"Color": "handleMessage__wrappee__Color",
+			"Base": "handleMessage__wrappee__Base",
+			"History": "handleMessage__wrappee__History",
+			"PrivateMessage": "handleMessage__wrappee__PrivateMessage",
+			"UserDefinedName": "handleMessage"
+		},
+		"onConnected": {
+			"Spamfilter": "onConnected__wrappee__Spamfilter",
+			"username": "onConnected__wrappee__PrivateMessaging",
+			"PrivateMessaging": "onConnected__wrappee__PrivateMessaging",
+			"Authentication": "onConnected__wrappee__Authentication",
+			"Encryption": "onConnected__wrappee__Log",
+			"Log": "onConnected__wrappee__Log",
+			"GUI": "onConnected"
+		},
+		"write": {
+			"Spamfilter": "write__wrappee__Spamfilter",
+			"username": "write__wrappee__username",
+			"PrivateMessaging": "write__wrappee__PrivateMessaging",
+			"Authentication": "write__wrappee__Authentication",
+			"Encryption": "write"
+		},
+		"print": {
+			"Encryption": "print__wrappee__Encryption",
+			"Log": "print"
+		},
+		"addText": {
+			"Encryption": "addText__wrappee__Encryption",
+			"Log": "addText__wrappee__Log",
+			"GUI": "addText"
+		},
+		"onDisconnected": {
+			"Log": "onDisconnected__wrappee__Log",
+			"GUI": "onDisconnected"
+		},
+		"initStuff": {
+			"_Base": "initStuff__wrappee___Base",
+			"SpamFilter": "initStuff__wrappee__Logging",
+			"Logging": "initStuff__wrappee__Logging",
+			"Authentication": "initStuff"
+		},
+		"newChatLine": {
+			"SpamFilter": "newChatLine__wrappee__SpamFilter",
+			"Logging": "newChatLine"
+		},
+		"getClientName": {
+			"Logging": "getClientName__wrappee__Logging",
+			"Authentication": "getClientName",
+			"Username": "getClientName"
+		},
+		"run": {
+			"Logging": "run__wrappee__Logging",
+			"Authentication": "run",
+			"UserNames": "run__wrappee__UserNames",
+			"Usernames": "run"
+		},
+		"isKnownCommand": {
+			"ServerCommands": "isKnownCommand__wrappee__ServerCommands",
+			"SendUserSpecificMessage": "isKnownCommand__wrappee__SendUserSpecificMessage",
+			"UsernameSupport": "isKnownCommand"
+		},
+		"coloringALine": {
+			"UsernameSupport": "coloringALine__wrappee__UsernameSupport",
+			"Coloring": "coloringALine"
+		},
+		"setup": {
+			"Base": "setup__wrappee__Base",
+			"Color": "setup",
+			"Authentication": "setup"
+		},
+		"getInput": {
+			"Color": "getInput",
+			"Encryption": "getInput"
+		},
+		"setPlugins": {
+			"Base": "setPlugins__wrappee__Base",
+			"authentication": "setPlugins__wrappee__colored",
+			"colored": "setPlugins__wrappee__colored",
+			"private": "setPlugins"
+		},
+		"receive": {
+			"authentication": "receive__wrappee__authentication",
+			"history": "receive"
+		},
+		"isSpam": {
+			"colored": "isSpam"
+		},
+		"cmd": {
+			"history": "cmd__wrappee__history",
+			"colored": "cmd__wrappee__colored",
+			"private": "cmd"
+		},
+		"initFeatures": {
+			"history": "initFeatures__wrappee__history",
+			"Base": "initFeatures__wrappee__Base",
+			"authentication": "initFeatures__wrappee__authentication",
+			"GUI": "initFeatures"
+		},
+		"removeConnection": {
+			"history": "removeConnection__wrappee__history",
+			"authentication": "removeConnection",
+			"Username": "removeConnection"
+		},
+		"initComponents": {
+			"GUI": "initComponents__wrappee__GUI",
+			"color": "initComponents"
+		},
+		"initInterface": {
+			"Gui": "initInterface"
+		},
+		"initLayout": {
+			"Color": "initLayout"
+		},
+		"sendNewTextMessage": {
+			"Gui": "sendNewTextMessage__wrappee__Gui",
+			"Color": "sendNewTextMessage"
+		},
+		"printTextMessage": {
+			"Color": "printTextMessage"
+		},
+		"addComponents": {
+			"Base": "addComponents__wrappee__Base",
+			"Color": "addComponents__wrappee__History",
+			"History": "addComponents__wrappee__History",
+			"Encryption": "addComponents"
+		},
+		"disconnect": {
+			"Color": "disconnect__wrappee__Color",
+			"History": "disconnect"
+		},
+		"getUsername": {
+			"PrivateMessage": "getUsername",
+			"UserDefinedName": "getUsername",
+			"Username": "getUsername"
+		},
+		"handleCommand": {
+			"Encryption": "handleCommand__wrappee__Encryption",
+			"PrivateMessage": "handleCommand__wrappee__PrivateMessage",
+			"UserDefinedName": "handleCommand"
+		},
+		"processMessage": {
+			"Base": "processMessage__wrappee__Base",
+			"Username": "processMessage__wrappee__Username",
+			"Authentification": "processMessage"
+		},
+		"setSource": {
+			"Base": "setSource__wrappee__Base",
+			"Username": "setSource"
+		},
+		"removeHandle": {
+			"Base": "removeHandle__wrappee__Base",
+			"Username": "removeHandle"
+		},
+		"processCommand": {
+			"Base": "processCommand__wrappee__Base",
+			"Username": "processCommand"
+		},
+		"initBackend": {
+			"Authentification": "initBackend"
+		},
+		"process": {
+			"FormatText": "process"
+		},
+		"setContent": {
+			"Encryption": "setContent"
+		},
+		"getContent": {
+			"Encryption": "getContent"
+		},
+		"main": {
+			"Client": "main__wrappee__Client",
+			"Logging": "main__wrappee__Logging",
+			"Console": "main__wrappee__Swap",
+			"Swap": "main__wrappee__Swap",
+			"GUI": "main"
+		},
+		"fireAddLine": {
+			"Client": "fireAddLine__wrappee__Client",
+			"Logging": "fireAddLine"
+		},
+		"checkAuth": {
+			"Authentification": "checkAuth"
+		},
+		"getPassword": {
+			"Authentification": "getPassword"
+		},
+		"setColor": {
+			"Color": "setColor"
+		},
+		"getColor": {
+			"Color": "getColor"
+		},
+		"getFarbe": {
+			"Color": "getFarbe"
+		},
+		"ClientConstructor": {
+			"Chat": "ClientConstructor__wrappee__Chat",
+			"UI": "ClientConstructor"
+		},
+		"initUI": {
+			"Graphical": "initUI"
+		},
+		"connectTo": {
+			"Username": "connectTo"
+		},
+		"getName": {
+			"Username": "getName"
+		},
+		"sendMsg": {
+			"pn": "sendMsg"
+		},
+		"decrypt": {
+			"Krypto": "decrypt"
+		},
+		"encrypt": {
+			"Krypto": "encrypt"
+		},
+		"doReverse": {
+			"reverse": "doReverse"
+		},
+		"doAscii": {
+			"ascii": "doAscii"
+		},
+		"doDeAscii": {
+			"ascii": "doDeAscii"
+		},
+		"buildGUI": {
+			"GUI": "buildGUI"
+		},
+		"setThisViewPresenter": {
+			"GUI": "setThisViewPresenter"
+		},
+		"printMessage": {
+			"ascii": "printMessage__wrappee__ascii",
+			"GUI": "printMessage__wrappee__Farbe",
+			"Farbe": "printMessage__wrappee__Farbe",
+			"Spamfilter": "printMessage"
+		},
+		"setBackTextField": {
+			"GUI": "setBackTextField"
+		},
+		"keyTyped": {
+			"GUI": "keyTyped"
+		},
+		"handleGUI": {
+			"GUI": "handleGUI__wrappee__GUI",
+			"Farbe": "handleGUI"
+		},
+		"handleColor": {
+			"Farbe": "handleColor"
+		},
+		"addColor": {
+			"Farbe": "addColor"
+		},
+		"update": {
+			"Authent": "update"
+		},
+		"addAuth": {
+			"Authent": "addAuth"
+		},
+		"createLogFile": {
+			"Logging": "createLogFile"
+		},
+		"logText": {
+			"Logging": "logText"
+		}
+	}
+
+}

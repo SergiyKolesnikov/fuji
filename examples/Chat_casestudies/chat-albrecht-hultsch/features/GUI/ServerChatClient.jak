@@ -1,0 +1,59 @@
+/**
+ * TODO description
+ */
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class ServerChatClient {
+    private Socket clientSocket;
+    private String name;
+    private Codierer codierer;
+    
+    
+    public ServerChatClient(String name, Socket clientSocket){
+        this.clientSocket = clientSocket;
+        this.name = name; 
+    }
+    
+    /**
+     * @return the clientSocket
+     */
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    /**
+     * @param clientSocket the clientSocket to set
+     */
+    public void setClientSocket(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    /**
+     * @return the name
+     */
+    public String gibName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setzenName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the codierer
+     */
+    public Codierer getCodierer() {
+        return codierer;
+    }
+
+    /**
+     * @param cod the Codierer to set
+     */
+    public void setCodierer(Codierer cod) {
+        this.codierer = cod;
+    }
+}

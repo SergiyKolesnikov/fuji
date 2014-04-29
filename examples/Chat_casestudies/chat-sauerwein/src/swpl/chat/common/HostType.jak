@@ -1,0 +1,8 @@
+layer swpl.chat.common;
+
+SoUrCe RooT Chat.swpl.chat.common "../../../../features/Chat/swpl/chat/common/HostType.jak";
+
+public class HostType {
+	public static final HostType Client = new HostType();
+	public static final HostType Server = new HostType();
+}

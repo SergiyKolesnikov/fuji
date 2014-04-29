@@ -1,0 +1,15 @@
+layer search_engine_features;
+
+SoUrCe RooT Base "../../../../Daten/workspace_EPMD_project/Search_Engine_Feature_oriented/src/Base/IndexerException.jak";
+
+
+/**
+ * Exception die ausgelöst wird, wenn bei der Indexierung ein Fehler auftritt.
+ */
+public class IndexerException extends Exception {
+	private static final long serialVersionUID = 1L; // Eclipse ruhigstellen, brauchen wir in unserem Environment eigentlich nicht.
+
+	public IndexerException(String message) {
+		super(message);
+	}
+}

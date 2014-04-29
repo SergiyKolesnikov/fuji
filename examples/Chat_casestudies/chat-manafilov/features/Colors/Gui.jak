@@ -1,0 +1,73 @@
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Event;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+public refines class Gui {
+	
+	protected Button b1, b2, b3, b4;
+	
+	public void startGui(){
+	
+		System.out.println("starting gui...");
+		setLayout(new BorderLayout());
+		outputTextbox = new TextArea();
+		add(outputTextbox, BorderLayout.PAGE_START);
+		outputTextbox.setEditable(false);
+
+        final Panel buttons = new Panel();
+        buttons.setLayout(new FlowLayout());
+        add(buttons, BorderLayout.CENTER);
+        b1 = new Button("Blue");
+        buttons.add(b1);
+		b1.addActionListener(this);
+		b2 = new Button("Red");
+		buttons.add(b2);
+		b2.addActionListener(this);;
+		b3 = new Button("Green");
+		buttons.add(b3);
+		b3.addActionListener(this);
+		b4 = new Button("Farbe aus");
+		buttons.add(b4);
+		b4.addActionListener(this);
+
+		inputField = new TextField();
+		add(inputField, BorderLayout.PAGE_END);
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+
+		pack();
+		setVisible(true);
+		inputField.requestFocus();
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+        // Get label of the button clicked in event passed in
+        String arg = e.getActionCommand();    
+        
+        if (arg.equals("Blue")){
+        	chatClient.color = "Blue";
+        }else{
+        	if(arg.equals("Red")){
+        		chatClient.color = "Red";
+        	}else{
+        	if(arg.equals("Green")){
+        			chatClient.color = "Green";
+        		}else{
+        			chatClient.color = "";
+        		}
+        	}
+        }		
+	}	
+
+}

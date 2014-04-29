@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<or abstract="true" mandatory="true" name="sple_chat_fop">
+				<and mandatory="true" name="Base">
+					<alt abstract="true" mandatory="true" name="UserInterface">
+						<and mandatory="true" name="GUI">
+							<feature name="Authentication"/>
+							<feature name="Spamfilter"/>
+							<feature name="Color"/>
+							<and name="Name">
+								<feature name="PrivateMSG"/>
+							</and>
+							<feature name="Encryption"/>
+						</and>
+						<feature mandatory="true" name="Console"/>
+					</alt>
+					<feature name="Logging"/>
+				</and>
+			</or>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

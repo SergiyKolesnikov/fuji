@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Chat">
+				<feature name="privateMessage"/>
+				<feature name="Encryption"/>
+				<feature name="TagRemovement"/>
+				<feature name="Farbe"/>
+				<feature name="Spam"/>
+				<alt abstract="true" mandatory="true" name="Gui">
+					<feature mandatory="true" name="GUI"/>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<feature name="Auth"/>
+				<feature name="History"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Farbe</var>
+					<var>GUI</var>
+				</imp>
+			</rule>
+			<rule>
+				<disj>
+					<conj>
+						<var>privateMessage</var>
+						<not>
+							<var>Encryption</var>
+						</not>
+					</conj>
+					<disj>
+						<conj>
+							<not>
+								<var>privateMessage</var>
+							</not>
+							<var>Encryption</var>
+						</conj>
+						<conj>
+							<not>
+								<var>Encryption</var>
+							</not>
+							<not>
+								<var>privateMessage</var>
+							</not>
+						</conj>
+					</disj>
+				</disj>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Chat"/>
+			<feature name="GUI"/>
+			<feature name="TagRemovement"/>
+			<feature name="Farbe"/>
+			<feature name="Auth"/>
+			<feature name="History"/>
+			<feature name="Spam"/>
+			<feature name="privateMessage"/>
+			<feature name="Encryption"/>
+			<feature name="Console"/>
+		</featureOrder>
+	</featureModel>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="feature/Authentication"/>
+	<classpathentry kind="src" path="feature/Base"/>
+	<classpathentry kind="src" path="feature/Color"/>
+	<classpathentry kind="src" path="feature/Console"/>
+	<classpathentry kind="src" path="feature/Encryption"/>
+	<classpathentry kind="src" path="feature/Gui"/>
+	<classpathentry kind="src" path="feature/Log"/>
+	<classpathentry kind="src" path="feature/ROT13"/>
+	<classpathentry kind="src" path="feature/Spam"/>
+	<classpathentry kind="src" path="feature/Switch"/>
+	<classpathentry kind="src" path="feature/User"/>
+	<classpathentry kind="src" path="src/config"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

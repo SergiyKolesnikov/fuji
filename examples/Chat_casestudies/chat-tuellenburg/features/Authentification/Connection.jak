@@ -1,0 +1,10 @@
+public refines  class Connection {
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		Super(String,Object).handleIncomingMessage(name, msg);
+	
+		if (msg instanceof AuthMessage) {
+			server.checkLogin(this, ((AuthMessage) msg).getPassword());
+		}
+	}
+}

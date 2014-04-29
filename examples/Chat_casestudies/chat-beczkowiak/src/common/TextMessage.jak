@@ -1,0 +1,51 @@
+layer common;
+
+import java.io.Serializable;
+
+import crypt.Crypt;
+
+SoUrCe RooT Base.common "../../features/Base/common/TextMessage.jak";
+
+/**
+ * Serializable message that can be send over the sockets between client and
+ * server.
+ */
+abstract class TextMessage$$Base$common implements Serializable, IMessage {
+
+    protected static final long serialVersionUID = -9161595018411902079L;
+    protected String content;
+
+    public TextMessage$$Base$common(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
+
+SoUrCe  EncryptionOn.common "../../features/EncryptionOn/common/TextMessage.jak";
+
+public class TextMessage extends  TextMessage$$Base$common  {
+	
+	protected byte[] contentCrypted;
+	
+	public void encode(Crypt crypt) {
+        byte[] array = crypt.encode(this.content);
+        if (array != null) {
+            this.content = "";
+            this.contentCrypted = array;
+        }
+    }
+
+    public void decode(Crypt crypt) {
+        Object obj = crypt.decode(this.contentCrypted);
+        if (obj != null) {
+            if (obj instanceof String) {
+                this.content = (String) obj;
+            } else {
+                throw new RuntimeException("Failed to decode a textmessage.");
+            }
+        }
+    }
+}

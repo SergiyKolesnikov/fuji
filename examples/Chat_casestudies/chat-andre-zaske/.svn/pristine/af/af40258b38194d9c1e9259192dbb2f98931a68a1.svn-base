@@ -1,0 +1,86 @@
+package gui.panels;
+
+import java.util.List;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Style;
+
+import engine.ChatClient;
+
+import network.server.packets.DataPacket;
+import network.server.packets.JoinMessage;
+import network.server.packets.PrivateMessage;
+import network.server.packets.QuitMessage;
+import network.server.packets.TextMessage;
+
+/**
+ * TODO description
+ */
+public class ClientPanel {
+
+	private DefaultListModel<String> friendsListModel;
+	private JList<String> friendsList;
+
+	private void initChatView() {
+		original();
+		JPanel westPanel = new JPanel();
+		westPanel.setLayout(new BorderLayout());
+		friendsListModel = new DefaultListModel<String>();
+		friendsList = new JList<String>(friendsListModel);
+		friendsList.setVisibleRowCount(10);
+		friendsList.setFixedCellWidth(100);
+		JPanel wrapperPanel = new JPanel();
+		wrapperPanel.add(friendsList);
+
+		westPanel.add(wrapperPanel, BorderLayout.CENTER);
+		add(westPanel, BorderLayout.WEST);
+	}
+
+	public void handlePacketIn(DataPacket packet) {
+		original(packet);
+		if (packet instanceof JoinMessage) {
+			JoinMessage joinMSG = (JoinMessage) packet;
+			if (!chatClient.getName().equals(joinMSG.getName())) {
+				friendsListModel.addElement(joinMSG.getName());
+			}
+		} else if (packet instanceof QuitMessage) {
+			QuitMessage quitMSG = (QuitMessage) packet;
+			friendsListModel.removeElement(quitMSG.getName());
+		} else if (packet instanceof PrivateMessage) {
+			Document doc = tpShowText.getDocument();
+			Style style = chatStyles.getStyle("private");
+			PrivateMessage pm = (PrivateMessage) packet;
+			String msg = "(p) " + pm.getName() + ": " + pm.getContent() + "\n";
+			try {
+				doc.insertString(doc.getLength(), msg, style);
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			}
+			tpShowText.setCaretPosition(tpShowText.getDocument().getLength());
+		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		String acom = e.getActionCommand();
+		if (acom.equals("btSendMSG") && friendsList.getSelectedValue() != null) {
+			List<String> selected = friendsList.getSelectedValuesList();
+			PrivateMessage pm = new PrivateMessage(chatClient.getName(),
+					"", taSendText.getText());
+			for (String name : selected) {
+				pm.setDestination(name);
+				chatClient.sendPacket(pm);
+			}
+			taSendText.setText("");
+		} else {
+			original(e);
+		}
+	}
+}

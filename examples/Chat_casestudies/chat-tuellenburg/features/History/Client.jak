@@ -1,0 +1,31 @@
+public refines  class Client {
+	
+	protected File history;
+	protected BufferedWriter historyWriter;
+	
+	refines Client(String host, int port, Encrypter enc) {
+      	
+      try {
+		new File("ClientLogs" + System.getProperty("file.separator")).mkdir();
+		history = new File("ClientLogs" + System.getProperty("file.separator") + "history_" 
+					+ System.currentTimeMillis() / 1000);
+		historyWriter = new BufferedWriter(new FileWriter(history));
+		historyWriter.write("Chat-Session: " + Calendar.getInstance().getTime() + "\n");
+			
+      } catch (NullPointerException e) {
+			e.printStackTrace();
+	  } catch (IOException e) {
+			e.printStackTrace();
+	  }
+	}
+	
+	public BufferedWriter getHistoryWriter() {
+		return historyWriter;
+	}
+	
+	public File getHistoryFile() {
+		return history;
+	}
+	
+
+}

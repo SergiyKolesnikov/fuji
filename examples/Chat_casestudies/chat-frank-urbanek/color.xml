@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<root>
+		<colorSchemes>
+			<colorscheme name="Default Colorscheme"/>
+			<curColorscheme index="1"/>
+		</colorSchemes>
+		<features>
+			<feature name="Color">
+				<color index="9" scheme="1"/>
+			</feature>
+		</features>
+	</root>

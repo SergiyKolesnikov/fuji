@@ -1,0 +1,32 @@
+
+
+SoUrCe RooT Basis "../features/Basis/CFC.jak";/**
+ * TODO description
+ */
+public class CFC implements Codierer {
+    
+    public CFC(){
+        
+    }
+
+    public String verschluesseln(String message) {
+        return invert(message);
+    }
+
+    public String entschluesseln(String message) {
+        return invert(message);
+    }
+    
+    private String invert(String message)
+    {
+        String erg = "";
+        for (int i = 0; i < message.length(); i++)
+            erg = message.charAt(i) + erg;
+        return erg;
+    }
+
+    public String gibName() {
+        return "CFC";
+    }
+    
+}

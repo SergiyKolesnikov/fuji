@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Chat_Produktlinie">
+				<feature mandatory="true" name="Basis"/>
+				<alt abstract="true" mandatory="true" name="Benutzer_Interface">
+					<feature mandatory="true" name="Gui"/>
+					<feature mandatory="true" name="Konsole"/>
+				</alt>
+				<or name="Verschluesselung">
+					<feature mandatory="true" name="Invertiere_Nachrichteninhalt"/>
+					<feature mandatory="true" name="Vertausche_Buchsaben"/>
+				</or>
+				<and abstract="true" mandatory="true" name="Textnachricht">
+					<feature name="Farbe"/>
+				</and>
+				<feature name="Historie"/>
+				<feature name="Soundausgabe"/>
+				<feature name="Spamfilter"/>
+				<feature name="Authentifizierung"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

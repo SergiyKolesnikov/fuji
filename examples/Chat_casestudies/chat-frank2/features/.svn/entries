@@ -1,0 +1,49 @@
+9
+
+dir
+33
+svn+ssh://frank@tanga.mathematik.uni-marburg.de/app/home/frank/svnrepo/testsvnrepo/empd_chat_ahead/features
+svn+ssh://frank@tanga.mathematik.uni-marburg.de/app/home/frank/svnrepo/testsvnrepo
+
+
+
+2011-06-28T20:18:54.674235Z
+27
+frank
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+cc412ba5-627c-418e-8ac3-139fe8fdaec3
+
+Auth
+dir
+
+Base
+dir
+
+Color
+dir
+
+Encryption
+dir
+
+History
+dir
+
+Sound
+dir
+
+Spamfilter
+dir
+

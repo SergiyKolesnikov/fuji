@@ -1,0 +1,90 @@
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class MessagePane extends JPanel {
+	private static final long serialVersionUID = 1L;
+
+	public Client chatClient;
+
+	public MessagePane(Client chatClient) {
+		this.chatClient = chatClient;
+		
+		setLocation(0, 420);
+		setSize(795, 130);
+		setLayout(null);
+
+		drawComponents();
+	}
+	
+
+	protected void drawComponents() {
+		addMessageTF();
+		addOKButton();
+	}
+
+	public JTextField tfMessage;
+
+	private void addMessageTF() {
+		tfMessage = new JTextField();
+		tfMessage.setLocation(0, 0);
+		tfMessage.setSize(725, 55);
+
+		tfMessage.addKeyListener(new KeyListener() {
+
+			
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
+
+		add(tfMessage);
+	}
+
+	private void addOKButton() {
+		JButton button = new JButton();
+		button.setLocation(725, 0);
+		button.setSize(70, 55);
+		button.setText("Send");
+
+		button.addActionListener(new ActionListener() {
+
+		
+			public void actionPerformed(ActionEvent e) {
+				sendMessage();
+			}
+
+		});
+
+		add(button);
+	}
+
+	private void sendMessage() {
+		if (chatClient != null)
+			chatClient.send(tfMessage.getText());
+		tfMessage.setText("");
+	}
+}

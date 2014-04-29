@@ -1,0 +1,10 @@
+
+
+import ui.ClientGui;
+
+public refines  class Client {
+	public static void main(String args[]) throws IOException {
+		Super().main(args);
+		new ClientGui("Chat " + args[0] + ":" + args[1], client);
+	}
+}

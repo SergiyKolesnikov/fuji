@@ -1,0 +1,260 @@
+layer Everything;import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.packet.*;
+import org.jivesoftware.smack.filter.*;
+import org.jivesoftware.smack.ChatManager.*;
+
+SoUrCe RooT InstantBase "../../../H:/Devolution/src/InstantBase/IMView.jak";
+
+abstract class IMView$$InstantBase extends ModelView implements MouseListener, KeyListener {
+    protected final JMenuItem miPreferences = new JMenuItem( ProgramImages.PREFERENCES );
+    protected DefaultMutableTreeNode rosterRoot;
+    protected JTree contactTree;
+    protected IMTabs tabManager;
+    protected JTextField txtInputField = new JTextField();
+    protected InstantMessenger modul;
+    protected Devolution base;
+    
+    /**
+     * Default constructor.
+     * 
+     * @param modul The modul which use the viewer.
+     */
+    public IMView$$InstantBase ( final Modul modul, final Devolution base ) {
+        super( modul );
+        this.base = base;
+        this.modul = (InstantMessenger)modul;
+        initView();
+        this.lbStatusbar.setText( "Instant Messenger" );
+    }
+
+    public JComponent initMainContent () {
+    	this.tabManager = new IMTabs(this);
+        getMainContent().add( this.tabManager.getPane(), BorderLayout.CENTER );
+        getMainContent().add(this.txtInputField, BorderLayout.SOUTH);
+        this.txtInputField.addKeyListener(this);
+        return this.coContent;
+    }
+
+    public JMenu initMenu () {
+        this.mnMenu.addSeparator();
+        this.miPreferences.addActionListener( this );
+        this.mnMenu.add( this.miPreferences );
+        return this.mnMenu;
+    }
+
+    public PreferencesEntry initPreferences () {
+        this.preferences = new IMPreferences( (InstantMessenger) this.modul );
+        return this.preferences;
+    }
+
+    public JComponent initSidepanel() {
+    	rosterRoot = new DefaultMutableTreeNode("Instant Messenging");
+    	this.contactTree = new JTree(createRosterTree(rosterRoot));
+    	this.contactTree.addMouseListener(this); // To detect double clicks
+    	this.contactTree.setRootVisible(false);
+        this.coSidepanel = this.contactTree;        
+        return this.coSidepanel;
+    }
+    
+    protected DefaultMutableTreeNode createRosterTree(DefaultMutableTreeNode root) {
+    	// Protocols refine me here
+		return root;
+    }
+
+    public JComponent initToolbar () {
+		// Protocols refine me here
+		return this.tbToolbar;
+    }
+    
+    protected void createNewTab(TreePath buddyPath) {
+    	// Protocols refine me here
+    }
+    
+    protected void sendMessage(String to, String msg) {
+    	// Protocols refine me here
+    }
+    
+    public void changeLanguage () {
+        this.miPreferences.setText( "Preferences" );
+        // TODO Hier müssen alle sprachabhänigen Strings gesetzt werden
+    }
+    
+	public void expandAll(JTree tree) {
+		int row = 0;
+		while (row < tree.getRowCount()) {
+			tree.expandRow(row);
+			row++;
+		}
+	}
+
+    public void actionPerformed ( final ActionEvent event ) {
+        final Object source = event.getSource();
+        if ( this.miPreferences.equals( source ) ) {
+            new PreferencesDialog( this.modul.getBase(), this.modul.getBase().getView(), new TreePath( this.preferences ) );
+        } else {
+            super.actionPerformed( event );
+        }
+    }
+
+	// Mouse listener for double clicks
+	public void mousePressed(MouseEvent e) {
+         if ( e != null && e.getClickCount() == 2) {
+         	TreePath selPath = this.contactTree.getPathForLocation(e.getX(), e.getY());
+         	if (selPath != null) {
+				createNewTab(selPath);
+			}
+		}
+    }
+	public void	mouseEntered(MouseEvent e) {}
+ 	public void	mouseExited(MouseEvent e) {}
+	public void	mouseClicked(MouseEvent e) {}
+ 	public void	mouseReleased(MouseEvent e) {}
+ 	
+ 	// Key listener for return (message sending)
+	public void	keyPressed(KeyEvent e) {
+		if ( e.getKeyCode() == KeyEvent.VK_ENTER ) {
+			sendMessage(this.tabManager.getActiveRoom(), this.txtInputField.getText());
+			this.txtInputField.setText("");
+		}
+	}
+ 	public void	keyReleased(KeyEvent e) {}
+ 	public void	keyTyped(KeyEvent e) {}
+    
+}
+
+SoUrCe  Jabber "../../../H:/Devolution/src/Jabber/IMView.jak";
+
+public class IMView extends  IMView$$InstantBase  implements JabberRosterListener {
+	protected JButton btnJabberConnect;
+    protected JMenuItem mnuJabberConnect;
+    protected JMenuItem mnuJabberDisconnect;
+    protected JabberConnection jabCon;
+
+    public JMenu initMenu () {
+    	JMenu mnuJabber = new JMenu("Jabber");
+    	this.mnMenu.add(mnuJabber);
+    	
+    	mnuJabber.add(mnuJabberConnect = new JMenuItem("Connect"));
+    	mnuJabberConnect.addActionListener(this);
+    	
+        mnuJabber.add(mnuJabberDisconnect = new JMenuItem("Disconnect"));
+        mnuJabberDisconnect.addActionListener(this);
+        mnuJabberDisconnect.setEnabled(false);
+        
+        return Super().initMenu();
+    }
+    
+    public JComponent initToolbar() {
+        this.tbToolbar.add(btnJabberConnect = new JButton("Connect to Jabber"));
+        btnJabberConnect.addActionListener(this);
+        return Super().initToolbar();
+    }
+    
+    public void actionPerformed(final ActionEvent event) {
+    	// Refines the IMView Action Listener
+    	final Object source = event.getSource();
+    	if (source.equals(btnJabberConnect)) {
+        	if (btnJabberConnect.getText().contains("Disconnect")) {
+        		disconnect();
+        	} else {
+        		connect();
+        	}
+        } else if (source.equals(mnuJabberConnect)) {
+        	connect();
+        } else if (source.equals(mnuJabberDisconnect)) {
+        	disconnect();
+        }
+    	Super(ActionEvent).actionPerformed(event);
+    }
+
+    public void connect() {
+    	mnuJabberConnect.setEnabled(false);
+        // Read the account/password from the setting here
+		
+		try {
+			String username = this.modul.getSetting().getOptionAsString(IMPreferences.FEATURE_NAME, "JabberUsername");
+			String password = TextCoding.rot48(this.modul.getSetting().getOptionAsString(IMPreferences.FEATURE_NAME, "JabberPassword"));
+			String domain = this.modul.getSetting().getOptionAsString(IMPreferences.FEATURE_NAME, "JabberDomain");
+			String resource = this.modul.getSetting().getOptionAsString(IMPreferences.FEATURE_NAME, "JabberResource");
+			this.jabCon.connect(username, password, domain, resource);
+			this.jabCon.getConnection().addPacketListener(this.tabManager, new PacketTypeFilter(Message.class));
+		} catch (XMPPException e) {
+			System.err.println("Jabber connection error:");
+			System.err.println(e.getMessage());
+			disconnect();
+		} catch (SettingException e) {
+			System.err.println("Error! Setting exception:");
+			System.err.println(e.getMessage());
+		}
+		btnJabberConnect.setText("Disconnect from Jabber");
+		mnuJabberDisconnect.setEnabled(true);
+    }
+    
+    public void disconnect() {
+    	mnuJabberDisconnect.setEnabled(false);
+        // Read the account/password from the setting here
+		
+		try {
+			this.jabCon.disconnect();
+		} catch (XMPPException e) {
+			System.err.println("Jabber connection error:");
+			System.err.println(e.getMessage());
+		}
+		
+		btnJabberConnect.setText("Connect to Jabber");
+		mnuJabberConnect.setEnabled(true);
+    }
+    
+    protected DefaultMutableTreeNode createRosterTree(DefaultMutableTreeNode rosterRoot) {
+     	// This is because somehow this method is called before this class is created...
+		if (jabCon == null) {	
+			jabCon = new JabberConnection(this.base);
+			jabCon.getJabberRoster().addLineListener(this);
+		}
+		
+    	rosterRoot.add(jabCon.getJabberRoster().getJabberRosterRoot());
+    	return rosterRoot;    	
+    }
+    
+    public void rosterChanged() {
+    	try {
+    		this.contactTree.updateUI();
+    	} catch (Exception e) {
+    		System.err.println("Error in rosterChanged()");
+    	}
+    }
+    
+    protected void createNewTab(TreePath buddyPath) {
+    	if (!buddyPath.getPath()[1].toString().equals("Jabber") || buddyPath.getPath().length <= 3) {
+    		Super(TreePath).createNewTab(buddyPath);
+    		return;
+    	}
+    	
+		// Get the buddy
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode)buddyPath.getPath()[buddyPath.getPath().length - 1];
+    	IMBuddy buddy = (IMBuddy)node.getUserObject(); 
+		createNewTab(buddy);
+    }
+    
+    public void createNewTab(IMBuddy buddy) {
+    	buddy.setChat(this.jabCon.getConnection().getChatManager().createChat(buddy.getUID(), new JabberListener()));
+		this.tabManager.addRoom(buddy);
+    }
+    
+    protected void sendMessage(String to, String msg) {
+    	try {
+	    	Chat chat = this.jabCon.getConnection().getChatManager().createChat(to, new JabberListener());
+	    	chat.sendMessage(msg);
+	    } catch (XMPPException e) {
+	    	System.err.println("Error sending message to " + to);
+	    	return;
+	    }
+	    ChatPanel panel = this.tabManager.getPanel(this.tabManager.getActiveRoom());
+	    String user = this.jabCon.getConnection().getUser();
+    	panel.addMessage(user.substring(0, user.indexOf('/')), msg);
+    }
+}

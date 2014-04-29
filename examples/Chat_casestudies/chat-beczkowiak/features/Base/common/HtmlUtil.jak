@@ -1,0 +1,91 @@
+
+
+/**
+ * Enthaelt Methoden die die Verarbeitung von HTML-Dokumenten
+ * unterstuetzen.
+ * @author Ralf Beczkowiak
+ *
+ */
+public class HtmlUtil {
+    
+    /**
+     * Extrahiert den Inhalt aus dem Body eines HTML-Dokuments.
+     * @param htmltext HTML-Dokument
+     * @return extrahierter Body
+     */
+    public static String getBody(String htmltext) {
+        if (htmltext == null || htmltext == "") {
+            return "";
+        }
+        char[] text = htmltext.toCharArray();
+        String result = "";
+        int opentags = 0;
+        boolean intext = false;
+        for (int i = 0; i < text.length; i++) {
+            switch (text[i]) {
+            case '<':
+                if (intext && i + 3 < text.length && text[i + 1] == 'b'
+                    && text[i + 2] == 'r' && text[i + 3] == '>') {
+                    result += text[i];
+                    break;
+                }
+                opentags++;
+                intext = false;
+                break;
+            case '>':
+                if (intext && opentags == 0) {
+                    result += text[i];
+                    break;
+                }
+                opentags--;
+                break;
+            case '\n':
+                if (intext) {
+                    result += "<br>";
+                }
+                break;
+            case '\r':
+                if (intext) {
+                    result += "<br>";
+                }
+                break;
+            default:
+                if (opentags == 0) {
+                    if (text[i] == '\t' || text[i] == '\b' || text[i] == '\f'
+                        || text[i] == '\\' || text[i] == '\"' || text[i] == '\''
+                            || text[i] == ' ') {
+                        if (intext) {
+                            result += text[i];
+                        }
+                        break;
+                    }
+                    intext = true;
+                    result += text[i];
+                }
+            }
+        }
+        result = result.trim();
+        while(result.endsWith("<br>")) {
+            result = result.substring(0, result.length() - 4);
+        }
+        return result;
+    }
+    
+    /**
+     * Fuegt einen Text an das Ende eines HTML-Dokuments an.
+     * (Direkt vor den Body-Tag und in eine neue Zeile.)
+     * @param htmltext HTML-Dokument
+     * @param text zu ergaenzender Text
+     * @return ergaenztes HTML-Dokument
+     */
+    public static String addToBody(String htmltext, String text) {
+        if (htmltext == null || htmltext == "") {
+            return text;
+        }
+        int mark = htmltext.indexOf("</body>");
+        String fulltext = htmltext.substring(0, mark) + "<br>"
+            + text + htmltext.substring(mark, htmltext.length());
+        return fulltext;
+    }
+    
+}

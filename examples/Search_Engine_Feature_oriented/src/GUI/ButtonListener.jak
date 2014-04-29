@@ -1,0 +1,79 @@
+layer GUI;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+
+/**
+	 * Event-Listener
+	 * 
+	 * Die Klasse Listener behandelt alle Events die durch Buttons ausgelöst
+	 * werden
+	 * 
+	 */
+	public class ButtonListener implements ActionListener {
+		Component parents;// = null;
+		MainFrame frame;
+
+		public ButtonListener(Component parents) {
+			this.parents = parents;
+			frame = (MainFrame) parents;
+		}
+
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			/**
+			 * Der startButton startet die Suche. Hierbei kann je nach
+			 * Einstellung nach der angegebenen Query gesucht werden, wie auch
+			 * nach den größsten Dateien oder auch nach dem Zeitpunkt der
+			 * letzten Änderung.
+			 */
+			if (e.getSource().equals(frame.startButton)) {
+				frame.searchResultContainer.removeAll();
+				frame.searchResultContainer.repaint();
+				
+				// setzt die Größe des Panels wieder zum Standard
+				frame.searchResultContainer.setPreferredSize(new Dimension(0, 0));
+
+				frame.scrollPane.repaint();
+
+				if (frame.queryTextFieldJComboBox.getSelectedItem()!= null) {
+					try {
+						frame.mrPinkMain.searchInIndex(((String)frame.queryTextFieldJComboBox.getSelectedItem()), frame.optionStorage.getMaxResults(), frame.optionStorage.getSearchMode());
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}else{
+					System.out.println("bitte Querry eingeben");
+				}	
+			}
+		}
+	}
+	
+	
+

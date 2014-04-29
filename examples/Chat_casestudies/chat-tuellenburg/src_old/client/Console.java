@@ -1,0 +1,64 @@
+package client;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+/**
+ * Console version of chat Client
+ * added: 14.05
+ *
+ */
+public class Console implements ChatLineListener, Runnable {
+
+	protected Thread thread;
+	
+	Scanner scanner = new Scanner(System.in);
+	Client chatClient;
+	
+	public Console(Client chatClient) {
+		this.chatClient = chatClient;
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+
+		scanner.useDelimiter("\n");
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	//reading the input from keyboard
+	//writing to history and sending message to server
+	public void run() {
+		String line;
+		System.out.println("Chat started");
+		Thread thisThread = Thread.currentThread();
+		chatClient.login("geheim");
+		while(thread == thisThread) {
+			line = scanner.next();
+			chatClient.send(line);
+			addToHistory(line);
+		}
+	}
+	
+	//shows new message on standard output channel
+	@Override
+	public void newChatLine(String line) {
+		System.out.println(line);
+
+	}
+	
+	/**
+	 * addToHistory: adds a new Line to the Historyfile on Client-side
+	 * @param line
+	 */
+	public void addToHistory(String line) {
+		try {
+			chatClient.getHistoryWriter().write(line + "\n");
+			chatClient.getHistoryWriter().flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -1,0 +1,150 @@
+{
+	"features" : [
+		"Gui"
+	],
+	"roles": {
+		"handleIncomingMessage": {
+			"Base": "handleIncomingMessage__wrappee__Base",
+			"Swap": "handleIncomingMessage__wrappee__Swap",
+			"Rot13": "handleIncomingMessage__wrappee__Authentication",
+			"Authentication": "handleIncomingMessage__wrappee__Authentication",
+			"Spamfilter": "handleIncomingMessage__wrappee__Spamfilter",
+			"Color": "handleIncomingMessage__wrappee__Color",
+			"Name": "handleIncomingMessage__wrappee__Name",
+			"PrivateMSG": "handleIncomingMessage__wrappee__PrivateMSG",
+			"Encryption": "handleIncomingMessage__wrappee__Encryption",
+			"Logging": "handleIncomingMessage"
+		},
+		"send": {
+			"Base": "send__wrappee__Base",
+			"Swap": "send__wrappee__Swap",
+			"Rot13": "send__wrappee__Spamfilter",
+			"Authentication": "send__wrappee__Spamfilter",
+			"Spamfilter": "send__wrappee__Spamfilter",
+			"Color": "send__wrappee__Color",
+			"Name": "send__wrappee__PrivateMSG",
+			"PrivateMSG": "send__wrappee__PrivateMSG",
+			"Encryption": "send__wrappee__Base",
+			"Nickname": "send"
+		},
+		"fireAddLine": {
+			"Base": "fireAddLine__wrappee__Base",
+			"Swap": "fireAddLine__wrappee__Swap",
+			"Rot13": "fireAddLine"
+		},
+		"initializeUI": {
+			"Gui": "initializeUI__wrappee__Gui",
+			"Color": "initializeUI__wrappee__Color",
+			"Historie": "initializeUI"
+		},
+		"sendMessage": {
+			"Gui": "sendMessage__wrappee__Gui",
+			"Color": "sendMessage__wrappee__Color",
+			"Historie": "sendMessage__wrappee__Historie",
+			"Spam": "sendMessage__wrappee__Spam",
+			"ChangeUsername": "sendMessage__wrappee__ChangeUsername",
+			"PrivateMessage": "sendMessage"
+		},
+		"initialiseServer": {
+			"Color": "initialiseServer__wrappee__Color",
+			"Historie": "initialiseServer"
+		},
+		"broadcast": {
+			"Color": "broadcast__wrappee__Color",
+			"Historie": "broadcast__wrappee__Name",
+			"Authentication": "broadcast__wrappee__Name",
+			"Name": "broadcast__wrappee__Name",
+			"PrivateMSG": "broadcast__wrappee__PrivateMsg",
+			"PrivateMsg": "broadcast__wrappee__PrivateMsg",
+			"History": "broadcast"
+		},
+		"sendServerMessage": {
+			"Color": "sendServerMessage__wrappee__Color",
+			"Historie": "sendServerMessage"
+		},
+		"handleServerMessage": {
+			"Color": "handleServerMessage__wrappee__Color",
+			"Historie": "handleServerMessage__wrappee__Spam",
+			"Spam": "handleServerMessage__wrappee__Spam",
+			"ChangeUsername": "handleServerMessage__wrappee__ChangeUsername",
+			"PrivateMessage": "handleServerMessage"
+		},
+		"newChatLine": {
+			"Color": "newChatLine__wrappee__Color",
+			"Historie": "newChatLine__wrappee__Historie",
+			"Spam": "newChatLine"
+		},
+		"loginClient": {
+			"Authentication": "loginClient"
+		},
+		"registerConnection": {
+			"Authentication": "registerConnection"
+		},
+		"init": {
+			"GUI": "init__wrappee__GUI",
+			"Authentication": "init__wrappee__Spamfilter",
+			"Spamfilter": "init__wrappee__Spamfilter",
+			"Color": "init__wrappee__PrivateMSG",
+			"PrivateMSG": "init__wrappee__PrivateMSG",
+			"Encryption": "init__wrappee__Unicast",
+			"Unicast": "init__wrappee__Unicast",
+			"Smilies": "init__wrappee__Ciphering",
+			"Ciphering": "init__wrappee__Ciphering",
+			"Rot13": "init__wrappee__Rot13",
+			"AlphaBeta": "init"
+		},
+		"startup": {
+			"GUI": "startup"
+		},
+		"finish": {
+			"GUI": "finish"
+		},
+		"modifyExtensionPanel": {
+			"GUI": "modifyExtensionPanel__wrappee__GUI",
+			"Color": "modifyExtensionPanel__wrappee__Unicast",
+			"Unicast": "modifyExtensionPanel__wrappee__Unicast",
+			"Smilies": "modifyExtensionPanel"
+		},
+		"actionPerformed": {
+			"GUI": "actionPerformed__wrappee__GUI",
+			"Color": "actionPerformed__wrappee__Unicast",
+			"Unicast": "actionPerformed__wrappee__Unicast",
+			"Smilies": "actionPerformed__wrappee__Smilies",
+			"PrivateMsg": "actionPerformed"
+		},
+		"handlePacketIn": {
+			"GUI": "handlePacketIn__wrappee__GUI",
+			"Color": "handlePacketIn__wrappee__Color",
+			"Unicast": "handlePacketIn__wrappee__Smilies",
+			"Smilies": "handlePacketIn__wrappee__Smilies",
+			"PrivateMsg": "handlePacketIn__wrappee__PrivateMsg",
+			"History": "handlePacketIn__wrappee__History",
+			"Authentication": "handlePacketIn__wrappee__Authentication",
+			"Spamfilter": "handlePacketIn"
+		},
+		"handleClientSocketStatusChanged": {
+			"Color": "handleClientSocketStatusChanged__wrappee__Color",
+			"Unicast": "handleClientSocketStatusChanged__wrappee__History",
+			"History": "handleClientSocketStatusChanged__wrappee__History",
+			"Authentication": "handleClientSocketStatusChanged"
+		},
+		"initChatView": {
+			"Unicast": "initChatView__wrappee__Unicast",
+			"Smilies": "initChatView__wrappee__Smilies",
+			"PrivateMsg": "initChatView"
+		},
+		"toString": {
+			"Base": "toString__wrappee__Base",
+			"Color": "toString"
+		},
+		"start": {
+			"Color": "start__wrappee__Color",
+			"Graphical": "start"
+		},
+		"incomingMessage": {
+			"Color": "incomingMessage__wrappee__Color",
+			"Nickname": "incomingMessage"
+		}
+	}
+
+}

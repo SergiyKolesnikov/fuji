@@ -1,0 +1,3 @@
+IntegerSet : Tree
+	| HashSet ;
+

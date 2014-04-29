@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="joChatBase">
+				<alt abstract="true" name="authentication">
+					<feature hidden="true" mandatory="true" name="authenticationANDgui"/>
+					<feature hidden="true" mandatory="true" name="authenticationANDconsole"/>
+				</alt>
+				<and mandatory="true" name="messaging">
+					<feature name="sound"/>
+					<feature name="coloredtext"/>
+					<and abstract="true" mandatory="true" name="encryption">
+						<feature name="rot13"/>
+						<feature name="invert"/>
+					</and>
+				</and>
+				<alt abstract="true" mandatory="true" name="userIO">
+					<feature mandatory="true" name="gui"/>
+					<feature mandatory="true" name="console"/>
+				</alt>
+				<feature name="history"/>
+				<alt name="spamfilter">
+					<feature hidden="true" mandatory="true" name="spamfilterANDconsole"/>
+					<feature hidden="true" mandatory="true" name="spamfilterANDgui"/>
+				</alt>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<conj>
+						<var>spamfilter</var>
+						<var>gui</var>
+					</conj>
+					<var>spamfilterANDgui</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>console</var>
+						<var>spamfilter</var>
+					</conj>
+					<var>spamfilterANDconsole</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>console</var>
+					<not>
+						<var>coloredtext</var>
+					</not>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>authentication</var>
+						<var>gui</var>
+					</conj>
+					<var>authenticationANDgui</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>authentication</var>
+						<var>console</var>
+					</conj>
+					<var>authenticationANDconsole</var>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="messaging"/>
+			<feature name="gui"/>
+			<feature name="console"/>
+			<feature name="spamfilter"/>
+			<feature name="coloredtext"/>
+			<feature name="rot13"/>
+			<feature name="invert"/>
+			<feature name="spamfilterANDgui"/>
+			<feature name="spamfilterANDconsole"/>
+			<feature name="authenticationANDgui"/>
+			<feature name="authenticationANDconsole"/>
+			<feature name="history"/>
+			<feature name="sound"/>
+		</featureOrder>
+	</featureModel>

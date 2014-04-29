@@ -1,0 +1,4 @@
+Paycard : [Logging] [LockOut] :: _Paycard ;
+
+Logging : [MaximumRecord] :: _Logging ;
+

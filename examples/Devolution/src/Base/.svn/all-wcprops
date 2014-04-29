@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/devolution/!svn/ver/57/trunk/src/Base
+END
+MultilingualListener.jak
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/devolution/!svn/ver/28/trunk/src/Base/MultilingualListener.jak
+END
+SaveException.jak
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/devolution/!svn/ver/28/trunk/src/Base/SaveException.jak
+END
+Setting.jak
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/devolution/!svn/ver/57/trunk/src/Base/Setting.jak
+END
+Test.jak
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/devolution/!svn/ver/28/trunk/src/Base/Test.jak
+END
+Modul.jak
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/devolution/!svn/ver/49/trunk/src/Base/Modul.jak
+END
+FileSaver.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/28/trunk/src/Base/FileSaver.jak
+END
+PreferencesDialog.jak
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/devolution/!svn/ver/43/trunk/src/Base/PreferencesDialog.jak
+END
+FormPanel.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/43/trunk/src/Base/FormPanel.jak
+END
+PreferencesEntry.jak
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/devolution/!svn/ver/54/trunk/src/Base/PreferencesEntry.jak
+END
+Devolution.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/49/trunk/src/Base/Devolution.jak
+END
+Translator.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/37/trunk/src/Base/Translator.jak
+END
+AboutDialog.jak
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/devolution/!svn/ver/30/trunk/src/Base/AboutDialog.jak
+END
+SettableProgram.jak
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/devolution/!svn/ver/28/trunk/src/Base/SettableProgram.jak
+END
+ModelView.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/36/trunk/src/Base/ModelView.jak
+END
+XMLizeable.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/28/trunk/src/Base/XMLizeable.jak
+END
+SettingException.jak
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/devolution/!svn/ver/28/trunk/src/Base/SettingException.jak
+END
+Properties.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/28/trunk/src/Base/Properties.jak
+END
+ProgramImages.jak
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/devolution/!svn/ver/48/trunk/src/Base/ProgramImages.jak
+END
+Preferences.jak
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/devolution/!svn/ver/43/trunk/src/Base/Preferences.jak
+END
+Multilingual.jak
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/devolution/!svn/ver/28/trunk/src/Base/Multilingual.jak
+END
+JLinkLabel.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/28/trunk/src/Base/JLinkLabel.jak
+END
+VerticalLayout.jak
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/devolution/!svn/ver/39/trunk/src/Base/VerticalLayout.jak
+END
+Statusbar.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/28/trunk/src/Base/Statusbar.jak
+END
+TextCoding.jak
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/devolution/!svn/ver/39/trunk/src/Base/TextCoding.jak
+END
+Resources.jak
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/devolution/!svn/ver/37/trunk/src/Base/Resources.jak
+END
+View.jak
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/devolution/!svn/ver/53/trunk/src/Base/View.jak
+END

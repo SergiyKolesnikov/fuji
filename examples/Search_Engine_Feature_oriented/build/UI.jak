@@ -1,0 +1,14 @@
+
+
+import org.apache.lucene.search.ScoreDoc;
+
+SoUrCe RooT User_Interface "../src/User_Interface/UI.jak";
+
+public interface UI {
+
+	public void printSearch_SearchPanel(ScoreDoc[] hits, Indexer index, String query);
+
+	public void printErrorMessage(String message);
+
+
+}

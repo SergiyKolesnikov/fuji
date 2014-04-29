@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/devolution/!svn/ver/57/trunk/lib
+END
+jaxen.jar
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/devolution/!svn/ver/3/trunk/lib/jaxen.jar
+END
+imap.jar
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/devolution/!svn/ver/41/trunk/lib/imap.jar
+END
+smackx.jar
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/devolution/!svn/ver/42/trunk/lib/smackx.jar
+END
+jdom.jar
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/devolution/!svn/ver/3/trunk/lib/jdom.jar
+END
+jdom-jaxen.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/devolution/!svn/ver/3/trunk/lib/jdom-jaxen.jar
+END
+mailapi.jar
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/devolution/!svn/ver/22/trunk/lib/mailapi.jar
+END
+smack.jar
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/devolution/!svn/ver/42/trunk/lib/smack.jar
+END
+pop3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/devolution/!svn/ver/36/trunk/lib/pop3.jar
+END
+smtp.jar
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/devolution/!svn/ver/16/trunk/lib/smtp.jar
+END

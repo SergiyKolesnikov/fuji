@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="ChatFH">
+				<feature mandatory="true" name="Basis"/>
+				<alt abstract="true" mandatory="true" name="Display">
+					<feature mandatory="true" name="Gui"/>
+					<feature mandatory="true" name="Konsole"/>
+				</alt>
+				<feature name="Historie"/>
+				<alt abstract="true" name="Farbe">
+					<feature mandatory="true" name="blau"/>
+					<feature mandatory="true" name="rot"/>
+					<feature mandatory="true" name="gelb"/>
+				</alt>
+				<feature name="Spamfilter"/>
+				<and name="Authentifizierung">
+					<alt abstract="true" name="Verschluesselung">
+						<feature mandatory="true" name="ROT13"/>
+						<feature mandatory="true" name="Change01"/>
+					</alt>
+				</and>
+				<and name="Username">
+					<feature name="PN"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -1,0 +1,21 @@
+/**
+ * TODO description
+ */
+public refines class ServerThread {
+	protected void nachrichtBearbeiten(String nachricht){
+		if (nachricht.startsWith("/nick " )){
+			nachricht = nachricht.substring(6);
+			int i = nachricht.indexOf(" ");
+			if (i == -1)
+				i = nachricht.length()-1;
+			
+			String neuerNick = nachricht.substring(0, i);
+			
+			if (!neuerNick.isEmpty()){
+				((ServerChatClient)server.getHashtable().get(socket)).setzenName(neuerNick);
+			}
+			return;
+		}
+		Super().nachrichtBearbeiten(nachricht);
+	}
+}

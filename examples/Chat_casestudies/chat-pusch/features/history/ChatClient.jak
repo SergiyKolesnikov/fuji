@@ -1,0 +1,26 @@
+
+import java.util.Random;
+
+public refines  class ChatClient {
+	
+	private PrintWriter historyOut;
+	
+	refines ChatClient() {
+		try {
+			Random random= new Random();
+			historyOut= new PrintWriter(new FileOutputStream(random.nextLong()+"_clientHistory.txt"), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void handleIncomingMessageObject(MessageObject msgo) {
+		historyOut.println("in: "+msgo);
+		Super(MessageObject).handleIncomingMessageObject(msgo);
+	}
+	
+	public void sendMessage(MessageObject msgo) {
+		historyOut.println("out: "+msgo);
+		Super(MessageObject).sendMessage(msgo);
+	}
+}

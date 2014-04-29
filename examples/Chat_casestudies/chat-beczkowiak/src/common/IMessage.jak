@@ -1,0 +1,21 @@
+layer common;
+
+import crypt.Crypt;
+
+SoUrCe RooT Base.common "../../features/Base/common/IMessage.jak";
+
+/**
+ * Interface um eine Nachrichtenklasse als solche zu Kennzeichnen.
+ * @author Ralf Beczkowiak
+ *
+ */
+abstract interface IMessage$$Base$common {
+}
+
+SoUrCe  EncryptionOn.common "../../features/EncryptionOn/common/IMessage.jak";
+
+public interface IMessage extends IMessage$$Base$common {
+	public void encode(Crypt crypt);
+    
+    public void decode(Crypt crypt);
+}

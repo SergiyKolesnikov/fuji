@@ -1,0 +1,50 @@
+
+import java.io.*;
+
+/** Klasse Konsole stellt ein simples Konsolen-User-Interface dar.*/
+public class Konsole implements ChatLineListener {
+	
+	/** der Client */
+	private Client chatClient;
+	
+	/** 
+	 * Erstellt ein neues Konsolen-Interface.
+	 * @param chatClient der Chat-Client fuer das Interface
+	 */
+	public Konsole(String title , Client chatClient) {
+		this.chatClient = chatClient;
+		this.chatClient.addLineListener(this);
+		System.out.println(title);
+	}
+	
+	/** 
+	 * Druckt den Nachrichten-Inhalt auf die Konsole.
+	 * (Observer-Pattern: wird jedesmal aufgerufen, falls
+	 * eine neue Nachricht eintrifft.)
+	 */
+	public void newChatLine(TextMessage msg) {
+		System.out.println(msg);
+	}
+	
+	/** Rudimentaere Methode zum Chaten. */
+	public void chat() {
+		String line = null;
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(System.in));
+			while(!(line = in.readLine()).equals("/quit")) {
+				chatClient.send(new TextMessage(line, "localhost"));	
+			}	
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch(IOException e) {
+					System.err.println(e.getMessage());
+				}		
+			}
+		}			
+	}
+}

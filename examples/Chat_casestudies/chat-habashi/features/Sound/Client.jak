@@ -1,0 +1,9 @@
+public refines  class Client {
+
+	public void handleIncomingMessage(Object msg) throws IOException {
+		Super().handleIncomingMessage(msg);
+		Toolkit.getDefaultToolkit().beep();
+		System.out.println("beep");	
+	}
+
+}

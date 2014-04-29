@@ -1,0 +1,29 @@
+public refines  class Gui {
+	
+	protected JComboBox colorComboBox;
+	
+	refines Gui(String title, Client chatClient) {
+	
+	  colorComboBox = new JComboBox(new String[]{"black", "blue", "red"});
+	  colorComboBox.addActionListener(colorChosen());
+	  paraGroup.addComponent(colorComboBox);
+	  vertGroup.addComponent(colorComboBox);
+	
+	}
+	
+	protected String createString(String text){
+	
+		String line = Super(String).createString(text);
+		line = "<" + chatClient.getCurrentColor() + "> " + line;
+		return line;
+	
+	}
+	
+	private ActionListener colorChosen() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent c) {
+				chatClient.setCurrentColor((String)colorComboBox.getSelectedItem());
+			}
+		};
+	}
+}

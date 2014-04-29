@@ -1,0 +1,37 @@
+Die Chatanwendung teilt sich in zwei Teile: Server und Client.
+
+HOWTO RUN:
+    - Server: chat.server.Server
+    - Client (Console): chat.client.gui.text.Console
+    - Client (GUI): chat.client.gui.graphical.Client
+    - Starter: chat.Chat (Startet server|client|console je nach Eingabe)
+    
+Anmerkungen zur Implementierung:
+
+  - Die Nachrichten (Objekte) werden beim Client als auch beim Server über
+    das Visitor-Pattern bearbeitet. Die konkreten Visitors sind
+    beim Server bei chat.server.visitors zu finden. Diese Visitors
+    sind mit dem Chain-of-Responsibility Pattern aneinandergereiht.
+    
+    Diese Ketten von "Filtern" können die Nachrichten bearbeiten.
+    Das bedeuted, dass man diese Filter beliebig hintereinanderschalten
+    kann (sofern das semantisch einen Sinn ergibt) und man erhält einen Chat
+    der anders funktioniert.
+    
+    In chat.server.ServerFilter findet man die Klasse die eine Menge von Visitors,
+    welche die Nachrichten behandeln. Hier könnte man noch das Factory-Pattern nutzen,
+    um verschiedene Filterketten zu kreeiren.
+    
+  - Sowohl der Chat als auch der Client nutzen das MVC Paradigma.
+    
+  - Der Server hört auf Port 2000.
+  
+  - Verschlüsselung ist ebenfalls wie oben erwähnt ein "Filter", d.h. welche Verschlüsselung
+    zum Einsatz kommt ist hardcodiert.
+
+        
+    
+Benutzen des Clients:
+
+    Geben Sie im Client (egal ob Console oder GUI) #help ein. Dann erhält man 
+    eine Liste von verfügbaren Commands (Login usw...).

@@ -1,0 +1,24 @@
+public refines  class ChatClientConsole {
+
+	protected SpamFilter spamFilter = new SpamFilter();
+	
+	public void printCommandSpecification() {
+		System.out.printf("%-25s login %20s\n","login:", "[username] [password]");
+		System.out.printf("%-25s cmds\n", "list other commands:", "");
+	}
+	
+	protected void handleUserCommand(String[] command) {
+		if (command[0].equals("login") && command.length==3) {
+			chatClient.sendMessage(new MessageObject(MessageType.AUTH, command[1], null, null, command[2]));
+			return;
+		}
+		Super(String[]).handleUserCommand(command);
+	}
+
+	public void newChatLine(MessageObject msgo) {
+		if (spamFilter.filterMessage(msgo))
+			Super(MessageObject).newChatLine(msgo);
+	}
+	
+	
+}

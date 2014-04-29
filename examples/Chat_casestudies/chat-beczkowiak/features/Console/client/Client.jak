@@ -1,0 +1,10 @@
+
+
+import ui.ClientConsole;
+
+public refines  class Client {
+	public static void main(String args[]) throws IOException {
+		Super().main(args);
+		new ClientConsole(client).start();
+	}
+}

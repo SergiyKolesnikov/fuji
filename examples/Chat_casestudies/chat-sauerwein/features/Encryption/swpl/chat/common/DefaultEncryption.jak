@@ -1,0 +1,18 @@
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class DefaultEncryption implements Encryption {
+	
+	public DefaultEncryption() {
+	}
+	
+	public String encode(String msg) {
+		return msg;
+	}
+
+	public String decode(String msg) {
+		return msg;
+	}
+
+}

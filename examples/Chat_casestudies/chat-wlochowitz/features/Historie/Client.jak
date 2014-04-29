@@ -1,0 +1,9 @@
+public refines  class Client {
+	
+	private final HistorieLogger logger = new HistorieLogger(Client.class.getName() + ".txt");
+
+	protected void process(TextMessage msg) {
+		Super().process(msg);
+		logger.log(msg.toString());
+	}	
+}

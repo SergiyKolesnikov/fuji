@@ -1,0 +1,28 @@
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+public refines  class Connection {
+	
+	String clientName = clientName = socket.getInetAddress().toString();
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage){
+			
+			String tmp = ((TextMessage) msg).getContent();
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter("Logs-server.txt",true));
+				bw.write(clientName+" - "+tmp);
+				bw.newLine();
+				bw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			server.broadcast(name + " - " + tmp);
+		}
+	}
+
+}

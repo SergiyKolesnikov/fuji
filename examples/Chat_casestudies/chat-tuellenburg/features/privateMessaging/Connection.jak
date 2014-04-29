@@ -1,0 +1,28 @@
+public refines  class Connection {
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		Super(String, Object).handleIncomingMessage(name, msg);
+		
+		//hier Nachricht auf Nutzernamen prüfen
+	    //eventuell nutzer in hashmap registrieren
+	    //weiterleiten an bestimmten nutzer
+		if (msg instanceof PrivateMessage) {
+			String text = ((PrivateMessage) msg).getMessage();
+			server.sendToUser(getUsernameFromMessage(text),text);
+		}
+		
+		if (msg instanceof RegisterMessage) {
+			String username = ((RegisterMessage) msg).getUsername();
+			server.registerUser(getUsernameFromMessage(username), Connection.this);
+		}
+	
+	}
+	
+	 private String getUsernameFromMessage(String text) {
+	 	int index = text.indexOf("/");
+		text = text.substring(index);
+		String[] tokens = text.split("\\s");
+	 	return tokens[1];
+	 }
+
+}

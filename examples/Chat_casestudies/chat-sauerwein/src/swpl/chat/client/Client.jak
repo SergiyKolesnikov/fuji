@@ -1,0 +1,262 @@
+layer swpl.chat.client;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import swpl.chat.common.Host;
+import swpl.chat.common.HostType;
+import swpl.chat.common.TextMessage;
+import java.awt.Toolkit;
+import swpl.chat.common.Logger;
+import swpl.chat.common.Encryption;
+import swpl.chat.common.DefaultEncryption;
+
+SoUrCe RooT Chat.swpl.chat.client "../../../../features/Chat/swpl/chat/client/Client.jak";
+
+/**
+ * simple chat client
+ */
+abstract class Client$$Chat$swpl$chat$client implements Runnable, Host {
+	
+	public static void main(String args[]) throws IOException {
+		if (args.length != 2)
+			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+		
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		client.startUserInterface();
+	}
+	
+	protected void startUserInterface() {
+		// to be extended by Client features
+	}
+
+	protected ObjectInputStream inputStream;
+	protected ObjectOutputStream outputStream;
+	private Socket socket;
+	
+	// cache for all messages that are receiver before the first listener is connected
+	private ArrayList startCache = new ArrayList();
+
+	protected Thread thread;
+
+	public Client$$Chat$swpl$chat$client(String host, int port) {
+		try {
+			this.socket = new Socket(host, port);
+			this.outputStream = new ObjectOutputStream((socket.getOutputStream()));
+			this.inputStream = new ObjectInputStream((socket.getInputStream()));
+			thread = new Thread(this);
+			thread.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * main method. waits for incoming messages.
+	 */
+	public void run() {
+		try {
+			while (true) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(msg);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			thread = null;
+			try {
+				outputStream.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			TextMessage textMsg = (TextMessage) msg;
+			fireAddLine(prepareReceiveMessage(textMsg));
+		}
+	}
+
+	public void send(TextMessage msg) {
+		msg = prepareSendMessage(msg);
+
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {
+		return msg;
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		return msg;
+	}
+
+	/**
+	 * listener-list for the observer pattern
+	 */
+	private ArrayList listeners = new ArrayList();
+
+	/**
+	 * addListner method for the observer pattern
+	 */
+	public void addLineListener(ChatLineListener listener) {
+		if (listeners.size() == 0) {
+			// this is the first listener, send all cached messages
+			for (Iterator iterator = startCache.iterator(); iterator.hasNext();) {
+				TextMessage msg = (TextMessage) iterator.next();
+				listener.newChatLine(msg);
+			}
+			// erase cached messages
+			startCache.clear();
+		}
+		listeners.add(listener);
+	}
+
+	/**
+	 * removeListner method for the observer pattern
+	 */
+	public void removeLineListener(ChatLineListener listner) {
+		listeners.remove(listner);
+	}
+
+	/**
+	 * fire Listner method for the observer pattern
+	 */
+	public void fireAddLine(TextMessage textMsg) {
+		if (listeners.size() == 0) {
+			// no listener is connected, so cache message
+			startCache.add(textMsg);
+		}
+		
+		for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
+			ChatLineListener listener = (ChatLineListener) iterator.next();
+			listener.newChatLine(textMsg);
+		}
+	}
+
+	public void stop() {
+		thread.stop();
+	}
+
+	public String getHostName() {
+		return "localhost";
+	}
+
+	public HostType getHostType() {
+		return HostType.Client;
+	}
+	
+	protected Host getServer() {
+		return new Host() {
+			public String getHostName() {
+				return socket.getInetAddress().getHostAddress();
+			}
+
+			public HostType getHostType() {
+				return HostType.Server;
+			}
+		};
+	}
+
+}
+
+SoUrCe  Sound.swpl.chat.client "../../../../features/Sound/swpl/chat/client/Client.jak";
+
+abstract class Client$$Sound$swpl$chat$client extends  Client$$Chat$swpl$chat$client  {
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {		
+		beep();
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		beep();
+		
+		return msg;
+	}
+	
+	private void beep() {
+		Toolkit.getDefaultToolkit().beep();
+	}
+
+}
+
+SoUrCe  History.swpl.chat.client "../../../../features/History/swpl/chat/client/Client.jak";
+
+abstract class Client$$History$swpl$chat$client extends  Client$$Sound$swpl$chat$client  {
+	private Logger logger = new Logger("client");
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {		
+		logger.log(getServer().getHostName() + " -> " + getHostName() + ": "
+					+ msg.getContent());
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		logger.log(getServer().getHostName() + " -> " + getHostName() + ": "
+					+ msg.getContent());
+		
+		return msg;
+	}
+}
+
+SoUrCe  Encryption.swpl.chat.client "../../../../features/Encryption/swpl/chat/client/Client.jak";
+
+abstract class Client$$Encryption$swpl$chat$client extends  Client$$History$swpl$chat$client  {
+	private Encryption encryption = new DefaultEncryption();
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {
+		String decodedText = encryption.decode(msg.getContent());
+		msg.setContent(decodedText);
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		String encodedText = encryption.encode(msg.getContent());
+		msg.setContent(encodedText);
+		
+		return msg;
+	}
+}
+
+SoUrCe  Gui.swpl.chat.client "../../../../features/Gui/swpl/chat/client/Client.jak";
+public class Client extends  Client$$Encryption$swpl$chat$client  {
+	protected void startUserInterface() {
+		ClientWindow gui = new ClientWindow(this);
+		gui.show();
+	}	
+}

@@ -1,0 +1,30 @@
+public refines  class ChatClientConsole {
+
+	protected SpamFilter spamFilter = new SpamFilter();
+	
+	refines ChatClientConsole() {
+		commandList.add(String.format("%-12s %-12s %-12s", "spamfilter" ,"[add | del]" ,"[string]\n"));
+	}
+	
+	protected void handleUserCommand(String[] command) {
+		if (command[0].equals("spamfilter") && command.length==3) {
+			if (command[1].equals("add")) {
+				spamFilter.addToBlacklist(command[2]);
+				System.out.println(command[2]+" added to blacklist");
+				System.out.println("current blacklist is "+spamFilter.getBlacklist());
+			} else if (command[1].equals("del")) {
+				if (spamFilter.removeFromBlacklist(command[2]))
+				System.out.println(command[2]+" removed from blacklist");
+			}
+			return;
+		}
+		Super(String[]).handleUserCommand(command);
+	}
+
+	public void newChatLine(MessageObject msgo) {
+		if (spamFilter.filterMessage(msgo))
+			Super(MessageObject).newChatLine(msgo);
+	}
+	
+	
+}

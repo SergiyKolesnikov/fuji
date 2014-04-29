@@ -1,0 +1,29 @@
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+
+public refines  class Client {
+
+    public void addToHistory(String msg){
+
+        RandomAccessFile raf;
+		try {
+			raf = new RandomAccessFile("C:\\Users\\frank\\"+this.toString()+".log", "rws");
+			raf.skipBytes( (int)raf.length() );
+			raf.writeBytes(msg);
+		} 
+		catch (IOException e){}
+    }
+    
+	public void fireAddLine(String line) {
+		
+		for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
+			ChatLineListener listener = (ChatLineListener) iterator.next();
+			listener.newChatLine(line);
+				
+			addToHistory(line);
+		}
+	}
+}

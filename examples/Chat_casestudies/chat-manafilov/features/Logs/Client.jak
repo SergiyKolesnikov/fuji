@@ -1,0 +1,26 @@
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+public refines  class Client {
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String tmp = ((TextMessage) msg).getContent();
+			fireAddLine(tmp + "\n");
+			
+			// Schreibt die Logfiles
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter("Logs-client.txt",true));
+				bw.write(tmp);
+				bw.newLine();
+				bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		
+		}
+	}
+
+}

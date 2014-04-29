@@ -1,0 +1,104 @@
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+
+import swpl.chat.client.ChatLineListener;
+import swpl.chat.client.Client;
+import swpl.chat.common.TextMessage;
+
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+
+public class ClientWindow implements ChatLineListener {
+
+	private Client chatClient;
+
+	protected JFrame frame;
+	private JTextPane tPLog;
+	private JTextField tFMessage;
+
+	/**
+	 * Create the application.
+	 */
+	public ClientWindow(Client chatClient) {
+		initialize();
+
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+		this.chatClient = chatClient;
+	}
+
+	public void show() {
+		frame.setVisible(true);
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	protected void initialize() {
+		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (chatClient != null) {
+					chatClient.stop();
+				}
+			}
+		});
+		frame.setBounds(100, 100, 450, 254);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(
+				new FormLayout(new ColumnSpec[] { FormFactory.DEFAULT_COLSPEC,
+						FormFactory.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default:grow"), }, new RowSpec[] {
+						RowSpec.decode("default:grow"),
+						FormFactory.RELATED_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.RELATED_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC, }));
+
+		tPLog = new JTextPane();
+		tPLog.setEditable(false);
+		frame.getContentPane().add(tPLog, "1, 1, 3, 1, fill, fill");
+		
+		tFMessage = new JTextField();
+		tFMessage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TextMessage textMsg = getTextMessage(tFMessage.getText()); 
+				chatClient.send(textMsg);
+				tFMessage.setText("");
+			}
+		});
+		frame.getContentPane().add(tFMessage, "1, 5, 3, 1, fill, default");
+		tFMessage.setColumns(10);
+	}
+
+	public void newChatLine(TextMessage textMsg) {
+		try {
+			showMessage(tPLog.getDocument(), textMsg);
+		} catch (BadLocationException e) {
+		}
+	}
+	
+	public TextMessage getTextMessage(String text) {
+		return new TextMessage(text);
+	}
+
+	public void showMessage(Document textBox, TextMessage textMsg) throws BadLocationException {
+		textBox.insertString(textBox.getLength(), textMsg.getContent() + "\n", 
+					new SimpleAttributeSet());
+	}
+	
+}

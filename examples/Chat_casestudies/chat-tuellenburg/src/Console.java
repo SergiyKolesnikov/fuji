@@ -1,0 +1,7 @@
+
+
+public  class Console {
+
+	public Console(Client client) {
+	}
+}

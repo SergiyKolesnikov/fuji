@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Chat">
+				<and abstract="true" name="GlobalFeatures">
+					<feature name="Encryption"/>
+				</and>
+				<alt abstract="true" name="Products">
+					<and mandatory="true" name="Client">
+						<feature name="Logging"/>
+						<alt abstract="true" mandatory="true" name="UserInterface">
+							<feature mandatory="true" name="Console"/>
+							<and mandatory="true" name="Grahpical">
+								<feature name="ColorSupport"/>
+							</and>
+						</alt>
+						<feature name="Auth"/>
+						<feature name="SPAMFilter"/>
+					</and>
+					<and mandatory="true" name="Server">
+						<feature name="UserSupport"/>
+					</and>
+				</alt>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Auth</var>
+					<var>Grahpical</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

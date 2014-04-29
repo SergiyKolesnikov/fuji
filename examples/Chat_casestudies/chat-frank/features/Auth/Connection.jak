@@ -1,0 +1,20 @@
+public refines  class Connection {
+
+	//boolean firstmsg = true;
+	
+	public void run() {
+	
+		Super().run();
+	}
+	
+	public void authen(Object msg, String clientName, String passOk, String passWrong){
+							
+			if(server.psswd.equals(((TextMessage)msg).getContentWithoutColor())) {
+				send("", passOk); //keine Lust mehr...
+				Super().firstmsg=false;
+			}
+			else {send("", passWrong) ; }		
+		
+	}
+	
+}

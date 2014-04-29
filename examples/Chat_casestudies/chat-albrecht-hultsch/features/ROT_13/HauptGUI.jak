@@ -1,0 +1,24 @@
+
+import java.io.IOException;
+
+/**
+ * TODO description
+ */
+public refines class HauptGUI {
+	Codierer cod = new Rot13();
+	protected void nachrichtAnzeigen(String nachricht){
+		Super().nachrichtAnzeigen(cod.entschluesseln(nachricht));
+	}
+	
+	protected void mi_AnmeldenActionPerformed(java.awt.event.ActionEvent evt){
+		Super().mi_AnmeldenActionPerformed(evt);
+		
+		try{
+			parentt.nachrichtSenden_klar(">>setzeVerschluesselungsfolge: " + cod.gibName() + ", <<\n");
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="EPMD_chat">
+				<alt abstract="true" mandatory="true" name="UserInterface">
+					<and mandatory="true" name="GUI">
+						<feature name="FormatText"/>
+					</and>
+					<feature mandatory="true" name="CLI"/>
+				</alt>
+				<feature name="Authentication"/>
+				<alt abstract="true" name="Encryption">
+					<feature mandatory="true" name="ROT"/>
+					<feature mandatory="true" name="XOR"/>
+				</alt>
+				<feature name="History"/>
+				<feature name="Spamfilter"/>
+				<and name="Usernames">
+					<feature name="PrivatMessages"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -1,0 +1,13 @@
+
+public refines  class ChatClient {
+
+	/**
+	 * Constructs a ChatClient and lays a GUI over it.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ChatClient cc= new ChatClient();
+		ChatClientGUI ccg= new ChatClientGUI(cc);
+		ccg.setVisible(true);
+	}
+}

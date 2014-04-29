@@ -1,0 +1,20 @@
+VISTEX_ : VISTEX+ :: _VISTEX ;
+
+VISTEX : [Edieren] Formatierung* Speichern* :: Editor
+	| Graphanzeige ;
+
+Edieren : [Undo] [Suchen] :: _Edieren ;
+
+Suchen : [Ersetzen] :: _Suchen ;
+
+Formatierung : Schriftgroesse
+	| Farbe ;
+
+Speichern : Textformat
+	| Exportieren+ :: Exportieren_ ;
+
+Exportieren : KomprimierterText
+	| HMTL ;
+
+Graphanzeige : [Graphbearbeitung] :: _Graphanzeige ;
+

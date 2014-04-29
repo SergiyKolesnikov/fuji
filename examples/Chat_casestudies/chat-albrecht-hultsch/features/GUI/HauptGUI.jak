@@ -1,0 +1,387 @@
+
+import java.awt.event.KeyEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import javax.swing.JFrame;
+
+/**
+ * TODO description
+ */
+public class HauptGUI extends JFrame{
+	
+	protected EPMD parentt;
+	protected Anmelden anmelden = new Anmelden();
+	private Socket serversocket;
+	
+	protected DataInputStream din;
+	protected DataOutputStream dout;
+    
+    private javax.swing.JButton btn_Senden;
+    protected javax.swing.JButton btn_blau;
+    protected javax.swing.JButton btn_gelb;
+    protected javax.swing.JButton btn_gruen;
+    protected javax.swing.JButton btn_rot;
+    private javax.swing.JList jList1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuItem mi_Abmelden;
+    private javax.swing.JMenuItem mi_Anmelden;
+    protected javax.swing.JMenuItem mi_Historie;
+    private javax.swing.JMenuItem mi_ServerBeenden;
+    private javax.swing.JMenuItem mi_ServerStarten;
+    protected javax.swing.JTextArea ta_Chat;
+    private javax.swing.JTextArea ta_Nachricht;
+
+    private Thread server = new Thread(){
+    	public void run(){
+    		try {
+    			new ChatServer(8888);
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
+    		}
+    	}
+    };
+    
+    public HauptGUI(EPMD parentt){
+    	this.parentt = parentt;
+    }
+	
+	protected void initComponents() {
+
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_Nachricht = new javax.swing.JTextArea();
+        btn_Senden = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_Chat = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jSeparator1 = new javax.swing.JSeparator();
+        btn_blau = new javax.swing.JButton();
+        btn_rot = new javax.swing.JButton();
+        btn_gelb = new javax.swing.JButton();
+        btn_gruen = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mi_Anmelden = new javax.swing.JMenuItem();
+        mi_Abmelden = new javax.swing.JMenuItem();
+        mi_Historie = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        mi_ServerStarten = new javax.swing.JMenuItem();
+        mi_ServerBeenden = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chatprogramm");
+
+        ta_Nachricht.setColumns(20);
+        ta_Nachricht.setRows(5);
+        ta_Nachricht.setEnabled(false);
+        ta_Nachricht.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ta_NachrichtKeyPressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(ta_Nachricht);
+
+        btn_Senden.setText("Senden");
+        btn_Senden.setToolTipText("Shift + Enter");
+        btn_Senden.setEnabled(false);
+        btn_Senden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SendenActionPerformed(evt);
+            }
+        });
+
+        ta_Chat.setColumns(20);
+        ta_Chat.setEditable(false);
+        ta_Chat.setRows(5);
+        ta_Chat.setEnabled(false);
+        jScrollPane1.setViewportView(ta_Chat);
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setEnabled(false);
+        jScrollPane2.setViewportView(jList1);
+
+        btn_blau.setText("Blau");
+        btn_blau.setEnabled(false);
+        btn_blau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_blauActionPerformed(evt);
+            }
+        });
+
+        btn_rot.setText("Rot");
+        btn_rot.setEnabled(false);
+        btn_rot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rotActionPerformed(evt);
+            }
+        });
+
+        btn_gelb.setText("Gelb");
+        btn_gelb.setEnabled(false);
+        btn_gelb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gelbActionPerformed(evt);
+            }
+        });
+
+        btn_gruen.setText("Gruen");
+        btn_gruen.setEnabled(false);
+        btn_gruen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gruenActionPerformed(evt);
+            }
+        });
+
+        jMenu1.setText("Client");
+
+        mi_Anmelden.setText("Anmelden");
+        mi_Anmelden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_AnmeldenActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_Anmelden);
+
+        mi_Abmelden.setText("Abmelden");
+        mi_Abmelden.setEnabled(false);
+        jMenu1.add(mi_Abmelden);
+
+        mi_Historie.setText("Historie anzeigen");
+        mi_Historie.setEnabled(false);
+        mi_Historie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_HistorieActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_Historie);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Server");
+
+        mi_ServerStarten.setText("Server starten");
+        mi_ServerStarten.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_ServerStartenActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mi_ServerStarten);
+
+        mi_ServerBeenden.setText("Server beenden");
+        mi_ServerBeenden.setEnabled(false);
+        mi_ServerBeenden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_ServerBeendenActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mi_ServerBeenden);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_blau, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_rot, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_gelb, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_gruen, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                            .addComponent(btn_Senden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_blau)
+                    .addComponent(btn_rot)
+                    .addComponent(btn_gelb)
+                    .addComponent(btn_gruen))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btn_Senden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        pack();
+    }
+
+	private void btn_SendenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SendenActionPerformed
+        if (!ta_Nachricht.getText().equals(""))
+        {
+            try {
+                String message = ta_Nachricht.getText() + "\n";
+                // Send it to the server
+                parentt.nachrichtSenden(message);
+                ta_Nachricht.setText("");
+            } catch( IOException ie ) { ie.printStackTrace(); }
+        }
+    }
+
+    protected void mi_AnmeldenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_AnmeldenActionPerformed
+        String host = "";
+        int port = 0;
+        
+        // Abfrage des Host und Ports
+        anmelden.ServerAbfrage();
+        
+        
+        // Connect to the server
+        try {
+            // Initiate the connection
+            serversocket = new Socket( anmelden.gibHost(), anmelden.gibPort());
+            
+            // We got a connection! Tell the world
+            System.out.println( "connected to "+serversocket );
+            
+            // Let's grab the streams and create DataInput/Output streams
+            // from them
+            din = new DataInputStream( serversocket.getInputStream() );
+            dout = new DataOutputStream( serversocket.getOutputStream() );
+            
+            parentt.din = din;
+            parentt.dout = dout;
+            	            
+            // Start a background thread for receiving messages
+            new Thread( parentt ).start();
+            
+            ta_Chat.setEnabled(true);
+            ta_Nachricht.setEnabled(true);
+                        
+            btn_blau.setEnabled(false);
+            btn_gelb.setEnabled(false);
+            btn_rot.setEnabled(false);
+            btn_gruen.setEnabled(false);
+            btn_Senden.setEnabled(true);
+            mi_Abmelden.setEnabled(true);
+            mi_Historie.setEnabled(false);
+            mi_Anmelden.setEnabled(false);
+            
+        } catch( IOException ie ) { ie.printStackTrace(); }
+    }
+
+    private void mi_ServerStartenActionPerformed(java.awt.event.ActionEvent evt) {
+        server.start();
+        
+    }
+
+    private void btn_blauActionPerformed(java.awt.event.ActionEvent evt) {
+        int cursorPos = ta_Nachricht.getCaretPosition();
+        String message = ta_Nachricht.getText();
+        
+        message = message.substring(0, cursorPos) + "<blau></blau>" + message.substring(cursorPos);
+        ta_Nachricht.setText(message);
+        ta_Nachricht.setCaretPosition(cursorPos + 6);
+        ta_Nachricht.requestFocus();
+        
+    }
+
+    private void btn_rotActionPerformed(java.awt.event.ActionEvent evt) {
+        int cursorPos = ta_Nachricht.getCaretPosition();
+        String message = ta_Nachricht.getText();
+        
+        message = message.substring(0, cursorPos) + "<rot></rot>" + message.substring(cursorPos);
+        ta_Nachricht.setText(message);
+        ta_Nachricht.setCaretPosition(cursorPos + 5);
+        ta_Nachricht.requestFocus();
+    }
+
+    private void btn_gelbActionPerformed(java.awt.event.ActionEvent evt) {
+        int cursorPos = ta_Nachricht.getCaretPosition();
+        String message = ta_Nachricht.getText();
+        
+        message = message.substring(0, cursorPos) + "<gelb></gelb>" + message.substring(cursorPos);
+        ta_Nachricht.setText(message);
+        ta_Nachricht.setCaretPosition(cursorPos + 6);
+        ta_Nachricht.requestFocus();
+    }
+
+    private void btn_gruenActionPerformed(java.awt.event.ActionEvent evt) {
+        int cursorPos = ta_Nachricht.getCaretPosition();
+        String message = ta_Nachricht.getText();
+        
+        message = message.substring(0, cursorPos) + "<gruen></gruen>" + message.substring(cursorPos);
+        ta_Nachricht.setText(message);
+        ta_Nachricht.setCaretPosition(cursorPos + 7);
+        ta_Nachricht.requestFocus();
+    }
+
+    private void mi_HistorieActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // get History from Server
+            String message = ">>getHistory<<\n";
+            parentt.nachrichtSenden(message);
+            ta_Chat.append("\n --> History -->\n");
+        } catch( IOException ie ) 
+        { 
+            ie.printStackTrace(); 
+        }
+        
+    }
+
+    private void mi_ServerBeendenActionPerformed(java.awt.event.ActionEvent evt) {
+        server.stop();
+    }
+
+    private void ta_NachrichtKeyPressed(java.awt.event.KeyEvent evt) {
+        if ((evt.isShiftDown()) && (evt.getKeyCode() == KeyEvent.VK_ENTER))
+            btn_Senden.doClick();
+    }
+    
+    protected void nachrichtAnzeigen(String nachricht){
+    	nachricht = entferneFarben(nachricht);
+    	
+    	ta_Chat.append(nachricht);
+    	ta_Chat.setCaretPosition(ta_Chat.getText().length());
+    }
+    
+    protected String entferneFarben(String nachricht){
+		nachricht = nachricht.replace("<blau>", "");
+		nachricht = nachricht.replace("</blau>", "");
+		nachricht = nachricht.replace("<rot>", "");
+		nachricht = nachricht.replace("</rot>", "");
+		nachricht = nachricht.replace("<gelb>", "");
+		nachricht = nachricht.replace("</gelb>", "");
+		nachricht = nachricht.replace("<gruen>", "");
+		nachricht = nachricht.replace("</gruen>", "");
+		return nachricht;
+    }
+}

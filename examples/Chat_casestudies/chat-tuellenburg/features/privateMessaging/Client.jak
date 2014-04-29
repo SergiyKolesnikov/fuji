@@ -1,0 +1,15 @@
+public refines  class Client {
+	
+	protected Message createMessage(String line) {
+		Message msg = Super(String).createMessage(line);
+		
+		if (line.indexOf("/ ") > 0) {
+			return new RegisterMessage(line);
+		} else if (line.indexOf("/msg ") > 0 ){
+			return new PrivateMessage(line);
+		} else {
+			return msg;
+		}
+	}
+
+}

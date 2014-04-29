@@ -1,0 +1,26 @@
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+
+public refines  class Client {
+
+	private File file = new File("History" + getClass().toString() + ".txt");
+	
+	public void handleIncomingMessage(Object msg) throws IOException {
+		Super().handleIncomingMessage(msg);
+		writeHistory((TextMessage) msg);
+	}
+	
+	void writeHistory(TextMessage msg) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+		IncomingTextMessage text = new IncomingTextMessage(msg.getText());
+		bw.write(text.getText());
+		bw.newLine();
+		bw.close();
+	}
+
+}

@@ -1,0 +1,51 @@
+
+import java.awt.event.KeyEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import javax.swing.JFrame;
+
+/**
+ * TODO description
+ */
+public refines class EPMD implements Runnable {
+	protected static DataInputStream din;
+	protected static DataOutputStream dout;
+	protected static HauptGUI child;
+	    
+	public static void main (String [] args){
+		Super().main(args);
+		
+		EPMD app = new EPMD();
+				
+		child = new HauptGUI(app);
+		child.initComponents();
+		child.setVisible(true);
+		
+		din = child.din;
+		dout = child.dout;
+	}
+	
+	public void nachrichtSenden(String nachricht) throws IOException{
+		dout.writeUTF(nachricht);
+	}
+	
+	public void nachrichtSenden_klar(String nachricht) throws IOException{
+		dout.writeUTF(nachricht);
+	}
+
+    public void run() {
+        try {
+            // Receive messages one-by-one, forever
+            while (true) {
+                // Get the next message
+                String message = din.readUTF();
+                
+                // Print it to our text window
+                child.nachrichtAnzeigen(message);
+            }
+        } catch( Exception ie ) { ie.printStackTrace(); }    
+    }
+}

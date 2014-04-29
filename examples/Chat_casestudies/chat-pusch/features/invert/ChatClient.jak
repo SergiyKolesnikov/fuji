@@ -1,0 +1,13 @@
+public refines  class ChatClient {
+	
+
+	protected void handleIncomingMessageObject(MessageObject msgo) {
+		InvertEncryption.decrypt(msgo);
+		Super(MessageObject).handleIncomingMessageObject(msgo);
+	}
+	
+	public void sendMessage(MessageObject msg) {
+		InvertEncryption.encrypt(msg);
+		Super(MessageObject).sendMessage(msg);
+	}
+}

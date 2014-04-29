@@ -1,0 +1,30 @@
+public refines  class Server {
+	
+	protected final String password = "geheim";
+	
+	public void broadcast(String text) {
+		synchronized (authenticatedConnections) {
+			for (Iterator iterator = authenticatedConnections.iterator(); iterator.hasNext();) {
+				Connection connection = (Connection) iterator.next();
+				connection.send(text);
+			}
+		}
+	}
+	
+	/**
+	 * checkLogin: checks whether auth. Messages consists of the right
+	 * password
+	 */
+	public void checkLogin(Connection connection, String password) {
+		if (this.password.equals(password) != true) {
+			
+			connection.send("connection refused: wrong password");
+			removeConnection(connection);
+		} else {
+			connection.send("connection accepted");
+			authenticatedConnections.add(connection);
+			connections.remove(connection);
+		}
+	}
+
+}

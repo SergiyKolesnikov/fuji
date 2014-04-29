@@ -1,0 +1,35 @@
+
+import java.util.List;
+import java.util.ArrayList;
+
+
+public class SpamFilter {
+	
+	private List blacklist = new ArrayList();
+
+	public boolean filterMessage(MessageObject msgo) {
+		StringBuilder toFilter= new StringBuilder(msgo.getMessage());
+		toFilter.delete(0, toFilter.indexOf("]:"));
+		
+		
+		for (int i=0; i<blacklist.size(); i++) {
+			String spamString = (String) blacklist.get(i);
+			if (toFilter.toString().contains(spamString)) return false;
+		}
+		return true;
+	}
+
+	public void addToBlacklist(String item) {
+		blacklist.add(item);
+	}
+	
+	public boolean removeFromBlacklist(String item) {
+		return blacklist.remove(item);
+	}
+
+	public List getBlacklist() {
+		return blacklist;
+	}
+
+
+}

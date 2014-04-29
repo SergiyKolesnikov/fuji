@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Lab5">
+				<feature mandatory="true" name="Base"/>
+				<alt mandatory="true" name="UI">
+					<and mandatory="true" name="Graphical">
+						<feature name="Color"/>
+					</and>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<and name="Features">
+					<feature name="Authorization"/>
+					<feature name="Logging"/>
+					<feature name="Encoding"/>
+					<feature name="Username"/>
+					<feature name="Spamfilter"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="UI"/>
+			<feature name="Graphical"/>
+			<feature name="Color"/>
+			<feature name="Console"/>
+			<feature name="Features"/>
+			<feature name="Logging"/>
+			<feature name="Authorization"/>
+			<feature name="Encoding"/>
+			<feature name="Username"/>
+			<feature name="Spamfilter"/>
+		</featureOrder>
+	</featureModel>

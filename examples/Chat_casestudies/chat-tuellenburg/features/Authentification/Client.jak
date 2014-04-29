@@ -1,0 +1,7 @@
+public refines  class Client {
+	
+	public void login(String password) {
+		send(new AuthMessage(username, password));
+	}
+
+}

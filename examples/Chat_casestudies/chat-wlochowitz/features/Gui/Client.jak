@@ -1,0 +1,7 @@
+public refines  class Client {
+
+	protected void set() {
+		Super().set();
+		new Gui("localhost", this);
+	}	
+}

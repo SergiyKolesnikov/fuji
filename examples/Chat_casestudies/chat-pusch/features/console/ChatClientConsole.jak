@@ -1,0 +1,91 @@
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.ArrayList;
+
+
+public class ChatClientConsole {
+	
+	private ChatClient chatClient;
+	private BufferedReader in;
+	protected List commandList=new ArrayList();
+	
+	public ChatClientConsole(ChatClient chatclient) {
+		in= new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Welcome to joChatClient.");
+		this.chatClient=chatClient;
+		getLoginInformation();
+	}
+	
+	private void printCommandSpecification() {
+		System.out.printf("%-25s login %20s\n","login:", "[username]");
+		System.out.printf("%-25s cmds\n", "list other commands:", "");
+	}
+	
+	private void printFullListOfCommands() {
+		System.out.println("-= list of Commands =-");
+		for (int i=0; i<commandList.size(); i++)
+			System.out.println(commandList.get(i));
+		System.out.println("-====================-");
+		
+	}
+	
+	private void getLoginInformation() {
+		printCommandSpecification();
+		getUserCommand();
+	}
+	
+	private void getUserCommand() {
+		try {
+				System.out.print("joChat: ");
+				String[] command= in.readLine().split(" ");
+				handleUserCommand(command);	
+				Thread.sleep(50);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			getUserCommand();
+			
+	}
+	
+	protected void handleUserCommand(String[] command) {
+			if (command[0].equals("cmds")) {
+				printFullListOfCommands();
+			} else if (command[0].equals("login") && command.length==2) {
+				chatClient.sendMessage(new MessageObject(MessageType.AUTH, command[1], null, null, "spl11"));
+			} else {
+				System.err.println("\nunknown/false argument.");
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				getLoginInformation();
+			}
+	}
+	
+	public void newChatLine(MessageObject msgo) {
+		if (msgo.getMessageType().equals(MessageType.AUTH_OK)) {
+			System.out.println(msgo.getMessage());
+			getUserCommand();
+		} 
+		else if (msgo.getMessageType().equals(MessageType.ERROR)) {
+			System.err.println(msgo.getMessage());
+			getLoginInformation();
+		} 
+		else if (msgo.getMessageType().equals(MessageType.AUTH_ERROR)) {
+			System.err.println(msgo.getMessage());
+			chatClient.setUsername("");
+			getLoginInformation();
+		}
+		else if (msgo.getMessageType().equals(MessageType.TEXT)) {
+			System.out.println(msgo.getMessage());
+		}
+		else if (msgo.getMessageType().equals(MessageType.USER_ON)) {
+			System.out.println("new user joined chatserver.");
+			System.out.println("current list of other users: "+java.util.Arrays.toString(msgo.getRecipients()));
+		}
+	}
+	
+}

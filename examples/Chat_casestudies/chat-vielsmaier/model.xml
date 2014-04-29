@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and name="Base">
+					<feature name="Color"/>
+					<feature name="History"/>
+					<feature name="Encryption"/>
+					<feature name="PrivateMessage"/>
+					<alt abstract="true" mandatory="true" name="UsernameBehaviour">
+						<feature mandatory="true" name="AuthenticatedUsername"/>
+						<feature mandatory="true" name="UserDefinedName"/>
+					</alt>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

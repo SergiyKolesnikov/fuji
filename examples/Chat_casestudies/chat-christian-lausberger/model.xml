@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Chat">
+				<feature mandatory="true" name="Base"/>
+				<feature name="Authentication"/>
+				<feature name="History"/>
+				<or abstract="true" mandatory="true" name="Output">
+					<feature mandatory="true" name="Console"/>
+					<feature mandatory="true" name="GUI"/>
+				</or>
+				<feature name="Spam_Filter"/>
+				<alt mandatory="true" name="Encryption">
+					<feature mandatory="true" name="Rot13"/>
+					<feature mandatory="true" name="SwitchLetters"/>
+					<feature mandatory="true" name="NoEncrypt"/>
+				</alt>
+				<feature name="Color"/>
+				<feature name="Nickname"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

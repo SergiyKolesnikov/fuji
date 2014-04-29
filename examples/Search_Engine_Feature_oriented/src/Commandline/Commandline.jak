@@ -1,0 +1,93 @@
+
+
+
+import java.util.StringTokenizer;
+import java.io.*;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.TermFreqVector;
+import org.apache.lucene.search.ScoreDoc;
+
+public class Commandline implements UI{
+
+	String prompt="lucene desktop searcher>";
+	String line="";
+	MrPinkMain mrpinkmain;
+	
+	public Commandline(MrPinkMain mrpinkmain) {
+		// TODO Auto-generated constructor stub
+        this.mrpinkmain = mrpinkmain;
+	}
+
+    public void printSearch_SearchPanel(ScoreDoc[] hits, Indexer index, String query){
+    
+    
+      printHits(hits, index, "lastModify");  //printSearch_SearchPanel(hits, index, query);
+      
+    }
+
+	public void printErrorMessage(String message){
+	
+	   System.out.println("An Error has Occured! Error message: "+message);
+	
+	}
+	
+	
+	void startCommandline(){
+		
+		while(true){
+		
+		System.out.print(prompt);
+		
+		BufferedReader in = new BufferedReader(
+				  new InputStreamReader( System.in ) );
+				try {
+					line = in.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+				if(parseCommand(line)==-1) return;
+		}
+	}
+	
+	/**
+	 * this method is necessary because we want to support pathes that contains whitespaces
+	 * @param s
+	 * @return
+	 */
+	String substituteWhiteSpacesinSingleQuotedStringArea(String s){
+		
+		String ret="";
+		boolean isinSingleQuotedArea=false;
+		
+		
+		for(int i=0;i<s.length();i++){
+			
+			if(s.charAt(i)=='\'') isinSingleQuotedArea = !isinSingleQuotedArea; 
+			
+			if(isinSingleQuotedArea && s.charAt(i)==' '){
+				ret+="%20";
+			}else{
+				ret+=s.charAt(i);
+			}
+		}
+		
+		
+		return ret;
+	}
+	
+	int parseCommand(String cmd){
+
+	  cmd = substituteWhiteSpacesinSingleQuotedStringArea(cmd);	
+		
+      StringTokenizer st = new StringTokenizer(cmd," "); // trenne den String durch das Trennzeichen ;
+
+      String[] tokens = new String[10];
+      
+      int tokenindex =0;
+      while (st.hasMoreTokens() && tokenindex<10) { 
+         //System.out

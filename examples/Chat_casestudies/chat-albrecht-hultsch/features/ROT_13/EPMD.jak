@@ -1,0 +1,13 @@
+/**
+ * TODO description
+ */
+public refines class EPMD {
+	private Codierer cod = new Rot13();
+	
+	public void nachrichtSenden(String nachricht) throws IOException{
+		nachricht = cod.verschluesseln(nachricht);
+		
+		Super().nachrichtSenden(nachricht);
+	}
+	
+}

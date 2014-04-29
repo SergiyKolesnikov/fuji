@@ -1,0 +1,10 @@
+PokerSPL : Player Table [Cards] [Wager] :: _PokerSPL ;
+
+Cards : MaxPlayerCardsTwo
+	| MaxPlayerCardsFive
+	| MaxPlayerCardsSeven ;
+
+Wager : [Blinds] [Pot_Limit] :: _Wager ;
+
+Blinds : [IncreasingBlinds] :: _Blinds ;
+

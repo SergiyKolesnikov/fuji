@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="chat_krieter">
+				<feature mandatory="true" name="Base"/>
+				<alt abstract="true" mandatory="true" name="Display">
+					<and mandatory="true" name="GUI">
+						<feature name="Color"/>
+					</and>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<feature name="Authentication"/>
+				<alt name="Encryption">
+					<feature mandatory="true" name="ROT13"/>
+					<feature mandatory="true" name="SWL"/>
+				</alt>
+				<feature name="History"/>
+				<feature name="Spamfilter"/>
+				<feature name="UserCommands"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="GUI"/>
+			<feature name="Color"/>
+			<feature name="Console"/>
+			<feature name="Authentication"/>
+			<feature name="Encryption"/>
+			<feature name="ROT13"/>
+			<feature name="SWL"/>
+			<feature name="History"/>
+			<feature name="Spamfilter"/>
+			<feature name="UserCommands"/>
+		</featureOrder>
+	</featureModel>

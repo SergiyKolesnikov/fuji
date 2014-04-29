@@ -1,0 +1,179 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Vector;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.DefaultTableModel;
+
+
+public class Client extends JFrame implements ListSelectionListener, ActionListener{
+
+
+    private static final long serialVersionUID = 1L;
+    private JScrollPane tablePanel;
+    private JTable table;
+    private JPanel contentPanel;
+    private JTextArea text;
+    private JPanel images;
+    private LinkedList buttons;
+    private String account;
+
+
+    public Client(String account){
+    	super("Mail Client");
+    	this.account = account;
+    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	this.setSize(700,400);
+    	createGUI();
+    	this.setVisible(true);
+    	insertMessages();
+    }
+
+
+    private void createGUI(){
+	JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+
+	tablePanel = new JScrollPane();
+	table = new JTable(new DefaultTableModel());
+	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	table.getSelectionModel().addListSelectionListener(this);
+	((DefaultTableModel)table.getModel()).addColumn("Betreff");
+	((DefaultTableModel)table.getModel()).addColumn("Sender");
+	((DefaultTableModel)table.getModel()).addColumn("Datum");
+	tablePanel.getViewport().add(table);
+	splitPane.setTopComponent(tablePanel);
+
+	contentPanel = new JPanel();
+	contentPanel.setLayout(new BorderLayout());
+	text = new JTextArea();
+	text.setEditable(false);
+	JScrollPane textPane = new JScrollPane();
+	textPane.getViewport().add(text);
+	contentPanel.add(textPane,BorderLayout.CENTER);
+
+	JScrollPane pane = new JScrollPane();
+	contentPanel.add(pane,BorderLayout.SOUTH);
+	images = new JPanel();
+	FlowLayout layout1 = new FlowLayout();
+	layout1.setAlignment(FlowLayout.LEFT);
+	layout1.setHgap(10);
+	images.setLayout(layout1);
+	pane.getViewport().add(images);
+
+	splitPane.setBottomComponent(contentPanel);
+	this.add(splitPane);
+    }
+
+    private void insertMessages(){
+	((JSplitPane)this.getContentPane().getComponent(0)).setDividerLocation(0.5);
+	table.setEnabled(false);
+	POP3Receiver receiver = new POP3Receiver(account);
+	receiver.receive();
+
+	int messageCount = receiver.getMessageCount();
+	for(int i=1; i<=messageCount; i++){
+
+	    LinkedList props = receiver.getMessageProperties(i);
+	    Vector newRow = new Vector();
+	    newRow.add(props.get(0));
+	    newRow.add(props.get(1));
+	    newRow.add(props.get(2));
+
+	    ((DefaultTableModel)table.getModel()).addRow(newRow);
+	}
+
+	receiver.close();
+	table.setEnabled(true);
+    }
+
+    public void insertContent(){
+	POP3Receiver receiver = new POP3Receiver(account);
+	receiver.receive();
+
+	text.setText(receiver.getTextContent(table.getSelectedRow()+1));
+	LinkedList fileNames = receiver.getFileAttachments(table.getSelectedRow()+1);
+	receiver.close();
+	buttons = new LinkedList();
+
+	try{
+	    for(int i=0; i<fileNames.size(); i++){
+		String name = (String)fileNames.get(i);
+		int posOfDot = name.lastIndexOf(".");
+		String prefix = name.substring(0,posOfDot);
+		String postfix = name.substring(posOfDot+1);
+
+		File tmpFile = File.createTempFile(prefix, "."+postfix);
+		final Icon icon = FileSystemView.getFileSystemView().getSystemIcon(tmpFile);
+		tmpFile.delete();
+
+		if(prefix.length() > 7) prefix = prefix.substring(0,6) + "_";
+		String text = prefix + "." + postfix;
+
+		JButton button = new JButton();
+		button.setToolTipText("Save " + name);
+		button.setIcon(icon);
+		button.setText(text);
+		button.addActionListener(this);
+		images.add(button);
+		buttons.add(button);
+		this.validate();
+	    }
+	} catch (Exception e){}
+    }
+
+    public void valueChanged(ListSelectionEvent e) {
+	if(e.getValueIsAdjusting() == false){
+	    table.setEnabled(false);
+	    images.removeAll();
+	    this.validate();
+	    insertContent();
+	    table.setEnabled(true);
+	}
+
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+	Object source = e.getSource();
+	if(source instanceof JButton){
+	    for(int i=0; i<buttons.size(); i++){
+		if(buttons.get(i) == source){
+		    JFileChooser fc = new JFileChooser();
+		    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		    int result = fc.showDialog(this,"Save");
+		    if(result == JFileChooser.APPROVE_OPTION){
+			POP3Receiver receiver = new POP3Receiver(account);
+			receiver.receive();
+			try{
+			    int message = table.getSelectedRow()+1;
+			    int file = i+1;
+			    String destination = fc.getSelectedFile().getCanonicalPath() + "/";
+			    receiver.saveFile(message, file, destination);
+			} catch (Exception ex){}
+			receiver.close();
+		    }
+		    return;
+		}
+	    }
+	}
+    }
+
+    public static void main(String[] args){
+    	new Client("###");
+    }
+}

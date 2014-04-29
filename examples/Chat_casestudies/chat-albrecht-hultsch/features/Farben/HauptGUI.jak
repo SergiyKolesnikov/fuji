@@ -1,0 +1,17 @@
+/**
+ * TODO description
+ */
+public refines class HauptGUI {
+	protected void mi_AnmeldenActionPerformed(java.awt.event.ActionEvent evt) {
+		Super().mi_AnmeldenActionPerformed(evt);
+		
+		btn_blau.setEnabled(true);
+        btn_gelb.setEnabled(true);
+        btn_rot.setEnabled(true);
+        btn_gruen.setEnabled(true);
+	}
+	
+	protected String entferneFarben(String nachricht){
+		return nachricht;
+	}
+}

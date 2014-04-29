@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="FOP_Chat_Client">
+				<or name="Krypto">
+					<feature mandatory="true" name="reverse"/>
+					<feature mandatory="true" name="ascii"/>
+				</or>
+				<alt abstract="true" mandatory="true" name="Ausgabe">
+					<and mandatory="true" name="GUI">
+						<feature name="Farbe"/>
+					</and>
+					<feature mandatory="true" name="Konsole"/>
+				</alt>
+				<feature name="Spamfilter"/>
+				<feature name="Authent"/>
+				<feature name="Logging"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

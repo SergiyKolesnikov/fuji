@@ -1,0 +1,34 @@
+
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.Clip;
+
+import java.io.File;
+
+public refines  class Client {
+	protected Clip clip;
+	
+	refines Client(String host, int port) {
+		try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File("affair.wav")));
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+        	e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			clip.stop();
+			clip.setFramePosition(0);
+            clip.start();
+		}
+		Super(Object).handleIncomingMessage(msg);
+	}
+}

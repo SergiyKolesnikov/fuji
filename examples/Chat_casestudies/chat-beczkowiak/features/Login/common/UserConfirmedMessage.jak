@@ -1,0 +1,36 @@
+
+
+import java.io.Serializable;
+
+
+
+
+/**
+ * Nachricht, die einen User informiert, ob seine Logindaten
+ * bestaetigt wurden.
+ * @author Ralf Beczkowiak
+ *
+ */
+public class UserConfirmedMessage implements Serializable, IMessage {
+
+    protected static final long serialVersionUID = 2101902412878462084L;
+    
+    protected boolean confirmed;
+    
+    /**
+     * Erzeugt eine neue Bestaetigungsnachricht, die
+     * den User informiert, ob sein Login akzeptiert wurde.
+     * @param confirmed Status
+     */
+    public UserConfirmedMessage(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+    
+    /**
+     * Feedback, ob der User zugelassen wurde.
+     * @return Feedback
+     */
+    public boolean isConfirmed() {
+        return this.confirmed;
+    }
+}

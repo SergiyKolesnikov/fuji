@@ -1,0 +1,16 @@
+public refines  class GUI {
+	
+	protected void initClient() {
+		Preferences prefs = Preferences.userNodeForPackage(Settings.class);
+		chatClient = new Client(prefs.get("host", "127.0.0.1"), Integer.parseInt(prefs.get("port", "8080")));
+
+		chatClient.send(new TextMessage("1234567"));
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+		lblNichtVerbunden.setText("Verbunden");
+		mntmVerbinden.setText("Verbindung Trennen");
+	}
+
+}

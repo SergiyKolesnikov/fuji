@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="build/search_engine_features"/>
+	<classpathentry kind="lib" path="lib/lucene-core-2.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-demos-2.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/tools.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin/search_engine_features"/>
+</classpath>

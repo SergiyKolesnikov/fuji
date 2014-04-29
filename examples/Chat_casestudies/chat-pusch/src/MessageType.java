@@ -1,0 +1,15 @@
+
+
+public  class MessageType {
+	
+	public static final String AUTH= "AUTH";
+	public static final String AUTH_OK= "AUTH_OK";
+	public static final String AUTH_ERROR= "AUTH_ERROR";
+	public static final String ERROR = "ERROR";
+	public static final String TEXT = "TEXT";
+	public static final String DELETE = "DELETE";
+	public static final String DELETE_OK = "DELETE_OK";
+	public static final String USER_ON = "USER_ON";
+	public static final String USER_OFF = "USER_OFF";
+	
+}

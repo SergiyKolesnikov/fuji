@@ -1,0 +1,13 @@
+public refines  class Client {
+	
+	protected String currentColor = "black";
+	
+	public void setCurrentColor(String color) {
+		this.currentColor = color;
+	}
+	
+	public String getCurrentColor() {
+		return this.currentColor;
+	}
+
+}

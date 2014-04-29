@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Chat">
+				<feature name="History"/>
+				<feature name="Color"/>
+				<feature name="Authentication"/>
+				<or name="Encryption">
+					<feature mandatory="true" name="ROT13Encryption"/>
+					<feature mandatory="true" name="SwapEncryption"/>
+				</or>
+				<alt abstract="true" mandatory="true" name="Client">
+					<feature mandatory="true" name="Gui"/>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<feature name="Sound"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Color</var>
+					<var>Gui</var>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Chat"/>
+			<feature name="Authentication"/>
+			<feature name="Sound"/>
+			<feature name="History"/>
+			<feature name="Encryption"/>
+			<feature name="ROT13Encryption"/>
+			<feature name="SwapEncryption"/>
+			<feature name="Gui"/>
+			<feature name="Color"/>
+			<feature name="Console"/>
+		</featureOrder>
+	</featureModel>

@@ -1,0 +1,38 @@
+public refines  class Server {
+	
+	public void run() {
+		while (true) {
+			try {
+				System.out.println("Waiting for Connections...");
+				Socket client = server.accept();
+				System.out.println("Accepted from " + client.getInetAddress());
+				//Connection c = connectTo(client);
+				Connection connection = new Connection(client, this);
+				connection.connectionOpen = false;
+
+				Object o = null;
+				try {
+					o = connection.inputStream.readObject();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				if (o instanceof TextMessage) {
+					System.out.println("Nachricht: "+((TextMessage)o).getContent());
+				}
+				if (((TextMessage)o).getContent().equals("1234567")) {
+					connection.connectionOpen = true;
+					connections.add(connection);
+					connection.start();
+				} else {
+					client.close();
+					connections.remove(connection);
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
+
+}

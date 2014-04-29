@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="chat">
+				<feature name="Spamfilter"/>
+				<and name="username">
+					<feature name="PrivateMessaging"/>
+				</and>
+				<feature name="Authentication"/>
+				<feature name="Encryption"/>
+				<feature name="Log"/>
+				<alt abstract="true" mandatory="true" name="UI">
+					<feature mandatory="true" name="Console"/>
+					<and mandatory="true" name="GUI">
+						<feature name="Color"/>
+					</and>
+				</alt>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -1,0 +1,70 @@
+{
+	"features" : [
+		"Base",
+		"Console",
+		"GUI",
+		"Spamfilter",
+		"History",
+		"Color",
+		"PrivateMSG",
+		"Authentication",
+		"ChangeUsername",
+		"Encryption"
+	],
+	"roles": {
+		"main": {
+			"Base": "main__wrappee__Base",
+			"GUI": "main",
+			"Console": "main__wrappee__Console"
+		},
+		"handleIncomingMessage": {
+			"GUI": "handleIncomingMessage__wrappee__GUI",
+			"Spamfilter": "handleIncomingMessage__wrappee__Color",
+			"Color": "handleIncomingMessage__wrappee__Color",
+			"PrivateMSG": "handleIncomingMessage__wrappee__PrivateMSG",
+			"Authentication": "handleIncomingMessage__wrappee__Authentication",
+			"ChangeUsername": "handleIncomingMessage__wrappee__ChangeUsername",
+			"Encryption": "handleIncomingMessage"
+		},
+		"init": {
+			"GUI": "init__wrappee__GUI",
+			"Spamfilter": "init__wrappee__PrivateMSG",
+			"PrivateMSG": "init__wrappee__PrivateMSG",
+			"Authentication": "init",
+			"Color": "init__wrappee__Color"
+		},
+		"fireAddLine": {
+			"Spamfilter": "fireAddLine__wrappee__Spamfilter",
+			"History": "fireAddLine",
+			"GUI": "fireAddLine__wrappee__GUI"
+		},
+		"fireStatusLine": {
+			"Spamfilter": "fireStatusLine__wrappee__Spamfilter",
+			"History": "fireStatusLine",
+			"GUI": "fireStatusLine__wrappee__GUI"
+		},
+		"connect": {
+			"Spamfilter": "connect__wrappee__Spamfilter",
+			"History": "connect",
+			"GUI": "connect__wrappee__GUI"
+		},
+		"createLayout": {
+			"Color": "createLayout"
+		},
+		"onChat": {
+			"Color": "onChat"
+		},
+		"printNewChatLine": {
+			"Color": "printNewChatLine"
+		},
+		"printStatusMessage": {
+			"Color": "printStatusMessage"
+		},
+		"send": {
+			"ChangeUsername": "send__wrappee__ChangeUsername",
+			"Encryption": "send",
+			"Authentication": "send__wrappee__Authentication"
+		}
+	}
+
+}

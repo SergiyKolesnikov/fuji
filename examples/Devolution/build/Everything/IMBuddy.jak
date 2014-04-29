@@ -1,0 +1,46 @@
+layer Everything;
+import org.jivesoftware.smack.*;
+
+SoUrCe RooT InstantBase "../../../H:/Devolution/src/InstantBase/IMBuddy.jak";
+abstract class IMBuddy$$InstantBase {
+	protected String sUID;
+	protected String sNickname;
+	
+	public IMBuddy$$InstantBase(String sUID, String sNickname) {
+		this.sUID = sUID;
+		if (this.sNickname == null) {
+			this.sNickname = sNickname;
+		}
+	}
+	
+	public String toString() {
+		if (sNickname == null || sNickname.length() == 0) {
+			return sUID;
+		} else {
+			return sNickname;
+		}
+	}
+	
+	public String getUID() {
+		return this.sUID;
+	}
+	
+	public String getNickname() {
+		return this.sNickname;
+	}
+}
+
+SoUrCe  Jabber "../../../H:/Devolution/src/Jabber/IMBuddy.jak";
+
+public class IMBuddy extends  IMBuddy$$InstantBase  {
+	Chat jabChat;
+	
+	refines IMBuddy(String sUID, String sNickname, Chat jabChat) {
+		Super(String, String).IMBuddy(sUID, sNickname);
+		this.jabChat = jabChat;
+	}
+	
+	public void setChat(Chat jabChat) {
+		this.jabChat = jabChat;
+	}
+}

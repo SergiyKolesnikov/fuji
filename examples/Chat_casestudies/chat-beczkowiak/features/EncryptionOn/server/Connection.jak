@@ -1,0 +1,24 @@
+
+
+import crypt.Crypt;
+
+public refines  class Connection {
+	
+	protected Crypt crypt;
+	
+	refines Connection(Socket s, Server server) {
+		this.crypt = new Crypt();
+	}
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof IMessage) {
+	        ((IMessage) msg).decode(this.crypt);
+	    }
+	    Super(String, Object).handleIncomingMessage(name, msg);
+	}
+	
+	public void send(IMessage msg) {
+		msg.encode(crypt);
+		Super(IMessage).send(msg);
+	}
+}

@@ -1,0 +1,8 @@
+public refines  class GUI {
+
+	public void newChatLine(String msg) {
+		Super(String).newChatLine(msg);
+		Toolkit.getDefaultToolkit().beep();
+	}
+
+}

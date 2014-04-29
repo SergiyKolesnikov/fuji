@@ -1,0 +1,13 @@
+UnionFindSPL : UnionFind Tests :: _UnionFindSPL ;
+
+UnionFind : QuickFind
+	| QuickUnion ;
+
+QuickUnion : [QU_Weighted] :: _QuickUnion ;
+
+QU_Weighted : [QU_Weighted_Modifications] :: _QU_Weighted ;
+
+QU_Weighted_Modifications : WQU_Halfing
+	| WQU_ByHeight
+	| WQU_PathCompression ;
+

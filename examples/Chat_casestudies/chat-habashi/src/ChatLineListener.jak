@@ -1,0 +1,8 @@
+
+
+SoUrCe RooT Base "../features/Base/ChatLineListener.jak";
+public interface ChatLineListener {
+
+	void newChatLine(String line);
+	
+}

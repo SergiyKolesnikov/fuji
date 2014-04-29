@@ -1,0 +1,7 @@
+layer Everything;
+
+SoUrCe RooT Jabber "../../../H:/Devolution/src/Jabber/JabberRosterListener.jak";
+// This listener gets informed every time the jabber roster changes
+public interface JabberRosterListener {
+	void rosterChanged();
+}

@@ -1,0 +1,13 @@
+public refines  class Connection {
+
+	protected void handleIncomingMessage(String clientName, Object msg) {
+		System.out.println("ich");
+		if(msg instanceof TextMessage){
+			TextMessage temptextmessage = (TextMessage) msg;
+			IncomingTextMessage textmessage = new IncomingTextMessage(temptextmessage.getText(), temptextmessage.getColor());
+			textmessage.setText(textmessage.decodeText());
+			server.broadcast(clientName + " - " + "<" + textmessage.textColor() + "> : " + textmessage.getText());
+		}
+	}
+
+}

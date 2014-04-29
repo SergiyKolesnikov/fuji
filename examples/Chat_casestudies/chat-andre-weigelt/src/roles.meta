@@ -1,0 +1,52 @@
+{
+	"features" : [
+		"Base",
+		"GUI",
+		"Authentication",
+		"Spamfilter",
+		"Color",
+		"Name",
+		"PrivateMSG",
+		"Encryption",
+		"Logging"
+	],
+	"roles": {
+		"broadcast": {
+			"Authentication": "broadcast__wrappee__Name",
+			"Name": "broadcast__wrappee__Name",
+			"PrivateMSG": "broadcast"
+		},
+		"loginClient": {
+			"Authentication": "loginClient"
+		},
+		"handleIncomingMessage": {
+			"Authentication": "handleIncomingMessage__wrappee__Authentication",
+			"Spamfilter": "handleIncomingMessage__wrappee__Spamfilter",
+			"Color": "handleIncomingMessage__wrappee__Color",
+			"Name": "handleIncomingMessage__wrappee__Name",
+			"PrivateMSG": "handleIncomingMessage__wrappee__PrivateMSG",
+			"Encryption": "handleIncomingMessage__wrappee__Encryption",
+			"Logging": "handleIncomingMessage"
+		},
+		"registerConnection": {
+			"Authentication": "registerConnection"
+		},
+		"send": {
+			"Authentication": "send__wrappee__Spamfilter",
+			"Spamfilter": "send__wrappee__Spamfilter",
+			"Color": "send__wrappee__Color",
+			"Name": "send__wrappee__PrivateMSG",
+			"PrivateMSG": "send__wrappee__PrivateMSG",
+			"Encryption": "send"
+		},
+		"init": {
+			"GUI": "init__wrappee__GUI",
+			"Authentication": "init__wrappee__Spamfilter",
+			"Spamfilter": "init__wrappee__Spamfilter",
+			"Color": "init__wrappee__PrivateMSG",
+			"PrivateMSG": "init__wrappee__PrivateMSG",
+			"Encryption": "init"
+		}
+	}
+
+}

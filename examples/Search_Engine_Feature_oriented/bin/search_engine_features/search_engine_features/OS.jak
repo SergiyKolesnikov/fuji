@@ -1,0 +1,15 @@
+layer search_engine_features;
+
+SoUrCe RooT Linux "Workspace/Plugin2/Search_Engine_Feature_oriented/src/Linux/OS.jak";
+
+public class OS {
+	public static String getPathSeparator()
+	{
+		return "/";
+	}
+	
+		public static char getPathSeparatorChar()
+	{
+		return '/';
+	}
+}

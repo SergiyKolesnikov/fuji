@@ -1,0 +1,152 @@
+layer server;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import common.TextMessage;
+
+SoUrCe RooT Base.server "../../features/Base/server/Server.jak";
+
+/**
+ * server's main class. accepts incoming connections and allows broadcasting
+ */
+abstract class Server$$Base$server implements Runnable{
+
+	private Thread thread;
+	protected ServerSocket server;
+	
+	public static void main(String args[]) throws IOException {
+		new Server(8080);
+	}
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	public Server$$Base$server(int port) throws IOException {
+		server = new ServerSocket(port);
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	public void shutdown() {
+		thread.stop();
+		try {
+			server.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connections.clear();
+	}
+
+	/**
+	 * creates a new connection for a socket
+	 * 
+	 * @param socket
+	 *            socket
+	 * @return the Connection object that handles all further communication with
+	 *         this socket
+	 */
+	public Connection connectTo(Socket socket) {
+		Connection connection = new Connection(socket, this);
+		connection.connectionOpen = false;
+		connections.add(connection);
+		return connection;
+	}
+
+	/**
+	 * list of all known connections
+	 */
+	protected HashSet connections = new HashSet();
+
+	/**
+	 * send a message to all known connections
+	 * 
+	 * @param text
+	 *            content of the message
+	 */
+	public void broadcast(String text) {
+		synchronized (connections) {
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+				Connection connection = (Connection) iterator.next();
+				connection.send(text);
+			}
+		}
+	}
+
+	/**
+	 * remove a connection so that broadcasts are no longer sent there.
+	 * 
+	 * @param connection
+	 *            connection to remove
+	 */
+	public void removeConnection(Connection connection) {
+		connections.remove(connection);
+	}
+
+	public void run() {
+		while (true) {
+			try {
+				System.out.println("Waiting for Connections...");
+				Socket client = server.accept();
+				System.out.println("Accepted from " + client.getInetAddress());
+				//Connection c = connectTo(client);
+				Connection connection = new Connection(client, this);
+
+				connection.connectionOpen = true;
+				connections.add(connection);
+				connection.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
+
+}
+
+SoUrCe  AUTH.server "../../features/AUTH/server/Server.jak";public class Server extends  Server$$Base$server  {
+	
+	public void run() {
+		while (true) {
+			try {
+				System.out.println("Waiting for Connections...");
+				Socket client = server.accept();
+				System.out.println("Accepted from " + client.getInetAddress());
+				//Connection c = connectTo(client);
+				Connection connection = new Connection(client, this);
+				connection.connectionOpen = false;
+
+				Object o = null;
+				try {
+					o = connection.inputStream.readObject();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				if (o instanceof TextMessage) {
+					System.out.println("Nachricht: "+((TextMessage)o).getContent());
+				}
+				if (((TextMessage)o).getContent().equals("1234567")) {
+					connection.connectionOpen = true;
+					connections.add(connection);
+					connection.start();
+				} else {
+					client.close();
+					connections.remove(connection);
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
+
+}

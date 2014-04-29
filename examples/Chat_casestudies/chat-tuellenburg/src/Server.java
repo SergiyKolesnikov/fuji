@@ -1,0 +1,220 @@
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+
+
+abstract class Server$$Base {
+	
+	private static Encrypter enc;
+	protected HashSet authenticatedConnections = new HashSet();
+	protected HashMap users = new HashMap();
+	
+	//Feature privateMessaging: Hashmap zur Abbildung von username/Connection paaren
+	//notwendige funktionen zum registrieren von usern
+	//funktion zum senden an speziellen user
+
+	public static void main(String args[]) throws IOException {
+		if (args.length != 2)
+			throw new RuntimeException("Syntax: ChatServer <port> [rot13/scramble2]");
+		
+		//which encryption algorithm?
+		enc = null;
+		if (args[1].equals("rot13") || args[1].equals("scramble2")) {
+			enc = new Encrypter(args[1]);
+		}
+
+		new Server(Integer.parseInt(args[0]));
+	}
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	 
+	public Server$$Base(int port) throws IOException {
+		setup();
+		ServerSocket server = new ServerSocket(port);
+		while (true) {
+			System.out.println("Waiting for Connections...");
+			Socket client = server.accept();
+			System.out.println("Accepted from " + client.getInetAddress());
+			Connection c = connectTo(client);
+			c.start();
+		}
+	}
+
+    protected void setup(){
+    	System.out.println("Server started");
+    }
+
+	/**
+	 * creates a new connection for a socket
+	 * 
+	 * @param socket
+	 *            socket
+	 * @return the Connection object that handles all further communication with
+	 *         this socket
+	 */
+	public Connection connectTo(Socket socket) {
+		Connection connection = new Connection(socket, ((Server) this), enc);
+		connections.add(connection);
+		return connection;
+	}
+
+	/**
+	 * list of all known connections
+	 */
+	protected HashSet connections = new HashSet();
+
+	/**
+	 * send a message to all connections
+	 * 
+	 * @param text
+	 *            content of the message
+	 */
+	public void broadcast(String text) {
+		synchronized (connections) {
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+				Connection connection = (Connection) iterator.next();
+				connection.send(text);
+			}
+		}
+	}
+	/**
+	 * remove a connection so that broadcasts are no longer sent there.
+	 * 
+	 * @param connection
+	 *            connection to remove
+	 */
+	public void removeConnection(Connection connection) {
+		connections.remove(connection);
+	}
+}
+
+abstract class Server$$Authentification extends  Server$$Base  {
+	
+	protected final String password = "geheim";
+	
+	public void broadcast(String text) {
+		synchronized (authenticatedConnections) {
+			for (Iterator iterator = authenticatedConnections.iterator(); iterator.hasNext();) {
+				Connection connection = (Connection) iterator.next();
+				connection.send(text);
+			}
+		}
+	}
+	
+	/**
+	 * checkLogin: checks whether auth. Messages consists of the right
+	 * password
+	 */
+	public void checkLogin(Connection connection, String password) {
+		if (((Server) this).password.equals(password) != true) {
+			
+			connection.send("connection refused: wrong password");
+			removeConnection(connection);
+		} else {
+			connection.send("connection accepted");
+			authenticatedConnections.add(connection);
+			connections.remove(connection);
+		}
+	}
+      // inherited constructors
+
+
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	 
+	public Server$$Authentification ( int port )  throws IOException{ super(port); }
+
+}
+
+abstract class Server$$History extends  Server$$Authentification  {
+	
+   protected File history;
+   protected BufferedWriter writer;
+
+   protected void setup() {
+   		super.setup();
+   		try {
+      		new File("ServerLogs" + System.getProperty("file.separator")).mkdir();
+			history = new File("ServerLogs" + System.getProperty("file.separator") 
+					      + "server_history" + (System.currentTimeMillis()/1000));
+			writer = new BufferedWriter(new FileWriter(history));
+			writer.write("Chat-Session: " + Calendar.getInstance().getTime());
+			writer.newLine();
+   		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+	
+	public void addToHistory(String line){
+		try {
+			writer.write(line);
+			writer.newLine();
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+      // inherited constructors
+
+
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	 
+	public Server$$History ( int port )  throws IOException{ super(port); }
+}
+
+
+
+public class Server extends  Server$$History  {
+	
+	void registerUser(String name, Connection conn) {
+		users.put(name,conn);
+	}
+	
+	Connection getConnectionByUsername(String name) {
+		return (Connection) users.get(name);
+	}
+	
+	void sendToUser(String name, String text) {
+		Connection conn = getConnectionByUsername(name);
+		if (conn != null)
+		  conn.send(text);		
+	}
+      // inherited constructors
+
+
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	 
+	public Server ( int port )  throws IOException{ super(port); }
+
+}

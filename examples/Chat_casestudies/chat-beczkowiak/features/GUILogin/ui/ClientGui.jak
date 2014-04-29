@@ -1,0 +1,41 @@
+
+
+import common.LoginMessage;
+
+public refines  class ClientGui {
+	
+	protected JMenuItem mntmLogin;
+    protected ConnectDialog diag;
+	
+	protected void initialize(String title) {
+		Super(String).initialize(title);
+		
+		mntmLogin = new JMenuItem("Login");
+        mntmLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                diag.setVisible(true);
+            }
+        });
+        startField.add(mntmLogin,1);
+        
+        diag = new ConnectDialog();
+        diag.addButtonListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                String command = arg0.getActionCommand();
+                
+                if (command.equalsIgnoreCase("Login")) {
+                    String name = diag.getUsername();
+                    char[] pw = diag.getPassword();
+                    if (name != null && name != "" && pw != null && pw.length != 0) {
+                        client.send(new LoginMessage(name, pw));
+                        diag.clearPw();
+                        diag.setVisible(false);
+                    }
+                } else if (command.equalsIgnoreCase("Cancel")) {
+                    diag.clearPw();
+                    diag.setVisible(false);
+                }
+            }
+        });
+	}
+}

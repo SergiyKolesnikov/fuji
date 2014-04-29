@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<or mandatory="true" name="VISTEX">
+				<and mandatory="true" name="Editor">
+					<and name="Edieren">
+						<feature name="Undo"/>
+						<and name="Suchen">
+							<feature name="Ersetzen"/>
+						</and>
+					</and>
+					<or name="Formatierung">
+						<feature mandatory="true" name="Schriftgroesse"/>
+						<feature mandatory="true" name="Farbe"/>
+					</or>
+					<or name="Speichern">
+						<feature mandatory="true" name="Textformat"/>
+						<or mandatory="true" name="Exportieren">
+							<feature mandatory="true" name="KomprimierterText"/>
+							<feature mandatory="true" name="HMTL"/>
+						</or>
+					</or>
+				</and>
+				<and mandatory="true" name="Graphanzeige">
+					<feature name="Graphbearbeitung"/>
+				</and>
+			</or>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

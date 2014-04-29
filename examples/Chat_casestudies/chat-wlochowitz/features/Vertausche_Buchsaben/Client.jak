@@ -1,0 +1,22 @@
+public refines class Client {
+	
+	private final VertauscheBuchstaben encrypter = new VertauscheBuchstaben();
+
+	protected void process(TextMessage msg) {
+		if(msg.getSender().equals("Server")) {
+			Super().process(msg); 
+		} else {	
+			String content = msg.getContent();
+			content = encrypter.decrypt(content);
+			msg.setContent(content);
+			Super().process(msg);
+		}		
+	}	
+	
+	protected void prepare(TextMessage msg) {
+		String content = msg.getContent();
+		content = encrypter.encrypt(content);
+		msg.setContent(content);
+		Super().prepare(msg);
+	}	
+}

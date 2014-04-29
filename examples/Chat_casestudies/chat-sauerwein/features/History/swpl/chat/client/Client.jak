@@ -1,0 +1,22 @@
+
+import swpl.chat.common.Logger;
+
+public refines class Client {
+	private Logger logger = new Logger("client");
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {		
+		logger.log(getServer().getHostName() + " -> " + getHostName() + ": "
+					+ msg.getContent());
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		logger.log(getServer().getHostName() + " -> " + getHostName() + ": "
+					+ msg.getContent());
+		
+		return msg;
+	}
+} 

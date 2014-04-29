@@ -1,0 +1,18 @@
+layer swpl.chat.client;
+import swpl.chat.common.TextMessage;
+
+SoUrCe RooT Chat.swpl.chat.client "../../../../features/Chat/swpl/chat/client/ChatLineListener.jak";
+
+/**
+ * Listener that gets informed every time when the chat client receives a new
+ * message
+ */
+public interface ChatLineListener {
+	/**
+	 * New text message received by client.
+	 * 
+	 * @param line
+	 *            the new message
+	 */
+	void newChatLine(TextMessage textMsg);
+}

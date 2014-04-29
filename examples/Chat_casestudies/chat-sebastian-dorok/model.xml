@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="epmd_chat_fop">
+				<feature mandatory="true" name="Base"/>
+				<or abstract="true" mandatory="true" name="Output">
+					<feature mandatory="true" name="Console"/>
+					<feature mandatory="true" name="GUI"/>
+				</or>
+				<and abstract="true" name="Messages">
+					<feature name="Spamfilter"/>
+					<feature name="History"/>
+					<feature name="Color"/>
+					<feature name="PrivateMSG"/>
+				</and>
+				<and abstract="true" name="Security">
+					<feature name="Authentication"/>
+					<feature name="Encryption"/>
+				</and>
+				<and abstract="true" name="Extras">
+					<feature name="ChangeUsername"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Console"/>
+			<feature name="GUI"/>
+			<feature name="Spamfilter"/>
+			<feature name="History"/>
+			<feature name="Color"/>
+			<feature name="PrivateMSG"/>
+			<feature name="Authentication"/>
+			<feature name="ChangeUsername"/>
+			<feature name="Encryption"/>
+		</featureOrder>
+	</featureModel>

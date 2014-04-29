@@ -1,0 +1,70 @@
+
+
+import java.io.PrintStream;
+import java.util.Scanner;
+
+import common.IMessage;
+
+import client.ChatLineListener;
+import client.Client;
+
+
+
+public class ClientConsole implements ChatLineListener, Runnable {
+    
+    protected Client client;
+    protected PrintStream out;
+    protected Scanner scan;
+    protected Thread thread;
+    
+    public ClientConsole(Client client){
+        this.client = client;
+        this.client.addLineListener(this);
+        this.out = System.out;
+        this.scan = new Scanner(System.in);
+    }
+    
+    public void newChatLine(String line) {
+        this.out.println(line);
+    }
+    
+    public synchronized void start() {
+        if (this.thread == null){
+            this.thread = new Thread(((ClientConsole) this));
+            this.thread.start();
+          }
+    }
+    
+    public void run() {
+        String input;
+        newChatLine("Enter \"connect\" and press return to connect a server.");
+        while (true) {
+            input = this.scan.nextLine();
+            if (input.startsWith("connect")) {
+                this.client.connect();
+                break;
+            }
+        }
+        
+        afterConnecting();
+        
+        newChatLine("Press enter to send your messages.");
+        while (true) {
+            input = scan.nextLine();
+            this.client.send(input);
+        }
+    }
+    
+    protected void afterConnecting() {
+    }
+    
+    public void send(IMessage msg) {
+        this.client.send(msg);
+    }
+    
+    public synchronized void stop() {
+        if (this.thread != null) {
+            this.thread = null;
+        }
+    }
+}

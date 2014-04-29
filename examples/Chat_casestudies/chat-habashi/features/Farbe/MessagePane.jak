@@ -1,0 +1,43 @@
+public refines  class MessagePane {
+
+	URL[] resources;
+	Color[] colors;
+	
+	int count = 2;
+	
+	protected void drawComponents(){
+		Super().drawComponents();
+		addComponents();	
+	}
+	
+	public void addComponents(){
+		resources = new URL[] {
+			getClass().getResource("/pics/black.png"),
+			getClass().getResource("/pics/red.png"),
+			getClass().getResource("/pics/green.png"),
+			getClass().getResource("/pics/yellow.png"),
+			getClass().getResource("/pics/blue.png"),
+			getClass().getResource("/pics/orange.png") };
+		
+		colors = new Color[] { Color.BLACK, Color.RED, Color.GREEN,
+			Color.YELLOW, Color.BLUE, Color.ORANGE };
+		
+		for (int i = 0; i < colors.length; i++) {
+			final JButton button = new JButton();
+			button.setLocation(i * 60, 54);
+			button.setSize(60, 51);
+			button.setIcon(new ImageIcon(resources[i]));
+
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					chatClient.setDefaultColor(colors[button.getLocation().x / 60]);
+				}
+			});
+			count++;
+			add(button);
+		}
+		
+	}
+
+
+}

@@ -1,0 +1,14 @@
+true
+messaging
+gui
+console
+spamfilter
+coloredtext
+rot13
+invert
+spamfilterANDgui
+spamfilterANDconsole
+authenticationANDgui
+authenticationANDconsole
+history
+sound

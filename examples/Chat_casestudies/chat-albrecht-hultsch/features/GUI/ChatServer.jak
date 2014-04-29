@@ -1,0 +1,201 @@
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * TODO description
+ */
+public class ChatServer {
+    // The ServerSocket we'll use for accepting new connections
+    private ServerSocket ss;
+    String history = "";
+    
+    // A mapping from sockets to DataOutputStreams. This will
+    // help us avoid having to create a DataOutputStream each time
+    // we want to write to a stream. <Socket, ChatClient>
+    private Hashtable chatClients = new Hashtable();
+    
+    // Constructor and while-accept loop all in one.
+    public ChatServer( int port ) throws IOException {
+        // All we have to do is listen
+        listen( port );
+    }
+    
+    private void listen( int port ) throws IOException {
+        // Create the ServerSocket
+        ss = new ServerSocket( port );
+        
+        // Tell the world we're ready to go
+        System.out.println( "Listening on "+ss );
+        
+        // Keep accepting connections forever
+        while (true) {
+            // Grab the next incoming connection
+            Socket s = ss.accept();
+            
+            // Tell the world we've got it
+            System.out.println( "Connection from "+s );
+            
+            // Save this stream so we don't need to make it again
+            chatClients.put( s, new ServerChatClient("User" + (chatClients.size()+1), s) );
+            
+            // Create a new thread for this connection, and then forget
+            // about it
+            new ServerThread( this, s );
+        }
+    }
+    
+    // Get an enumeration of all the OutputStreams, one for each client
+    // connected to us
+    Enumeration getClients() {
+        return chatClients.elements();
+    }
+    
+    Hashtable getHashtable(){
+        return chatClients;
+    }
+    
+
+    
+    void setzenName (String cod, Socket s)
+    {
+        ServerChatClient updatetedClient = (ServerChatClient) chatClients.get(s);
+        updatetedClient.setzenName(cod);
+        chatClients.remove(s);
+        chatClients.put(s, updatetedClient);
+    }
+
+    String gibName (Socket s)
+    {
+        ServerChatClient client = (ServerChatClient) chatClients.get(s);
+        return client.gibName();
+    }
+    
+    void setzenCodierer (Codierer cod, Socket s)
+    {
+        ServerChatClient updatetedClient = (ServerChatClient) chatClients.get(s);
+        updatetedClient.setCodierer(cod);
+        chatClients.remove(s);
+        chatClients.put(s, updatetedClient);
+    }
+
+    Codierer gibCodierer (Socket s)
+    {
+        ServerChatClient client = (ServerChatClient) chatClients.get(s);
+        return client.getCodierer();
+    }
+    
+    // Send a message to all clients (utility routine)
+    void sendToAll( String nachricht ) {
+        // We synchronize on this because another thread might be
+        // calling removeConnection() and this would screw us up
+        // as we tried to walk through the list
+        synchronized( chatClients ) {
+            // For each client ...
+        	String tmp_nachricht = nachricht;
+            for (Enumeration e = getClients(); e.hasMoreElements(); ) {
+                try {
+                	nachricht = tmp_nachricht;
+                    // ... get the output stream ...
+                	ServerChatClient cc = (ServerChatClient)e.nextElement();
+                	String name = cc.gibName();
+                	Codierer cod = cc.getCodierer();
+                    DataOutputStream dout = new DataOutputStream(cc.getClientSocket().getOutputStream());
+                    if (cod != null) {
+                    	nachricht = cod.verschluesseln(nachricht);
+                    }
+                    
+                    
+                    // TODO: Delete
+                    System.out.println("snd-codiert: von " + name + ": " + nachricht);
+                    // Delete ende
+                    
+                    // ... and send the message
+                    dout.writeUTF( nachricht );
+                } catch( IOException ie ) { System.out.println( ie ); }
+            }
+        }
+    }
+    
+    protected void addMessageToHistory(String message)
+    {
+        BufferedWriter buf = null;
+        try {
+            File file = new File("history.txt");
+            buf = new BufferedWriter(new FileWriter(file, true));
+            buf.append(message);
+//            history += message;
+        } catch (IOException ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                buf.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    protected String getHistory ()
+    {
+        BufferedReader buf = null;
+        String hist = "";
+        try {
+            File file = new File("history.txt");
+            buf = new BufferedReader(new FileReader(file));
+            String temp = buf.readLine();
+            while (temp != null){
+                hist += temp + "\n";
+                temp = buf.readLine();
+            }
+//            return history;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                buf.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return hist;
+    }
+    
+    // Remove a socket, and it's corresponding output stream, from our
+    // list. This is usually called by a connection thread that has
+    // discovered that the connectin to the client is dead.
+    void removeConnection( Socket s ) {
+        // Synchronize so we don't mess up sendToAll() while it walks
+        // down the list of all output streams
+        synchronized( chatClients ) {
+            // Tell the world
+            System.out.println( "Removing connection to "+s );
+            
+            // Remove it from our hashtable/list
+            chatClients.remove( s );
+            
+            // Make sure it's closed
+            try {
+                s.close();
+            } catch( IOException ie ) {
+                System.out.println( "Error closing "+s );
+                ie.printStackTrace();
+            }
+        }
+    }    
+
+}

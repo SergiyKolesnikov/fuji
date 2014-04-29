@@ -1,0 +1,36 @@
+
+import javax.swing.JPasswordField;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public refines  class ChatClientStartDialog {
+	private static final long serialVersionUID = -5758498741523549857L;
+	private JPasswordField pwdPassword;
+	
+	protected void initGUIElements() {
+		Super().initGUIElements();
+		JLabel lblPassword = new JLabel("password:");
+		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
+		gbc_lblPassword.insets = new Insets(0, 0, 0, 5);
+		gbc_lblPassword.anchor = GridBagConstraints.EAST;
+		gbc_lblPassword.gridx = 0;
+		gbc_lblPassword.gridy = 2;
+		contentPanel.add(lblPassword, gbc_lblPassword);
+		
+		pwdPassword = new JPasswordField();
+		GridBagConstraints gbc_pwdPassword = new GridBagConstraints();
+		gbc_pwdPassword.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pwdPassword.gridx = 1;
+		gbc_pwdPassword.gridy = 2;
+		contentPanel.add(pwdPassword, gbc_pwdPassword);
+	}
+	
+	protected void handleLoginClick() {
+		String username = textUsername.getText();
+		chatClient.sendMessage(new MessageObject(MessageType.AUTH, username, null, null,String.valueOf(pwdPassword.getPassword())));
+		chatClient.setUsername(username);
+	}
+}

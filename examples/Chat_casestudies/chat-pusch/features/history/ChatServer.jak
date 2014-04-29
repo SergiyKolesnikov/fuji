@@ -1,0 +1,12 @@
+public refines  class ChatServer {
+	
+		private PrintWriter historyOut;
+		
+		refines ChatServer() {
+			try {
+				historyOut = new PrintWriter(new FileOutputStream("serverHistory.txt"),true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+}

@@ -1,0 +1,90 @@
+
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.ButtonGroup;
+
+public refines  class ClientGui {
+	protected ButtonGroup buttonGroup;
+	protected String currentColor;
+    
+    protected void initialize(String title) {
+		Super(String).initialize(title);
+		
+		inputField.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent arg0) {
+	            if (arg0.getKeyCode() != KeyEvent.VK_ENTER
+	                    && arg0.getKeyCode() != KeyEvent.VK_SPACE
+	                    && arg0.getKeyCode() != KeyEvent.VK_BACK_SPACE
+	                    && !arg0.isActionKey()) {
+	                if (!currentColor.equalsIgnoreCase("black")) {
+	                    String inputtext = HtmlUtil.getBody(inputField.getText());
+	                    
+	                    inputtext = "<font color=\"" + currentColor + "\">"
+	                        + inputtext + "</font>";
+	                    
+	                    inputField.setText(inputtext);
+	                }
+	            }
+	        }
+		});
+		
+		JMenu mnColor = new JMenu("Color");
+        buttonGroup = new ButtonGroup();
+        currentColor = "aqua";
+        
+        JRadioButtonMenuItem rdbtnmntmBlack = new JRadioButtonMenuItem("Black");
+        buttonGroup.add(rdbtnmntmBlack);
+        rdbtnmntmBlack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                currentColor = "black";
+            }
+        });
+        mnColor.add(rdbtnmntmBlack);
+        
+        JRadioButtonMenuItem rdbtnmntmYellow = new JRadioButtonMenuItem("Yellow");
+        buttonGroup.add(rdbtnmntmYellow);
+        rdbtnmntmYellow.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                currentColor = "yellow";
+            }
+        });
+        mnColor.add(rdbtnmntmYellow);
+        
+        JRadioButtonMenuItem rdbtnmntmRed = new JRadioButtonMenuItem("Red");
+        rdbtnmntmRed.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                currentColor = "red";
+            }
+        });
+        buttonGroup.add(rdbtnmntmRed);
+        mnColor.add(rdbtnmntmRed);
+        
+        JRadioButtonMenuItem rdbtnmntmBlue = new JRadioButtonMenuItem("Blue");
+        buttonGroup.add(rdbtnmntmBlue);
+        rdbtnmntmBlue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                currentColor = "blue";
+            }
+        });
+        mnColor.add(rdbtnmntmBlue);
+        
+        JRadioButtonMenuItem rdbtnmntmAqua = new JRadioButtonMenuItem("Aqua");
+        buttonGroup.add(rdbtnmntmAqua);
+        rdbtnmntmAqua.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                currentColor = "aqua";
+            }
+        });
+        rdbtnmntmAqua.setSelected(true);
+        mnColor.add(rdbtnmntmAqua);
+        
+        menuBar.add(mnColor);
+    }
+    
+    public void send(String line) {
+    	Super(String).send("<font color=\"" + currentColor + "\">"
+        + line + "</font>");
+    }
+}

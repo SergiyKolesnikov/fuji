@@ -1,0 +1,38 @@
+
+
+public refines class DefaultEncryption {
+	
+	public String encode(String msg) {
+		return Super(String).encode(rotEncode(msg));
+	}
+
+	public String decode(String msg) {
+		return rotDecode(Super(String).decode(msg));
+	}
+
+	private String rotEncode(String msg) {
+		/** Rot13 implementation borrowed from
+			 * http://sanjaal.com/java/64/java-encryption/java-implementation-rot-13-encoding-algorithm/
+			 */
+        String encodedText = "";
+        int textLength = msg.length();
+ 
+        for (int i = 0; i < textLength; i++) {
+            char currentChar = msg.charAt(i);
+            if ((currentChar >= 65 && currentChar <= 77)
+                    || (currentChar >= 97 && currentChar <= 109)) {
+                encodedText += (char) (currentChar + 13);
+            } else if ((currentChar >= 78 && currentChar <= 90)
+                    || (currentChar >= 110 && currentChar <= 122)) {
+                encodedText += (char) (currentChar - 13);
+            } else {
+                encodedText += currentChar;
+            }
+        }
+        return encodedText;
+	}
+
+	private String rotDecode(String msg) {
+		return rotEncode(msg);
+	}
+}

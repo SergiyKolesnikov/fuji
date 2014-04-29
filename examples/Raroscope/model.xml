@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Raroscope">
+				<feature mandatory="true" name="Base"/>
+				<feature name="Version"/>
+				<feature name="CRC"/>
+				<feature name="HostOS"/>
+				<feature name="Entries"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments>
+			<c> assumed model (all features optional except base feature</c>
+		</comments>
+		<featureOrder userDefined="false"/>
+	</featureModel>

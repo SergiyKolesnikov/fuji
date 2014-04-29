@@ -1,0 +1,45 @@
+
+
+SoUrCe RooT Vertausche_Buchsaben "../features/Vertausche_Buchsaben/VertauscheBuchstaben.jak";/** Encrypter fuer das Verschluesseln und Entschluesseln von Zeichenketten mittels Invertierung. */
+public class VertauscheBuchstaben {
+	
+	/** 
+	 * Liefert eine verschluesselte Zeichenkette, 
+	 * indem die uebergebene Zeichenkette invertiert wird. 
+	 * @param text ein beliebiger Text
+	 * @return die verschluesselte Zeichenkette
+	 */
+	public String encrypt(String text) {
+		if(text.length() > 0)
+			return vertausche(text, 0, text.length() - 1);
+		else return text;	
+	}
+
+	/**
+	 * Entschluesselt eine Zeichenkette.
+	 * @param text eine beliebige Zeichenkette
+	 * @return die entschluesselte Zeichenkette
+	 */
+	public String decrypt(String text) {
+		if(text.length() > 0)
+			return vertausche(text, 0, text.length() - 1);
+		else return text;
+	}
+	
+ /**
+     * Vertauscht den Buchstaben an der Position i im String mit dem an der
+     * Position j.
+     * @param s eine beliebige Zeichenkette
+     * @param i eine beliebige erste Position innerhalb der Zeichenkette
+     * @param j eine beliebige zweite Position innerhalb der Zeichkette
+     * @return die Zeichenkette, in der die Buchstaben an der Position i
+     * mit denen an der Position j vertauscht sind.
+     */
+    private String vertausche(String s, int i, int j) {
+        StringBuffer sb = new StringBuffer(s);
+        char temp = sb.charAt(i);
+        sb.setCharAt(i, sb.charAt(j));
+        sb.setCharAt(j, temp);
+        return sb.toString();
+    }
+}

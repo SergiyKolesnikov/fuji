@@ -1,0 +1,64 @@
+
+
+import java.util.HashMap;
+
+import common.LoginMessage;
+import common.UserConfirmedMessage;
+
+public refines  class Connection {
+	protected HashMap users;
+    
+    protected boolean connectionConfirmed = false;
+    
+    protected Connection connection;
+    
+    refines Connection(Socket s, Server server) {
+    	users = new HashMap();
+        users.put("Admin", new char[] {'a', 'd', 'm', 'i', 'n'});
+        users.put("User", new char[] {'p', 'w'});
+    }
+    
+    public void send(IMessage msg) {
+    	if (msg instanceof UserConfirmedMessage || this.connectionConfirmed) {
+            Super(IMessage).send(msg);
+        }
+    }
+    
+    protected void handleIncomingMessage(String name, Object message) {
+		if (message instanceof LoginMessage) {
+			if (!this.connectionConfirmed) {
+	            LoginMessage msg = (LoginMessage) message;
+	            char[] pw = (char[])users.get(msg.getName());
+	            boolean check = true;
+	            if (pw != null) {
+	                char[] pw2check = msg.getPassword();
+	                if (pw2check.length != pw.length) {
+	                	check = false;
+	                }
+	                if (check) {
+		                for (int i = 0; i < pw.length; i++) {
+		                    if (pw[i] != pw2check[i]) {
+		                        this.connectionConfirmed = false;
+		                        check = false;
+		                    }
+		                }
+		                this.connectionConfirmed = true;
+		                this.clientName = msg.getName();
+	                }
+	            }
+	            send(new UserConfirmedMessage(this.connectionConfirmed));
+			}
+		} else {
+			if (this.connectionConfirmed) {
+	        	Super(String, Object).handleIncomingMessage(name, message);
+	    	}
+		}
+    }
+    
+    protected void afterConnecting() throws IOException, ClassNotFoundException {
+		while (connectionOpen && !this.connectionConfirmed) {
+            Object msg = inputStream.readObject();
+            handleIncomingMessage(clientName, msg);
+        }
+	}
+}

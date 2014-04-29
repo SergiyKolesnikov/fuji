@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="EPMDChat">
+				<feature mandatory="true" name="Basis"/>
+				<alt abstract="true" mandatory="true" name="Oberflaeche">
+					<feature mandatory="true" name="Konsole"/>
+					<feature mandatory="true" name="GUI"/>
+				</alt>
+				<alt abstract="true" name="Verschluesselung">
+					<feature mandatory="true" name="ROT_13"/>
+					<feature mandatory="true" name="CFC"/>
+				</alt>
+				<and abstract="true" name="Server">
+					<feature name="Spamfilter"/>
+					<feature name="Nickname_wechseln"/>
+					<feature name="Private_Nachrichten"/>
+				</and>
+				<feature name="Authentifizierung"/>
+				<feature name="Farben"/>
+				<feature name="Historie"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Konsole</var>
+					<not>
+						<disj>
+							<var>Farben</var>
+							<disj>
+								<var>Historie</var>
+								<disj>
+									<var>Nickname_wechseln</var>
+									<disj>
+										<var>Private_Nachrichten</var>
+										<var>Authentifizierung</var>
+									</disj>
+								</disj>
+							</disj>
+						</disj>
+					</not>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Server</var>
+					<var>GUI</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Basis"/>
+			<feature name="Konsole"/>
+			<feature name="GUI"/>
+			<feature name="ROT_13"/>
+			<feature name="CFC"/>
+			<feature name="Authentifizierung"/>
+			<feature name="Farben"/>
+			<feature name="Historie"/>
+			<feature name="Spamfilter"/>
+			<feature name="Nickname_wechseln"/>
+			<feature name="Private_Nachrichten"/>
+		</featureOrder>
+	</featureModel>

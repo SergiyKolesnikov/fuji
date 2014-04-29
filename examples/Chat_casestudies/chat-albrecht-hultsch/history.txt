@@ -1,0 +1,42 @@
+User2: >>setzeVerschluesselungsfolge: ROT_13, CFC, <<
+User1: asdasd
+User1: asd
+User1: asd
+User2: >>setzeVerschluesselungsfolge: ROT_13, CFC, <<
+User2: 
+qfnqfnUser1: asdasd
+User1: asdasd
+User1: asd
+User1: asdasd
+User1: asd
+User1: asd
+User1: asd
+User1: asd
+User1: <gelb>asdasd</gelb>
+User1: asd/asd
+User1: asd
+User1: asd
+User1: asd
+User1: asd
+Albrecht: Albrecht
+Albrecht: hallo
+User1: hallo
+Albrecht: hallo
+User1: herbert
+herbert: hallo
+herbert: System: Spam Nachricht unterdrückt!
+herbert: spam
+System: Spam Nachricht unterdrÃ¼ckt!
+System: Spam Nachricht gesperrt!
+herbert: herbert
+User1: hallo
+User1: /avpx ureoreg
+herbert: hallo
+herbert: hallo
+ich: hallo
+herbert: selber hallo
+herbert: hallo
+ich: ich
+ich: hallo
+ich: hallo du da
+herbert: hallo

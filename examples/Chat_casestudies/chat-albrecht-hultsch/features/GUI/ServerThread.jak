@@ -1,0 +1,111 @@
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+/**
+ * TODO description
+ */
+public class ServerThread extends Thread{
+    // The Server that spawned us
+    protected ChatServer server;
+    
+    // The Socket connected to our client
+    protected Socket socket;
+    
+	public ServerThread( ChatServer server, Socket socket ) {
+        // Save the parameters
+        this.server = server;
+        this.socket = socket;
+        // Start up the thread
+        start();
+    }
+	
+	// This runs in a separate thread when start() is called in the
+    // constructor.
+    public void run() {
+        try {
+            DataInputStream din = new DataInputStream( socket.getInputStream() );
+            
+            while (true) {
+                // ... read the next message ...
+                String nachricht = din.readUTF();
+                Codierer cod = ((ServerChatClient)server.getHashtable().get(socket)).getCodierer();
+                String name = ((ServerChatClient)server.getHashtable().get(socket)).gibName();
+                
+                // TODO: Delete
+                System.out.println("rcv-codiert: von " + name + ": " + nachricht);
+                // Delete ende
+                
+                if (cod != null){
+                	nachricht = cod.entschluesseln(nachricht);
+                }
+                
+                // TODO: Delete
+                System.out.println("rcv-klar: von " + name + ": " + nachricht);
+                // Delete ende
+                
+                // ... and have the server send it to all clients
+                nachrichtBearbeiten(nachricht);
+            }
+        } catch( IOException ie ) {
+            ie.printStackTrace();
+        } finally {
+            // The connection is closed for one reason or another,
+            // so have the server dealing with it
+            server.removeConnection( socket );
+        }
+    }
+    
+    protected void nachrichtBearbeiten(String nachricht){
+    	if (nachricht.equals(">>getHistory<<\n"))
+        {
+    		try{
+	            DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
+	            String temp = server.getHistory();
+	            dout.writeUTF(temp);
+    		}
+            catch (IOException ex)
+            {
+            	ex.printStackTrace();
+            }
+            
+            System.out.println("Sending History");
+            return;
+        }
+        
+        if ((nachricht.startsWith(">>setzeVerschluesselungsfolge: ")) && (nachricht.endsWith("<<\n")))
+        {
+        	String folge = nachricht.substring(nachricht.indexOf(">>setzeVerschluesselungsfolge: ") + ">>setzeVerschluesselungsfolge: ".length(), nachricht.length()-5);
+        	
+        	String [] codiererNamen = folge.split(", ");
+        	
+        	for (int i = 0; i < codiererNamen.length; i++)
+        	{
+        		if(codiererNamen[i].equals("ROT_13"))
+        		{
+        			server.setzenCodierer(new Rot13(), socket);
+        			continue;
+        		}
+        		
+        		if(codiererNamen[i].equals("CFC"))
+        		{
+        			server.setzenCodierer(new CFC(), socket);
+        			continue;
+        		}
+        	}
+            return;
+        }
+        
+        String name = ((ServerChatClient)server.getHashtable().get(socket)).gibName();
+        
+                        
+        // ... and have the server send it to all clients
+        nachricht = name + ": " + nachricht;
+        server.sendToAll(nachricht);
+        server.addMessageToHistory(nachricht);
+        
+        
+    }
+}

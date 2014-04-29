@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and mandatory="true" name="Base">
+					<feature name="ColorChat"/>
+					<feature name="Authentification"/>
+					<feature name="History"/>
+					<feature name="privateMessaging"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

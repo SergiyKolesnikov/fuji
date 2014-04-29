@@ -1,0 +1,20 @@
+
+import java.util.HashMap;
+
+public refines  class Server {
+	
+	void registerUser(String name, Connection conn) {
+		users.put(name,conn);
+	}
+	
+	Connection getConnectionByUsername(String name) {
+		return (Connection) users.get(name);
+	}
+	
+	void sendToUser(String name, String text) {
+		Connection conn = getConnectionByUsername(name);
+		if (conn != null)
+		  conn.send(text);		
+	}
+
+}

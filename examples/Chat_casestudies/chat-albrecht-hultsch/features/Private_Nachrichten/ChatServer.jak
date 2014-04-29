@@ -1,0 +1,34 @@
+
+import java.io.DataOutputStream;
+
+/**
+ * TODO description
+ */
+public refines class ChatServer {
+	protected void sendeZu (String nutzerName, String nachricht){
+		for (Enumeration e = getClients(); e.hasMoreElements(); ) {
+			ServerChatClient cc = (ServerChatClient)e.nextElement();
+			String name = cc.gibName();
+			if (name.equals(nutzerName))
+			{
+				try
+				{
+					DataOutputStream dout = new DataOutputStream(cc.getClientSocket().getOutputStream());
+
+					nachricht = "*Privat* " + nachricht;
+					
+                	Codierer cod = cc.getCodierer();
+                    if (cod != null) {
+                    	nachricht = cod.verschluesseln(nachricht);
+                    }
+                    
+					dout.writeUTF(nachricht);
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+		}
+	}
+}

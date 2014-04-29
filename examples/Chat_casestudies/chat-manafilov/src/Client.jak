@@ -1,0 +1,218 @@
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.awt.Toolkit;
+
+SoUrCe RooT Base "../features/Base/Client.jak";
+
+
+
+/**
+ * simple chat client
+ */
+abstract class Client$$Base implements Runnable {
+	public static void main(String args[]) throws IOException {
+		if (args.length < 2)
+			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		new Gui("Chat " + args[0] + ":" + args[1], client);
+	}
+
+	protected ObjectInputStream inputStream;
+
+	protected ObjectOutputStream outputStream;
+
+	protected Thread thread;
+
+	public Client$$Base(String host, int port) {
+		try {
+			System.out.println("Connecting to " + host + " (port " + port
+					+ ")...");
+			Socket s = new Socket(host, port);
+			this.outputStream = new ObjectOutputStream((s.getOutputStream()));
+			this.inputStream = new ObjectInputStream((s.getInputStream()));
+			thread = new Thread(this);
+			thread.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * main method. waits for incoming messages.
+	 */
+	public void run() {
+		try {
+			while (true) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(msg);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			thread = null;
+			try {
+				outputStream.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			fireAddLine(((TextMessage) msg).getContent() + "\n");
+		}
+	}
+
+	public void send(String line) {
+		send(new TextMessage(line));
+	}
+
+	public void send(TextMessage msg) {
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+						
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+	/**
+	 * listener-list for the observer pattern
+	 */
+	private ArrayList listeners = new ArrayList();
+
+	/**
+	 * addListner method for the observer pattern
+	 */
+	public void addLineListener(ChatLineListener listener) {
+		listeners.add(listener);
+	}
+
+	/**
+	 * removeListner method for the observer pattern
+	 */
+	public void removeLineListener(ChatLineListener listner) {
+		listeners.remove(listner);
+	}
+
+	/**
+	 * fire Listner method for the observer pattern
+	 */
+	public void fireAddLine(String line) {
+		for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
+			ChatLineListener listener = (ChatLineListener) iterator.next();
+			listener.newChatLine(line);
+		}
+	}
+
+	public void stop() {
+		thread.stop();
+	}
+
+}
+
+SoUrCe  Colors "../features/Colors/Client.jak";abstract class Client$$Colors extends  Client$$Base  {
+	public String color = "";
+	
+	public void send(String line) {
+		if(color.equals("")){
+			send(new TextMessage(line));
+		}else{
+			
+			// Hängt die Textfarbe an der String hinten an
+			send(new TextMessage(line+" ("+color+")"));
+		}
+			
+		
+	}
+
+}
+
+SoUrCe  Auth "../features/Auth/Client.jak";abstract class Client$$Auth extends  Client$$Colors  {
+	
+	public static void main(String args[]) throws IOException {
+		
+		if (args.length != 3)
+			throw new RuntimeException("Syntax: ChatClient <host> <port> <password>");
+
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		new Gui("Chat " + args[0] + ":" + args[1], client);
+		
+		// Hier wird das Passwort gesendet
+		client.send(args[2]); 
+		
+		
+		/*
+		Client client = new Client("localhost", 8081);
+		new Gui("Chat localhost 8081", client);
+		client.send("geheim");
+		*/
+	}
+
+}
+
+SoUrCe  Logs "../features/Logs/Client.jak";
+
+abstract class Client$$Logs extends  Client$$Auth  {
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String tmp = ((TextMessage) msg).getContent();
+			fireAddLine(tmp + "\n");
+			
+			// Schreibt die Logfiles
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter("Logs-client.txt",true));
+				bw.write(tmp);
+				bw.newLine();
+				bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		
+		}
+	}
+
+}
+
+SoUrCe  Sound "../features/Sound/Client.jak";
+
+public class Client extends  Client$$Logs  {
+	
+	public void send(TextMessage msg) {
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+			Toolkit.getDefaultToolkit().beep();
+						
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+}

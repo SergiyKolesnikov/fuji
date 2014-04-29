@@ -1,0 +1,80 @@
+
+
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.JComboBox;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.TermFreqVector;
+import org.apache.lucene.search.ScoreDoc;
+import java.awt.GridBagLayout;
+
+
+/**
+ * Hauptfenster der Anwendung.
+ * 
+ * @author Mr. Pink
+ */
+public class MainFrame extends JFrame implements UI{
+	public static final long serialVersionUID = 1L;
+
+	// Referenz zu der Main-Klasse.
+	public MrPinkMain mrPinkMain = null;
+
+	// Components
+	
+	
+	
+
+	public JButton startButton;
+	//public JTextField queryTextFieldfield;
+	public JPanel searchResultContainer;
+	public JPanel groupBoxSearch;
+	public JScrollPane scrollPane;
+	public JTextArea informationField;
+	
+	public JComboBox queryTextFieldJComboBox;
+	
+
+	// Hier werden die Einstellung der Optionen gespeichert
+	public OptionStorage optionStorage = new OptionStorage(10, false, false);
+
+	/**
+	 * Konstruktor.
+	 * 
+	 * Intitialisiert das Hauptfenster.
+	 * 
+	 * @param mrPinkMain   Referenz zu der Main-Klasse.
+	 */
+	public MainFrame(MrPinkMain mrPinkMain) {
+		this.mrPinkMain = mrPinkMain;
+		this.setSize(600, 400);
+		this.setVisible(true);
+		this.setMinimumSize(this.getSize());
+		this.setLayout(new BorderLayout());

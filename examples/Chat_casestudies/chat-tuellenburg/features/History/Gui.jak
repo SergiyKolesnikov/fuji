@@ -1,0 +1,70 @@
+public refines  class Gui {
+	
+	protected JButton historyButton;
+
+  	refines Gui(String title, Client chatClient) {
+	
+	  historyButton = new JButton("History");
+	  historyButton.addActionListener(buttonPressed());
+	  paraGroup.addComponent(historyButton);
+	  vertGroup.addComponent(historyButton);
+	
+	}
+	
+	protected String createString(String text) {
+		String line = Super(String).createString(text);
+		addToHistory(line);
+		return line;
+	}
+	
+	protected ActionListener buttonPressed() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent c){
+				showHistory();
+			}
+		};
+	}
+	
+	/**
+	 * addToHistory: adds a new Line to the Historyfile on Client-side
+	 * @param line
+	 */
+	public void addToHistory(String line) {
+		try {
+			chatClient.getHistoryWriter().write(line + "\n");
+			chatClient.getHistoryWriter().flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * showHistory shows a new Window with the most recent history File
+	 * of this session
+	 */
+	public void showHistory(){
+		JFrame historyFrame = new JFrame("History");
+		JTextArea historyTextBox = new JTextArea();
+		historyTextBox.setPreferredSize(new Dimension(600,800));
+		historyTextBox.setEditable(false);
+		
+		try {
+			BufferedReader historyReader = new BufferedReader(
+							new FileReader(chatClient.getHistoryFile()));
+			String line;
+			while ((line = historyReader.readLine()) != null) {
+				historyTextBox.append(line + "\n");
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Container pane = historyFrame.getContentPane();
+		pane.add(historyTextBox,BorderLayout.CENTER);
+		
+		historyFrame.pack();
+		historyFrame.setVisible(true);
+	}
+}

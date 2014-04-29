@@ -1,0 +1,14 @@
+Prop4JSPL : [Operators] [Input_Output] [SatSolver] [To_CNF] [Tests] :: _Prop4JSPL ;
+
+Operators : [And] [Or] [Implies] [Negation] [Equals] [extended] :: _Operators ;
+
+extended : [AtLeast] [AtMost] [Choose] :: _extended ;
+
+Input_Output : [Node_Reader] [Node_Writer] :: _Input_Output ;
+
+%%
+
+SatSolver implies To_CNF ;
+To_CNF implies extended ;
+Tests implies To_CNF and Node_Reader ;
+

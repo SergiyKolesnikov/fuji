@@ -1,0 +1,73 @@
+public refines  class Connection {
+
+	private boolean connectionOpen = false;
+	
+	private String password = "geheim";
+	
+	String clientName = "";
+	
+	public void run() {
+		clientName = socket.getInetAddress().toString();
+		try {
+			
+			// Hier wird überprüft, ob das erste gesendete Nachricht == das Passwort ist.
+			if(connectionOpen == false){
+					try {
+						Object msg = inputStream.readObject();
+						String tmp = ((TextMessage)msg).getContent();
+						
+						if(tmp.equals(password)){
+							connectionOpen = true;
+						}
+						else
+						{
+							server.broadcast(clientName + " falsches Passwort");
+							try {
+								server.removeConnection(this);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								socket.close();
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+						}
+					
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+					
+			server.broadcast(clientName + " has joined.");
+			while (connectionOpen) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(clientName, msg);
+					
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				server.removeConnection(this);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			server.broadcast(clientName + " has left.");
+			try {
+				socket.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+}

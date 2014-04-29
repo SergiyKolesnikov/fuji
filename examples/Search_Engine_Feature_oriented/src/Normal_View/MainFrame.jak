@@ -1,0 +1,31 @@
+
+
+public refines class MainFrame {
+
+	public void printSearch_SearchPanel(ScoreDoc[] hits, Indexer index,
+			String query) {
+		searchResultContainer.setLayout(null);
+		try {
+			if (hits.length == 0) {
+				new NoDocument(searchResultContainer, new Point((groupBoxSearch
+						.getWidth() / 2) - 50, searchResultContainer
+						.getPreferredSize().height));
+			} else {
+
+				for (int rankPos = 0; rankPos < hits.length; rankPos++) {
+					int documentID = hits[rankPos].doc;
+					Object[] ret = index.getDocument(documentID);
+					Document document = (Document) ret[0];
+					TermFreqVector[] freqVec = (TermFreqVector[]) ret[1];
+
+					String lastModification = document.getField("lastModify")
+							.stringValue();
+					Timestamp ts = new Timestamp(new Long(lastModification));
+					Date d = new Date(ts.getTime());
+					lastModification = d.toString();
+
+					String size = document.getField("size").stringValue()
+							+ " Byte";
+
+					Point position = new Point(10, searchResultContainer
+							.getPreferr

@@ -1,0 +1,12 @@
+layer Base;
+
+SoUrCe RooT Base "../../../H:/Devolution/src/Base/MultilingualListener.jak";/**
+ * @author Marcel Jaeschke
+ * @since 1.6
+ */
+public interface MultilingualListener {
+	/**
+	 * Change the language of all components.
+	 */
+	public void changeLanguage ();
+}

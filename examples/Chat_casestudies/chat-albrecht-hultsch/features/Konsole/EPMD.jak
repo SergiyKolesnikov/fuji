@@ -1,0 +1,67 @@
+/**
+ * TODO description
+ */
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import javax.xml.stream.events.StartDocument;
+
+public refines class EPMD implements Runnable {
+	private static DataInputStream din;
+	private static DataOutputStream dout;
+	
+	public static void main(String [] args){
+		Super().main(args);
+		start();
+	}
+	
+	public static void start (){
+		// Connect to the server
+		try {
+			Anmelden anmelden = new Anmelden();
+			anmelden.ServerAbfrage();
+//			anmelden.NutzerAbfrage();
+			
+			// Initiate the connection
+			Socket serversocket = new Socket( anmelden.gibHost(), anmelden.gibPort());
+
+			// We got a connection! Tell the world
+			System.out.println( "connected to "+serversocket );
+
+			// Let's grab the streams and create DataInput/Output streams
+			// from them
+			din = new DataInputStream( serversocket.getInputStream() );
+			dout = new DataOutputStream( serversocket.getOutputStream() );
+			
+			// Start a background thread for receiving messages
+			new Thread(new EPMD()).start();
+			
+		} catch( IOException ie ) { ie.printStackTrace(); }
+	}
+	
+	public void run() {
+		try {
+			// Receive messages one-by-one, forever
+			while (true) {
+				// Get the next message
+				String message = din.readUTF();
+	                
+				System.out.print(entferneFarben(message));
+			}
+		} catch( Exception ie ) { ie.printStackTrace(); }    
+	}
+	    
+    protected String entferneFarben(String nachricht){
+		nachricht = nachricht.replace("<blau>", "");
+		nachricht = nachricht.replace("</blau>", "");
+		nachricht = nachricht.replace("<rot>", "");
+		nachricht = nachricht.replace("</rot>", "");
+		nachricht = nachricht.replace("<gelb>", "");
+		nachricht = nachricht.replace("</gelb>", "");
+		nachricht = nachricht.replace("<gruen>", "");
+		nachricht = nachricht.replace("</gruen>", "");
+		return nachricht;
+    }
+}

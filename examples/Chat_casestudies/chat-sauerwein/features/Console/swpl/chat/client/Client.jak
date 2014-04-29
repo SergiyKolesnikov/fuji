@@ -1,0 +1,6 @@
+
+public refines class Client {
+	protected void startUserInterface() {
+		ClientConsole gui = new ClientConsole(this);
+	}	
+} 

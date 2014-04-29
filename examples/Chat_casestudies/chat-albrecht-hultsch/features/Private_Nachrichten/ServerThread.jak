@@ -1,0 +1,19 @@
+/**
+ * TODO description
+ */
+public refines class ServerThread {
+	protected void nachrichtBearbeiten(String nachricht){
+		if (nachricht.startsWith("@" )){
+			int index = nachricht.indexOf(" ");
+			String empfaenger = nachricht.substring(1, index);
+			nachricht = nachricht.substring(index +1);
+			
+			String sender = ((ServerChatClient)server.getHashtable().get(socket)).gibName();
+			
+			server.sendeZu(empfaenger, sender + ": " + nachricht);
+			server.sendeZu(sender, sender + ": " + nachricht);
+			return;
+		}
+		Super().nachrichtBearbeiten(nachricht);
+	}
+}

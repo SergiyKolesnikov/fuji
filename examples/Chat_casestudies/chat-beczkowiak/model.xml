@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and abstract="true" name="Stuff">
+					<feature name="EncryptionOn"/>
+					<feature name="LoginEncryption"/>
+					<feature name="ConsoleLogin"/>
+					<feature name="GUILogin"/>
+					<feature name="DAES"/>
+				</and>
+				<feature name="Blocklist"/>
+				<feature name="Audio"/>
+				<feature name="History"/>
+				<feature name="Colors"/>
+				<or abstract="true" name="Encryption">
+					<feature mandatory="true" name="AES"/>
+					<feature mandatory="true" name="DES"/>
+				</or>
+				<feature name="Login"/>
+				<alt abstract="true" mandatory="true" name="UserInterface">
+					<feature mandatory="true" name="Console"/>
+					<feature mandatory="true" name="GUI"/>
+				</alt>
+				<feature mandatory="true" name="Base"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Colors</var>
+					<not>
+						<var>Console</var>
+					</not>
+				</imp>
+			</rule>
+			<rule>
+				<eq>
+					<disj>
+						<var>AES</var>
+						<var>DES</var>
+					</disj>
+					<var>EncryptionOn</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>AES</var>
+						<var>DES</var>
+					</conj>
+					<var>DAES</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>GUI</var>
+						<var>Login</var>
+					</conj>
+					<var>GUILogin</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>EncryptionOn</var>
+						<var>Login</var>
+					</conj>
+					<var>LoginEncryption</var>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<conj>
+						<var>Console</var>
+						<var>Login</var>
+					</conj>
+					<var>ConsoleLogin</var>
+				</eq>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Login"/>
+			<feature name="GUI"/>
+			<feature name="Console"/>
+			<feature name="History"/>
+			<feature name="Colors"/>
+			<feature name="GUILogin"/>
+			<feature name="ConsoleLogin"/>
+			<feature name="Audio"/>
+			<feature name="EncryptionOn"/>
+			<feature name="LoginEncryption"/>
+			<feature name="Blocklist"/>
+			<feature name="AES"/>
+			<feature name="DES"/>
+			<feature name="DAES"/>
+		</featureOrder>
+	</featureModel>

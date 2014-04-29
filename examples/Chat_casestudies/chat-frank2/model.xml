@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and name="Base">
+					<feature name="Color"/>
+					<feature name="History"/>
+					<feature name="Auth"/>
+					<feature name="Spamfilter"/>
+					<feature name="Sound"/>
+					<feature name="Encryption"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

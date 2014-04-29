@@ -1,0 +1,7 @@
+layer swpl.chat.common;
+
+SoUrCe RooT Encryption.swpl.chat.common "../../../../features/Encryption/swpl/chat/common/Encryption.jak";
+public interface Encryption {
+	public abstract String encode(String msg);
+	public abstract String decode(String msg);
+}

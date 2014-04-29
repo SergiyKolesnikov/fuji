@@ -1,0 +1,9 @@
+public refines  class Connection {
+
+	private final HistorieLogger logger = new HistorieLogger(Server.class.getName() + ".txt");
+
+	protected void process(TextMessage msg) {
+		Super().process(msg);
+		logger.log(msg.toString());
+	}	
+}

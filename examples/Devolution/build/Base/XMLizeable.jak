@@ -1,0 +1,20 @@
+layer Base;/* JDOM */
+import org.jdom.Element;
+
+SoUrCe RooT Base "../../../H:/Devolution/src/Base/XMLizeable.jak";
+
+/**
+ * Interface to allow to visit an methoh which convert the object to a proper
+ * XML element.
+ * 
+ * @author Marcel Jaeschke
+ * @since 1.5
+ */
+public interface XMLizeable {
+	/**
+	 * Convert the object as a proper XML element.
+	 * 
+	 * @return The object as a proper XML element.
+	 */
+	public Element toXML ();
+}

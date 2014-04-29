@@ -1,0 +1,12 @@
+
+
+public refines  class Connection {
+	
+	protected void handleIncomingMessage(Object msg) {
+		Super(Object).handleIncomingMessage(msg);
+		if (msg instanceof TextMessage) {
+			Log.info(((TextMessage) msg).getContent());
+		}
+	}
+
+}

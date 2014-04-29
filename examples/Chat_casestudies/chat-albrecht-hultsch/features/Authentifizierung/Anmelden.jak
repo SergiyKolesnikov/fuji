@@ -1,0 +1,34 @@
+/**
+ * TODO description
+ */
+public refines class Anmelden {
+	protected String nutzerName;
+	protected String passwort;
+	
+	public String gibNutzerName(){
+		return nutzerName;
+	}
+	
+	public String gibpasswort(){
+		return passwort;
+	}
+	
+	public boolean istAuthentifiziert(){
+		return (nutzerName.equals(passwort) && !nutzerName.isEmpty());
+	}
+	
+	public void ServerAbfrage(){
+		Super().ServerAbfrage();
+		NutzerAbfrage abfrage= new NutzerAbfrage(null, true);
+		
+		while (abfrage.status = true){
+			nutzerName = abfrage.name;
+			passwort = abfrage.passwort;
+			if(istAuthentifiziert()){
+				break;
+			}
+			abfrage.setVisible(true);
+		}
+	}
+
+}

@@ -1,0 +1,7 @@
+public refines  class GUI {
+	
+	protected Dimension setLocationCenter(int x, int y) {
+		return Super().setLocationCenter(800,550);
+	}
+	
+}

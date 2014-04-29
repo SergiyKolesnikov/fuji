@@ -1,0 +1,18 @@
+
+import java.awt.Toolkit;
+
+public refines  class Client {
+	
+	public void send(TextMessage msg) {
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+			Toolkit.getDefaultToolkit().beep();
+						
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+}

@@ -1,0 +1,7 @@
+public refines  class Gui {
+	
+	refines Gui(String title, Client chatClient) {
+	  chatClient.login("geheim");	
+	}
+
+}

@@ -1,0 +1,30 @@
+
+import java.awt.Color;
+
+
+
+public refines  class ChatFrame {
+	
+	
+	refines ChatFrame() {
+		this.selectedColor=null;
+		Super().ChatFrame();
+	}
+	
+	protected void init() {
+		Super().init();
+		JMenuItem mntmSetColor = new JMenuItem("set color");
+		mntmSetColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Color returnedColor= JColorChooser.showDialog(null, "choose text color", selectedColor);
+				if (returnedColor!=null) {
+					selectedColor = returnedColor;
+					textAreaUser.setForeground(selectedColor);
+				}
+			}
+		});
+		mnText.add(mntmSetColor);
+	}
+	
+	
+}

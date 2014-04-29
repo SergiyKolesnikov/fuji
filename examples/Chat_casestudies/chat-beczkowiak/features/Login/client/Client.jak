@@ -1,0 +1,41 @@
+
+import common.LoginMessage;
+import common.UserConfirmedMessage;
+
+public refines  class Client {
+	protected boolean userConfirmed = false;
+    protected String username;
+    
+    public void send(IMessage msg) {
+    	if (!this.userConfirmed) {
+            if (msg instanceof LoginMessage) {
+                this.username = ((LoginMessage) msg).getName();
+                Super(IMessage).send(msg);
+            } else {
+                fireAddLine("Login needed!");
+            }
+        } else {
+        	if (!(msg instanceof LoginMessage)) {
+        		Super(IMessage).send(msg);
+        	}
+    	}
+    }
+    
+    protected void handleIncomingMessage(Object msg) {
+    	if (msg instanceof UserConfirmedMessage) {
+            UserConfirmedMessage message = (UserConfirmedMessage) msg;
+            this.userConfirmed = message.isConfirmed();
+            
+            if (this.userConfirmed) {
+                fireAddLine("Logged in as " + username + ".");
+            } else {
+                fireAddLine("Invalid username and/or password!");
+            }
+        }
+        Super(Object).handleIncomingMessage(msg);
+    }
+    
+    public boolean isConfirmedUser() {
+    	return this.userConfirmed;
+    }
+}

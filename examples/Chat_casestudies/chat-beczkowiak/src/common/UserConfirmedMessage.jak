@@ -1,0 +1,64 @@
+layer common;
+
+import java.io.Serializable;
+import crypt.Crypt;
+
+SoUrCe RooT Login.common "../../features/Login/common/UserConfirmedMessage.jak";
+
+
+
+
+/**
+ * Nachricht, die einen User informiert, ob seine Logindaten
+ * bestaetigt wurden.
+ * @author Ralf Beczkowiak
+ *
+ */
+abstract class UserConfirmedMessage$$Login$common implements Serializable, IMessage {
+
+    protected static final long serialVersionUID = 2101902412878462084L;
+    
+    protected boolean confirmed;
+    
+    /**
+     * Erzeugt eine neue Bestaetigungsnachricht, die
+     * den User informiert, ob sein Login akzeptiert wurde.
+     * @param confirmed Status
+     */
+    public UserConfirmedMessage$$Login$common(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+    
+    /**
+     * Feedback, ob der User zugelassen wurde.
+     * @return Feedback
+     */
+    public boolean isConfirmed() {
+        return this.confirmed;
+    }
+}
+
+SoUrCe  LoginEncryption.common "../../features/LoginEncryption/common/UserConfirmedMessage.jak";
+
+public class UserConfirmedMessage extends  UserConfirmedMessage$$Login$common  {
+	protected byte[] confirmedCrypted;
+	
+	public void encode(Crypt crypt) {
+        byte[] array = crypt.encode(String.valueOf(this.confirmed));
+        if (array != null) {
+            this.confirmed = false;
+            this.confirmedCrypted = array;
+        }
+    }
+
+    public void decode(Crypt crypt) {
+        Object obj = crypt.decode(this.confirmedCrypted);
+        if (obj != null) {
+            if (obj instanceof String){
+                this.confirmed = Boolean.parseBoolean((String)obj);
+            } else {
+                throw new RuntimeException("Failed to decode an login request.");
+            }
+        }
+    }
+}

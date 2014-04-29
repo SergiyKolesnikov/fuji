@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Chat">
+				<alt name="Encryption">
+					<feature mandatory="true" name="Simple"/>
+					<feature mandatory="true" name="Rot13"/>
+				</alt>
+				<feature name="Logging"/>
+				<alt mandatory="true" name="UI">
+					<feature mandatory="true" name="Console"/>
+					<and mandatory="true" name="Graphical">
+						<feature name="Password"/>
+						<feature name="Color"/>
+					</and>
+				</alt>
+				<feature name="Username"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

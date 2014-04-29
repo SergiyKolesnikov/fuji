@@ -1,0 +1,7 @@
+layer swpl.chat.common;
+
+SoUrCe RooT Chat.swpl.chat.common "../../../../features/Chat/swpl/chat/common/Host.jak";
+public interface Host {
+	public abstract String getHostName();
+	public abstract HostType getHostType();
+}

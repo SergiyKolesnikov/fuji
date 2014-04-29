@@ -1,0 +1,4 @@
+BankAccount : [Overdraft] [Interest] [CreditWorthiness] [DailyLimit] :: _BankAccount ;
+
+Interest : [InterestEstimation] :: _Interest ;
+

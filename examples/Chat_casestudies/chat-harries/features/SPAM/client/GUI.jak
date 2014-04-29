@@ -1,0 +1,9 @@
+public refines  class GUI {
+	
+	protected void sendMessage() {
+		if (!txtMessage.getText().contains("scheisse") || !txtMessage.getText().contains("penner")) {
+				Super().sendMessage();
+		}
+	}
+	
+}

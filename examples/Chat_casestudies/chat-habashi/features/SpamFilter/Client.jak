@@ -1,0 +1,19 @@
+public refines  class Client {
+
+	protected String[] spamList = {"lila","blau","rot","gelb","justin bieber"};
+	
+	protected boolean contains(String text) {
+		for(int i=0;i<spamList.length;i++){
+			if(spamList[i].equals(text))
+				return true;
+		}
+		return false;
+	}
+	
+	public void send(OutgoingTextMessage textMessage) {
+		if(contains(textMessage.getText()))
+			return;
+		Super().send(textMessage);
+	}
+
+}

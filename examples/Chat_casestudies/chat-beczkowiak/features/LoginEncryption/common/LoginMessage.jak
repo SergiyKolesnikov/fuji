@@ -1,0 +1,35 @@
+
+import crypt.Crypt;
+
+public refines  class LoginMessage {
+	protected byte[] nameCrypted;
+	protected byte[] passwordCrypted;
+	
+	public void encode(Crypt crypt) {
+        byte[] array = crypt.encode(this.name);
+        if (array != null) {
+            this.name = "";
+            this.nameCrypted = array;
+            array = crypt.encode(this.password);
+            this.password = new char[] {};
+            this.passwordCrypted = array;
+        }
+    }
+
+	public void decode(Crypt crypt) {
+        Object obj = crypt.decode(this.nameCrypted);
+        if (obj != null) {
+			if (obj instanceof String){
+				this.name = (String) obj;
+        	} else {
+        	    throw new RuntimeException("Failed to decode an login request.");
+			}
+			obj = crypt.decode(this.passwordCrypted);
+			if (obj instanceof char[]){
+      	          this.password = (char[]) obj;
+			} else {
+				throw new RuntimeException("Failed to decode an login request.");
+			}
+        }
+	}
+}

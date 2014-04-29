@@ -1,0 +1,79 @@
+
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+
+public refines  class ChatClientGUI {
+	
+	public static final long serialVersionUID = 217362163163278123L;
+	protected SpamFilter spamFilter= new SpamFilter();
+	
+	protected void init() {
+		Super().init();
+		JMenuItem mntmSpamfilter = new JMenuItem("Spamfilter");
+				mntmSpamfilter.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						final JFrame spamFrame= new JFrame();
+						spamFrame.setLayout(new BorderLayout());
+						JPanel pnButtons= new JPanel();
+						final JList lstSpam = new JList(spamFilter.getBlacklist().toArray(new String[0]));
+						lstSpam.setPreferredSize(new Dimension(200,100));
+						JButton btnAddFilter = new JButton("add");
+						btnAddFilter.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								String item=null;
+								item = JOptionPane.showInputDialog(null, "Filter hinzufuegen", "");
+								if (!item.equals("")) spamFilter.addToBlacklist(item);
+								lstSpam.setListData(spamFilter.getBlacklist().toArray(new String[0]));
+								spamFrame.validate();
+							}
+						});
+						JButton btnDelFilter = new JButton("del");
+						btnDelFilter.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								String item=null;
+								item = JOptionPane.showInputDialog(null, "Filter entfernen", "");
+								if (!item.equals("")) spamFilter.removeFromBlacklist(item);
+								lstSpam.setListData(spamFilter.getBlacklist().toArray(new String[0]));
+								spamFrame.validate();
+							}
+						});
+						pnButtons.add(btnAddFilter);
+						pnButtons.add(btnDelFilter);
+						spamFrame.add(new JLabel("SpamFilterList"));
+						spamFrame.add(lstSpam, BorderLayout.CENTER);
+						spamFrame.add(pnButtons, BorderLayout.PAGE_END);	
+						spamFrame.pack();
+						spamFrame.setVisible(true);
+					}
+				});
+				mnChat.add(mntmSpamfilter);		
+	}
+	
+	public void newChatLine(MessageObject msgo) {
+		if (!(msgo.getMessageType().equals(MessageType.TEXT) && spamFilter.filterMessage(msgo))) {
+			Super(MessageObject).newChatLine(msgo);
+		}
+	}
+}

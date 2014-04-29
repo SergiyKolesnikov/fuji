@@ -1,0 +1,15 @@
+ 
+import swpl.chat.client.ChatLineListener;
+import swpl.chat.client.Client;
+import swpl.chat.common.TextMessage;
+
+public class ClientConsole implements ChatLineListener {
+	
+	public ClientConsole(Client chatClient) {
+		chatClient.addLineListener(this);
+	}
+	
+	public void newChatLine(TextMessage textMsg) {
+		System.out.println(textMsg.getContent() + "\n");
+	}
+}

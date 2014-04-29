@@ -1,0 +1,11 @@
+/**
+ * TODO description
+ */
+public refines class HauptGUI {
+	protected void mi_AnmeldenActionPerformed(java.awt.event.ActionEvent evt) {
+		Super().mi_AnmeldenActionPerformed(evt);
+		
+		mi_Historie.setEnabled(true);
+	}
+
+}

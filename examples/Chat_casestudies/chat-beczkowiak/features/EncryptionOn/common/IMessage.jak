@@ -1,0 +1,9 @@
+
+
+import crypt.Crypt;
+
+public refines  interface IMessage {
+	public void encode(Crypt crypt);
+    
+    public void decode(Crypt crypt);
+}

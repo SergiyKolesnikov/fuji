@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="features/And"/>
+	<classpathentry kind="src" path="features/AtLeast"/>
+	<classpathentry kind="src" path="features/AtMost"/>
+	<classpathentry kind="src" path="features/Choose"/>
+	<classpathentry kind="src" path="features/Equals"/>
+	<classpathentry kind="src" path="features/Implies"/>
+	<classpathentry kind="src" path="features/Negation"/>
+	<classpathentry kind="src" path="features/Node_Reader"/>
+	<classpathentry kind="src" path="features/Node_Writer"/>
+	<classpathentry kind="src" path="features/Operators"/>
+	<classpathentry kind="src" path="features/Or"/>
+	<classpathentry kind="src" path="features/SatSolver"/>
+	<classpathentry kind="src" path="features/Tests"/>
+	<classpathentry kind="src" path="features/To_CNF"/>
+	<classpathentry kind="src" path="src/full"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

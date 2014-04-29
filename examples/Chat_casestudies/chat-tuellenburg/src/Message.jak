@@ -1,0 +1,14 @@
+
+import java.io.Serializable;
+
+SoUrCe RooT Base "../features/Base/Message.jak";
+
+public class Message implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	public Message(){
+		
+	}
+
+}

@@ -1,0 +1,7 @@
+
+public refines class Client {
+	protected void startUserInterface() {
+		ClientWindow gui = new ClientWindow(this);
+		gui.show();
+	}	
+} 

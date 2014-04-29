@@ -1,0 +1,11 @@
+public refines  class Client {
+	
+	public static void main(String args[]) throws IOException{
+		if (args.length != 2)
+			throw new RuntimeException("wrong parameter!");
+		
+		Client client = new Client(args[0], Integer.parseInt(args[1]));		
+		new GUI(client);	
+	}
+
+}

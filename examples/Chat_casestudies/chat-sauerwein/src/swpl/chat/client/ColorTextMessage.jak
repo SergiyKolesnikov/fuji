@@ -1,0 +1,23 @@
+layer swpl.chat.client;
+import java.awt.Color;
+
+import swpl.chat.common.TextMessage;
+
+SoUrCe RooT Color.swpl.chat.client "../../../../features/Color/swpl/chat/client/ColorTextMessage.jak";
+
+public class ColorTextMessage extends TextMessage {
+
+	private static final long serialVersionUID = 3040444623853535495L;
+	
+	private Color color;
+
+	public ColorTextMessage(String content, Color color) {
+		super(content);
+		this.color = color;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+}

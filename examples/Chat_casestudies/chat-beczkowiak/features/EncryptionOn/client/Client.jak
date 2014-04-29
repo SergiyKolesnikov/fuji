@@ -1,0 +1,24 @@
+
+
+import crypt.Crypt;
+
+public refines  class Client {
+	
+	protected Crypt crypt;
+	
+	refines Client(String host, int port) {
+		this.crypt = new Crypt();
+	}
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof IMessage) {
+	        ((IMessage) msg).decode(this.crypt);
+	    }
+	    Super(Object).handleIncomingMessage(msg);
+	}
+	
+	protected void beforeSending(IMessage msg) {
+		msg.encode(this.crypt);
+		Super(IMessage).beforeSending(msg);
+	}
+}

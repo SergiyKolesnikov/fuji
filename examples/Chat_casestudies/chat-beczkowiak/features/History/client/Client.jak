@@ -1,0 +1,35 @@
+
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public refines  class Client {
+	
+	protected BufferedWriter bw;
+	
+	protected void handleIncomingMessage(Object msg) {
+		Super(Object).handleIncomingMessage(msg);
+		BufferedWriter bw = getBufferedWriter();
+        if (msg instanceof TextMessage) {
+            try {
+                bw.write(((TextMessage) msg).getContent() + "\n");
+                bw.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+            }
+        }
+	}
+	
+	protected BufferedWriter getBufferedWriter() {
+        if (this.bw == null) {
+            try {
+                this.bw = new BufferedWriter(new FileWriter(new File("Client.txt"), true));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return this.bw;
+    }
+}

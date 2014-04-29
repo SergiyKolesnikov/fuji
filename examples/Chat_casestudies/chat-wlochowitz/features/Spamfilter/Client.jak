@@ -1,0 +1,10 @@
+public refines  class Client {
+
+	public void fireAddLine(TextMessage msg) {
+		if (Spamfilter.hasSpamHint(msg)) {
+			System.out.println("dubious message was discarded..."); 
+		} else {
+			Super().fireAddLine(msg);
+		}		
+	}
+}

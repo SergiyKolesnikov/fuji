@@ -1,0 +1,24 @@
+public refines  class Client {
+	
+	private boolean ALLOW_INTERACTION;
+	public final String CODE = getCode();
+
+	public void send(OutgoingTextMessage textMessage) {
+		if(!ALLOW_INTERACTION){
+			if(textMessage.getText().equals(CODE)) ALLOW_INTERACTION=true;
+			return;
+		}
+		Super().send(textMessage);
+	}
+
+	public void handleIncomingMessage(Object msg) throws IOException {
+		if(!ALLOW_INTERACTION)
+			return;
+		Super().handleIncomingMessage(msg);			
+	}
+	
+	public String getCode(){
+		return "code";
+	}
+	
+}

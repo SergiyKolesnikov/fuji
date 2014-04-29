@@ -1,0 +1,36 @@
+
+
+public refines class Connection {
+	private static final String PASSWORD = "secret";
+	
+	private boolean loggedIn = false;
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {		
+		// if authenticated, just forward the message
+		if (loggedIn) {
+			return Super(TextMessage).prepareReceiveMessage(msg);
+		}
+		
+		
+		// client is not authenticated, check if the sent message is the password
+		if (isValidPassword(msg.getContent())) {
+			loggedIn = true;
+			send("Successfully logged in");
+		} else {
+			send("Sorry, wrong password");
+		}
+		
+		throw new SecurityException("not authenticated");
+	}
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		try {
+			Super(String, Object).handleIncomingMessage(name, msg);
+		} catch (SecurityException exc) {
+			// don't let the other features see this message
+		}
+	}
+	private boolean isValidPassword(String password) {
+		return password.equals(PASSWORD);
+	}
+}

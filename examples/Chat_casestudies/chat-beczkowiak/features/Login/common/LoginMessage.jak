@@ -1,0 +1,43 @@
+
+
+import java.io.Serializable;
+
+/**
+ * Serialisierbare Klasse zum Versenden der Login-Daten.
+ * @author Ralf Beczkowiak
+ *
+ */
+public class LoginMessage implements Serializable, IMessage {
+
+    protected static final long serialVersionUID = 4047863306110543911L;
+    
+    protected String name;
+    protected char[] password;
+    
+    /**
+     * Erzeugt eine neue Loginmessage zum Versenden.
+     * @param name Benutzername
+     * @param password Passwort
+     */
+    public LoginMessage(String name, char[] password) {
+        this.name = name;
+        this.password = password;
+    }
+    
+    /**
+     * Gibt den Benutzernamen zurueck.
+     * @return Benutzername
+     */
+    public String getName() {
+        return this.name;
+    }
+    
+    /**
+     * Gibt das Passwort zurueck.
+     * @return Passwort
+     */
+    public char[] getPassword() {
+        return this.password;
+    }
+    
+}

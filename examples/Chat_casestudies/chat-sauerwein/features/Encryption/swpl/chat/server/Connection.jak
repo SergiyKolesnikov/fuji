@@ -1,0 +1,23 @@
+
+import swpl.chat.common.Encryption;
+import swpl.chat.common.DefaultEncryption;
+
+public refines class Connection {
+	private Encryption encryption = new DefaultEncryption();
+	
+	protected TextMessage prepareReceiveMessage(TextMessage msg) {
+		String decodedText = encryption.decode(msg.getContent());
+		msg.setContent(decodedText);
+		
+		return Super(TextMessage).prepareReceiveMessage(msg);
+	}
+	
+	protected TextMessage prepareSendMessage(TextMessage msg) {
+		msg = Super(TextMessage).prepareSendMessage(msg);
+		
+		String encodedText = encryption.encode(msg.getContent());
+		msg.setContent(encodedText);
+		
+		return msg;
+	}
+} 

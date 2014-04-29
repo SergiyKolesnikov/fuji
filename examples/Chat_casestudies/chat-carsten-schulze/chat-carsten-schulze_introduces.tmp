@@ -1,0 +1,171 @@
+introduces CLI {package}client{type}Client
+introduces GUI {package}client{type}Client
+introduces History {package}client{type}Client
+introduces ROT {package}client{type}Client
+introduces Spamfilter {package}client{type}Client
+introduces XOR {package}client{type}Client
+introduces Authentication {package}client{type}Client
+introduces Authentication {static}{package}client{type}Client{field}password{type}java.lang.String
+introduces Authentication {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces CLI {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+introduces CLI {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+introduces CLI {package}client{type}Client{field}thread{type}java.lang.Thread
+introduces CLI {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+introduces CLI {static}{package}client{type}Client{method}main(java.lang.String[]){type}void
+introduces CLI {package}client{type}Client{method}run(){type}void
+introduces CLI {package}client{type}Client{method}newMessage(java.lang.Object){type}void
+introduces CLI {package}client{type}Client{method}send(common.Message){type}void
+introduces CLI {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+introduces CLI {package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int
+introduces CLI {package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void
+introduces CLI {package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message
+introduces CLI {package}client{type}Client{method}stop(){type}void
+introduces CLI {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces GUI {package}client{type}Client{field}inputStream{type}java.io.ObjectInputStream
+introduces GUI {package}client{type}Client{field}outputStream{type}java.io.ObjectOutputStream
+introduces GUI {package}client{type}Client{field}thread{type}java.lang.Thread
+introduces GUI {package}client{type}Client{field}plugins{type}java.util.ArrayList<client.ChatPlugin>
+introduces GUI {static}{package}client{type}Client{method}main(java.lang.String[]){type}void
+introduces GUI {package}client{type}Client{method}run(){type}void
+introduces GUI {package}client{type}Client{method}newMessage(java.lang.Object){type}void
+introduces GUI {package}client{type}Client{method}send(common.Message){type}void
+introduces GUI {package}client{type}Client{method}loadPlugin(client.ChatPlugin){type}void
+introduces GUI {package}client{type}Client{method}compare(client.ChatPlugin, client.ChatPlugin){type}int
+introduces GUI {package}client{type}Client{method}removePlugin(client.ChatPlugin){type}void
+introduces GUI {package}client{type}Client{method}notifyPlugins(common.Message){type}common.Message
+introduces GUI {package}client{type}Client{method}init(){type}void
+introduces GUI {package}client{type}Client{method}stop(){type}void
+introduces GUI {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces History {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces ROT {static}{package}client{type}Client{method}main(java.lang.String[]){type}void
+introduces ROT {package}client{type}Client{method}send(common.Message){type}void
+introduces ROT {package}client{type}Client{constructor}Client()
+introduces Spamfilter {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces XOR {package}client{type}Client{method}send(common.Message){type}void
+introduces XOR {package}client{type}Client{constructor}Client(java.lang.String, int, java.util.List<client.ChatPlugin>)
+introduces GUI {package}server{type}Connection
+introduces Usernames {package}server{type}Connection
+introduces Authentication {package}server{type}Connection
+introduces Authentication {static}{package}server{type}Connection{field}password{type}java.lang.String
+introduces Authentication {package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server)
+introduces GUI {package}server{type}Connection{field}socket{type}java.net.Socket
+introduces GUI {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+introduces GUI {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+introduces GUI {package}server{type}Connection{field}server{type}server.Server
+introduces GUI {package}server{type}Connection{method}run(){type}void
+introduces GUI {package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void
+introduces GUI {package}server{type}Connection{method}send(java.lang.String){type}void
+introduces GUI {package}server{type}Connection{method}send(common.Message){type}void
+introduces GUI {package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server)
+introduces Usernames {package}server{type}Connection{field}socket{type}java.net.Socket
+introduces Usernames {package}server{type}Connection{field}inputStream{type}java.io.ObjectInputStream
+introduces Usernames {package}server{type}Connection{field}outputStream{type}java.io.ObjectOutputStream
+introduces Usernames {package}server{type}Connection{field}server{type}server.Server
+introduces Usernames {package}server{type}Connection{field}clientName{type}java.lang.String
+introduces Usernames {package}server{type}Connection{method}run(){type}void
+introduces Usernames {package}server{type}Connection{method}handleIncomingMessage(java.lang.Object){type}void
+introduces Usernames {package}server{type}Connection{method}send(java.lang.String){type}void
+introduces Usernames {package}server{type}Connection{method}send(common.Message){type}void
+introduces Usernames {package}server{type}Connection{method}setclientName(java.lang.String){type}void
+introduces Usernames {package}server{type}Connection{method}getclientName(){type}java.lang.String
+introduces Usernames {package}server{type}Connection{constructor}Connection(java.net.Socket, server.Server)
+introduces GUI {package}common{type}Message
+introduces CLI {package}common{type}Message
+introduces CLI {static}{package}common{type}Message{field}serialVersionUID{type}long
+introduces CLI {package}common{type}Message{field}text{type}java.lang.String
+introduces CLI {package}common{type}Message{field}status{type}byte
+introduces CLI {package}common{type}Message{field}dest{type}java.lang.String
+introduces CLI {package}common{type}Message{field}src{type}java.lang.String
+introduces CLI {package}common{type}Message{constructor}Message(java.lang.String, byte)
+introduces CLI {package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String)
+introduces CLI {package}common{type}Message{method}getText(){type}java.lang.String
+introduces CLI {package}common{type}Message{method}getStatus(){type}byte
+introduces CLI {package}common{type}Message{method}setStatus(byte){type}void
+introduces CLI {package}common{type}Message{method}getDestination(){type}java.lang.String
+introduces GUI {static}{package}common{type}Message{field}serialVersionUID{type}long
+introduces GUI {package}common{type}Message{field}text{type}java.lang.String
+introduces GUI {package}common{type}Message{field}status{type}byte
+introduces GUI {package}common{type}Message{field}dest{type}java.lang.String
+introduces GUI {package}common{type}Message{field}src{type}java.lang.String
+introduces GUI {package}common{type}Message{method}getText(){type}java.lang.String
+introduces GUI {package}common{type}Message{method}getStatus(){type}byte
+introduces GUI {package}common{type}Message{method}setStatus(byte){type}void
+introduces GUI {package}common{type}Message{method}getDestination(){type}java.lang.String
+introduces GUI {package}common{type}Message{constructor}Message(java.lang.String, byte)
+introduces GUI {package}common{type}Message{constructor}Message(java.lang.String, byte, java.lang.String, java.lang.String)
+introduces GUI {package}client{type}ChatPlugin
+introduces CLI {package}client{type}ChatPlugin
+introduces CLI {package}client{type}ChatPlugin{method}getType(){type}byte
+introduces CLI {package}client{type}ChatPlugin{method}process(common.Message){type}common.Message
+introduces GUI {package}client{type}ChatPlugin{method}getType(){type}byte
+introduces GUI {package}client{type}ChatPlugin{method}process(common.Message){type}common.Message
+introduces CLI {package}client{type}Cli
+introduces CLI {package}client{type}Cli{field}type{type}byte
+introduces CLI {package}client{type}Cli{constructor}Cli(client.Client)
+introduces CLI {package}client{type}Cli{method}getType(){type}byte
+introduces CLI {package}client{type}Cli{method}process(common.Message){type}common.Message
+introduces GUI {package}client{type}ChatObserver
+introduces CLI {package}client{type}ChatObserver
+introduces CLI {package}client{type}ChatObserver{method}newMessage(java.lang.Object){type}void
+introduces CLI {package}client{type}ChatObserver{method}loadPlugin(client.ChatPlugin){type}void
+introduces CLI {package}client{type}ChatObserver{method}removePlugin(client.ChatPlugin){type}void
+introduces CLI {package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message
+introduces GUI {package}client{type}ChatObserver{method}newMessage(java.lang.Object){type}void
+introduces GUI {package}client{type}ChatObserver{method}loadPlugin(client.ChatPlugin){type}void
+introduces GUI {package}client{type}ChatObserver{method}removePlugin(client.ChatPlugin){type}void
+introduces GUI {package}client{type}ChatObserver{method}notifyPlugins(common.Message){type}common.Message
+introduces GUI {package}client{type}Gui
+introduces FormatText {package}client{type}Gui
+introduces FormatText {package}client{type}Gui{constructor}Gui(java.lang.String, client.Client)
+introduces FormatText {package}client{type}Gui{method}process(common.Message){type}common.Message
+introduces GUI {static}{package}client{type}Gui{field}serialVersionUID{type}long
+introduces GUI {static}{package}client{type}Gui{field}type{type}byte
+introduces GUI {package}client{type}Gui{field}outputTextbox{type}javax.swing.JEditorPane
+introduces GUI {package}client{type}Gui{field}inputField{type}javax.swing.JTextField
+introduces GUI {package}client{type}Gui{field}scrollPane{type}javax.swing.JScrollPane
+introduces GUI {package}client{type}Gui{field}chatClient{type}client.Client
+introduces GUI {package}client{type}Gui{method}getType(){type}byte
+introduces GUI {package}client{type}Gui{method}getInput(){type}java.awt.event.ActionListener
+introduces GUI {package}client{type}Gui{method}actionPerformed(java.awt.event.ActionEvent){type}void
+introduces GUI {package}client{type}Gui{method}process(common.Message){type}common.Message
+introduces GUI {package}client{type}Gui{constructor}Gui(java.lang.String, client.Client)
+introduces GUI {package}server{type}Server
+introduces GUI {static}{package}server{type}Server{method}main(java.lang.String[]){type}void
+introduces GUI {package}server{type}Server{constructor}Server(int)
+introduces GUI {package}server{type}Server{method}connectTo(java.net.Socket){type}server.Connection
+introduces GUI {package}server{type}Server{field}connections{type}java.util.HashSet<server.Connection>
+introduces GUI {package}server{type}Server{method}broadcast(common.Message){type}void
+introduces GUI {package}server{type}Server{method}unicast(common.Message){type}void
+introduces GUI {package}server{type}Server{method}removeConnection(server.Connection){type}void
+introduces History {package}client{type}History
+introduces History {package}client{type}History{field}type{type}byte
+introduces History {package}client{type}History{field}path{type}java.lang.String
+introduces History {package}client{type}History{constructor}History(java.lang.String, client.Client)
+introduces History {package}client{type}History{method}getType(){type}byte
+introduces History {package}client{type}History{method}process(common.Message){type}common.Message
+introduces XOR {package}client{type}Encryption
+introduces ROT {package}client{type}Encryption
+introduces ROT {package}client{type}Encryption{field}type{type}byte
+introduces ROT {package}client{type}Encryption{field}cipher{type}java.lang.String
+introduces ROT {package}client{type}Encryption{field}key{type}char
+introduces ROT {package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client)
+introduces ROT {package}client{type}Encryption{method}getType(){type}byte
+introduces ROT {package}client{type}Encryption{method}process(common.Message){type}common.Message
+introduces ROT {package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String
+introduces ROT {package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String
+introduces XOR {package}client{type}Encryption{field}type{type}byte
+introduces XOR {package}client{type}Encryption{field}cipher{type}java.lang.String
+introduces XOR {package}client{type}Encryption{field}key{type}char
+introduces XOR {package}client{type}Encryption{method}getType(){type}byte
+introduces XOR {package}client{type}Encryption{method}process(common.Message){type}common.Message
+introduces XOR {package}client{type}Encryption{method}encrypt(java.lang.String){type}java.lang.String
+introduces XOR {package}client{type}Encryption{method}decrypt(java.lang.String){type}java.lang.String
+introduces XOR {package}client{type}Encryption{constructor}Encryption(java.lang.String, char, client.Client)
+introduces Spamfilter {package}client{type}Spamfilter
+introduces Spamfilter {package}client{type}Spamfilter{field}type{type}byte
+introduces Spamfilter {package}client{type}Spamfilter{field}blacklist{type}java.util.TreeSet<java.lang.String>
+introduces Spamfilter {package}client{type}Spamfilter{constructor}Spamfilter(java.util.List<java.lang.String>, client.Client)
+introduces Spamfilter {package}client{type}Spamfilter{method}getType(){type}byte
+introduces Spamfilter {package}client{type}Spamfilter{method}process(common.Message){type}common.Message
+introduces Spamfilter {package}client{type}Spamfilter{method}add(java.lang.String){type}void
+introduces Spamfilter {package}client{type}Spamfilter{method}remove(java.lang.String){type}void

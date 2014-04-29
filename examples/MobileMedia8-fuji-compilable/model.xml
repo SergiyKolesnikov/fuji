@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<alt abstract="true" mandatory="true" name="NewCompound1">
+				<and abstract="true" mandatory="true" name="MobilMedia">
+					<and abstract="true" name="Derivatives">
+						<feature name="includePhotoAlbum_x_CopyPhotoOrSMS"/>
+						<feature name="includeVideo_x_notSimulatePlayVideo"/>
+						<feature name="includeMMAPI_x_MusicAndVideo"/>
+						<feature name="includeMMAPI_x_PhotoAlbumAndVideoOrMusic"/>
+						<feature name="capturePhoto_x_CapturePhotoOrVideo"/>
+						<feature name="includePhotoAlbum_x_SMSOrCapturePhoto"/>
+						<feature name="x_misc"/>
+						<feature name="includeVideo_x_MusicOrVideo"/>
+						<feature name="capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto"/>
+						<feature name="includeVideo_x_MusicAndVideo"/>
+						<feature name="includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto"/>
+						<feature name="includeCopyPhoto_includeMMAPI"/>
+						<feature name="includeCopyPhoto_includeVideo"/>
+						<feature name="includeMMAPI_includePhotoAlbum"/>
+						<feature name="includePhotoAlbum_includeSmsFeature"/>
+						<feature name="includeMMAPI_x_misc"/>
+						<feature name="includePhotoAlbum_x_misc"/>
+						<feature name="includeVideo_x_misc"/>
+						<feature name="x_CapturePhotoOrVideo"/>
+						<feature name="x_CopyPhotoOrSMSOrCapturePhoto"/>
+						<feature name="x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto"/>
+						<feature name="x_MusicAndVideo"/>
+						<feature name="x_MusicAndVideo_x_misc"/>
+						<feature name="x_MusicOrVideo"/>
+						<feature name="x_PhotoAlbumAndVideoOrMusic"/>
+						<feature name="x_PhotoAlbumAndVideoOrMusic_x_misc"/>
+						<feature name="x_PhotoAlbumOrMusicOrVideo"/>
+						<feature name="x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto"/>
+						<feature name="captureVideo_x_CapturePhotoOrVideo"/>
+						<feature name="includeVideo_x_notMisc"/>
+						<feature name="includePhotoAlbum_x_notMisc"/>
+						<feature name="includeMMAPI_x_notMisc"/>
+						<feature name="includePhotoAlbum_x_CopyPhotoOrSMSOrCapturePhoto"/>
+					</and>
+					<or abstract="true" mandatory="true" name="Media">
+						<and abstract="true" mandatory="true" name="Photo">
+							<feature mandatory="true" name="includePhotoAlbum"/>
+							<feature name="includeSmsFeature"/>
+							<feature name="capturePhoto"/>
+						</and>
+						<alt abstract="true" mandatory="true" name="Music">
+							<feature mandatory="true" name="includeMMAPI"/>
+						</alt>
+						<and abstract="true" mandatory="true" name="Video">
+							<feature mandatory="true" name="includeVideo"/>
+							<feature name="captureVideo"/>
+							<feature name="includeVideo_simulatePlayVideo"/>
+						</and>
+					</or>
+					<feature name="includeSorting"/>
+					<feature name="includeFavourites"/>
+					<feature name="includeCopyPhoto"/>
+					<feature name="includePrivacy"/>
+					<feature mandatory="true" name="base"/>
+				</and>
+			</alt>
+		</struct>
+		<constraints>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_x_CopyPhotoOrSMS</var>
+					<disj>
+						<var>includeCopyPhoto</var>
+						<var>includeSmsFeature</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_misc</var>
+					<disj>
+						<conj>
+							<var>includeMMAPI</var>
+							<var>includePhotoAlbum</var>
+						</conj>
+						<disj>
+							<conj>
+								<var>includeMMAPI</var>
+								<var>includeVideo</var>
+							</conj>
+							<conj>
+								<var>includeVideo</var>
+								<var>includePhotoAlbum</var>
+							</conj>
+						</disj>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeMMAPI_x_PhotoAlbumAndVideoOrMusic</var>
+					<disj>
+						<conj>
+							<var>includeMMAPI</var>
+							<var>includePhotoAlbum</var>
+						</conj>
+						<conj>
+							<var>includePhotoAlbum</var>
+							<var>includeVideo</var>
+						</conj>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>capturePhoto_x_CapturePhotoOrVideo</var>
+					<disj>
+						<var>capturePhoto</var>
+						<var>captureVideo</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeVideo_x_MusicOrVideo</var>
+					<disj>
+						<var>includeMMAPI</var>
+						<var>includeVideo</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>capturePhoto_x_CopyPhotoOrSMSOrCapturePhoto</var>
+					<disj>
+						<var>includeCopyPhoto</var>
+						<disj>
+							<var>includeSmsFeature</var>
+							<var>capturePhoto</var>
+						</disj>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeVideo_x_notSimulatePlayVideo</var>
+					<not>
+						<var>includeVideo_simulatePlayVideo</var>
+					</not>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeMMAPI_x_MusicAndVideo</var>
+					<conj>
+						<var>includeMMAPI</var>
+						<var>includeVideo</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_x_SMSOrCapturePhoto</var>
+					<disj>
+						<var>includeSmsFeature</var>
+						<var>capturePhoto</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeVideo_x_MusicAndVideo</var>
+					<conj>
+						<var>includeMMAPI</var>
+						<var>includeVideo</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeSmsFeature_x_CopyPhotoOrSMSOrCapturePhoto</var>
+					<disj>
+						<var>includeCopyPhoto</var>
+						<disj>
+							<var>includeSmsFeature</var>
+							<var>capturePhoto</var>
+						</disj>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeCopyPhoto_includeMMAPI</var>
+					<conj>
+						<var>includeCopyPhoto</var>
+						<var>includeMMAPI</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeCopyPhoto_includeVideo</var>
+					<conj>
+						<var>includeCopyPhoto</var>
+						<var>includeVideo</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeMMAPI_includePhotoAlbum</var>
+					<conj>
+						<var>includeMMAPI</var>
+						<var>includePhotoAlbum</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_includeSmsFeature</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<var>includeSmsFeature</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeMMAPI_x_misc</var>
+					<conj>
+						<var>includeMMAPI</var>
+						<var>x_misc</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_x_misc</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<var>x_misc</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeVideo_x_misc</var>
+					<conj>
+						<var>includeVideo</var>
+						<var>x_misc</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_CapturePhotoOrVideo</var>
+					<disj>
+						<var>capturePhoto</var>
+						<var>captureVideo</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_CopyPhotoOrSMSOrCapturePhoto_x_SMSOrCapturePhoto</var>
+					<conj>
+						<disj>
+							<var>includeCopyPhoto</var>
+							<disj>
+								<var>includeSmsFeature</var>
+								<var>capturePhoto</var>
+							</disj>
+						</disj>
+						<disj>
+							<var>includeSmsFeature</var>
+							<var>capturePhoto</var>
+						</disj>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_MusicAndVideo</var>
+					<conj>
+						<var>Music</var>
+						<var>Video</var>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_MusicAndVideo_x_misc</var>
+					<conj>
+						<var>Music</var>
+						<conj>
+							<var>Video</var>
+							<var>x_misc</var>
+						</conj>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_MusicOrVideo</var>
+					<disj>
+						<var>Music</var>
+						<var>Video</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_PhotoAlbumAndVideoOrMusic</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<disj>
+							<var>Video</var>
+							<var>Music</var>
+						</disj>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_PhotoAlbumAndVideoOrMusic_x_misc</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<conj>
+							<disj>
+								<var>Video</var>
+								<var>Music</var>
+							</disj>
+							<var>x_misc</var>
+						</conj>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_PhotoAlbumOrMusicOrVideo</var>
+					<disj>
+						<var>includePhotoAlbum</var>
+						<disj>
+							<var>Music</var>
+							<var>Video</var>
+						</disj>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>x_CapturePhotoOrVideo_x_CopyPhotoOrSMSOrCapturePhoto</var>
+					<conj>
+						<disj>
+							<var>capturePhoto</var>
+							<var>capturePhoto</var>
+						</disj>
+						<disj>
+							<var>includeCopyPhoto</var>
+							<disj>
+								<var>includeSmsFeature</var>
+								<var>capturePhoto</var>
+							</disj>
+						</disj>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>captureVideo_x_CapturePhotoOrVideo</var>
+					<disj>
+						<var>capturePhoto</var>
+						<var>captureVideo</var>
+					</disj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeVideo_x_notMisc</var>
+					<conj>
+						<var>includeVideo</var>
+						<not>
+							<var>x_misc</var>
+						</not>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_x_notMisc</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<not>
+							<var>x_misc</var>
+						</not>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includeMMAPI_x_notMisc</var>
+					<conj>
+						<var>includeMMAPI</var>
+						<not>
+							<var>x_misc</var>
+						</not>
+					</conj>
+				</eq>
+			</rule>
+			<rule>
+				<eq>
+					<var>includePhotoAlbum_x_CopyPhotoOrSMSOrCapturePhoto</var>
+					<conj>
+						<var>includePhotoAlbum</var>
+						<disj>
+							<var>includeCopyPhoto</var>
+							<disj>
+								<var>includeSmsFeature</var>
+								<var>capturePhoto</var>
+							</disj>
+						</disj>
+					</conj>
+				</eq>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -1,0 +1,13 @@
+public refines  class ServerClientConnection {
+	
+
+	protected void handleIncomingMessageObject(MessageObject msgo) {
+		ROT13Encryption.decrypt(msgo);
+		Super(Object).handleIncomingMessageObject(msgo);
+	}
+	
+	public void sendMessage(MessageObject msg) {
+		ROT13Encryption.encrypt(msg);
+		Super(MessageObject).sendMessage(msg);
+	}
+}

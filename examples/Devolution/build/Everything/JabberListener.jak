@@ -1,0 +1,13 @@
+layer Everything;
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.MessageListener;
+
+SoUrCe RooT Jabber "../../../H:/Devolution/src/Jabber/JabberListener.jak";
+
+public class JabberListener implements MessageListener {
+	public void processMessage(Chat chat, Message message)  {
+        // DEBUG:
+        // System.out.println("Received message: " + message.getBody());
+    }
+}

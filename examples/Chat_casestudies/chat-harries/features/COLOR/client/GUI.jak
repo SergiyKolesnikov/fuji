@@ -1,0 +1,18 @@
+
+import java.awt.Toolkit;
+
+refines class GUI {
+	
+	public void newChatLine(String msg) {
+		Preferences prefs = Preferences.userNodeForPackage(Settings.class);
+		StyleConstants.setForeground(chatDoc.getStyle("receive"), Color.BLACK);
+		StyleConstants.setForeground(chatDoc.getStyle("send"), Color.YELLOW);
+	
+		if (msg.startsWith(Settings.nickname)) {
+			style = chatDoc.getStyle("send");
+		} else {
+			style = chatDoc.getStyle("receive");
+		}
+		Super(String).newChatLine(msg);
+	}
+}

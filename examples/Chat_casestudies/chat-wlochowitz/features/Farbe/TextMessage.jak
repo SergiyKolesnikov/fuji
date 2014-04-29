@@ -1,0 +1,17 @@
+
+import java.awt.Color;
+
+public refines class TextMessage {
+	
+	private static final long serialVersionUID = -9161595018411902079L;
+	
+	private Color color;
+	
+	public Color getColor() {
+		return color;
+	}			
+	
+	public void setColor(Color c) {
+		this.color = c;
+	}	
+}

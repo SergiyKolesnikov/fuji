@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Chat">
+				<feature mandatory="true" name="Base"/>
+				<feature name="History"/>
+				<feature name="Auth"/>
+				<alt abstract="true" mandatory="true" name="Interface">
+					<feature mandatory="true" name="Gui"/>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<feature name="Color"/>
+				<feature name="Username"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

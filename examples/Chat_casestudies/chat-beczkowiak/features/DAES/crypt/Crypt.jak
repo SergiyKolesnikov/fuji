@@ -1,0 +1,24 @@
+public refines  class Crypt {
+	public byte[] encode(Object obj) {
+        byte[] array = null;
+        array = encode(obj, "DES", "einszwei".getBytes());
+        
+        array = encode(array, "AES", "einszweidreivier".getBytes());
+        
+        return array;
+    }
+    
+    public Object decode(byte[] array) {
+        Object obj = null;
+        
+        obj = decode(array, "AES", "einszweidreivier".getBytes());
+        if (obj instanceof byte[]) {
+            array = (byte[]) obj;
+        } else {
+            throw new RuntimeException("Failed to decode Message!");
+        }
+        
+        obj = decode(array, "DES", "einszwei".getBytes());
+        return obj;
+    }
+}

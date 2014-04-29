@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="PKJab">
+				<feature mandatory="true" name="Base"/>
+				<or abstract="true" mandatory="true" name="ContactListSource">
+					<feature mandatory="true" name="ServerRoster"/>
+				</or>
+				<and abstract="true" name="XEP0085">
+					<feature mandatory="true" name="Composing"/>
+					<feature name="SendComposing"/>
+				</and>
+				<feature name="History"/>
+				<feature name="Timestamps"/>
+				<and abstract="true" name="XEP0092">
+					<feature name="SendVersion"/>
+				</and>
+				<feature name="ThemeSelection"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

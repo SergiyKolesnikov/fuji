@@ -1,0 +1,13 @@
+
+/**
+ * TODO description
+ */
+public refines class Anmelden {
+	public void ServerAbfrage(){
+		PortUndHost abfrage = new PortUndHost(null, true);
+		abfrage.setVisible(true);
+		
+		host = abfrage.gibHost();
+		port = abfrage.gibPort();
+	}
+}

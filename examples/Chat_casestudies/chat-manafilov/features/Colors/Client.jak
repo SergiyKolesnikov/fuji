@@ -1,0 +1,16 @@
+public refines  class Client {
+	public String color = "";
+	
+	public void send(String line) {
+		if(color.equals("")){
+			send(new TextMessage(line));
+		}else{
+			
+			// Hängt die Textfarbe an der String hinten an
+			send(new TextMessage(line+" ("+color+")"));
+		}
+			
+		
+	}
+
+}

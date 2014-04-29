@@ -1,0 +1,15 @@
+layer Everything;
+import javax.swing.*;
+
+SoUrCe RooT IMTextView "../../../H:/Devolution/src/IMTextView/ChatPanel.jak";
+
+public class ChatPanel extends JTextArea {
+	public ChatPanel() {
+		setLineWrap(true);
+		setEditable(false);
+	}
+
+	public void addMessage(String sender, String msg) {
+		append("\n" + sender + ": " + msg);
+	}
+}

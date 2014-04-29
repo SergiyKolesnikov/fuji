@@ -1,0 +1,206 @@
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+SoUrCe RooT Base "../features/Base/Connection.jak";
+
+
+/**
+ * class for an individual connection to a client. allows to send messages to
+ * this client and handles incoming messages.
+ */
+abstract class Connection$$Base extends Thread {
+	protected Socket socket;
+
+	protected ObjectInputStream inputStream;
+
+	protected ObjectOutputStream outputStream;
+
+	protected Server server;
+	private boolean connectionOpen = true;
+
+	public Connection$$Base(Socket s, Server server) {
+		this.socket = s;
+		try {
+			inputStream = new ObjectInputStream((s.getInputStream()));
+			outputStream = new ObjectOutputStream((s.getOutputStream()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		this.server = server;
+	}
+
+	/**
+	 * waits for incoming messages from the socket
+	 */
+	public void run() {
+		String clientName = socket.getInetAddress().toString();
+		try {
+			server.broadcast(clientName + " has joined.");
+			while (connectionOpen) {
+
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(clientName, msg);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			server.removeConnection(this);
+			server.broadcast(clientName + " has left.");
+			try {
+				socket.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param name
+	 *            name of the client
+	 * @param msg
+	 *            received message
+	 */
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage){
+			server.broadcast(name + " - " + ((TextMessage) msg).getContent());
+
+		}
+	}
+
+	/**
+	 * sends a message to the client
+	 * 
+	 * @param line
+	 *            text of the message
+	 */
+	public void send(String line) {
+		send(new TextMessage(line));
+	}
+
+	public void send(TextMessage msg) {
+		try {
+			synchronized (outputStream) {
+				outputStream.writeObject(msg);
+			}
+			outputStream.flush();
+		} catch (IOException ex) {
+			connectionOpen = false;
+		}
+
+	}
+
+}
+
+SoUrCe  Auth "../features/Auth/Connection.jak";abstract class Connection$$Auth extends  Connection$$Base  {
+
+	private boolean connectionOpen = false;
+	
+	private String password = "geheim";
+	
+	String clientName = "";
+	
+	public void run() {
+		clientName = socket.getInetAddress().toString();
+		try {
+			
+			// Hier wird überprüft, ob das erste gesendete Nachricht == das Passwort ist.
+			if(connectionOpen == false){
+					try {
+						Object msg = inputStream.readObject();
+						String tmp = ((TextMessage)msg).getContent();
+						
+						if(tmp.equals(password)){
+							connectionOpen = true;
+						}
+						else
+						{
+							server.broadcast(clientName + " falsches Passwort");
+							try {
+								server.removeConnection(this);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								socket.close();
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+						}
+					
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+					
+			server.broadcast(clientName + " has joined.");
+			while (connectionOpen) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(clientName, msg);
+					
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				server.removeConnection(this);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			server.broadcast(clientName + " has left.");
+			try {
+				socket.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+}
+
+SoUrCe  Logs "../features/Logs/Connection.jak";
+
+public class Connection extends  Connection$$Auth  {
+	
+	String clientName = clientName = socket.getInetAddress().toString();
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage){
+			
+			String tmp = ((TextMessage) msg).getContent();
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter("Logs-server.txt",true));
+				bw.write(clientName+" - "+tmp);
+				bw.newLine();
+				bw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			server.broadcast(name + " - " + tmp);
+		}
+	}
+
+}
