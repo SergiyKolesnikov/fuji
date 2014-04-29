@@ -1,88 +1,0 @@
-8
-
-dir
-61
-http://svn2.assembla.com/svn/devolution/trunk/src
-http://svn2.assembla.com/svn/devolution
-
-
-
-2008-03-09T09:02:40.616686Z
-61
-Jochen
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-c395b634-4022-4dee-a7d9-fccbfec04023
-
-POP3
-dir
-
-IMXMLView
-dir
-
-SMTP
-dir
-
-Upload
-dir
-
-Jabber
-dir
-
-IMAP
-dir
-
-CalDAV
-dir
-
-AB_IM_Interact
-dir
-
-Addressbook
-dir
-
-ToDo
-dir
-
-IMTextView
-dir
-
-GoogleCalendar
-dir
-
-RSS
-dir
-
-iCal
-dir
-
-Base
-dir
-
-InstantBase
-dir
-
-AntiSpam
-dir
-
-MailBase
-dir
-
-IRC
-dir
-
-AB_SMTP_Interact
-dir
-
