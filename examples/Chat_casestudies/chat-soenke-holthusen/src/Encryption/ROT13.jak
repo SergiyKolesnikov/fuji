@@ -1,0 +1,54 @@
+layer Encryption;
+
+import java.util.HashMap;
+
+public class ROT13 extends Encryption
+{
+	private static final ROT13 INSTANCE = new ROT13();
+
+	private static HashMap _lookup_table = new HashMap();
+
+	static
+	{
+		_name = "ROT13";
+
+		String from = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .!?:>";
+		String to =   "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm?:> .!";
+
+		for (int i = 0; i < from.length(); i++)
+		{
+			_lookup_table.put(String.valueOf(from.charAt(i)), String.valueOf(to.charAt(i)));
+		}
+	}
+
+	private ROT13()
+	{
+	}
+
+	public static ROT13 getInstance()
+	{
+		return INSTANCE;
+	}
+	
+	public String getName()
+	{
+		return _name;
+	}
+
+	public String encrypt(String cleartext)
+	{
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < cleartext.length(); i++)
+		{
+			String a = (String) _lookup_table.get(String.valueOf(cleartext.charAt(i)));
+			builder.append(a == null ? cleartext.charAt(i) : a);
+		}
+		return builder.toString();
+	}
+
+	public String decrypt(String ciphertext)
+	{
+		return encrypt(ciphertext);
+	}
+}
+

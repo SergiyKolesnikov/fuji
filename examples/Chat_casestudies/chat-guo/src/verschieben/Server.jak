@@ -1,0 +1,14 @@
+
+layer verschieben;
+
+public refines class Server {
+
+	public void serverlog(TextMessage msg){
+		
+		msg.entverschieben();
+		Super(TextMessage).serverlog(msg);
+		msg.verschieben();
+	
+	}
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and abstract="true" mandatory="true" name="Basis">
+					<feature mandatory="true" name="client"/>
+					<feature mandatory="true" name="common"/>
+					<feature mandatory="true" name="server"/>
+				</and>
+				<or name="Encryption">
+					<feature mandatory="true" name="Rot13"/>
+					<feature mandatory="true" name="Rueckwaerts"/>
+				</or>
+				<feature name="Color"/>
+				<feature name="Authentification"/>
+				<feature name="History"/>
+				<feature name="Konsole"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Authentification</var>
+					<not>
+						<var>Konsole</var>
+					</not>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+	</featureModel>

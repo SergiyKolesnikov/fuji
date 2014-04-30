@@ -1,0 +1,15 @@
+layer FullGUI;
+
+SoUrCe RooT Chat "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/Chat/ChatLineListener.jak";/**
+ * Listener that gets informed every time when the chat client receives a new
+ * message
+ */
+public interface ChatLineListener {
+	/**
+	 * New text message received by client.
+	 * 
+	 * @param line
+	 *            the new message
+	 */
+	void newChatLine(String line);
+}

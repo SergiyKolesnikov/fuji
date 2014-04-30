@@ -1,0 +1,12 @@
+
+layer Authentication;
+
+public refines class Server {
+
+	public void send(TextMessage msg, Connection connection) {
+		if (connection.isAuthenticated())
+			Super().send(msg, connection);
+		
+	}
+
+}

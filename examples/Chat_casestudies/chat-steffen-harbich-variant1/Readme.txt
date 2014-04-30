@@ -1,0 +1,1 @@
+Diese Variante enthält alle Features und die GUI als Benutzerschnittstelle.

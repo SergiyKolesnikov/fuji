@@ -1,0 +1,17 @@
+
+
+import java.util.ArrayList;
+
+public refines class Server {
+	protected ArrayList authenticated = new ArrayList();
+	
+	public boolean isAuthenticated(Connection c) {
+		if (authenticated == null) authenticated = new ArrayList();
+		return authenticated.contains(c);
+	}
+
+	public void authenticate(Connection c) {
+		if (authenticated == null) authenticated = new ArrayList();
+		authenticated.add(c);
+	}
+}

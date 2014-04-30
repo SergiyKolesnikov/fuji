@@ -1,0 +1,16 @@
+
+
+import java.awt.*;
+
+/**
+ * simple AWT gui for the chat client
+ */
+public refines class Gui {
+	
+	protected Choice colorChoice;
+	
+	public void helpme(Client chatClient) {
+		Super().helpme(chatClient);
+		Super().newChatLine("Enter 'password:<PASSWORD>' to get into the conversation\n");
+	}	
+}

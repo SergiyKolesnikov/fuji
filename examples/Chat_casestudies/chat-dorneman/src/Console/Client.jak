@@ -1,0 +1,12 @@
+
+layer Console;
+
+public refines class Client {
+	
+	public void start() {
+	  System.out.println("Client console...");
+	  Super().start();
+	}
+
+
+} 

@@ -1,0 +1,36 @@
+layer Encryption;
+
+public refines class ChatConnection {
+	
+	protected void react(Message message)
+	{
+		
+		if (message.getType() == Message.TYPE_MESSAGE)
+		{
+			message = decrypt(message);
+		}
+
+		Super().react(message);
+	}
+	
+	public void send(Message message)
+	{
+		
+		if (message.getType() == Message.TYPE_MESSAGE)
+		{
+			message = encrypt(message);
+		}
+
+		Super().send(message);
+	}
+	
+	protected Message encrypt(Message message)
+	{
+		return Message.createNewTextMessage(message.getNick(), message.getColor(), Reverse.getInstance().encrypt(ROT13.getInstance().encrypt(message.getText())));
+	}
+		
+	protected Message decrypt(Message message)
+	{
+		return Message.createNewTextMessage(message.getNick(), message.getColor(), ROT13.getInstance().encrypt(Reverse.getInstance().encrypt(message.getText())));
+	}
+}

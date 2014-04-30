@@ -1,0 +1,18 @@
+
+
+public refines class Client {
+	
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String message=Encryption.decrypt(((TextMessage) msg).getContent());
+			Super(Object).handleIncomingMessage(new TextMessage(message));
+		}
+	}
+
+}

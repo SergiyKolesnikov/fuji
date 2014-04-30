@@ -1,0 +1,37 @@
+layer Authentication;
+
+public refines class Server 
+{
+	protected String _password = "o_O";
+	
+	public void handleMessage(Message message)
+	{
+		ChatConnection conn = (ChatConnection) _connections.get(message.getOrigin());
+
+		if(message.getType() == Message.TYPE_AUTHENTICATION)
+		{
+			if (!conn.isAuthenticated())
+			{
+				if (message.getPassword().equals(_password))
+				{
+					conn.authenticate();
+
+					conn.send(Message.createNewAuthResponse(true));
+				}
+				else
+				{
+					conn.send(Message.createNewAuthResponse(false));
+				}
+			}
+		}
+		else if(message.getType() == Message.TYPE_MESSAGE)
+		{		
+			if(conn.isAuthenticated())
+				Super().broadcast(message);
+		}
+		else
+		{
+			Super().handleMessage(message);
+		}
+	}
+}

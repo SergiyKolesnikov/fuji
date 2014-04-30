@@ -1,0 +1,1 @@
+Diese Variante enthält keine Verschlüsselung, keine Farbe und die GUI.

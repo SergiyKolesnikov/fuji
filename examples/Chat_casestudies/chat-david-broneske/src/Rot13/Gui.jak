@@ -1,0 +1,13 @@
+
+
+
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+
+
+public refines class Gui {
+		public void init(){
+			Super().init();
+			container.add(new Checkbox("ROT13",group, false));
+		}
+}

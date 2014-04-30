@@ -1,0 +1,59 @@
+
+
+public refines class Connection {	
+	 
+ protected String password = "default";
+ 
+ protected boolean connectionOpen = false;
+	
+ public void run() {
+        String clientName = socket.getInetAddress().toString();
+        try {
+            String firstMessage = "empty";
+				
+            try {
+                Object msg = inputStream.readObject();
+                firstMessage = krypto.rot(((TextMessage) msg).getContent());
+				if(firstMessage.contains("passwd:" + this.password)) {
+					this.connectionOpen = true;
+				}
+            } catch (ClassNotFoundException ex) {
+                this.connectionOpen = false;
+            }
+            
+            if(connectionOpen) {
+                String message = clientName + " has joint. Welcome.";
+                server.broadcast(message);
+            } else {
+                String message = "Some tried to connect... failed.";
+                server.broadcast(message);
+            }
+            
+            while (this.connectionOpen) {
+                try {
+                    Object msg = inputStream.readObject();
+                    handleIncomingMessage(clientName, msg);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            server.removeConnection(this);
+            server.broadcast(clientName + " has left.");
+            try {
+                socket.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    
+	protected void handleIncomingMessage(String name, Object msg) {
+		if(this.connectionOpen == true) {
+			Super().handleIncomingMessage(name,msg);
+		} else {}
+	}
+}

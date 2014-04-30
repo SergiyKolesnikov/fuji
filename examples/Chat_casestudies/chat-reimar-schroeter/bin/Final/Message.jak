@@ -1,0 +1,139 @@
+layer Final;
+
+
+
+
+import java.io.Serializable;
+
+import java.awt.Color;
+
+SoUrCe RooT Root "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/Root/Message.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+abstract class Message$$Root implements Serializable{
+	protected String content = "";
+	protected String userName = "";
+	
+	/**
+	 * Create a new message 
+	 * 
+	 * @param userName who sending the message 
+	 * @param content of the message
+	 */
+	public Message$$Root(String userName, String content){
+		setUserName(userName);
+		setContent(content);
+	}
+	
+	/**
+	 * Create a new message 
+	 *  
+	 * @param content of the message
+	 */
+	public Message$$Root(String content){
+		setContent(content);
+	}
+	
+	/**
+	 * set the content of the message 
+	 *  
+	 * @param content of the message
+	 */
+	public void setContent(String content){
+		this.content = content;	
+	}
+	
+	
+	/**
+	 * Set the user who sending the message 
+	 *  
+	 * @param userName who sending the message
+	 */
+	protected void setUserName(String userName){
+		this.userName = userName;
+	}
+	
+	/**
+	 * Get the user who sending the message  
+	 *  
+	 * @param content of the message
+	 */
+	public String getUserName(){
+		return userName;
+	}
+	
+	/**
+	 * Get the output line:
+	 * user: message  
+	 *  
+	 * @return user: message 
+	 */ 
+	public String getUserName_And_Content(){
+		if(userName.compareTo("") == 0){
+			return getContent();
+		}else{
+			return userName + ": " + getContent();
+		}
+	}
+	
+	/**
+	 * return the content of message
+	 * 
+	 * @return content of message
+	 */
+	public String getContent(){
+		return content; 
+	}
+}
+
+SoUrCe  Security "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/Security/Message.jak";
+
+abstract class Message$$Security extends  Message$$Root  implements Serializable{
+	static Cryptography crypto;
+	
+	public void setContent(String content){
+		
+		if(crypto == null){
+			crypto = Cryptography.create();
+		}	
+		if(crypto != null){
+			content = crypto.encrypt(content);
+		}
+	
+		Super().setContent(content);
+	}
+	
+	
+	public String getContent(){
+		String content = Super().getContent();
+		
+		if(crypto == null){
+			crypto = Cryptography.create();
+		}	
+		if(crypto != null){
+			content = crypto.decrypt(content);
+		}
+		
+		return content;
+	}
+	
+	
+}
+
+SoUrCe  Color "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/Color/Message.jak";
+
+
+public class Message extends  Message$$Security  {
+	Color textColor = Color.BLACK;
+	
+	public Color getColor(){
+		return textColor;	
+	}
+	
+	public void setColor(Color color){
+		textColor = color;	
+	}
+}

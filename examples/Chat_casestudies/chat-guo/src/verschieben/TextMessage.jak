@@ -1,0 +1,49 @@
+
+layer verschieben;
+
+public refines class TextMessage {
+	
+	public void verschieben(){
+	
+		this.content=verschieben(this.getContent());
+	
+	}
+	
+	public void entverschieben(){
+	
+		this.content=entverschieben(this.getContent());
+	
+	}
+	
+	public String verschieben(String pf) {
+
+		StringBuffer pf2 = new StringBuffer();
+
+		for (int i = 0; i < pf.length(); i++) {
+			int c = pf.charAt(i);
+			if (c < 65 || c > 122) {
+				pf2.append((char) c);
+			} else
+				pf2.append((char) (c + 1));
+
+		}
+		return pf2.toString();
+	}
+
+	public String entverschieben(String pf) {
+
+		StringBuffer pf2 = new StringBuffer();
+
+		for (int i = 0; i < pf.length(); i++) {
+			int c = pf.charAt(i);
+			if (c < 66 || c > 123) {
+				pf2.append((char) c);
+			} else
+				pf2.append((char) (c - 1));
+
+		}
+		return pf2.toString();
+	}
+
+
+}

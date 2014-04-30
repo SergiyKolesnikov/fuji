@@ -1,0 +1,61 @@
+layer Authentication;
+
+public refines class Client {
+	protected boolean _authentication_request = false;
+	protected boolean _authentication_response = false;
+	protected boolean _authentication_sucessful = false;
+	
+	protected boolean sendAuthentication(String password)
+	{
+		Message mess;
+		mess = Message.createNewAuthRequest(password);
+		_connection.send(mess);
+		_authentication_request = true;
+
+		int i = 0;
+		while (!_authentication_response && i < 500)
+		{
+			i += 100;
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+			}
+		}
+
+		boolean toreturn = (_authentication_response == false || _authentication_sucessful == false ? false : true);
+
+		_authentication_request = false;
+		_authentication_response = false;
+		_authentication_sucessful = false;
+		return toreturn;
+	}
+	
+	public void receive(Message message)
+	{
+		if(message.getType() == Message.TYPE_AUTHENTICATION)
+		{
+			if (_authentication_request)
+			{
+				if (message.successfulAuth())
+				{
+					_connection.authenticate();
+					System.out.println("Authentication sucessful...");
+					_authentication_sucessful = true;
+				}
+				else
+				{
+					System.out.println("Couldn't authenticate...");
+					_authentication_sucessful = false;
+				}
+				_authentication_response = true;
+			}
+		}
+		else
+		{
+			Super().receive(message);
+		}
+	}
+}

@@ -1,0 +1,15 @@
+layer Color;
+
+public refines class Client {
+	
+	
+	public void handleIncomingMessage(Object msg){
+		if(msg instanceof TextMessage)
+			fireAddLine(((TextMessage) msg).getColor());
+		Super().handleIncomingMessage(msg);
+		
+	}
+	
+	
+	
+}

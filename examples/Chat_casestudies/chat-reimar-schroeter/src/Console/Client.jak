@@ -1,0 +1,14 @@
+
+
+import java.io.IOException;
+
+public refines class Client {
+	
+	public static void main(String[] args) throws IOException {
+		Super().main(args);
+		
+		Client client = Client.getClient();
+		
+		new MyConsole("Chat " + args[2], client);
+	}
+}

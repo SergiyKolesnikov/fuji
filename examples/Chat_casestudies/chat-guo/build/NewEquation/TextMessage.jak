@@ -1,0 +1,159 @@
+
+layer NewEquation;
+
+import java.io.Serializable;
+
+import java.awt.Color;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+SoUrCe RooT Chatbasic "../../H:/workspace/empdu4/src/Chatbasic/TextMessage.jak";
+
+
+abstract class TextMessage$$Chatbasic implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	public String content;
+	public String msgHead; /**
+	 	                     * msgHead fuer Ipadress oder Name.
+	 	                     * weiter fuer andere funktion.
+	 	                     * 
+	 	                     */
+	
+	public TextMessage$$Chatbasic() {
+		
+	}
+	
+	public TextMessage$$Chatbasic(String content) {
+		super();
+		this.content = content;
+		this.msgHead="------------------";
+	}
+	
+	public TextMessage$$Chatbasic(String msghead, TextMessage msg) {
+		super();
+		int len = msghead.length();
+		if (len < 18) {
+			for (int i = 1; i <= 18-len; i++) {
+				msghead += "-";
+			}
+
+		}
+
+		this.msgHead = msghead;
+		this.content = msg.getContent();
+	}
+
+	public String getContent() {
+		return content;
+	}
+	
+	public String getHead() {
+		return msgHead;
+
+	}
+	
+	public void log(String fName) {
+		
+	}
+}
+
+SoUrCe  Farbe "../../H:/workspace/empdu4/src/Farbe/TextMessage.jak";
+
+abstract class TextMessage$$Farbe extends  TextMessage$$Chatbasic  {
+
+	public Color farbe;
+	
+	refines TextMessage(String content){
+		this.farbe=new Color(0, 0, 0);
+	}
+
+	TextMessage$$Farbe(String content, Color farbe) {
+		Super(String)(content);
+		this.farbe=farbe;
+		
+	}
+	
+	refines TextMessage(String msghead, TextMessage msg){
+		this.farbe = msg.getFarbe();
+	}
+	
+	public Color getFarbe() {
+		return farbe;
+
+	}
+	
+	
+}
+
+SoUrCe  Historie "../../H:/workspace/empdu4/src/Historie/TextMessage.jak";
+
+abstract class TextMessage$$Historie extends  TextMessage$$Farbe  {
+
+
+	
+	public void log(String fName) {
+		Super(String).log(fName);
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(fName, true);
+			fw.write(this.getHead()+this.getContent() + "\n");
+			fw.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			System.out.println("Writer error");
+			System.exit(-1);
+		}
+	}
+}
+
+SoUrCe  verschieben "../../H:/workspace/empdu4/src/verschieben/TextMessage.jak";
+
+public class TextMessage extends  TextMessage$$Historie  {
+	
+	public void verschieben(){
+	
+		this.content=verschieben(this.getContent());
+	
+	}
+	
+	public void entverschieben(){
+	
+		this.content=entverschieben(this.getContent());
+	
+	}
+	
+	public String verschieben(String pf) {
+
+		StringBuffer pf2 = new StringBuffer();
+
+		for (int i = 0; i < pf.length(); i++) {
+			int c = pf.charAt(i);
+			if (c < 65 || c > 122) {
+				pf2.append((char) c);
+			} else
+				pf2.append((char) (c + 1));
+
+		}
+		return pf2.toString();
+	}
+
+	public String entverschieben(String pf) {
+
+		StringBuffer pf2 = new StringBuffer();
+
+		for (int i = 0; i < pf.length(); i++) {
+			int c = pf.charAt(i);
+			if (c < 66 || c > 123) {
+				pf2.append((char) c);
+			} else
+				pf2.append((char) (c - 1));
+
+		}
+		return pf2.toString();
+	}
+
+
+}

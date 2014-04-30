@@ -1,0 +1,32 @@
+
+layer EncROT;
+
+public refines class TextMessage {
+
+	private void encryptROT(char[] chars, int n) {
+		
+		for(int i = 0; i < chars.length; ++i)
+			chars[i] = (char)((chars[i] + n) % 256);
+	}
+			
+	private void decryptROT(char[] chars, int n) {
+		
+		encryptROT(chars, -n);
+	}
+	
+	public void encodeContent(char[] chars) {
+		
+		System.out.print("Encoding [RT] " + new String(chars) + " -> ");
+		encryptROT(chars, 13);
+		System.out.println(new String(chars) + ".");
+		Super().encodeContent(chars);
+	}
+	
+	public void decodeContent(char[] chars) {
+		
+		Super().decodeContent(chars);
+		System.out.print("Decoding [RT] " + new String(chars) + " -> ");
+		decryptROT(chars, 13);		
+		System.out.println(new String(chars) + ".");
+	}
+}

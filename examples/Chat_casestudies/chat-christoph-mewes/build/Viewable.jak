@@ -1,0 +1,9 @@
+
+
+import javax.swing.JTextPane;
+
+SoUrCe RooT Common "../src/Common/Viewable.jak";
+
+public interface Viewable {
+	public void render(JTextPane pane);
+}

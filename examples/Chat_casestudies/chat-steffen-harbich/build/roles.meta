@@ -1,0 +1,38 @@
+{
+	"features" : [
+		"Base",
+		"Common",
+		"Client",
+		"Server",
+		"GUI",
+		"Authentication",
+		"History"
+	],
+	"roles": {
+		"startUI": {
+			"Server": "startUI__wrappee__Server",
+			"GUI": "startUI"
+		},
+		"runCommunicationLoop": {
+			"GUI": "runCommunicationLoop__wrappee__GUI",
+			"Authentication": "runCommunicationLoop"
+		},
+		"startServer": {
+			"Authentication": "startServer__wrappee__Authentication",
+			"History": "startServer"
+		},
+		"startClient": {
+			"Authentication": "startClient__wrappee__Authentication",
+			"History": "startClient"
+		},
+		"handleIncomingMessage": {
+			"Authentication": "handleIncomingMessage__wrappee__Authentication",
+			"History": "handleIncomingMessage"
+		},
+		"broadcast": {
+			"Authentication": "broadcast__wrappee__Authentication",
+			"History": "broadcast"
+		}
+	}
+
+}

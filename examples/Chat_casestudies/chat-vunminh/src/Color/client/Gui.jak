@@ -1,0 +1,44 @@
+layer Color;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Event;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JTextField;
+import java.util.List;
+
+public refines class Gui {
+	
+	protected JButton colorButton;
+	protected JTextField colorField;
+	public void initLayout()
+	{
+		Super().initLayout();
+		colorButton = new JButton("Change");
+		colorField = new JTextField();
+		colorField.setText("Blue");
+		colorField.setEditable(true);
+		feature.add(colorButton);
+		feature.add(colorField);
+		colorButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+				getClient().setColor(new Color("["+colorField.getText()+"]"));
+		}})	;
+		add(feature,BorderLayout.PAGE_START);
+		
+		
+	}	
+	
+	public Client getClient()
+	{
+		return chatClient;
+	}
+	
+}

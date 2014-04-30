@@ -1,0 +1,16 @@
+layer GUI;
+
+public refines class Client {
+
+	private Gui gui;
+	
+	public void run() {
+		gui = new Gui(this);
+		Super().run();	
+	}
+	
+	public void fireAddLine(String line) {
+		Super().fireAddLine(line);
+		gui.onMessageReceived(line);
+	}
+}

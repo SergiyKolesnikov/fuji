@@ -1,0 +1,10 @@
+
+
+public refines class Client {
+	
+	public void send(String line) {
+		String message=Encryption.encrypt(line);
+		Super(String).send(message);
+	}
+
+}

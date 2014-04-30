@@ -1,0 +1,8 @@
+layer Console;
+
+public refines class Client {
+	ConsoleUI console;
+	public void initUI(){
+		console = new ConsoleUI(this);
+	}
+}

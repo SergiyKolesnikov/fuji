@@ -1,0 +1,24 @@
+
+layer Encryption;
+
+public refines class TextMessage {
+
+	protected void decodeContent(char[] chars) {}
+	
+	protected void encodeContent(char[] chars) {}
+
+    public void setContent(String content) {
+		
+		char[] chars = content.toCharArray();
+		encodeContent(chars);
+		this.content = new String(chars);
+	} 
+
+	public String getContent() {	
+
+		char[] chars = content.toCharArray();
+		decodeContent(chars);
+		return new String(chars);
+	}
+
+}

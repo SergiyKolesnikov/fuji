@@ -1,0 +1,9 @@
+layer Console;
+
+public refines class Client {	
+
+	public void fireAddLine(String line) {
+		Super().fireAddLine(line);
+		System.out.println(line);
+	}	
+}

@@ -1,0 +1,7 @@
+layer test2;
+
+SoUrCe RooT Core "../../../E:/Programmierung/Java-Programme/epmd_chat_featide/src/Core/ChatLineListener.jak";
+
+public interface ChatLineListener {
+	void newChatLine(TextMessage msg);
+}

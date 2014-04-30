@@ -1,0 +1,13 @@
+
+
+public abstract refines  class Cryptography {
+	public static Cryptography create(){
+		Cryptography cr = Super().create();
+		if(cr == null){
+			return new Reverse_Cryption();
+		}
+		else{
+			return new Reverse_Cryption(cr);
+		}
+	}
+}

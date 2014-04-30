@@ -1,0 +1,18 @@
+
+
+public class Encrypt {
+	
+
+	
+	public String encrypt(String text, String method){
+
+		return text;
+	}
+
+	
+	public String decrypt(String text, String method){
+		
+		return text;
+			
+	}
+}

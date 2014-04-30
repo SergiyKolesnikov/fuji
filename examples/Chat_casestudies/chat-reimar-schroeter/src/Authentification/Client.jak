@@ -1,0 +1,39 @@
+
+
+public refines class Client {
+	boolean auth_accept = false;
+	
+	public void send(Message msg) {
+		if(auth_accept == false){
+			msg = new Auth_Message(msg.getUserName(), msg.getContent());
+		}
+		Super().send(msg);	
+	}
+	
+	public void addLineListener(ChatLineListener listener) {
+		Super().addLineListener(listener);
+		
+		if(auth_accept == false){
+			Message tMsg = new Message("Geben Sie das PW ein:");
+			listener.newChatLine(tMsg);
+		}
+	}
+	
+	public void handleIncomingMessage(Object msg){
+		if(auth_accept == false){
+			if(msg instanceof Auth_Message){
+				Auth_Message authMsg = (Auth_Message) msg;
+				
+				if(authMsg.getContent().compareTo(Auth_Message.PW_ACCEPT) == 0){
+					auth_accept = true;
+					send(new Message(getUserName() + " betritt den Raum"));	
+					Super().handleIncomingMessage(new Message("PW akzeptiert!"));
+				}else{
+					Super().handleIncomingMessage(new Message("PW war falsch, wiederholen Sie die Eingabe:"));
+				}
+			}
+		}else{
+			Super().handleIncomingMessage(msg);
+		}
+	}
+}

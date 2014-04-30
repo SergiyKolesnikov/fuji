@@ -1,0 +1,10 @@
+layer Console;
+
+public class Console {
+	
+	public Console(String title, Client chatClient)
+	{
+		System.out.println(chatClient.toString()+" Connected");
+	}
+
+}

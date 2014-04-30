@@ -1,0 +1,20 @@
+
+
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+
+public refines class TextMessage {
+	public void render(JTextPane pane) {
+		if (this.hasAttribute("color")) {
+			java.awt.Color c    = (java.awt.Color) this.getAttribute("color");
+			StyleContext   sc   = StyleContext.getDefaultStyleContext();
+			AttributeSet   aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+			pane.setCharacterAttributes(aset, false);
+		}
+		
+		Super().render(pane);
+	}
+}

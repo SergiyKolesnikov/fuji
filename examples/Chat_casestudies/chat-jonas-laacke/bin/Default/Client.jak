@@ -1,0 +1,213 @@
+layer Default;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+SoUrCe RooT Base "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/Base/Client.jak";
+
+/**
+ * simple chat client
+ */
+abstract class Client$$Base implements Runnable {
+
+	protected ObjectInputStream inputStream;
+
+	protected ObjectOutputStream outputStream;
+
+	protected Thread thread;
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) throws IOException{
+		if (args.length != 2)
+			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+	}
+	
+	public Client$$Base(String host, int port) {
+		try {
+			System.out.println("Connecting to " + host + " (port " + port
+					+ ")...");
+			Socket s = new Socket(host, port);
+			this.outputStream = new ObjectOutputStream((s.getOutputStream()));
+			this.inputStream = new ObjectInputStream((s.getInputStream()));
+			thread = new Thread(this);
+			thread.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * main method. waits for incoming messages.
+	 */
+	public void run() {
+		try {
+			while (true) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncomingMessage(msg);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			thread = null;
+			try {
+				outputStream.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String message=((TextMessage) msg).getContent();
+			fireAddLine(message + "\n");
+		}
+	}
+	
+	public void send(String line) {
+		send(new TextMessage(line));
+	}
+
+	public void send(TextMessage msg) {
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+	/**
+	 * listener-list for the observer pattern
+	 */
+	private ArrayList listeners = new ArrayList();
+
+	/**
+	 * addListner method for the observer pattern
+	 */
+	public void addLineListener(ChatLineListener listener) {
+		listeners.add(listener);
+	}
+
+	/**
+	 * removeListner method for the observer pattern
+	 */
+	public void removeLineListener(ChatLineListener listner) {
+		listeners.remove(listner);
+	}
+
+	/**
+	 * fire Listner method for the observer pattern
+	 */
+	public void fireAddLine(String line) {
+		for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
+			ChatLineListener listener = (ChatLineListener) iterator.next();
+			listener.newChatLine(line);
+		}
+	}
+
+	public void stop() {
+		thread.stop();
+	}
+
+}
+
+SoUrCe  GUI "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/GUI/Client.jak";
+
+abstract class Client$$GUI extends  Client$$Base {
+	
+	public static void main(String[] args) throws IOException {
+		Super(String[]).main(args);
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		new GUI("Chat " + args[0] + ":" + args[1], client);
+	}
+
+}
+
+SoUrCe  Encryption "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/Encryption/Client.jak";
+
+abstract class Client$$Encryption extends  Client$$GUI  {
+	
+	public void send(String line) {
+		String message=Encryption.encrypt(line);
+		Super(String).send(message);
+	}
+
+}
+
+SoUrCe  Color "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/Color/Client.jak";
+
+abstract class Client$$Color extends  Client$$Encryption  {
+	
+	private String color="";
+	
+	public void send(String line) {
+		//color selected by user
+		if(line.startsWith("/color")) {
+			String[] switchColor=line.split(" ");
+			color=switchColor[1]+": ";
+		}
+		else{
+			Super(String).send(color+line);
+		}
+	}
+
+}
+
+SoUrCe  History "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/History/Client.jak";
+
+abstract class Client$$History extends  Client$$Color  {
+	
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String message=((TextMessage) msg).getContent();
+			History.saveMessage(message);
+			Super(Object).handleIncomingMessage(msg);
+		}
+	}
+
+}
+
+SoUrCe  Encryption "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/Decryption/Client.jak";
+
+public class Client extends  Client$$History  {
+	
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param msg
+	 *            the message (Object) received from the sockets
+	 */
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			String message=Encryption.decrypt(((TextMessage) msg).getContent());
+			Super(Object).handleIncomingMessage(new TextMessage(message));
+		}
+	}
+
+}

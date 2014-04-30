@@ -1,0 +1,18 @@
+
+layer NewEquation;
+
+SoUrCe RooT Client "../../../Studium/epmd/ueb/epmd_chat_feature/src/Client/ChatLineListener.jak";
+
+/**
+ * Listener that gets informed every time when the chat client receives a new
+ * message
+ */
+public interface ChatLineListener {
+	/**
+	 * New text message received by client.
+	 * 
+	 * @param line
+	 *            the new message
+	 */
+	void newChatLine(String line);
+}

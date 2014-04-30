@@ -1,0 +1,170 @@
+layer Final;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
+
+
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.JButton;
+
+import java.awt.LayoutManager;
+
+SoUrCe RooT GUI "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/GUI/Gui.jak";
+
+/**
+ * Swing GUI for the chat client
+ */
+abstract class Gui$$GUI extends JFrame implements ChatLineListener{
+
+	private static final long serialVersionUID = 1L;
+
+	JTextPane outputTextbox;
+	
+	Document document;
+	
+	BorderLayout globalLayout;
+
+	protected TextField inputField;
+
+	private Client chatClient;
+	
+	/**
+	 * creates layout
+	 * 
+	 * @param title
+	 *            title of the window
+	 * @param chatClient
+	 *            chatClient that is used for sending and receiving messages 
+	 */
+	public Gui$$GUI(String title, Client chatClient) {
+		init(title, chatClient);
+	}
+	
+	public void init(String title, Client chatClientL){
+		
+		System.out.println("starting gui...");
+		
+		this.setTitle(title);
+		
+		globalLayout = new BorderLayout();
+		setLayout(globalLayout);
+		
+		outputTextbox = new JTextPane();
+		
+		add(BorderLayout.CENTER, new JScrollPane(outputTextbox));
+		outputTextbox.setEditable(false);
+		document = outputTextbox.getStyledDocument();
+				
+		inputField = new TextField();
+		
+		JPanel intern = new JPanel();
+		intern.setLayout(new BorderLayout());
+		intern.add(BorderLayout.CENTER, inputField);
+		add(BorderLayout.SOUTH, intern);
+		add(BorderLayout.SOUTH, inputField);
+		
+
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		ChatLineListener list = this;
+		if(list instanceof ChatLineListener)
+			chatClientL.addLineListener(list);
+				
+		pack();
+		setVisible(true);
+		inputField.requestFocus();
+
+		chatClient = chatClientL;
+		
+		//handle event to close the application
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent evt){
+				setVisible(false);
+				System.exit(0);
+			}
+		});	
+	}
+	
+	public SimpleAttributeSet setAttribute(SimpleAttributeSet attr, Message msg){	
+		return attr;
+	}
+
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(Message msg){
+		SimpleAttributeSet attr = new SimpleAttributeSet();
+		
+		attr = setAttribute(attr, msg);
+				
+		try {
+			document.insertString(document.getLength(), msg.getUserName_And_Content() + "\n", attr);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		} 
+		outputTextbox.setSelectionEnd(document.getLength());
+	}
+
+	/**
+	 * handles AWT events (enter in textfield)
+	 */
+	public boolean handleEvent(Event e) {
+		if ((e.target == inputField) && (e.id == Event.ACTION_EVENT)) {
+			chatClient.send((String) e.arg);
+			inputField.setText("");
+			return true;
+		}
+		return super.handleEvent(e);
+	}
+}
+
+SoUrCe  Color "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/Color/Gui.jak";
+
+public class Gui extends  Gui$$GUI  implements ActionListener{
+	
+	private static Color textColor;
+	public static Color getTextColor(){
+		return textColor;	
+	}
+	
+	public void init(String title, Client chatClient) {
+		Super().init(title, chatClient);
+		
+		Random rand = new Random();
+		textColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+		
+		JButton changeTextColorButton = new JButton("");
+		changeTextColorButton.setBackground(textColor);
+		changeTextColorButton.addActionListener(this);
+		
+		Super().add(BorderLayout.EAST, changeTextColorButton);
+		Super().repaint();
+	}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		textColor = javax.swing.JColorChooser.showDialog(null, "Auswahl der Textfarbe", textColor);
+		((JButton)arg0.getSource()).setBackground(textColor);
+		inputField.requestFocus();
+	}
+	
+	public SimpleAttributeSet setAttribute(SimpleAttributeSet attr, Message msg){
+		attr = Super().setAttribute(attr, msg);
+		StyleConstants.setForeground(attr, msg.getColor());
+		return attr;
+	}
+}

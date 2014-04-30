@@ -1,0 +1,148 @@
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
+
+
+/**
+ * server's main class. accepts incoming connections and allows broadcasting
+ */
+abstract class Server$$Base {
+	
+	public static void main(String args[]) throws IOException {
+		if (args.length != 1)
+			throw new RuntimeException("Syntax: ChatServer <port>");
+		
+		
+		// TODO hinzufÃ¼gen der Plugins
+
+		new Server(Integer.parseInt(args[0]));
+	}
+	
+	
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	public Server$$Base(int port) throws IOException {
+		
+		ServerSocket server = new ServerSocket(port);
+		while (true) {
+			System.out.println("Waiting for Connections...");
+			Socket client = server.accept();
+			
+			
+			Connection c = connectTo(client);
+			c.start();
+		}
+	}
+
+	
+
+	/**
+	 * list of all known connections
+	 */
+	protected HashSet connections = new HashSet();
+	
+	/**
+	 * send a message to all known connections
+	 * 
+	 * @param text
+	 *            content of the message
+	 */
+	public void broadcast(Message message) {
+		
+		
+		//TODO durchgehen der PlugIns
+		
+		
+		if(message != null){
+			synchronized (connections) {
+				for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+			
+					Connection connection = (Connection) iterator.next();
+					connection.send(message);
+				}
+			}
+		}
+	}
+	
+	public void broadcast(String text) {
+	
+		
+		synchronized (connections) {
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+			
+				Connection connection = (Connection) iterator.next();
+				connection.send(text);
+			}
+		}
+	}
+	
+	/**
+	 * creates a new connection for a socket
+	 * 
+	 * @param socket
+	 *            socket
+	 * @return the Connection object that handles all further communication with
+	 *         this socket
+	 */
+	public Connection connectTo(Socket socket) {
+		Connection connection = new Connection(socket, ((Server) this));
+
+		connections.add(connection);
+
+		return connection;
+	}
+	
+	/**
+	 * remove a connection so that broadcasts are no longer sent there.
+	 * 
+	 * @param connection
+	 *            connection to remove
+	 */
+	public void removeConnection(Connection connection) {
+		connections.remove(connection);
+	}
+
+
+}
+
+
+
+public class Server extends  Server$$Base  {
+
+	Log logFile;
+
+	public void broadcast(Message message) {
+		if(logFile == null){
+			logFile = new Log("Server");
+		}
+		
+		logFile.log(message);
+		
+		super.broadcast(message);
+		
+	}
+      // inherited constructors
+
+
+	
+	
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	public Server ( int port )  throws IOException{ super(port); }	
+
+}

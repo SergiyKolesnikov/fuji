@@ -1,0 +1,5 @@
+layer Core;
+
+public interface ChatLineListener {
+	void newChatLine(TextMessage msg);
+}

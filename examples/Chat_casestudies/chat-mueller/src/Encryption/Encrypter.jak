@@ -1,0 +1,100 @@
+
+layer Encryption;
+
+/**
+ * @author Nils  Mueller
+ * Encrypter Klasse zum ver- und entschluesseln von Text
+ */
+public class Encrypter {
+
+	
+	/**
+	 * verschiebt die Zeichen eines Strings um 13 Stellen (ROT13)
+	 * @param text String
+	 * @return verschobener Text
+	 */
+	public static  String rot13(String text) {
+		char[] result = new char[text.length()];
+		
+		for (int i=0;i<=text.length()-1;i++) {
+			char z=text.charAt(i);
+			if (Character.isDigit(z)) {		//Zeichen ist Zahl
+				result[i] = switchDigit(z);
+			}
+			else if (Character.isLetter(z)) {	// Zeichen ist Buchstabe
+					result[i] = switchChar(z,13);
+			}
+				else {		// Sonderzeichen bleiben erhalten
+					result[i] = z;
+			}
+		}
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * verschiebt einen Digit c um 5 Stellen (ROT5)
+	 * @param c Digit als char
+	 * @return verschobenen Digit als char
+	 */
+	private static char switchDigit(char c) {
+		int numeric = Character.getNumericValue(c);
+		char res = Integer.toString((numeric + 5)%10).charAt(0);
+		return res;
+	}
+	
+	/**
+	 * verschiebt einen Character c um n Stellen
+	 * @param c Character
+	 * @param n Stellen
+	 * @return verschobener Character
+	 */
+	private static char switchChar(char c, int n) {
+		int c_int= (int) c;		// Zeichen als Unicode
+			// A:65 ... Z:90; a:97 ... z:122
+		if ( ((c_int+n<=90) && (c_int<=90)) || ((c_int>=97) && (c_int+n<=122)) ) {
+			return ((char) (c_int+n));				// verschieben problemlos moeglich
+		}
+		else {
+			if (c_int<=90) {
+				return ( (char) (64+c_int+n-90) );	// Grossbuchstaben nach Z, weiter bei A
+			}
+			else {
+				return ( (char) (96+c_int+n-122) );	// Kleinbuchstaben nach z, weiter bei a
+			}
+		}
+	}
+	
+	/**
+	 * kehrt einen String um
+	 * @param text String
+	 * @return String rueckwaerts
+	 */
+	public static String rotateString(String text) {
+		int end = text.length();
+		char[] result = new char[end];
+		
+		for (int i = 0; i <= end-1; i++) {
+			result[end-i-1]=text.charAt(i);
+		}
+		
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * verschluesselt Text mit ROT13 und Gesamtumkehrung
+	 * @param text Text
+	 * @return verschluesselter Text
+	 */
+	public static String encrypt(String text) {
+		return rotateString(rot13(text));
+	}
+	
+	/**
+	 * entschluesselt Text mit Gesamtumkehrung und ROT13
+	 * @param text Text
+	 * @return entschluesselter Text
+	 */
+	public static String decrypt(String text) {
+		return rot13(rotateString(text));
+	}
+}

@@ -1,0 +1,6 @@
+
+
+public interface Crypter {
+	public String encrypt(String plaintext);
+	public String decrypt(String encoded);
+}

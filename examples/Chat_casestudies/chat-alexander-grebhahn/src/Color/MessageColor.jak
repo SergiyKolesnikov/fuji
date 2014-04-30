@@ -1,0 +1,25 @@
+
+import java.awt.Color;
+import java.util.List;
+
+import javax.swing.JColorChooser;
+
+
+public class MessageColor{
+
+	private Color myColor = null;
+	
+	public Color getColor() {
+		return myColor;
+	}
+
+
+	public void addColor(Message msg) {
+		if(myColor == null)
+			myColor = JColorChooser.showDialog(null, "Farben", new java.awt.Color(0,0,0));
+		
+		if(!msg.hasComponent("color")){
+			msg.addComponent("color", myColor);
+		}
+	}
+}

@@ -1,0 +1,9 @@
+
+
+public refines class Server {
+	
+	public void broadcast(String text) {
+		text = krypto.trash(text);
+		Super().broadcast(text);
+	}
+}

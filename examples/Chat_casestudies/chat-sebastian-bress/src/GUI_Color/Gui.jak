@@ -1,0 +1,17 @@
+
+
+public refines class Gui {
+
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(String line) {
+		
+		Super().newChatLine("Black: "+line);
+		
+
+	}
+
+
+}

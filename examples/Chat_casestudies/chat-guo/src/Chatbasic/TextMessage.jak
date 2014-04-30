@@ -1,0 +1,53 @@
+
+layer Chatbasic;
+
+import java.io.Serializable;
+
+
+public class TextMessage implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	public String content;
+	public String msgHead; /**
+	 	                     * msgHead fuer Ipadress oder Name.
+	 	                     * weiter fuer andere funktion.
+	 	                     * 
+	 	                     */
+	
+	public TextMessage() {
+		
+	}
+	
+	public TextMessage(String content) {
+		super();
+		this.content = content;
+		this.msgHead="------------------";
+	}
+	
+	public TextMessage(String msghead, TextMessage msg) {
+		super();
+		int len = msghead.length();
+		if (len < 18) {
+			for (int i = 1; i <= 18-len; i++) {
+				msghead += "-";
+			}
+
+		}
+
+		this.msgHead = msghead;
+		this.content = msg.getContent();
+	}
+
+	public String getContent() {
+		return content;
+	}
+	
+	public String getHead() {
+		return msgHead;
+
+	}
+	
+	public void log(String fName) {
+		
+	}
+}

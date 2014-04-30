@@ -1,0 +1,18 @@
+
+import common.HistoryWriter;
+/**
+ * simple chat client
+ */
+public refines class Client {
+	
+	private static HistoryWriter w;
+
+	public static void main(String args[]) throws IOException {
+		w = new HistoryWriter("Client_" + args[0] + args[1] + "_");
+		Super().main(args);	
+	}
+	public void fireAddLine(String line) {
+		w.write(line);
+		Super().fireAddLine(line);
+	}
+}

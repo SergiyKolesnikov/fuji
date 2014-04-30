@@ -1,0 +1,37 @@
+
+
+import java.io.*;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+
+public refines class Connection {	
+
+    protected String serverfile = "history_server.log";
+
+    protected String getTime() {
+        Calendar cal = Calendar.getInstance();
+        DateFormat formatter = new SimpleDateFormat();
+        return (formatter.format(cal.getTime()));
+    }
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		String message = ((TextMessage) msg).getContent();
+		String logstring = (getTime() + " - " + name + ": " + message + "\n");
+        byte data[] = new byte[logstring.length()];
+        for (int i = 0; i < logstring.length(); i++) {
+            data[i] = (byte) logstring.charAt(i);
+        }
+        FileOutputStream fileoutserver;
+        try {
+            fileoutserver = new FileOutputStream(serverfile, true);
+            fileoutserver.write(data);
+            fileoutserver.getFD().sync();
+            fileoutserver.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		Super().handleIncomingMessage(name, msg);
+	}
+}

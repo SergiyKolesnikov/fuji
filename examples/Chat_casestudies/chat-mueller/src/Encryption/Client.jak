@@ -1,0 +1,22 @@
+
+layer Encryption;
+
+public refines class Client {
+
+	protected static boolean ENCRYPTING = true;	// Status Verschluesselung
+
+	protected void handleIncomingMessage() {
+		if (inMsg.isEncrypted()) {			// wenn Textmessage verschluesselt
+			inMsg.setEncrypted(false);		// Message wird entschlüsselt
+		}
+		Super().handleIncomingMessage();
+	}
+
+	protected void handleOutTextMessage() {
+		if (ENCRYPTING) {
+			outMsg.setEncrypted(true);
+		}
+		Super().handleOutTextMessage();
+	}
+
+}

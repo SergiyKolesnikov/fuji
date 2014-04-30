@@ -1,0 +1,27 @@
+
+import java.awt.Choice;
+import java.awt.Event;
+
+public refines class Gui {
+	private static final long serialVersionUID = 1L;
+	
+	public  Choice choice;
+	
+	protected void init(Client chatClient) {
+		Super().init(chatClient);
+		choice = new Choice();
+		choice.add("Black");
+		choice.add("Gray");
+		choice.add("Red");
+		choice.add("Blue");
+		choice.add("Green");
+		choice.add("Yellow");
+		add("East",choice);
+	}
+	
+	public boolean handleEvent(Event e) {
+		e.arg = "[" + choice.getSelectedItem() + "] " + (String)e.arg;
+		return Super().handleEvent(e);	
+	}
+	
+}

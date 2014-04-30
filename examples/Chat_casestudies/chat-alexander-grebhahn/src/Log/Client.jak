@@ -1,0 +1,19 @@
+
+
+public refines class Client {
+
+	Log logFile;
+
+	protected void handleIncomingMessage(Object msg) {
+	
+		if(msg instanceof Message){
+			if(logFile == null){
+				logFile = new Log("Client"+this.name+Math.random());
+			}
+			logFile.log((Message)msg);
+		}
+	
+		Super().handleIncomingMessage(msg);	
+	}
+
+}

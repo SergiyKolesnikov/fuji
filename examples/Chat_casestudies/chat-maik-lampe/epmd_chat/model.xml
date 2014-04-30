@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<feature mandatory="true" name="Base"/>
+				<alt abstract="true" mandatory="true" name="Visual">
+					<feature mandatory="true" name="Console"/>
+					<feature mandatory="true" name="Gui"/>
+				</alt>
+				<feature name="Logging"/>
+				<alt abstract="true" name="Encryption">
+					<feature mandatory="true" name="Reverse"/>
+					<feature mandatory="true" name="Flip"/>
+				</alt>
+				<feature name="Auth"/>
+				<feature name="Color"/>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

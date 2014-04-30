@@ -1,0 +1,17 @@
+
+layer Historie;
+
+public refines class Server {
+
+	public void broadcast(TextMessage msg) {	
+		serverlog(msg);
+		Super(TextMessage).broadcast(msg);
+	}
+	
+	public void serverlog(TextMessage msg){
+		
+		msg.log("c:/Serverlog.dat");
+	
+	}
+
+}

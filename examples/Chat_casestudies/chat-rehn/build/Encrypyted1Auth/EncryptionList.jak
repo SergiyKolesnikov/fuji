@@ -1,0 +1,20 @@
+
+layer Encrypyted1Auth;
+
+import java.util.LinkedList;
+
+SoUrCe RooT Encryption "workspace/EPMD-Feature/src/Encryption/EncryptionList.jak";
+
+abstract class EncryptionList$$Encryption {
+	public LinkedList methods = new LinkedList();
+	
+	public EncryptionList$$Encryption() {}
+}
+
+SoUrCe  Rot13 "workspace/EPMD-Feature/src/Rot13/EncryptionList.jak";
+
+public class EncryptionList extends  EncryptionList$$Encryption  {
+	refines EncryptionList() {
+		methods.add(new Rot13Encryption());
+	}
+}

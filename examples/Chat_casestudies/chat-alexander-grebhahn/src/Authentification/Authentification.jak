@@ -1,0 +1,71 @@
+
+import java.util.List;
+import java.util.Scanner;
+
+public class Authentification{
+
+	boolean isAuthenticate = false;
+	
+	Long identifier;
+	
+
+	public boolean checkAccepted(Message msg) {
+		if(isAuthenticate)
+			return true;
+		if(!isAuthenticate){
+			if(msg.hasComponent("password")){
+				String accept = (String) msg.getComponent("accepted");
+				if(accept.equals("accepted")){
+					long ident = (Long) msg.getComponent("identifier");
+					if(identifier.equals(ident)){
+						isAuthenticate = true;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+
+	public Object addPassword(Message msg) {
+		if(!isAuthenticate){
+			
+			identifier =  System.currentTimeMillis();
+			
+			System.out.println("Passworteingabe: ");
+			Scanner sc = new Scanner(System.in);
+			String password = sc.next();
+			
+			msg.addComponent("password", password);
+			
+			msg.addComponent("accepted", "notAccepted");
+			msg.addComponent("identifier", identifier);
+			
+		}
+		return msg;
+	}
+
+	public static boolean checkPasswordAndName(Message msg) {
+	
+		String password;
+		String name = (String) msg.getComponent("name");
+		String isAuten;
+		if(msg.hasComponent("password")){
+			password = (String) msg.getComponent("password");
+			isAuten = (String) msg.getComponent("accepted");
+			if(isAuten.equals("notAccepted")){
+				if(name.equals(password)){
+					msg.overrideComponent("accepted", new String("accepted"));
+					System.out.println("Person  "+name +"  akzeptiert");
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+}

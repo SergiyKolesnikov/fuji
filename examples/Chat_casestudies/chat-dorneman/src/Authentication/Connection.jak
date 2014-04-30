@@ -1,0 +1,25 @@
+
+layer Authentication;
+
+public refines class Connection {
+
+	private boolean authenticated = false;
+	
+	public boolean isAuthenticated() {
+		return authenticated;
+	}
+	
+	protected void handleIncomingMessage(String name, TextMessage msg) {
+						
+		if (!authenticated) {
+			if (msg.getContent().startsWith("!AuthPW: foobar")) {
+				authenticated = true;
+				send("you are now authenticated!");
+			} else {
+				send("# authentication required: type \"!AuthPW: foobar\" ;)");
+			}
+		} else {
+			Super().handleIncomingMessage(name, msg);
+		}
+	}
+}

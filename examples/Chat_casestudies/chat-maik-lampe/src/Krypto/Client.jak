@@ -1,0 +1,16 @@
+
+
+
+public refines class Client {
+		
+	public void send(String line) {	
+		String newLine = krypto.rot(line);		
+		Super().send(newLine);
+	}
+	
+	public void fireAddLine(String line) {
+		String newLine = krypto.trash(line);
+		Super().fireAddLine(newLine);
+	}
+
+}

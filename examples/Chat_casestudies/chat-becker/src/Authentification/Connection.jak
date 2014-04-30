@@ -1,0 +1,18 @@
+
+layer Authentification;
+
+public refines class Connection {
+	private String password="EPMD4EVER";
+	Boolean auth=false;
+	public void handleIncomingMessage(String name, TextMessage msg){
+		if(msg instanceof AuthMessage){
+			if(msg.getContent().equals(password))
+				auth=true;
+		}
+		
+		if(auth)
+			Super(String,TextMessage).handleIncomingMessage(name,msg);
+		else
+			send(new TextMessage("Keine Erfolgreiche Authentification"));	
+	}
+}

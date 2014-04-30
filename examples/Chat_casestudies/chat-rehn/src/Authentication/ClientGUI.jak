@@ -1,0 +1,9 @@
+layer Authentication;
+
+public refines class ClientGUI {
+
+	public void initGUI() throws Exception {
+		Super().initGUI();
+		client.authenticate(clientName, ServerAuthentication.REQ_PASSWORD);
+	}
+}

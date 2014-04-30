@@ -1,0 +1,41 @@
+layer FullGUI;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+SoUrCe RooT Chat "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/Chat/Log.jak";
+
+abstract class Log$$Chat {
+	
+	public void write(String line) {
+	}
+
+}
+
+SoUrCe  Log "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/Log/Log.jak";
+
+public class Log extends  Log$$Chat  {
+	
+	private final String LOG_FILE = "log" + System.currentTimeMillis() + ".txt";
+	
+	private BufferedWriter writer;
+	
+	public Log() {
+		try {
+			writer = new BufferedWriter(new FileWriter(LOG_FILE));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void write(String line) {
+		try {
+			writer.append(line);
+			writer.newLine();
+			writer.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

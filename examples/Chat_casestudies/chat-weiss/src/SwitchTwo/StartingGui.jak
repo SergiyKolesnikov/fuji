@@ -1,0 +1,11 @@
+
+
+public refines class StartingGui 
+{
+	public void actionPerformed(ActionEvent e) {
+
+		password = SwitchTwo.crypto(password);
+		Super(Actionevent).actionPerformed(e);
+
+	}
+}

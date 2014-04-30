@@ -1,0 +1,19 @@
+
+import common.Crypter;
+/**
+ * simple chat client
+ */
+public refines class Client {
+	
+	private Crypter c = new Crypter();
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			Super().handleIncomingMessage(c.decrypt((TextMessage) msg));
+		}	
+	}
+	
+	public void send(TextMessage msg) {
+		Super().send(c.encrypt(msg));
+	}
+}

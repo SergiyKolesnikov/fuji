@@ -1,0 +1,7 @@
+
+
+public refines class TextMessage {
+	protected boolean cryp=false;
+	
+	
+}

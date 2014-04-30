@@ -1,0 +1,29 @@
+
+layer ROT13;
+
+public refines class TextMessage {
+
+	public void rot13(){
+	
+		this.content=rot13(this.getContent());
+	
+	}
+	
+	public String rot13(String pf) {
+
+		StringBuffer pf2 = new StringBuffer();
+	
+		for (int i = 0; i < pf.length(); i++) {
+			int c = pf.charAt(i);
+			if (c < 65 || c > 122) {
+				pf2.append((char) c);
+			} else if ((c < 78 && c >= 65) || (c < 110 && c >= 97)) {
+				pf2.append((char) (c + 13));
+			} else if ((c >= 78 && c <= 90) || (c >= 110 && c <= 122)) {
+				pf2.append((char) (c - 13));
+			}
+	
+		}
+		return pf2.toString();
+	}	
+}

@@ -1,0 +1,15 @@
+
+
+public refines class Client {
+	public void send(Message msg) {
+		if (msg != null) {
+			Gui g = ($pack.Gui) Gui.getInstance();
+			
+			if (g != null) {
+				msg.setAttribute("color", g.getCurrentColor());
+			}
+		}
+		
+		Super().send(msg);
+	}
+}

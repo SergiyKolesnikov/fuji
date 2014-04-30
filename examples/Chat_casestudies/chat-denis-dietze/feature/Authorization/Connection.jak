@@ -1,0 +1,18 @@
+public refines class Connection {
+	public void authInc(String clientName, Object msg) {
+		if(msg instanceof TextMessage && Super().pass) {
+			if(((TextMessage)msg).getContent().equals(Super().decrypt1("passwort junge"))) {
+				Super().server.broadcast(clientName + " login successful.");
+				Super().pass = false;
+			}
+			else {
+				Super().server.broadcast(clientName + " wrong password.");
+				Super().connectionOpen = false;
+				Super().pass = false;
+			}
+		}
+		else {
+			Super().authInc(clientName,msg);
+		}
+	}
+}

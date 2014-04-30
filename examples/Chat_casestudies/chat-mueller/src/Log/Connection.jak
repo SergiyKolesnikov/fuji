@@ -1,0 +1,19 @@
+
+layer Log;
+
+public refines class Connection {
+
+	protected Logger log;						// schreibt Log
+
+	public void run() {
+		String clientName = getClientName();
+		log = new Logger("Client_" + clientName.substring(1));
+		Super().run();
+	}
+	
+	public void send(String line) {
+		log.logIt(line);
+		Super(String).send(line);
+	}
+
+}

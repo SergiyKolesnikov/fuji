@@ -1,0 +1,16 @@
+
+
+public refines class Client {
+	public void init(String host, int port) {
+		new Gui("Chat " + host + ":" + port, instance);
+		Super().init(host, port);
+	}
+	
+	public void handleIncoming(Object msg) {
+		if (msg instanceof Viewable) {
+			Gui.getInstance().render((Viewable) msg);
+		}
+		
+		Super().handleIncoming(msg);
+	}
+}

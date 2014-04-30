@@ -1,0 +1,8 @@
+layer Crypt;
+
+public refines class Connection {
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage)
+			server.broadcast(name + " - " + Chiffre.decrypt(((TextMessage) msg).getContent()));
+	}
+}

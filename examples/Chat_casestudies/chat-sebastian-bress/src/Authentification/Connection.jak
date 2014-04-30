@@ -1,0 +1,51 @@
+
+
+public refines class Connection {
+
+
+	/**
+	 * the Client has to authenticate himself by the Server. First the Client sends a request 
+	 * with the password to the Server. Then he waits for a reply. If the passwort fits, the client is successfully 
+	 * authenticated and he gets the status ok, otherwise a 'failed' is returned.   
+	 */
+	
+	public boolean initialize_Connection() {
+		
+		
+		Object msg= new Object(); //to avoid the "not initialized error"
+		
+		try {
+			msg = inputStream.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		if (msg instanceof TextMessage) {
+			TextMessage tms = (TextMessage) msg;
+			
+			if(tms.getMessagetyp().equals("authenticate")){
+			
+				if(tms.getPassword().equals(server.password)){
+					
+					send(new TextMessage("authenticated","","","","ok"));
+					return true; //accept connection
+					
+				}else{		
+					
+					System.err.println("invalid passwort! Connection refused...");
+					send(new TextMessage("authenticated","","","","failed"));
+					
+				}
+				
+			}
+			
+		}
+		
+		return false; //something went wrong, refuse connection
+			
+	}
+
+}

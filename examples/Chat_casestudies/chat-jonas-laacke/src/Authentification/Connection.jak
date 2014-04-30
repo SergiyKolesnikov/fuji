@@ -1,0 +1,52 @@
+
+
+public refines class Connection {
+	
+	private boolean communicationAllowed=false;
+	private String password="MyPassword";
+	
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param name
+	 *            name of the client
+	 * @param msg
+	 *            received message
+	 */
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage){
+			String text=((TextMessage)msg).getContent();
+			if(!communicationAllowed){
+				communicationAllowed=password.equals(text);
+				if(communicationAllowed)
+					server.broadcast(name + " has joined.");
+				else
+					sendWithoutAuthentification("You have to enter the password first!");
+			}
+			else
+				server.broadcast(name + " - " + text);
+		}
+	}
+	
+	/**
+	 * sends a message to the client
+	 * 
+	 * @param line
+	 *            text of the message
+	 */
+	public void send(String line) {
+		if(communicationAllowed)
+			Super(String).send(line);
+	}
+	
+	/**
+	 * sends a message to the client without authentification
+	 * 
+	 * @param line
+	 *            text of the message
+	 */
+	public void sendWithoutAuthentification(String line) {
+		Super(String).send(line);
+	}
+
+}

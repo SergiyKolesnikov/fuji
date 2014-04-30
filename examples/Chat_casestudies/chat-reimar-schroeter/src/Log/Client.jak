@@ -1,0 +1,21 @@
+
+
+import java.lang.Thread;
+import java.lang.InterruptedException;
+
+public refines class Client{
+	public Logger log = null;
+	
+	public void handleIncomingMessage(Object msg) {
+		Super().handleIncomingMessage(msg);
+		
+		if(msg instanceof Message){
+			if(log == null){
+				log = new Logger(getUserName());
+			}
+			if(log != null){
+				log.writeLogLine(((Message) msg).getUserName_And_Content());
+			}		
+		}
+	}
+}

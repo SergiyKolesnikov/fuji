@@ -1,0 +1,13 @@
+
+layer Authentification;
+
+public refines class Client {
+	private String passwort="EPMD4EVER";
+	
+	public void init(){
+		Super().init();
+		TextMessage auth=new AuthMessage(passwort);
+		send (auth);
+	}
+	
+}

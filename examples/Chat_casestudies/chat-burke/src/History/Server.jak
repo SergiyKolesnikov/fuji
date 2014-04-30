@@ -1,0 +1,17 @@
+layer History;
+
+public refines class Server {
+	
+	History history;
+	
+	public void initServer(int port) {
+		Super().initServer(port);
+		history = new History("Server.txt");	
+	}
+	
+	public void broadcast(String text) {
+		history.onMessageReceived(text);		
+		Super().broadcast(text);
+	}
+
+}

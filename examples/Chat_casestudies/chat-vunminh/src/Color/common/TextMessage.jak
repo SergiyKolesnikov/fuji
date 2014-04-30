@@ -1,0 +1,22 @@
+import java.io.Serializable;
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+public refines class TextMessage {
+ protected Color clr;
+ 
+ 		
+	public Color getColor() {
+		return this.clr;
+	}
+
+	public void setMessageColor(Color clr) {
+		this.clr = clr;
+		
+	}
+
+ 
+		
+}

@@ -1,0 +1,28 @@
+
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Iterator;
+
+public refines class Server {
+
+
+	//needed for writing the log file
+    private String logfile_path = "./chat_server_messages.log";
+	protected File file;//  = new File(logfile_path);
+    protected BufferedWriter bw;// = new BufferedWriter(new FileWriter(file));
+    
+    //you may want to change the location of the log file
+  
+    public void log(TextMessage msg){
+    
+         System.out.println("LOGGING: writing received message '"+msg.getContent()+"' to logfile...");
+    
+    }
+  
+
+}

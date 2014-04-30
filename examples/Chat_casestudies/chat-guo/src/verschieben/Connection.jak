@@ -1,0 +1,31 @@
+
+layer verschieben;
+
+public refines class Connection {
+
+	public void infoSend(Connection connection,TextMessage msg){
+		msg.verschieben();
+		Super(Connection,TextMessage).infoSend(connection,msg);
+	}
+	
+	public void infoin(TextMessage msg){
+		msg.entverschieben();
+		Super(TextMessage).infoin(msg);
+		
+	}
+	
+	public TextMessage join(String string){
+		
+		TextMessage msg=Super(String).join(string);
+		msg.verschieben();
+		return msg;
+	}
+	
+	public TextMessage left(String string){
+		
+		TextMessage msg=Super(String).left(string);
+		msg.verschieben();
+		return msg;
+	}
+
+}

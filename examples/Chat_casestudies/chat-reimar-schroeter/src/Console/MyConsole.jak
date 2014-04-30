@@ -1,0 +1,46 @@
+
+
+import java.util.Scanner;
+
+
+/**
+ * 
+ *	Console for the chat client
+ */
+public class MyConsole implements ChatLineListener{
+	Client chatClient;
+	Scanner scanner = new Scanner(System.in);
+	
+	
+	public MyConsole(String title, Client chatClient) {
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+		
+		getInput();
+		this.chatClient = chatClient;
+	}
+	
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(Message msg) {
+		String output = msg.getUserName_And_Content();
+		System.out.println(output);
+	}
+	
+	/**
+	 * handles input from console
+	 */
+	public void getInput(){
+		new Thread(){
+			public void run(){
+				while(true){
+					chatClient.send(scanner.nextLine());
+				}
+			}
+		}.start();
+	}
+}

@@ -1,0 +1,16 @@
+
+
+
+public refines class Client {
+	
+	Gui myGui;
+	
+	protected void handleIncomingMessage(Object msg) {
+		Super().handleIncomingMessage(msg);
+		if(msg instanceof Message){
+//			myGui.newChatLine((Message)msg);
+		}	
+	}
+	
+
+}

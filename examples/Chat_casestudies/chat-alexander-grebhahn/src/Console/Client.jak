@@ -1,0 +1,14 @@
+
+
+
+public refines class Client {
+	
+	Console myConsole;
+	
+	protected void handleIncomingMessage(Object msg) {
+		Super().handleIncomingMessage(msg);
+		if(msg instanceof Message){
+		//	myConsole.newChatLine((Message)msg);
+		}	
+	}
+}

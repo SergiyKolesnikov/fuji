@@ -1,0 +1,153 @@
+layer Base;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Iterator;
+
+public refines class Server
+{
+	protected HashMap _connections = new HashMap();
+	protected LinkedList _received_messages = new LinkedList();
+
+	private ServerSocket _server_socket;
+	
+	public boolean _stop_it = false;
+	
+	
+//	protected ChatLogger _logger = new ChatLogger("chatserver.log");
+	
+
+	public Server(int port)
+	{
+		System.out.println("Initializing Server...");
+		try
+		{
+			_server_socket = new ServerSocket(port);
+			_server_socket.setSoTimeout(10);
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+
+		this.start();
+		System.out.println("Server is running...");
+	}
+
+	public void receive(Message message)
+	{
+		_received_messages.add(message);
+	}
+
+	public void run()
+	{
+		while (!_stop_it)
+		{
+			try
+			{
+				Socket client_socket = _server_socket.accept();
+				ChatConnection connection = new ChatConnection(client_socket, this);
+				connection.start();
+				_connections.put(connection.toString(), connection);
+				System.out.println("Clients++: " + connection.toString() + " (" + _connections.size() + " active)");
+			}
+			catch (SocketTimeoutException ste)
+			{
+				// ignore SocketTimeout
+			}
+			catch (IOException e)
+			{
+				System.out.println(e.getMessage());
+			}
+
+			int messages = 0;
+
+			// process a maximum of 5 messages per turn
+			while (!_received_messages.isEmpty() && messages < 5)
+			{
+				Message message = (Message) _received_messages.removeFirst();
+				handleMessage(message);
+				messages++;
+			}
+		}
+		
+		try
+		{
+			_server_socket.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void handleMessage(Message message)
+	{
+		ChatConnection conn = (ChatConnection) _connections.get(message.getOrigin());
+
+/*		case Message.TYPE_AUTHENTICATION:
+			if (!conn.isAuthenticated())
+			{
+				if (message.getPassword().equals(_password))
+				{
+					conn.authenticate();
+
+					conn.send(Message.createNewAuthResponse(true));
+				}
+				else
+				{
+					conn.send(Message.createNewAuthResponse(false));
+				}
+			}
+			break;
+*/	
+			
+		if(message.getType() == Message.TYPE_MESSAGE)
+		{
+			
+//			if(conn.isAuthenticated())
+			
+			broadcast(message);
+		}
+		else if (message.getType() ==  Message.TYPE_EOC)
+		{
+			conn.stopIT();
+			_connections.remove(conn.toString());
+			System.out.println("Clients--: " + conn.toString() + " (" + _connections.size() + " active)");
+			//System.out.println("Clients left: " + _connections.size());
+		}
+		
+		
+		//log(message.toString());
+		
+	}
+
+	protected void broadcast(Message message)
+	{
+		Iterator it = _connections.keySet().iterator();
+		//for(Object key : _connections.keySet())
+		while(it.hasNext())
+		{
+			Object key = it.next();
+			ChatConnection conn = (ChatConnection) _connections.get(key);
+			conn.send(message);
+		}
+	}
+	
+	
+//	public void log(String s)
+//	{
+//		_logger.log(s);
+//	}
+
+	public static void main(String[] args)
+	{
+		new Server(6666);
+	}
+	
+}

@@ -1,0 +1,20 @@
+public refines class Server {
+	public void createFile() {
+		try {
+			Super().fileout = new FileOutputStream("history_server.log",true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void writeFile(String text) {
+		try {
+			for(int i=0;i<text.length();i++) {
+				Super().fileout.write((byte)text.charAt(i));
+			}
+			Super().fileout.write((byte)'\n');
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

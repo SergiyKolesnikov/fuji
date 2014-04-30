@@ -1,0 +1,30 @@
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import common.TextMessage;
+
+public class Console implements ChatLineListener{
+	
+	Client client;
+	
+	public Console(Client client) {
+		this.client = client;
+		client.addLineListener(this);
+		BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+		while (true) {
+			String zeile = null;
+			try {
+				zeile = console.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			client.send(new TextMessage(zeile));
+		}
+	}
+
+	public void newChatLine(String massage) {
+		client.print(massage);	
+	}
+}

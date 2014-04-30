@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Root">
+				<and name="Base">
+					<alt abstract="true" mandatory="true" name="UI">
+						<feature mandatory="true" name="Console"/>
+						<feature mandatory="true" name="GUI"/>
+					</alt>
+					<or name="Crypt">
+						<feature mandatory="true" name="POT13"/>
+						<feature mandatory="true" name="Reverse"/>
+					</or>
+					<feature name="Log"/>
+					<feature name="Authentification"/>
+					<feature name="Color"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

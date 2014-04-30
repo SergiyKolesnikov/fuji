@@ -1,0 +1,9 @@
+
+layer NewEquation;
+
+SoUrCe RooT Chatbasic "../../H:/workspace/empdu4/src/Chatbasic/ChatLineListener.jak";
+
+public interface ChatLineListener {
+	
+	void newChatLine(TextMessage msg);
+}

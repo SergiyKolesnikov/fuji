@@ -1,0 +1,81 @@
+layer FullGUI;
+
+import java.io.Serializable;
+
+SoUrCe RooT Chat "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/Chat/TextMessage.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+abstract class TextMessage$$Chat implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	
+	protected String content;
+
+	public TextMessage$$Chat(String content) {
+		setContent(content);
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+}
+
+SoUrCe  BackwardsEncryption "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/BackwardsEncryption/TextMessage.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+abstract class TextMessage$$BackwardsEncryption extends  TextMessage$$Chat  {
+
+	public void setContent(String content) {
+		Super().setContent(backwards(content));
+	}
+
+	public String getContent() {
+		return backwards(Super().getContent());
+	}
+
+	private String backwards(String text) {
+		char[] chars = new char[text.length()];
+		for (int i = 0; i < text.length(); i++)
+			chars[i] = text.charAt(text.length() - i - 1);
+		return new String(chars);
+	}
+
+}
+
+SoUrCe  RotationEncryption "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/RotationEncryption/TextMessage.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+public class TextMessage extends  TextMessage$$BackwardsEncryption  {
+
+	private static final int KEY = 13;
+	
+	public void setContent(String content) {
+		Super().setContent(rotate(content, KEY));
+	}
+
+	public String getContent() {
+		return rotate(Super().getContent(), -KEY);
+	}
+
+	private String rotate(String text, int key) {
+		char[] chars = text.toCharArray();
+		for (int i = 0; i < chars.length; i++)
+			chars[i] = (char) (chars[i] + key);
+		return new String(chars);
+	}
+
+}

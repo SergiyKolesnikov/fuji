@@ -1,0 +1,46 @@
+
+import java.io.Serializable;
+import java.util.HashMap;
+
+
+
+public class Message implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private HashMap components = new HashMap();
+	
+	public Object getComponent(String name){
+		return components.get(name);
+	}
+	
+	public void removeComponent(String name){
+		components.remove(name);
+	}
+	
+	public void addComponent(String name, Object content){
+		components.put(name, content);
+	}
+	
+	public boolean hasComponent(String name){
+		if(components.containsKey(name))
+			return true;
+		return false;
+	}
+	
+	public HashMap getComponents(){
+		return components;
+	}
+	
+	public void overrideComponent(String name, Object newValue){
+		if(components.containsKey(name)){
+			components.remove(name);
+		}
+		components.put(name, newValue);
+	}
+	
+}

@@ -1,0 +1,31 @@
+
+layer EncToggleCase;
+
+public refines class TextMessage {
+
+	private void toggleCase(char[] chars) {
+		
+		for(int i = 0; i < chars.length; ++i)
+			if (chars[i] >= 'A' && chars[i] <= 'Z')
+				chars[i] += 'a' - 'A';
+			else if (chars[i] >= 'a' && chars[i] <= 'z')
+				chars[i] -= 'a' - 'A';
+	}
+	
+	public void encodeContent(char[] chars) {
+		
+		System.out.print("Encoding [TC] " + new String(chars) + " -> ");
+		toggleCase(chars);
+		System.out.println(new String(chars) + ".");
+		Super().encodeContent(chars);
+	}
+	
+	public void decodeContent(char[] chars) {
+		
+		Super().decodeContent(chars);
+		System.out.print("Decoding [TC] " + new String(chars) + " -> ");
+		toggleCase(chars);		
+		System.out.println(new String(chars) + ".");
+	}
+
+}

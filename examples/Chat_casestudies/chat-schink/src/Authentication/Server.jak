@@ -1,0 +1,8 @@
+layer Authentication;
+
+public refines class Server {
+	
+	public int getPasswordHash() {
+		return "password".hashCode();
+	}
+}

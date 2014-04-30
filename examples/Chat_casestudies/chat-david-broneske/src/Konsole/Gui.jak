@@ -1,0 +1,12 @@
+
+
+public refines class Gui {
+	public void init(){
+		System.out.println("Cmd Mode entered"); 
+		setVisible(false);
+	}
+	
+	public void newChatLine(String line) {
+		System.out.print(line);
+	}
+}

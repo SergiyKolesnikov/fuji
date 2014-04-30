@@ -1,0 +1,56 @@
+
+
+public refines class Client {
+
+
+/**
+	 * the Client has to authenticate himself by the Server. First the Client sends a request 
+	 * with the password to the Server. Then he waits for a reply. If the client is successfully 
+	 * authenticated, then he gets the status ok, otherwise a 'failed' is returned.   
+	 */
+	
+	protected boolean initialize_Connection() {
+		
+		send(new TextMessage("authenticate","","",password,""));
+		
+		Object msg= new Object(); //to avoid the "not initialized error"
+		
+		try {
+			msg = inputStream.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		if (msg instanceof TextMessage) {
+			TextMessage tms = (TextMessage) msg;
+			
+			if(tms.getMessagetyp().equals("authenticated")){
+			
+				if(tms.getReply_status().equals("ok")){
+					
+					System.err.println("Successful authenticated!");
+					return true;
+					
+				}else if(tms.getReply_status().equals("failed")){
+					
+					System.err.println("authentication failed! Maybe wrong Password?");
+					
+				}else{
+					
+					System.err.println("Protokollfehler: invalid reply_status_value " + tms.getReply_status());
+				}
+				
+			}
+			
+		}
+		
+		return false; //something went wrong
+			
+	}
+
+
+
+
+}

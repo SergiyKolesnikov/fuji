@@ -1,0 +1,28 @@
+
+layer EncryptedChat;
+
+import java.util.LinkedList;
+
+SoUrCe RooT Encryption "EPMD-Feature/src/Encryption/EncryptionList.jak";
+
+abstract class EncryptionList$$Encryption {
+	public LinkedList methods = new LinkedList();
+	
+	public EncryptionList$$Encryption() {}
+}
+
+SoUrCe  Rot13 "EPMD-Feature/src/Rot13/EncryptionList.jak";
+
+abstract class EncryptionList$$Rot13 extends  EncryptionList$$Encryption  {
+	refines EncryptionList() {
+		methods.add(new Rot13Encryption());
+	}
+}
+
+SoUrCe  Reverse "EPMD-Feature/src/Reverse/EncryptionList.jak";
+
+public class EncryptionList extends  EncryptionList$$Rot13  {
+	refines EncryptionList() {
+		methods.add(new ReverseEncryption());
+	}
+}

@@ -1,0 +1,41 @@
+
+
+import java.io.Serializable;
+
+public class AuthMessage extends AbstractMessage implements Serializable {
+	private static final long serialVersionUID = -1306003108060399379L;
+
+	private String user;
+	private String pass;
+	private String sender;
+
+	public AuthMessage(String username, String password) {
+		this.user   = username;
+		this.pass   = password;
+		this.sender = "";
+	}
+
+	public String getContent() {
+		return user + ":" + pass;
+	}
+
+	public String getUsername() {
+		return user;
+	}
+
+	public String getPassword() {
+		return pass;
+	}
+
+	public void setContent(String content) {
+		// Dummy
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String userID) {
+		sender = userID;
+	}
+}

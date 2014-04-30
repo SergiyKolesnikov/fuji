@@ -1,0 +1,39 @@
+layer ConsoleAuthentication;
+
+public refines class Client {
+	
+	protected void runIT()
+	{
+		if(setup())
+		{
+			authenticate();
+			go();
+		}
+	}
+	
+	protected void authenticate()
+	{
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Password (o_O): ");
+		String password = scanner.nextLine();
+		if(password.equals(""))
+			password = "o_O";
+		System.out.println(password);
+		while (!sendAuthentication(password))
+		{
+			System.out.println("Wrong password!");
+			System.out.println("Password (o_O): ");
+			
+			password = scanner.nextLine();
+			if(password.equals(""))
+				password = "o_O";
+
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		new Client();
+	}
+}

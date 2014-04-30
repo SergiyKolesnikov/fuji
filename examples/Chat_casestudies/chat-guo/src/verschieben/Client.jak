@@ -1,0 +1,16 @@
+
+layer verschieben;
+
+public refines class Client {
+
+	public void fireAddLine(TextMessage msg){
+		msg.entverschieben();
+		Super(TextMessage).fireAddLine(msg);
+	}
+	
+	public void send(TextMessage msg){
+		msg.verschieben();
+		Super(TextMessage).send(msg);
+	}
+
+}

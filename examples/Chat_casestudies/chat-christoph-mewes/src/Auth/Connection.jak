@@ -1,0 +1,28 @@
+
+
+public refines class Connection {
+	protected void handleIncoming(Connection c, Message msg) {
+		Server s = Server.getInstance();
+
+		if (msg instanceof AuthMessage && !s.isAuthenticated(c)) {
+			AuthMessage amsg = (AuthMessage) msg;
+
+			if (amsg.getPassword().equals("password") && amsg.getUsername().equals("username")) {
+				s.authenticate(c);
+
+				msg = new SystemMessage("Benutzer '" + amsg.getUsername() + "' hat sich angemeldet.");
+				msg.setSender("System");
+			}
+		}
+
+		if (!(msg instanceof AuthMessage) && s.isAuthenticated(c)) {
+			Super().handleIncoming(c, msg);
+		}
+	}
+
+	protected void handleOutgoing(Connection c, Message msg) throws IOException {
+		if (Server.getInstance().isAuthenticated(c)) {
+			Super().handleOutgoing(c, msg);
+		}
+	}
+}

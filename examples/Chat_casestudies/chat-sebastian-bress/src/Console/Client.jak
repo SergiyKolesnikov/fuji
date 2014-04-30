@@ -1,0 +1,25 @@
+
+
+public refines class Client {
+
+ public static void main(String args[]) throws IOException {
+  
+           Super().main(args);
+
+           Console shell = new Console(client);
+			  while(true){
+				  try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					System.err.println("sleep(1000) failed!");
+					//e.printStackTrace();
+				}
+				  shell.broadcasttime();
+			  }
+
+
+ }
+
+
+}

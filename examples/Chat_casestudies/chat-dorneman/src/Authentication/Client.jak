@@ -1,0 +1,11 @@
+
+layer Authentication;
+
+public refines class Client {
+
+	public void run() {
+		send("!AuthPW: wrong");
+		Super().run();
+	}
+
+}

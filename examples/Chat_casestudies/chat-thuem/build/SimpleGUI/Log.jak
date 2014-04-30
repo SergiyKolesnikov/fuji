@@ -1,0 +1,13 @@
+layer SimpleGUI;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+SoUrCe RooT Chat "../../../Users/Thomas Thüm/ITI/runtime-EclipseApplication/EPMD_Chat_tthuem_fop/src/Chat/Log.jak";
+
+public class Log {
+	
+	public void write(String line) {
+	}
+
+}

@@ -1,0 +1,13 @@
+layer Auth;
+
+public refines class Connection {
+	public void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage)
+			if (((TextMessage) msg).getPassword().compareTo("blubb")==0)
+			Super().handleIncomingMessage(name, msg);
+			else {
+				send("Falsches passwort");
+				server.removeConnection(this);
+			}
+	}
+}

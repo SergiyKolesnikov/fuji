@@ -1,0 +1,37 @@
+
+
+
+/**
+ * 
+ * class to encrypt/decrypt text
+ * 
+ */
+public abstract class Cryptography {
+	protected Cryptography rek;
+	
+	/**
+	 * create one Cryptography subclass of the given kind
+	 * 
+	 * @param kind of the subclass to create
+	 * @return
+	 */
+	public static Cryptography create(){
+		return null;
+	}
+	
+	/**
+	 * encrypt the given string and return the result
+	 * 
+	 * @param msg text to encrypt
+	 * @return encrypted text
+	 */
+	public abstract String encrypt(String msg);
+
+	/**
+	 * decrypt the given string and return the result
+	 * 
+	 * @param msg text to decrypt
+	 * @return decrypted text
+	 */
+	public abstract String decrypt(String msg);
+}

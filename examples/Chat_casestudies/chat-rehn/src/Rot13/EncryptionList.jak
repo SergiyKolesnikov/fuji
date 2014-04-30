@@ -1,0 +1,7 @@
+layer Rot13;
+
+public refines class EncryptionList {
+	refines EncryptionList() {
+		methods.add(new Rot13Encryption());
+	}
+}

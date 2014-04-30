@@ -1,0 +1,35 @@
+
+
+import java.io.Serializable;
+
+public refines class Message implements Serializable{
+	static Cryptography crypto;
+	
+	public void setContent(String content){
+		
+		if(crypto == null){
+			crypto = Cryptography.create();
+		}	
+		if(crypto != null){
+			content = crypto.encrypt(content);
+		}
+	
+		Super().setContent(content);
+	}
+	
+	
+	public String getContent(){
+		String content = Super().getContent();
+		
+		if(crypto == null){
+			crypto = Cryptography.create();
+		}	
+		if(crypto != null){
+			content = crypto.decrypt(content);
+		}
+		
+		return content;
+	}
+	
+	
+}

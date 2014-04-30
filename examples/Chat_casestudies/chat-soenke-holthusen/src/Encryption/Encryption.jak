@@ -1,0 +1,12 @@
+layer Encryption;
+
+public abstract class Encryption
+{
+	protected static String _name;
+	
+	public abstract String encrypt(String cleartext);
+
+	public abstract String decrypt(String ciphertext);
+
+	public abstract String getName();
+}

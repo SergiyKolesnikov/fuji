@@ -1,0 +1,5 @@
+public refines class Client {
+	public String workMsg(String txt) {
+		return "bla";
+	}
+}

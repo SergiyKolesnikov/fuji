@@ -1,0 +1,11 @@
+
+
+public class Reverser implements Crypter {
+	public String encrypt(String plaintext) {
+		return new StringBuffer(plaintext).reverse().toString();
+	}
+
+	public String decrypt(String encrypted) {
+		return this.encrypt(encrypted);
+	}
+}

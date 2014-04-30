@@ -1,0 +1,6 @@
+layer Colors;
+
+public refines interface ChatLineListener {
+	
+	void newChatLine(String line, Color color);
+}

@@ -1,0 +1,17 @@
+layer Log;
+import java.io.IOException;
+public refines class Connection {
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		 	Super(String,Object).handleIncomingMessage(name,msg);
+			try
+			{
+			Log.write(((TextMessage) msg).getContent());
+			}
+			catch (IOException e)
+			{
+			System.out.println(e.toString());
+			}
+	}
+
+}

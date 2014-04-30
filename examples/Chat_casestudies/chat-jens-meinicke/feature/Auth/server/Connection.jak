@@ -1,0 +1,17 @@
+
+public refines class Connection {
+	
+	private boolean activated = false;
+	
+	private String password = "LaLeLu";
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (activated) {
+			Super().handleIncomingMessage(name, msg);
+		} else if (msg instanceof TextMessage) {
+			if (((TextMessage)msg).getContent().equals(password)) {
+				activated = true;
+			}
+		}
+	}
+}

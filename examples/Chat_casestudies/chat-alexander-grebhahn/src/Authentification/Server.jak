@@ -1,0 +1,13 @@
+
+
+public refines class Server {
+
+	public void broadcast(Message message) {
+		
+		if(Authentification.checkPasswordAndName(message)){
+			Super().broadcast(message);	
+			
+		}
+		
+	}	
+}

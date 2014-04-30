@@ -1,0 +1,34 @@
+
+
+public refines class Connection {
+	String pw = "abc";
+	boolean auth_accept = false;
+	
+	public void handleIncomingMessage(Object msg){
+		if(auth_accept == false){
+			if(msg instanceof Auth_Message){
+				Auth_Message authMsg = (Auth_Message) msg;
+				
+				if(authMsg.getContent().compareTo(pw) == 0){
+					Auth_Message m = new Auth_Message(Auth_Message.PW_ACCEPT);
+					send(m);
+					auth_accept = true;
+					
+				}else{
+					send(new Auth_Message(Auth_Message.PW_INCORRECT));
+				}
+			} 
+		}else{
+			Super().handleIncomingMessage(msg);
+		}
+	}
+	
+	public void send(Message msg){
+		if(auth_accept == true){
+			Super().send(msg);
+		}
+		if(msg instanceof Auth_Message){
+			Super().send(msg);
+		}
+	}
+}

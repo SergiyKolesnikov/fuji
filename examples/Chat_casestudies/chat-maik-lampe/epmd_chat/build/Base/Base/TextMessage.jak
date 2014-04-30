@@ -1,0 +1,65 @@
+layer Base;
+
+import java.io.Serializable;
+
+SoUrCe RooT Base "../Workspace/epmd_chat/src/Base/TextMessage.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+abstract class TextMessage$$Base implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	protected String content;
+	protected String origin;
+
+	public TextMessage$$Base(String content) {
+		super();
+		this.content = content;
+		this.origin="";
+	}
+	
+	public void setOrigin(String origin){
+		this.origin=origin;
+	}
+	
+	public String getOrigin(){
+		return this.origin;
+	}
+	
+	public void setContent(String content){
+		this.content=content;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+}
+
+SoUrCe  Flip "../Workspace/epmd_chat/src/Flip/TextMessage.jak";
+
+abstract class TextMessage$$Flip extends  TextMessage$$Base  {
+	protected boolean cryp=false;
+	
+	
+}
+
+SoUrCe  Color "../Workspace/epmd_chat/src/Color/TextMessage.jak";
+
+public class TextMessage extends  TextMessage$$Flip  {
+	protected String color;
+	
+	public void setColor(String color){
+		this.color=color;
+	}
+	
+	refines TextMessage(String content){
+		this.content=content;
+		this.color="";
+	}
+	
+	public String getColor(){
+		return this.color;
+	}
+}

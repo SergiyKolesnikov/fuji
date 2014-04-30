@@ -1,0 +1,11 @@
+
+layer test2;
+
+SoUrCe RooT Core "../../../E:/Programmierung/Java-Programme/epmd_chat_featide/src/Core/ChatComponent.jak";
+
+public interface ChatComponent {
+	String getName();
+	void addLineListener(ChatLineListener listener); 
+	void removeLineListener(ChatLineListener listner); 
+	void fireAddLine(TextMessage msg);
+}

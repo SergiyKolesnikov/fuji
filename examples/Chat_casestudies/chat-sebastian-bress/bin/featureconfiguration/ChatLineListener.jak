@@ -1,0 +1,18 @@
+layer featureconfiguration;
+
+SoUrCe RooT Base "../../../../Daten/workspace_EPMD_project/Client/src/Base/ChatLineListener.jak";
+
+
+/**
+ * Listener that gets informed every time when the chat client receives a new
+ * message
+ */
+public interface ChatLineListener {
+	/**
+	 * New text message received by client.
+	 * 
+	 * @param line
+	 *            the new message
+	 */
+	void newChatLine(String line);
+}

@@ -1,0 +1,11 @@
+layer Login;
+
+public refines class Client {
+
+	String password = "PASSWORD";
+
+	public void run() {
+		send(password);
+		Super().run();	
+	}
+}

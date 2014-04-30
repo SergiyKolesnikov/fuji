@@ -1,0 +1,9 @@
+layer Authentication;
+
+import java.io.*;
+
+SoUrCe RooT Authentication "../../../D:/Documents and Settings/slayer/workspace/EPMD_FIDE/src/Authentication/LoginReply.jak";
+
+public class LoginReply implements Serializable{
+	public boolean status;
+}

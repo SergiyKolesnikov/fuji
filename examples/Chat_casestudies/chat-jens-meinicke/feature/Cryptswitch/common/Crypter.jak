@@ -1,0 +1,18 @@
+public refines class Crypter {
+	
+	public TextMessage encrypt(TextMessage message) {
+		String text = message.getContent();
+		String text2 = "";
+		for (int i = 0;i < text.length();i++)
+			text2 += (char) (text.charAt(i) + 100);
+		return new TextMessage(text2);
+	}
+
+	public TextMessage decrypt(TextMessage message) {
+		String text = message.getContent();
+		String text2 = "";
+		for (int i = 0;i < text.length();i++)
+			text2 += (char) (text.charAt(i) - 100);
+		return new TextMessage(text2);
+	}
+}

@@ -1,0 +1,7 @@
+layer Reverse;
+
+public refines class EncryptionList {
+	refines EncryptionList() {
+		methods.add(new ReverseEncryption());
+	}
+}

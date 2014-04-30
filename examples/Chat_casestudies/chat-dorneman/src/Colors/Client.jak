@@ -1,0 +1,19 @@
+
+layer Colors;
+
+public refines class Client {
+
+	protected void handleIncomingMessage(Object msg) {
+		
+		if (msg instanceof TextMessage) {
+			
+			fireAddLine(((TextMessage) msg).getContent() + " [Color: " + ((TextMessage) msg).getColor() + "]\n");
+		}
+	}
+	
+	public void send(TextMessage msg) {
+	
+		msg.setColor("red");
+		Super().send(msg);	
+	}
+}
