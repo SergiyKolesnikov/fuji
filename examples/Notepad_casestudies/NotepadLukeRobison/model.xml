@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<alt abstract="true" mandatory="true" name="Notepad">
+				<and abstract="true" mandatory="true" name="NotepadMain">
+					<or abstract="true" name="Extension">
+						<feature mandatory="true" name="About"/>
+						<feature mandatory="true" name="CutCopyPaste"/>
+						<feature mandatory="true" name="Find"/>
+						<feature mandatory="true" name="Font"/>
+						<feature mandatory="true" name="LineWrap"/>
+						<feature mandatory="true" name="Print"/>
+						<feature mandatory="true" name="Save"/>
+						<feature mandatory="true" name="SelectAll"/>
+						<feature mandatory="true" name="UndoRedo"/>
+					</or>
+					<feature mandatory="true" name="Base"/>
+				</and>
+			</alt>
+		</struct>
+		<constraints>
+			<rule>
+				<var>Notepad</var>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments>
+			<c> non-grammar constraints</c>
+			<c> annotations</c>
+			<c>Notepad { disp="Base Features"}</c>
+		</comments>
+		<featureOrder userDefined="false"/>
+	</featureModel>

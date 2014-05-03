@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="NotepadGanovSvetoslav">
+				<feature mandatory="true" name="Base"/>
+				<feature name="Help"/>
+				<feature name="UndoRedo"/>
+				<feature name="Format"/>
+				<feature name="CutCopyPasteSelectAll"/>
+				<feature name="Find"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Find"/>
+			<feature name="CutCopyPasteSelectAll"/>
+			<feature name="Format"/>
+			<feature name="UndoRedo"/>
+			<feature name="Help"/>
+		</featureOrder>
+	</featureModel>
