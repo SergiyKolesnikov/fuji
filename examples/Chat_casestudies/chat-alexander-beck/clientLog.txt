@@ -1,0 +1,68 @@
+04.01.11 17.14 - /127.0.0.1 has joined.
+04.01.11 17.57 - /127.0.0.1 has joined.
+05.01.11 16.13 - /127.0.0.1 has joined.
+05.01.11 16.13 - /127.0.0.1 - hallo
+05.01.11 16.14 - /127.0.0.1 has joined.
+05.01.11 16.18 - /127.0.0.1 has joined.
+05.01.11 16.18 - Sie sind am Chat angemeldet
+05.01.11 16.18 - /127.0.0.1 - Passwort:12345
+05.01.11 16.18 - /127.0.0.1 - Passwort:12345
+05.01.11 16.18 - /127.0.0.1 - Passwort:12345
+05.01.11 16.20 - /127.0.0.1 has joined.
+05.01.11 16.20 - Sie sind am Chat angemeldet
+05.01.11 16.20 - /127.0.0.1 - hallo
+05.01.11 16.20 - /127.0.0.1 - funktioniert
+05.01.11 16.20 - /127.0.0.1 - super
+05.01.11 16.20 - /127.0.0.1 has joined.
+05.01.11 16.20 - Sie sind am Chat angemeldet
+05.01.11 16.20 - /127.0.0.1 - ollah
+05.01.11 16.20 - /127.0.0.1 - sad theg hcon thcin githcir
+05.01.11 16.26 - /127.0.0.1 has joined.
+05.01.11 16.26 - Sie sind am Chat angemeldet
+05.01.11 16.26 - /127.0.0.1 - ollah
+05.01.11 16.29 - /127.0.0.1 has joined.
+05.01.11 16.29 - Sie sind am Chat angemeldet
+05.01.11 16.29 - /127.0.0.1 - ollah
+05.01.11 16.36 - /127.0.0.1 has joined.
+05.01.11 16.36 - Authentifizierung fehlgeschlagen
+05.01.11 16.38 - /127.0.0.1 has joined.
+05.01.11 16.38 - /127.0.0.1 has joined.
+05.01.11 16.38 - Authentifizierung fehlgeschlagen
+05.01.11 16.39 - /127.0.0.1 has joined.
+05.01.11 16.39 - Authentifizierung fehlgeschlagen
+05.01.11 16.40 - /127.0.0.1 has joined.
+05.01.11 16.40 - Sie sind am Chat angemeldet
+05.01.11 16.40 - /127.0.0.1 - hallo
+05.01.11 16.40 - /127.0.0.1 - geht
+05.01.11 16.40 - /127.0.0.1 - wieso das nun nicht
+05.01.11 16.42 - /127.0.0.1 has joined.
+05.01.11 16.42 - Authentifizierung fehlgeschlagen
+05.01.11 16.43 - /127.0.0.1 has joined.
+05.01.11 16.43 - /127.0.0.1 - test
+05.01.11 16.43 - /127.0.0.1 - hallo welt funktioniert
+05.01.11 16.46 - /127.0.0.1 has joined.
+05.01.11 16.46 - Sie sind am Chat angemeldet
+05.01.11 16.46 - /127.0.0.1 - huhu
+05.01.11 16.46 - /127.0.0.1 has joined.
+05.01.11 16.46 - Authentifizierung fehlgeschlagen
+05.01.11 16.58 - /127.0.0.1 has joined.
+05.01.11 16.58 - Sie sind am Chat angemeldet
+05.01.11 16.58 - /127.0.0.1 - allo
+05.01.11 16.58 - /127.0.0.1 - Hallo
+05.01.11 16.58 - /127.0.0.1 - geht
+05.01.11 16.58 - /127.0.0.1 - oder
+05.01.11 16.58 - /127.0.0.1 has joined.
+05.01.11 16.58 - /127.0.0.1 - Hallo
+05.01.11 17.11 - /127.0.0.1 has joined.
+05.01.11 17.11 - Sie sind am Chat angemeldet
+05.01.11 17.11 - /127.0.0.1 - geht
+06.01.11 11.57 - /127.0.0.1 has joined.
+06.01.11 11.57 - Sie sind am Chat angemeldet
+06.01.11 11.57 - /127.0.0.1 - geht immernoch?
+06.01.11 11.57 - /127.0.0.1 - supi
+06.01.11 11.58 - /127.0.0.1 has joined.
+06.01.11 11.58 - Sie sind am Chat angemeldet
+06.01.11 11.58 - /127.0.0.1 - auch mit console
+06.01.11 11.58 - /127.0.0.1 - und allen features
+06.01.11 11.58 - /127.0.0.1 - na klar
+06.01.11 11.58 - /127.0.0.1 - das ja fein

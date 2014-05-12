@@ -1,0 +1,32 @@
+
+layer Encryption;
+
+public refines class TextMessage {
+
+	private boolean encrypted;	// Zustand Verschluesselung
+
+	/**
+	 * @return Wahrheitswert, ob verschluesselt
+	 */
+	public boolean isEncrypted() {
+		if (encrypted==true) {
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	/**
+	 * initiert die Verschluesselung der Nachricht
+	 */
+	public void setEncrypted(boolean value) {
+		encrypted = value;
+		if (encrypted) {
+			this.content = Encrypter.encrypt(this.content);
+		}
+		else {
+			this.content = Encrypter.decrypt(this.content);
+		}
+	}
+
+}

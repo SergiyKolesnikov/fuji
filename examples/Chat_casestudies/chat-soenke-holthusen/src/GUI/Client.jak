@@ -1,0 +1,246 @@
+layer GUI;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+public refines class Client {
+	protected JPanel _panel_connect, _panel_chat, _panel_chat_control;
+	protected JTextField _tf_host, _tf_port, _tf_username, _tf_password, _tf_nick, _tf_input;
+	protected JButton _bt_connect, _bt_send;
+	protected ColorPane _tp_chat;
+	protected JFrame _jf_connect, _jf_chat;
+
+	protected void runIT()
+	{
+		setup();
+	}
+
+	protected boolean guiconnect()
+	{
+		return connect(_tf_host.getText(), Integer.parseInt(_tf_port.getText()));
+	}
+
+	protected boolean setup()
+	{
+		_color = Color.black;
+		
+		_jf_connect = new JFrame("Chat Connect!");
+		_panel_connect = new JPanel(new GridLayout(6, 2));
+
+		_panel_connect.add(new JLabel("host"));
+		_tf_host = new JTextField("localhost");
+		_tf_host.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_connect.doClick();
+				}
+			}
+		});
+		_panel_connect.add(_tf_host);
+
+		_panel_connect.add(new JLabel("port"));
+		_tf_port = new JTextField("6666");
+		_tf_port.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_connect.doClick();
+				}
+			}
+		});
+		_panel_connect.add(_tf_port);
+
+		// _panel_connect.add(new JLabel("User"));
+		_tf_username = new JTextField("john");
+		_tf_username.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_connect.doClick();
+				}
+			}
+		});
+		// _panel_connect.add(_tf_username);
+
+		_panel_connect.add(new JLabel("Password"));
+		_tf_password = new JTextField("o_O");
+		_tf_password.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_connect.doClick();
+				}
+			}
+		});
+		_tf_password.setEnabled(false);
+		_panel_connect.add(_tf_password);
+
+		_panel_connect.add(new JLabel("Nick"));
+		_tf_nick = new JTextField(_nick);
+		_tf_nick.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_connect.doClick();
+				}
+			}
+		});
+		_panel_connect.add(_tf_nick);
+
+		_panel_connect.add(new JLabel());
+		_bt_connect = new JButton("connect");
+
+		_bt_connect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (guiconnect()
+				//connect(_tf_host.getText(), Integer.parseInt(_tf_port.getText())) 
+						
+//						&& sendAuthentication(_tf_password.getText())
+						
+					)
+				{
+					_nick = _tf_nick.getText();
+					_jf_connect.setVisible(false);
+					go();
+				}
+				else
+				{
+					_bt_connect.setText("error");
+				}
+
+			}
+		});
+
+		_panel_connect.add(_bt_connect);
+
+		_jf_connect.setContentPane(_panel_connect);
+		_jf_connect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_jf_connect.pack();
+		_jf_connect.setVisible(true);
+		
+		return false;
+	}
+
+	protected void go()
+	{
+		_jf_chat = new JFrame("Chatt0r!");
+		_jf_chat.setBounds(200, 200, 800, 400);
+		_jf_chat.addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				super.windowClosing(e);
+				disconnect();
+			}
+		});
+
+		_panel_chat = new JPanel(new BorderLayout());
+
+		_tp_chat = new ColorPane();
+		_tp_chat.setFocusable(false);
+		_panel_chat.add(new JScrollPane(_tp_chat), BorderLayout.CENTER);
+
+		_panel_chat_control = new JPanel(new BorderLayout());
+		
+
+		_tf_input = new JTextField("");
+		_tf_input.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+				{
+					_bt_send.doClick();
+				}
+				else if (key == KeyEvent.VK_ESCAPE)
+				{
+					disconnect();
+					System.exit(0);
+				}
+			}
+
+		});
+		_panel_chat_control.add(_tf_input, BorderLayout.CENTER);
+
+		_bt_send = new JButton("send");
+		_bt_send.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isConnected())
+				{
+					if (!_tf_input.getText().isEmpty())
+					{
+						String s = _tf_input.getText();
+						_tf_input.setText("");
+						send(s);
+					}
+				}
+				else
+				{
+					_tp_chat.append(Color.RED, "Couldn't send your Message, not connected to a Server...\n");
+				}
+			}
+		});
+		_panel_chat_control.add(_bt_send, BorderLayout.EAST);
+
+		_panel_chat.add(_panel_chat_control, BorderLayout.SOUTH);
+
+		_jf_chat.setContentPane(_panel_chat);
+		_jf_chat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// _jf_chat.pack();
+		_jf_chat.setVisible(true);
+
+		_tf_input.requestFocusInWindow();
+	}
+
+	public void handleMessage(Message message)
+	{
+		if (_tp_chat != null)
+		{
+			String toAdd = message.getNick() + ": " + message.getText() + "\n";
+			
+			_tp_chat.append(_color, toAdd);
+			
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		new Client();
+	}
+}

@@ -1,0 +1,36 @@
+layer Rueckwaerts;
+
+public refines class Encrypt {
+	
+	public String encrypt(String text, String method){
+		text = Super(String,String).encrypt(text, method);
+		
+		if(method.equals("Rückwärts")){
+				String ergText="";
+				
+				if(!(text=="")){
+					for(int i=text.length()-1;i >= 0; i --){
+						ergText=ergText+text.charAt(i);
+					}
+					return ergText;
+				}
+			}
+			
+			return text;
+		}
+		
+		public String decrypt(String text, String method){
+			text = Super(String,String).decrypt(text, method);
+			if (method.equals("Rückwärts")) {
+					String ergText = "";
+					if (!(text == "")) {
+						for (int i = text.length() - 1; i >= 0; i--) {
+							ergText = ergText + text.charAt(i);
+						}
+						return ergText;
+					}
+					
+			}
+			return text;
+		}
+}

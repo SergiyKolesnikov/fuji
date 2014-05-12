@@ -1,0 +1,21 @@
+import java.io.Serializable;
+
+public class Color implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String clr;
+	public Color()
+	{
+		clr = "[NoColor]";
+	}
+	public Color(String s)
+	{
+		clr = s;
+	}
+	public String getClr() {
+		return clr;
+	}
+	
+	
+	
+}

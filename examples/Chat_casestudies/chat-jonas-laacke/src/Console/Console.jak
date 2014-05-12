@@ -1,0 +1,23 @@
+
+
+public class Console implements ChatLineListener{
+	
+	private Client chatClient;
+
+	public Console(Client chatClient) {
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+		this.chatClient = chatClient;
+	}
+
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(String line) {
+		System.out.println(line);
+	}
+
+}

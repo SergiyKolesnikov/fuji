@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="NotepadIanWehrman">
+				<feature mandatory="true" name="Base"/>
+				<feature name="Save"/>
+				<feature name="Undo"/>
+				<feature name="Find"/>
+				<feature name="Font"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Save"/>
+			<feature name="Undo"/>
+			<feature name="Find"/>
+			<feature name="Font"/>
+		</featureOrder>
+	</featureModel>

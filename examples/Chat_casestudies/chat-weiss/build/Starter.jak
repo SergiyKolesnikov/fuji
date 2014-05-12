@@ -1,0 +1,33 @@
+
+
+SoUrCe RooT Base "../src/Base/Starter.jak";
+
+abstract class Starter$$Base {
+	
+	public static void main(String args[]) 
+	{
+
+		System.out.print("starting ");
+
+	}
+
+	
+
+}
+
+SoUrCe  Server "../src/Server/Starter.jak";
+
+public class Starter extends  Starter$$Base  
+{
+	
+	public static void main(String args[]) 
+	{
+		Super(String[]).main(args);
+		System.out.println("server... ");
+		
+		new ServerGui();
+
+	}
+	
+	
+}

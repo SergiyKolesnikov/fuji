@@ -1,0 +1,8 @@
+
+
+public refines class Client {
+	public void run() {
+		this.send(new AuthMessage("username", "password"));
+		Super().run();
+	}
+}

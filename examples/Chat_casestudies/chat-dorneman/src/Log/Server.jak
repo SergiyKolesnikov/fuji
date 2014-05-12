@@ -1,0 +1,42 @@
+
+layer Log;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Iterator;
+
+/**
+ * server's main class. accepts incoming connections and allows broadcasting
+ */
+public refines class Server {
+	
+	private OutputStreamWriter logFile;
+	
+	public void start() {
+		
+		try {
+		 logFile = new OutputStreamWriter(new FileOutputStream("server.txt", true));
+		} catch (IOException e) {
+		  //
+		}
+		Super().start();
+	}
+	
+	public void broadcast(TextMessage msg) {
+		
+		try {
+			logFile.append(msg.getContent() + "\n");
+			logFile.flush();
+		} catch (IOException e) {
+		  //
+		}
+		
+		
+		Super().broadcast(msg);		
+	}
+}

@@ -1,0 +1,8 @@
+layer Crypt;
+
+public refines class Client {
+	public void send(String line) {
+		Super(String).send(Chiffre.encrypt(line));
+		
+	}
+}

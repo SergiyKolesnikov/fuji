@@ -1,0 +1,69 @@
+
+layer Farbe;
+
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
+import javax.swing.text.StyleConstants;
+
+public refines class Gui {
+
+	public JComboBox cbColor;
+	
+	public void initAtoms(){
+	
+		super.initAtoms();
+		cbColor = new JComboBox();
+		cbColor.addItem("red");
+		cbColor.addItem("black");
+		cbColor.addItem("blue");
+		cbColor.addItem("green");
+		cbColor.addItem("orange");
+		
+	}
+	
+	public void initLayout(){
+	
+		super.initLayout();
+		panel.add("West", cbColor);
+		
+	}
+	public Color getColor(){
+		Color sColor;
+		switch (cbColor.getSelectedIndex()) {
+		case 0:
+			sColor = Color.red;
+			break;
+		case 1:
+			sColor = Color.black;
+			break;
+		case 2:
+			sColor = Color.blue;
+			break;
+		case 3:
+			sColor = Color.green;
+			break;
+		case 4:
+			sColor = Color.orange;
+			break;
+		default:
+			sColor = Color.black;
+		}
+		return sColor;
+	}
+	
+	
+	public TextMessage nachrichtErstellung(String text){
+	
+		return new TextMessage(text,getColor());
+	}
+	
+	public SimpleAttributeSet attributEinstellen(TextMessage msg){
+		
+		SimpleAttributeSet aset = new SimpleAttributeSet();
+		StyleConstants.setForeground(aset, msg.getFarbe());
+		return aset;
+	}
+	
+}

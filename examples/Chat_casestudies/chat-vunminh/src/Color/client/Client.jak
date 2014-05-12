@@ -1,0 +1,17 @@
+layer Color;
+
+
+public refines class Client {
+
+protected Color clr=new Color();
+public void send(String line) {
+		TextMessage txt = new TextMessage(line);
+		txt.setMessageColor(clr);
+		send(txt);
+	}
+public void setColor(Color clr)
+{
+	this.clr = clr;
+}
+
+}

@@ -1,0 +1,176 @@
+layer Base;
+
+import java.awt.Color;
+import java.io.Serializable;
+
+public class Message implements Serializable
+{
+	private static final long serialVersionUID = -1680619919384453798L;
+
+
+	public static final int TYPE_MESSAGE = 0;
+	public static final int TYPE_EOC = 1;
+	public static final int TYPE_AUTHENTICATION = 2;
+
+
+	private int _type;
+
+	
+	// authentication fields
+	private String _password = null;
+	private boolean _authentication_response = false;
+	private boolean _authentication_successful = false;
+
+	// message
+	private String _nick = null;
+	private String _text = null;
+	
+	private Color _color = null;
+	
+
+	// connection relevant
+	private String _origin = null;
+
+	
+	public static Message createNewAuthRequest(String password)
+	{
+		Message mess = new Message();
+		mess._type = TYPE_AUTHENTICATION;
+		mess._password = password;
+		return mess;
+	}
+	
+
+	
+	public static Message createNewAuthResponse(boolean success)
+	{
+		Message mess = new Message();
+		mess._type = TYPE_AUTHENTICATION;
+		mess._authentication_response = true;
+		mess._authentication_successful = success;
+		return mess;
+	}
+	
+
+	public static Message createNewTextMessage(String nick, Color color, String text)
+	{
+		Message mess = new Message();
+		mess._type = TYPE_MESSAGE;
+		mess._nick = nick;
+		
+		mess._color = (color == null ? Color.black : color);
+		
+		mess._text = text;
+		return mess;
+	}
+
+	public static Message changeText(Message message, String text)
+	{
+		message._text = text;
+		return message;
+	}
+
+	public static Message createNewEOCMessage()
+	{
+		Message mess = new Message();
+		mess._type = TYPE_EOC;
+		return mess;
+	}
+
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("Connection: " + _origin + "\n");
+		
+		builder.append("Type: ");
+		
+		switch (_type)
+		{
+		
+		case TYPE_AUTHENTICATION:
+			builder.append("Authentication-");
+			if (_authentication_response)
+			{
+				builder.append("Response\nSuccessful authenticated: " + (_authentication_successful ? "true" : "false"));
+			}
+			else
+			{
+				builder.append("Request\nPassword: " + _password);
+			}
+			break;
+		
+			
+		case TYPE_MESSAGE:
+			builder.append("Message\nNick: " + _nick + 
+					
+					"\nColor: " + _color + 
+					
+					"\nText: " + _text);
+			break;
+
+		case TYPE_EOC:
+			builder.append("End of Chat");
+			break;
+		}
+
+		return builder.toString();
+	}
+
+	public int getType()
+	{
+		return _type;
+	}
+	
+	public String getPassword()
+	{
+		return _password;
+	}
+	
+
+	public String getNick()
+	{
+		return _nick;
+	}
+
+	public String getText()
+	{
+		return _text;
+	}
+
+	
+	public Color getColor()
+	{
+		return _color;
+	}
+	
+
+	
+	public boolean isAuthMessage()
+	{
+		return _type == TYPE_AUTHENTICATION;
+	}
+	
+
+	
+	public boolean successfulAuth()
+	{
+		return _authentication_response & _authentication_successful == true;
+	}
+	
+
+	public void setOrigin(String origin)
+	{
+		_origin = origin;
+	}
+	
+	public void clearOrigin()
+	{
+		_origin = null;
+	}
+
+	public String getOrigin()
+	{
+		return _origin;
+	}
+}

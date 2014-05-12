@@ -1,0 +1,62 @@
+
+layer Color;
+
+import java.awt.Color;
+
+public refines class TextMessage {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+
+	protected Color color;		// Textfarbe
+
+/**
+	 * setzt Textfarbe
+	 */
+	public void setColor(Color c) {
+		color = c;
+	}
+	
+	/**
+	 * gibt Textfarbe zurueck
+	 * @return Farbe als Color
+	 */
+	public Color getColor() {
+		return color;
+	}
+	
+	/**
+	 * gibt Textfarbe zurueck
+	 * @return Farbname als String
+	 */
+	public String getColorString() {
+		if (color != null && !color.equals(Color.BLACK)) {
+			if (color.equals(Color.RED))
+				return "[rot] ";
+			else if (color.equals(Color.GREEN)) 
+				return "[grün] ";
+			else if (color.equals(Color.YELLOW))
+				return "[gelb] ";
+			else if (color.equals(Color.WHITE))
+				return "[weiß] ";
+			else if (color.equals(Color.ORANGE))
+				return "[orange] ";
+			else if (color.equals(Color.BLUE))
+				return "[blau] ";
+			else if (color.equals(Color.CYAN))
+				return "[cyan] ";
+			else if (color.equals(Color.MAGENTA))
+				return "[magenta] ";
+			else if (color.equals(Color.PINK))
+				return "[pink] ";
+		}
+		return "";
+	}
+	
+	/**
+	 * String Ausgabe
+	 * @return Textnachricht
+	 */
+	public String toString() {
+		return (getColorString() + content);
+	}
+}

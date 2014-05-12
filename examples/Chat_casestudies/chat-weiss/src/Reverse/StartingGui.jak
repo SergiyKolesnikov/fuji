@@ -1,0 +1,11 @@
+
+
+public refines class StartingGui 
+{
+	public void actionPerformed(ActionEvent e) {
+
+		password = Reverse.crypto(password);
+		Super(Actionevent).actionPerformed(e);
+
+	}
+}

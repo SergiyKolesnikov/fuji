@@ -1,0 +1,77 @@
+
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Iterator;
+
+
+
+/**
+ * server's main class. accepts incoming connections and allows broadcasting
+ */
+public class Server {
+	protected HashSet connections = new HashSet();
+	protected static Server instance = null;
+
+	public static void main(String args[]) throws IOException {
+		if (args.length != 1) throw new RuntimeException("Syntax: ChatServer <port>");
+		new Server(Integer.parseInt(args[0]));
+	}
+	
+	public static Server getInstance() {
+		return instance;
+	}
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 *
+	 * @param port  port to listen on
+	 */
+	public Server(int port) throws IOException {
+		ServerSocket server = new ServerSocket(port);
+		instance = (Server) this;
+
+		for (;;) {
+			connectTo(server.accept()).start();
+		}
+	}
+
+	/**
+	 * creates a new connection for a socket
+	 *
+	 * @param  socket  socket
+	 * @return         the Connection object that handles all further communication with this socket
+	 */
+	public Connection connectTo(Socket socket) {
+		Connection connection = new Connection(socket, ((Server) this));
+		connections.add(connection);
+		return connection;
+	}
+
+	/**
+	 * send a message to all known connections
+	 *
+	 * @param text  content of the message
+	 */
+	public void broadcast(Message msg) {
+		synchronized (connections) {
+			Iterator iterator = connections.iterator();
+
+			while (iterator.hasNext()) {
+				Connection connection = (Connection) iterator.next();
+				connection.send(msg);
+			}
+		}
+	}
+
+	/**
+	 * remove a connection so that broadcasts are no longer sent there.
+	 *
+	 * @param connection  connection to remove
+	 */
+	public void removeConnection(Connection connection) {
+		connections.remove(connection);
+	}
+}

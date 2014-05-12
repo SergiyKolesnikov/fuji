@@ -1,0 +1,28 @@
+
+
+public refines class Client {
+
+	Decryption crypt;
+
+	protected void handleIncomingMessage(Object msg) {
+		if(msg instanceof Message){
+			Message local = (Message) msg;
+			if(local.hasComponent("content")){
+				String content = (String) local.getComponent("content");
+				String newCont = crypt.decrypt(content);
+				local.overrideComponent("content", newCont);
+			}
+		}
+		Super().handleIncomingMessage(msg);
+		
+	}
+
+	public void sendMess(Message msg) {
+		if(msg.hasComponent("content")){
+			String content = (String) msg.getComponent("content");
+			String newCont = crypt.enctypt(content);
+			msg.overrideComponent("content", newCont);
+		}
+		Super().sendMess( msg);
+	}
+}

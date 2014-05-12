@@ -1,0 +1,15 @@
+
+
+public refines class Connection {
+
+     protected void handleIncomingMessage(String name, Object msg) {
+		
+			
+			//log incoming Message 
+			//log(((TextMessage) msg).getContent());
+            server.log((TextMessage) msg);
+			Super().handleIncomingMessage(name, msg);
+     }		
+
+
+}

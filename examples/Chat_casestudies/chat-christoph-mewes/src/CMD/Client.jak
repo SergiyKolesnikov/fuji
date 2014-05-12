@@ -1,0 +1,12 @@
+
+
+public refines class Client {
+	public void handleIncoming(Object msg) {
+		if (msg instanceof Viewable) {
+			TextMessage m = (TextMessage) msg;
+			System.out.println(m.getSender() + ": " + m.getContent());
+		}
+		
+		Super().handleIncoming(msg);
+	}
+}

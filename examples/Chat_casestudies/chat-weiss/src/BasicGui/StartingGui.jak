@@ -1,0 +1,17 @@
+
+
+public refines class StartingGui 
+{
+	
+	public void checkPassword(String s) {
+		
+		 
+		Super(String).checkPassword(s);
+		if (s.equals("OK")) {
+
+			new ChatGui("Chat", client, nameField.getText());
+			
+		}
+	}
+	
+}

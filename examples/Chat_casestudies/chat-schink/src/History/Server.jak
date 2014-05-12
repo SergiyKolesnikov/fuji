@@ -1,0 +1,10 @@
+layer History;
+
+public refines class Server {
+	
+	protected void acceptConnections(int port) throws IOException {
+		connections.add(new HistoryWriter("serverHistory"));
+		
+		Super(int).acceptConnections(port);
+	}
+}

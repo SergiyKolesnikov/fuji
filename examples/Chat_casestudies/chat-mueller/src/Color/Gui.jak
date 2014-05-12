@@ -1,0 +1,78 @@
+
+layer Color;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+public refines class Gui implements ActionListener {
+
+	// Panel mit RadioButtons zur Farbauswahl
+	protected JPanel farbPanel;
+	protected JLabel farbLabel;
+	protected ButtonGroup farbButton;
+	protected JRadioButton rotButton;
+	protected JRadioButton gruenButton;
+	protected JRadioButton blauButton;
+	protected JRadioButton schwarzButton;
+
+	private Color currentColor;		//aktuelle Farbwahl
+
+	public void initial() {
+		Super().initial();
+		
+		//Initialisierung des Farbpanels
+		farbPanel = new JPanel();
+		farbPanel.setLayout(new FlowLayout());
+		farbLabel = new JLabel("Textfarbe: ");
+		farbButton = new ButtonGroup();
+		schwarzButton = new JRadioButton("schwarz");
+		schwarzButton.setSelected(true);
+		rotButton = new JRadioButton("rot");
+		gruenButton = new JRadioButton("grün");
+		blauButton = new JRadioButton("blau");
+		farbButton.add(schwarzButton);
+		farbButton.add(rotButton);
+		farbButton.add(gruenButton);
+		farbButton.add(blauButton);
+		farbPanel.add(farbLabel);
+		farbPanel.add(schwarzButton);
+		farbPanel.add(rotButton);
+		farbPanel.add(gruenButton);
+		farbPanel.add(blauButton);
+		add("North", farbPanel);
+		
+		//Actionlistener fuer Radiobuttons
+		schwarzButton.addActionListener(this);
+		rotButton.addActionListener(this);
+		gruenButton.addActionListener(this);
+		blauButton.addActionListener(this);
+	}
+	
+	/**
+	 * verwaltet Actionevents der Radiobuttons
+	 */
+	public void actionPerformed(ActionEvent arg0) {
+		if ( (arg0.getSource() == schwarzButton) && (currentColor != Color.BLACK) ){
+			currentColor = Color.BLACK;
+			chatClient.setColor(currentColor);
+		}
+		if ( (arg0.getSource() == rotButton) && (currentColor != Color.RED) ){
+			currentColor = Color.RED;
+			chatClient.setColor(currentColor);
+		}
+		if ( (arg0.getSource() == gruenButton) && (currentColor != Color.GREEN) ){
+			currentColor = Color.GREEN;
+			chatClient.setColor(currentColor);
+		}
+		if ( (arg0.getSource() == blauButton) && (currentColor != Color.BLUE) ){
+			currentColor = Color.BLUE;
+			chatClient.setColor(currentColor);
+		}
+	}
+}

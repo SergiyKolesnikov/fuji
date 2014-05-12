@@ -1,0 +1,24 @@
+layer Base;
+
+import java.io.IOException;
+import java.io.FileWriter;
+
+SoUrCe RooT Logging "../Workspace/epmd_chat/src/Logging/Logging.jak";
+
+public class Logging {
+	protected FileWriter fw;
+	public Logging(){
+	}
+	public void log(Object msg){
+		if(msg instanceof TextMessage){
+			try{
+				this.fw = new FileWriter("chatlog.txt",true);
+				this.fw.write( ((TextMessage) msg).getContent()+"\r\n");
+				this.fw.close();
+			}
+			catch (IOException ex){
+				System.out.println("Schreibfehler beim loggen!");
+			}
+		}
+	}
+}

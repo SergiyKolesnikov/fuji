@@ -1,0 +1,38 @@
+
+
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+
+public refines class Gui {
+	
+	public CheckboxGroup group;
+	
+	public Encrypt encrypt= new Encrypt();
+	
+	public void init(){
+		Super().init();
+		if(container==null){
+			container= new Container();
+			container.setLayout(new GridLayout(8,1));
+			add("East",container);
+		}
+		group = new CheckboxGroup();
+		container.add(new Checkbox("keine",group,true));	
+	}
+	
+	public void manipulate(String s){
+		s= encrypt.encrypt(s,group.getSelectedCheckbox().getLabel());
+		Super(String).manipulate(s);
+	}
+	
+	public void newChatLine(String line){
+		
+		if(line.contains("-")){
+			String name = line.substring(0, line.indexOf("-")+2);
+			String text = line.substring(line.indexOf("-")+2,line.length()-1);
+			line = name + encrypt.decrypt(text, group.getSelectedCheckbox().getLabel())+"\n";
+			
+		}
+		Super(String).newChatLine(line);	
+	}
+}

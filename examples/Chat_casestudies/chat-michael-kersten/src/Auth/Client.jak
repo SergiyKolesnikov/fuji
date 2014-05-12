@@ -1,0 +1,27 @@
+
+
+public refines class Client {
+	protected static String password;
+	
+	public static void main(String args[])throws IOException{
+		
+		password=args[2];
+		String argu[]=new String[2];
+		argu[0]=args[0];
+		argu[1]=args[1];
+		Super().main(argu);
+		
+		
+	}
+	
+	
+	
+	
+	
+	public void send(TextMessage msg){
+		msg.setPassword(this.password);
+		Super().send(msg);
+	}
+	
+		
+}

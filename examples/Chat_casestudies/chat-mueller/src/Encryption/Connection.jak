@@ -1,0 +1,13 @@
+
+layer Encryption;
+
+public refines class Connection {
+
+	protected void handleIncomingMessage(String name, TextMessage msg) { 
+		if (msg.isEncrypted()) {			// wenn Nachricht verschluesselt
+			msg.setEncrypted(false);	// entschluesselt Message
+		}
+		Super(String, TextMessage).handleIncomingMessage(name, msg);
+	}
+
+}

@@ -1,0 +1,127 @@
+
+layer Chat;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Iterator;
+
+/**
+ * server's main class. accepts incoming connections and allows broadcasting
+ */
+public class Server {
+		
+	ServerSocket server; 
+
+	public static void main(String args[]) throws IOException {
+		if (args.length != 1)
+			throw new RuntimeException("Syntax: ChatServer <port>");
+		
+		int port = Integer.parseInt(args[0]);
+		System.out.println("starting server...");
+		new Server(port);
+		
+	}
+
+	/**
+	 * awaits incoming connections and creates Connection objects accordingly.
+	 * 
+	 * @param port
+	 *            port to listen on
+	 */
+	public Server(int port)  {
+		try {
+			server = new ServerSocket(port);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		start();
+	}
+	
+	public void start()  {
+	  while (true) {
+			System.out.println("Waiting for Connections...");
+			
+			try {
+				Socket client = server.accept();
+				System.out.println("Accepted from " + client.getInetAddress());
+				Connection c = connectTo(client);
+				c.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}					
+			
+		}
+	}
+
+	/**
+	 * creates a new connection for a socket
+	 * 
+	 * @param socket
+	 *            socket
+	 * @return the Connection object that handles all further communication with
+	 *         this socket
+	 */
+	public Connection connectTo(Socket socket) {
+		Connection connection = new Connection(socket, this);
+		connections.add(connection);
+		return connection;
+	}
+
+	/**
+	 * list of all known connections
+	 */
+	protected HashSet connections = new HashSet();
+
+	/**
+	 * send a message to all known connections
+	 * 
+	 * @param text
+	 *            content of the message
+	 * @throws IOException 
+	 */
+	public void broadcast(String line) {
+		broadcast(new TextMessage(line));
+	}
+	
+	public void broadcast(TextMessage msg) {
+		
+		synchronized (connections) {
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+				Connection connection = (Connection) iterator.next();
+				
+				send(msg, connection);
+				
+				
+			}
+		}
+		
+	}
+	
+	public void send(TextMessage msg, Connection connection) {
+		try {
+					connection.outputStream.writeObject(msg);
+					connection.outputStream.flush();
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+
+	/**
+	 * remove a connection so that broadcasts are no longer sent there.
+	 * 
+	 * @param connection
+	 *            connection to remove
+	 */
+	public void removeConnection(Connection connection) {
+		connections.remove(connection);
+	}
+
+}

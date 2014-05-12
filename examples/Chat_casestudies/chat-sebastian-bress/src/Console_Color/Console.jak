@@ -1,0 +1,15 @@
+
+
+public refines class Console {
+
+
+	public void newChatLine(String line){//, String color) {
+	
+	   Super().newChatLine("Blue: "+line);
+	
+		
+	}
+
+
+
+}

@@ -1,0 +1,12 @@
+layer Encrypyted1Auth;
+
+SoUrCe RooT Authentication "workspace/EPMD-Feature/src/Authentication/ServerAuthentication.jak";
+
+public class ServerAuthentication {
+	
+	public final static String REQ_PASSWORD = "1234";
+	
+	public boolean authenticate(String username, String password) {
+		return password.equals(REQ_PASSWORD);
+	}
+}

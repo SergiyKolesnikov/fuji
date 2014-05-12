@@ -1,0 +1,10 @@
+
+
+public refines class Connection {	
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		String message = ((TextMessage) msg).getContent();
+		TextMessage newmsg = new TextMessage(krypto.rot(message));
+		Super().handleIncomingMessage(name, (Object) newmsg);
+	}
+}

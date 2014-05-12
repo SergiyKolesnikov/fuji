@@ -1,0 +1,9 @@
+public refines class Client {
+	
+	private String password = "LaLeLu"; 
+	
+	public void run() {
+		send(new TextMessage(password));
+		Super().run();	
+	}	
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and mandatory="true" name="Root">
+				<feature mandatory="true" name="Base"/>
+				<feature name="Authentication"/>
+				<alt abstract="true" mandatory="true" name="UI">
+					<and mandatory="true" name="Console">
+						<feature name="ConsoleAuthentication"/>
+					</and>
+					<and mandatory="true" name="GUI">
+						<feature name="Color"/>
+						<feature name="GUIAuthentication"/>
+					</and>
+				</alt>
+				<feature name="History"/>
+				<feature name="Encryption"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<conj>
+						<var>Console</var>
+						<var>Authentication</var>
+					</conj>
+					<var>ConsoleAuthentication</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>GUI</var>
+						<var>Authentication</var>
+					</conj>
+					<var>GUIAuthentication</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>ConsoleAuthentication</var>
+					<var>Authentication</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>GUIAuthentication</var>
+					<var>Authentication</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+	</featureModel>

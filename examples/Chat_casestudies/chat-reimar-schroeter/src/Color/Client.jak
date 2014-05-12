@@ -1,0 +1,9 @@
+
+
+public refines class Client {
+	
+	public void send(Message msg) {
+		msg.setColor(Gui.getTextColor());
+		Super().send(msg);
+	}
+}

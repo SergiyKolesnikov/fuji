@@ -1,0 +1,10 @@
+layer Authentication;
+
+public refines class Client {
+
+	public void run() {
+		send(new ConnectionMessage("password"));
+		
+		Super().run();
+	}
+}

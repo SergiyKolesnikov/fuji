@@ -1,0 +1,34 @@
+
+layer NewEquation;
+
+import java.io.Serializable;
+
+SoUrCe RooT Chat "../../../Studium/epmd/ueb/epmd_chat_feature/src/Chat/TextMessage.jak";
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+public class TextMessage implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	protected String content;
+
+	public TextMessage(String content) {
+		super();
+		this.content = content;
+	}
+
+	public String getContent() {
+		return content;
+	}
+	
+	/**
+	 * String Ausgabe
+	 * @return Textnachricht
+	 */
+	public String toString() {	
+		return (content);
+	}
+	
+}

@@ -1,0 +1,21 @@
+
+
+public refines class Connection {
+	
+	/**
+	 * decides what to do with incoming messages
+	 * 
+	 * @param name
+	 *            name of the client
+	 * @param msg
+	 *            received message
+	 */
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage){
+			String text=((TextMessage)msg).getContent();
+			text=Encryption.decrypt(text);
+			Super(String,Object).handleIncomingMessage(name, new TextMessage(text));
+		}
+	}
+
+}

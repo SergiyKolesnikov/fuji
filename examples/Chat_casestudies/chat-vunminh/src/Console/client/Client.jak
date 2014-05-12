@@ -1,0 +1,13 @@
+layer Console;
+
+public refines class Client {
+	
+	public static void main(String args[]) throws IOException {
+		if (args.length != 2)
+			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		new Console("Console " + args[0] + ":" + args[1], client);
+	}
+
+}

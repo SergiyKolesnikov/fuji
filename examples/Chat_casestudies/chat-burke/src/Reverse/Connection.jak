@@ -1,0 +1,14 @@
+layer Reverse;
+
+public refines class Connection {
+
+	ReverseEncryption crypt = new ReverseEncryption();
+	
+	protected void handleIncomingMessage(String name, String msg) {
+		Super().handleIncomingMessage(name, crypt.getDecryptedMessage(msg));
+	}
+
+	public void send(String line) {
+		Super().send(crypt.getEncryptedMessage(line));
+	}
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and abstract="true" mandatory="true" name="Root">
+				<and mandatory="true" name="Base">
+					<feature mandatory="true" name="Common"/>
+					<feature mandatory="true" name="Client"/>
+					<feature mandatory="true" name="Server"/>
+					<alt abstract="true" mandatory="true" name="UI">
+						<and mandatory="true" name="Console">
+							<feature name="ColoredConsole"/>
+						</and>
+						<and mandatory="true" name="GUI">
+							<feature name="ColoredGUI"/>
+						</and>
+					</alt>
+					<alt name="Encryption">
+						<feature mandatory="true" name="Encryption_Rot13"/>
+						<feature mandatory="true" name="Encryption_Reverse"/>
+					</alt>
+					<feature name="Authentication"/>
+					<feature name="History"/>
+					<feature name="Color"/>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<conj>
+						<var>Console</var>
+						<var>Color</var>
+					</conj>
+					<var>ColoredConsole</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>Console</var>
+						<var>ColoredConsole</var>
+					</conj>
+					<var>Color</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>GUI</var>
+						<var>Color</var>
+					</conj>
+					<var>ColoredGUI</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<conj>
+						<var>GUI</var>
+						<var>ColoredGUI</var>
+					</conj>
+					<var>Color</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+	</featureModel>

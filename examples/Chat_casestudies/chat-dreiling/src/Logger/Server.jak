@@ -1,0 +1,18 @@
+
+layer Logger;
+
+public refines class Server {
+	public void intialize(int port) throws Exception {
+		System.out.println("Logger START!");
+		
+		/*if[LOG]*/ 
+		new LogWriter(this);
+		/*end[LOG]*/
+		
+		Super(int).intialize(port);
+		
+		
+	}
+	
+
+}

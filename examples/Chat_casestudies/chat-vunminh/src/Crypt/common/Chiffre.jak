@@ -1,0 +1,48 @@
+public class Chiffre {
+
+	/**
+	 * dies sollten erste Buchstabe gegen letze Buchstabe vertauscht werden .
+	 * 
+	 * @param a
+	 * @return
+	 */
+	public static String vertausch(String a) {
+		if (a.length() < 2)
+			return a;
+		else {
+			return a.charAt(a.length() - 1) + a.substring(1, a.length() - 1)
+					+ a.charAt(0);
+		}
+	}
+
+	/**
+	 * 
+	 * @param a
+	 * @return
+	 */
+	public static String rot13(String a) {
+		String s = "";
+		for (int i = 0; i < a.length(); i++) {
+			char c = a.charAt(i);
+			if (c >= 'a' && c <= 'm')
+				c += 13;
+			else if (c >= 'n' && c <= 'z')
+				c -= 13;
+			else if (c >= 'A' && c <= 'M')
+				c += 13;
+			else if (c >= 'A' && c <= 'Z')
+				c -= 13;
+			s = c + s;
+		}
+		return s;
+
+	}
+
+	public static String encrypt(String line) {
+		return vertausch(rot13(line));
+	}
+	public static String decrypt(String a) {
+		return rot13(vertausch(a));
+	}
+
+}

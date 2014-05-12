@@ -1,0 +1,21 @@
+
+
+public refines class Client {
+	public void send(TextMessage msg){
+		String text=msg.getContent();
+		msg.setContent(text.substring(1, 2) + text.substring(0, 1) + text.substring(2,text.length()));
+		msg.cryp=true;
+		Super().send(msg);
+	}
+	
+	protected void handleIncomingMessage(Object msg) {
+		if (msg instanceof TextMessage) {
+			if (((TextMessage)msg).cryp){
+				String text=((TextMessage)msg).getContent();
+				((TextMessage) msg).setContent(text.substring(1, 2) + text.substring(0, 1) + text.substring(2,text.length()));
+			}
+			Super().handleIncomingMessage(msg);
+		}
+	}
+	
+}

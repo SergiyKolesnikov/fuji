@@ -1,0 +1,11 @@
+
+
+public class Plain implements Crypter {
+	public String encrypt(String plaintext) {
+		return plaintext;
+	}
+
+	public String decrypt(String encrypted) {
+		return encrypted;
+	}
+}

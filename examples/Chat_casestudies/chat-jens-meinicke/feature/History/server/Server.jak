@@ -1,0 +1,18 @@
+
+import common.HistoryWriter;
+
+public refines class Server {
+
+	private static HistoryWriter w;
+	
+	public static void main(String args[]) throws IOException {
+		//w = new HistoryWriter(args[0]);
+		w = new HistoryWriter("Server_" + args[0] + "_");
+		Super().main(args);	
+	}
+	
+	public void broadcast(String msg) {
+		w.write(msg);	
+		Super().broadcast(msg);
+	}
+}

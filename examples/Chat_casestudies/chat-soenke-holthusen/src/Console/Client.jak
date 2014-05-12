@@ -1,0 +1,66 @@
+layer Console;
+
+import java.util.Scanner;
+
+public refines class Client {
+	
+	protected boolean setup()
+	{
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("host (localhost): ");
+		String host = scanner.nextLine();
+		if (host.equals("")) host = "localhost";
+
+		System.out.println("port (6666): ");
+		String port_st = scanner.nextLine();
+		System.out.println(port_st);
+		int port;
+		try
+		{
+			port = Integer.parseInt(port_st);
+		}
+		catch (NumberFormatException e)
+		{
+			port = 6666;
+		}
+
+		System.out.println(host + ":" + port);
+		if(!connect(host, port))
+		{
+			System.out.println("Couldn't connect...");
+			return false;
+		}
+		
+		System.out.println("nick (Anonymous): ");
+		_nick = scanner.nextLine();
+		if (_nick.equals("")) _nick = "Anonymous";
+		
+		return true;
+	}
+	
+	protected void go()
+	{
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Welcome to the BasicChatClient...");
+		System.out.println("Use 'q' to exit...");
+		
+		String s;
+		while (scanner.hasNext())
+		{
+			s = scanner.nextLine();
+			if (s.equals("q"))
+			{
+				disconnect();
+				break;
+			}
+			send(s);
+		}
+		_stop_it = true;
+	}
+	
+	public static void main(String[] args)
+	{
+		new Client();
+	}
+}

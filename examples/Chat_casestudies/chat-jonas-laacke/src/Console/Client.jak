@@ -1,0 +1,11 @@
+
+
+public refines class Client {
+	
+	public static void main(String args[]) throws IOException {
+		Super().main(args);
+		Client client = new Client(args[0], Integer.parseInt(args[1]));
+		new Console(client);
+	}
+
+}

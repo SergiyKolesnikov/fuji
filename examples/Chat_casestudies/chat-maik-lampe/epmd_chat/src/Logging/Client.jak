@@ -1,0 +1,9 @@
+layer Logging;
+
+public refines class Client {
+	protected void handleIncomingMessage(Object msg){
+		Super().handleIncomingMessage(msg);
+		Logging logger=new Logging();
+		logger.log(msg);
+	}
+}

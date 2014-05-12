@@ -1,0 +1,59 @@
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
+
+
+
+
+public class Console implements ChatLineListener {
+
+	protected Thread thread;
+	private FileWriter logWriter;
+	
+	private Client chatClient;
+	
+	Input input;
+	
+	public Console(Client chatClient) {
+	
+		
+		this.chatClient = chatClient;
+		
+		chatClient.addLineListener(this);		
+		
+		input = new Input(chatClient);
+		
+		thread = new Thread(input);
+		thread.start();
+		
+	}	
+	
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(String line) {
+		System.out.println(line);
+	}
+
+	public void newChatLine(Message message) {
+		mesageOutput(message);
+	}
+
+	public Message mesageOutput(Message msg) {
+			if(msg.hasComponent("name")){
+				System.out.print(msg.getComponent("name")+"   ");
+			}
+			if(msg.hasComponent("content")){
+				System.out.print(msg.getComponent("content")+"   ");
+			}
+			if(msg.hasComponent("color")){
+				System.out.print(msg.getComponent("color")+"   ");
+			}
+			System.out.println();
+		return msg;
+	}
+	
+}

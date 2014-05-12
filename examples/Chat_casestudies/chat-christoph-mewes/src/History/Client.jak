@@ -1,0 +1,11 @@
+
+
+public refines class Client {
+	public void handleIncoming(Object msg) {
+		if (msg instanceof TextMessage) {
+			History.logMessage((TextMessage) msg, false);
+		}
+		
+		Super().handleIncoming(msg);
+	}
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and mandatory="true" name="Base">
+				<alt abstract="true" mandatory="true" name="UI">
+					<feature mandatory="true" name="GUI"/>
+					<feature mandatory="true" name="Console"/>
+				</alt>
+				<feature name="Auth"/>
+				<or name="Crypter">
+					<feature mandatory="true" name="Cryptreverse"/>
+					<feature mandatory="true" name="Cryptswitch"/>
+				</or>
+				<feature name="History"/>
+				<feature name="Color"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Color</var>
+					<var>GUI</var>
+				</imp>
+			</rule>
+		</constraints>
+		<comments/>
+	</featureModel>

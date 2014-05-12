@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<struct>
+			<and mandatory="true" name="Root">
+				<feature mandatory="true" name="Base"/>
+				<alt name="Encryption">
+					<feature mandatory="true" name="Reverse_Order"/>
+					<feature mandatory="true" name="Pseudo_Caesar"/>
+				</alt>
+				<feature name="Authentification"/>
+				<feature name="Logging"/>
+				<alt mandatory="true" name="UI">
+					<and mandatory="true" name="GUI">
+						<feature name="GUI_Color"/>
+					</and>
+					<and mandatory="true" name="Console">
+						<feature name="Console_Color"/>
+					</and>
+				</alt>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+	</featureModel>

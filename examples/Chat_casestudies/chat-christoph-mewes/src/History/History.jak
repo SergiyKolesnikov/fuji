@@ -1,0 +1,50 @@
+
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class History {
+	public static void logMessage($pack.Message msg, boolean isServer) {
+		BufferedWriter log = getLog(isServer);
+
+		try {
+			log.write("[" + getDateTime() + "] ");
+			log.write(msg.getSender() + ": ");
+			log.write(msg.getContent());
+			log.newLine();
+			log.flush();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static BufferedWriter getLog(boolean isServer) {
+		String filename;
+
+		if (isServer) {
+			filename = "Q:\\chatlogs\\server.log";
+		}
+		else {
+			filename = "Q:\\chatlogs\\" + Client.getInstance().getUserID() + ".log";
+		}
+
+		try {
+			return new BufferedWriter(new FileWriter(filename, true));
+		}
+		catch (Exception e) {
+			System.err.println("Can't open logfile in " + filename + ".");
+			return null;
+		}
+	}
+
+	private static String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+}

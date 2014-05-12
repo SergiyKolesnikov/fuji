@@ -1,0 +1,10 @@
+public refines class Client implements Runnable {
+	public static void main(String args[]) throws IOException {
+		Super().main(args);
+		new Console(client);
+	}
+	
+	void print(String line) {
+		System.out.println(line);
+	} 
+}

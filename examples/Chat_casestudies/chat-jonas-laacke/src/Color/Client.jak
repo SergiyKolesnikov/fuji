@@ -1,0 +1,18 @@
+
+
+public refines class Client {
+	
+	private String color="";
+	
+	public void send(String line) {
+		//color selected by user
+		if(line.startsWith("/color")) {
+			String[] switchColor=line.split(" ");
+			color=switchColor[1]+": ";
+		}
+		else{
+			Super(String).send(color+line);
+		}
+	}
+
+}

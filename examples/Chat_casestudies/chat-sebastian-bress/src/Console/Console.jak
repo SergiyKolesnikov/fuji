@@ -1,0 +1,42 @@
+
+
+
+import java.util.Calendar;
+
+public class Console implements ChatLineListener {
+
+	
+	private Client chatClient;
+	
+	public Console(Client chatClient){
+		
+		System.out.println("starting console...");
+		
+		// register listener so that we are informed whenever a new chat message
+		// is received (observer pattern)
+		chatClient.addLineListener(this);
+		this.chatClient = chatClient;
+		
+		
+	}
+	
+	public void newChatLine(String line){//, String color) {
+		// TODO Auto-generated method stub
+
+	
+		  //System.out.println(color+": "+line);
+	
+		  System.out.println(line);	
+	
+		
+	}
+	
+	void broadcasttime(){
+		
+		Calendar cal = Calendar.getInstance();
+
+		chatClient.fireAddLine("now is time"+cal.getTime()); //, "red");
+		
+	}
+
+}

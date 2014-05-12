@@ -1,0 +1,11 @@
+
+
+public refines class Connection {
+	protected void handleIncoming(Connection c, Message msg) {
+		if (msg instanceof TextMessage) {
+			History.logMessage((TextMessage) msg, true);
+		}
+		
+		Super().handleIncoming(c, msg);
+	}
+}

@@ -1,0 +1,12 @@
+
+
+public refines class Server {
+	Logger log;
+	
+	public Logger getLogger(){
+		if(log ==  null){
+			log = new Logger("Server");
+		}
+		return log;
+	}	
+}

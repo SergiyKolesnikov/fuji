@@ -1,0 +1,36 @@
+layer Crypt;
+
+public refines class Gui {
+	private Crypter   algorithm = new Plain();
+	private JComboBox select;
+	
+	protected void initToolbar(JPanel toolbar) {
+		JLabel label  = new JLabel("Verschlüsselung:");
+		select = new JComboBox(new String[] {"(keine)", "Buchstaben tauschen", "Psst, geheim!", "!sträwkcüR"});
+
+		select.addActionListener(this);
+
+		toolbar.add(label);
+		toolbar.add(select);
+		
+		Super().initToolbar(toolbar);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == select) {
+			switch (select.getSelectedIndex()) {
+				case 0: algorithm = new Plain(); break;
+				case 1: algorithm = new Switcher(); break;
+				case 2: algorithm = new Secret(); break;
+				case 3: algorithm = new Reverser(); break;
+			}
+		}
+		else {
+			Super().actionPerformed(e);
+		}
+	}
+	
+	public Crypter getAlgorithm() {
+		return algorithm;
+	}
+}

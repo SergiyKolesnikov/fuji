@@ -1,0 +1,16 @@
+layer History;
+
+public refines class Client {
+	protected ChatLogger _logger = new ChatLogger("chatclient.log");
+	
+	public void log(String s)
+	{
+		_logger.log(s);
+	}
+	
+	public void handleMessage(Message message) {
+		Super().handleMessage(message);
+		
+		log(message.toString());
+	}
+}

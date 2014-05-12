@@ -1,0 +1,22 @@
+layer Default;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+SoUrCe RooT History "../../../Jonas/Studium/WS 2010/EPMD/Workspace/FeatureChat/src/History/History.jak";
+
+public class History {
+	
+	public static void saveMessage(String message){
+
+		try {
+			FileWriter writer=new FileWriter("log.txt",true);
+			writer.write(message+"\r\n");
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

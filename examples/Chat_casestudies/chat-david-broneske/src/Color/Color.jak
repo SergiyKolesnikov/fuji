@@ -1,0 +1,12 @@
+
+
+public class Color {
+	public String getColor(String color, String s){
+		if(!color.equals("Schwarz")){
+			s= "<"+color+"> " + s +" </"+color+">" ;
+			return s;
+		}
+		return s;
+		
+	}
+}

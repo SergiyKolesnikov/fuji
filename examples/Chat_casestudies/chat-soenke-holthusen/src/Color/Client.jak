@@ -1,0 +1,58 @@
+layer Color;
+
+public refines class Client {
+	protected JButton _bt_change_color;
+	
+	protected void go()
+	{
+		Super().go();
+		
+		_bt_change_color = new JButton();
+		_bt_change_color.setBackground(_color);
+		_bt_change_color.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				final JFrame color_frame = new JFrame();
+				color_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+				JPanel panel = new JPanel();
+
+				final JColorChooser chose = new JColorChooser(_color);
+				panel.add(chose);
+
+				JButton bt_color_chose = new JButton("ok");
+				bt_color_chose.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						_color = chose.getColor();
+						_bt_change_color.setBackground(_color);
+						color_frame.setVisible(false);
+					}
+				});
+				panel.add(bt_color_chose);
+
+				color_frame.setContentPane(panel);
+
+				color_frame.pack();
+				color_frame.setVisible(true);
+				chose.getColor();
+				_tf_input.requestFocusInWindow();
+			}
+		});
+
+		_panel_chat_control.add(_bt_change_color, BorderLayout.WEST);
+	}
+	
+	public void handleMessage(Message message)
+	{
+		if (_tp_chat != null)
+		{
+			String toAdd = message.getNick() + ": " + message.getText() + "\n";
+			
+			_tp_chat.append(message.getColor(), toAdd);
+			
+		}
+	}
+}

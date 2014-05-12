@@ -1,0 +1,28 @@
+public refines class Client {
+	public void createFile() {
+		try {
+			Super().fileout = new FileOutputStream("history_client.log",true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void closeFile() {
+		try {
+			Super().fileout.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void writeFile(Object msg) {
+		try {
+				for (int i=0; i < (((TextMessage) msg).getContent()).length(); i++){
+			      Super().fileout.write((byte) (((TextMessage) msg).getContent()).charAt(i) );
+				}
+				Super().fileout.write((byte)'\n');
+			}
+			catch (IOException e) {
+					e.printStackTrace();
+			}
+			
+	}
+}

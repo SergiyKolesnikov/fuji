@@ -1,0 +1,11 @@
+
+
+public refines class Client {
+
+	protected void init(){
+		Super().init();	
+	
+		crypt = new POT13();
+	}
+	
+}

@@ -1,0 +1,18 @@
+
+
+public refines class Server {
+
+	Log logFile;
+
+	public void broadcast(Message message) {
+		if(logFile == null){
+			logFile = new Log("Server");
+		}
+		
+		logFile.log(message);
+		
+		Super().broadcast(message);
+		
+	}	
+
+}

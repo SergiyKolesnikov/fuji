@@ -1,0 +1,29 @@
+
+
+public refines class Encrypt {
+	public String encrypt(String text, String method){
+		text= Super(String,String).encrypt(text, method);
+		if(method.equals("ROT13")){
+			String ergText="";
+			for(int i=0; i<text.length();i++){
+				ergText= ergText+(char) ((int)text.charAt(i)+13);
+			}
+			
+			return ergText;
+		}
+		return text;
+	
+	}
+	public String decrypt(String text, String method){
+		text= Super(String,String).decrypt(text, method);
+		if (method.equals("ROT13")) {
+			String ergText = "";
+			for (int i = 0; i < text.length(); i++) {
+				ergText = ergText + (char) ((int) text.charAt(i) - 13);
+			}
+			
+			return ergText;
+		}
+		return text;
+	}
+}

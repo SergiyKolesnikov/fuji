@@ -1,0 +1,18 @@
+layer GUIAuthentication;
+
+public refines class Client {
+
+	protected boolean setup()
+	{
+		boolean ret = Super().setup();
+		
+		_tf_password.setEnabled(true);
+		
+		return ret;
+	}
+
+	protected boolean guiconnect()
+	{
+		return connect(_tf_host.getText(), Integer.parseInt(_tf_port.getText())) && sendAuthentication(_tf_password.getText());
+	}
+}

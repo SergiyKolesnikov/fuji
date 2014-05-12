@@ -1,0 +1,33 @@
+
+
+public refines class Client {
+	
+	Authentification authen;
+	
+	protected void init(){
+		Super().init();	
+	
+		authen = new Authentification();
+	
+	}
+	
+	protected void handleIncomingMessage(Object msg) {
+		if(msg instanceof Message){
+			Message local = (Message) msg;
+			if(!authen.checkAccepted(local)){
+				msg = null;
+			}
+		}
+		Super().handleIncomingMessage(msg);
+		
+	}
+
+	public void sendMess(Message msg) {
+		
+		authen.addPassword(msg);
+		
+		Super().sendMess( msg);
+	}
+	
+	
+}

@@ -1,0 +1,41 @@
+layer Color;
+
+public refines class ClientGUI {
+	private JCheckBox colorBox;
+	private boolean color = false;
+	
+	private final static String COLOR_PREFIX = "{color}";
+	private final static String NOCOLOR_PREFIX = "{nocolor}";
+	
+	public void initGUI() throws Exception {
+		Super().initGUI();
+		colorBox = new JCheckBox("Color");
+		colorBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				color = colorBox.isSelected();
+			}
+		});
+		
+		add(colorBox);
+	}
+	
+	public String postMessageReceived(String newMessage) {
+		String msg = Super().postMessageReceived(newMessage);
+		
+		if (msg.contains(COLOR_PREFIX))
+			msg = "(colored) " + msg.replace(COLOR_PREFIX, "");
+		else if (msg.contains(NOCOLOR_PREFIX))
+			msg = msg.replace(NOCOLOR_PREFIX, "");
+		
+		return msg;
+	}
+	
+	public String preMessageSent(String msg) {
+		msg = Super().preMessageSent(msg);
+		if (color)
+			msg = COLOR_PREFIX + msg;
+		else
+			msg = NOCOLOR_PREFIX + msg;
+		return msg;
+	}
+}

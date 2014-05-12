@@ -1,0 +1,7 @@
+layer Base;
+
+public interface ChatReceiver
+{
+	public void receive(Message message);
+	public void handleMessage(Message message);
+}

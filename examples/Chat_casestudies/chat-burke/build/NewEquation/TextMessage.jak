@@ -1,0 +1,20 @@
+layer NewEquation;
+
+import java.io.Serializable;
+
+SoUrCe RooT Base "../../../D:/Develop/eclipse workspace/EPMD/src/Base/TextMessage.jak";
+
+public class TextMessage implements Serializable {
+
+	private String content;
+
+	public TextMessage(String content) {
+		super();
+		this.content = content;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+}

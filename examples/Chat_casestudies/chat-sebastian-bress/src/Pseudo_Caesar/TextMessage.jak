@@ -1,0 +1,41 @@
+
+
+public refines class TextMessage {
+
+
+	String encryptText(String text){
+
+		String encrypted_text="";
+
+			//encryptionmode B
+	
+            for(int i=0;i<text.length();i++){
+				
+				encrypted_text += (char)((int)text.charAt(i)+(int)'A');
+				
+			} 
+
+        System.out.println("encrypt Messsage \""+text+"\" to \""+encrypted_text+"\"");
+
+		return encrypted_text;
+	}
+	
+	String decryptText(String text){
+		
+		String decrypted_text="";
+
+        //encryptionmode B
+     
+		for(int i=0;i<text.length();i++){
+					
+			decrypted_text += (char)((int)text.charAt(i)-(int)'A');
+					
+		}
+		 
+        System.out.println("decrypt Messsage \""+text+"\" to \""+decrypted_text+"\"");
+
+		return decrypted_text;
+	}
+	
+	
+}

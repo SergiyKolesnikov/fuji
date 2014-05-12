@@ -1,0 +1,34 @@
+layer Color;
+
+import java.awt.Choice;
+import java.awt.GridLayout;
+
+
+
+public refines class Gui {
+	public Color color = new Color();
+
+	public static String[] colors={"Schwarz","Blau","Rot","Grün","Gelb"};
+	
+	protected Choice colorBox;
+	
+	public void init(){
+		Super().init();
+		if(container==null){
+			container= new Container();
+			container.setLayout(new GridLayout(8,1));
+			add("East",container);
+		}	
+		colorBox=new Choice();
+		for(int i=0; i< colors.length;i++){
+			colorBox.addItem(colors[i]);
+		}
+		container.add(colorBox);
+		pack();
+	}
+	public void manipulate(String s){
+		s = color.getColor(colorBox.getSelectedItem(), s);
+		Super(String).manipulate(s);
+		
+	}
+}

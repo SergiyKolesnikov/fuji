@@ -1,0 +1,16 @@
+
+
+import java.awt.Color;
+
+
+public refines class Message {
+	Color textColor = Color.BLACK;
+	
+	public Color getColor(){
+		return textColor;	
+	}
+	
+	public void setColor(Color color){
+		textColor = color;	
+	}
+}

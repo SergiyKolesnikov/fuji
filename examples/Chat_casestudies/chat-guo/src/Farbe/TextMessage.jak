@@ -1,0 +1,30 @@
+
+layer Farbe;
+
+import java.awt.Color;
+
+public refines class TextMessage {
+
+	public Color farbe;
+	
+	refines TextMessage(String content){
+		this.farbe=new Color(0, 0, 0);
+	}
+
+	TextMessage(String content, Color farbe) {
+		Super(String)(content);
+		this.farbe=farbe;
+		
+	}
+	
+	refines TextMessage(String msghead, TextMessage msg){
+		this.farbe = msg.getFarbe();
+	}
+	
+	public Color getFarbe() {
+		return farbe;
+
+	}
+	
+	
+}

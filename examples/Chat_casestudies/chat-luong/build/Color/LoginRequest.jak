@@ -1,0 +1,12 @@
+layer Color;
+
+import java.io.*;
+
+SoUrCe RooT Authentication "../../../D:/Documents and Settings/slayer/workspace/EPMD_FIDE/src/Authentication/LoginRequest.jak";
+
+public class LoginRequest implements Serializable{
+	
+	public String Usrname;
+	public String Pwd;
+	
+}

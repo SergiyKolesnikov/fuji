@@ -1,0 +1,17 @@
+
+
+import java.lang.String;
+import java.lang.Object;
+
+
+public refines class Connection {
+	
+	protected void handleIncomingMessage(Object msg) {
+		Super().handleIncomingMessage(msg);
+		
+		if(msg instanceof Message){
+			Message tMsg = (Message) msg;
+			server.getLogger().writeLogLine(tMsg.getUserName_And_Content());
+		}
+	}
+}

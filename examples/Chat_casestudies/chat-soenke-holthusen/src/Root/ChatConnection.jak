@@ -1,0 +1,5 @@
+layer Root;
+
+public class ChatConnection extends Thread {
+
+}

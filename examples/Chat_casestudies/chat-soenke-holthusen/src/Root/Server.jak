@@ -1,0 +1,5 @@
+layer Root;
+
+public class Server extends Thread implements ChatReceiver {
+
+}

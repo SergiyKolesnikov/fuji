@@ -1,0 +1,63 @@
+
+
+import java.awt.BorderLayout;
+import java.awt.Event;
+import java.awt.Frame;
+import java.awt.TextArea;
+import java.awt.TextField;
+
+/**
+ * simple AWT gui for the chat client
+ */
+public class Gui extends Frame implements ChatLineListener {
+
+	private static final long serialVersionUID = 1L;
+
+	private Client chatClient;
+
+	/**
+	 * creates layout
+	 * 
+	 * @param title
+	 *            title of the window
+	 * @param chatClient
+	 *            chatClient that is used for sending and receiving messages
+	 */
+	public Gui(String title, Client chatClient) {
+		super(title);
+		helpme(chatClient);
+	}
+	
+	protected void helpme(Client chatClient) {
+		System.out.println("starting console...");
+		setLayout(new BorderLayout());
+
+		chatClient.addLineListener(this);
+
+		pack();
+		setVisible(false);
+
+		this.chatClient = chatClient;
+	}
+
+	/**
+	 * this method gets called every time a new message is received (observer
+	 * pattern)
+	 */
+	public void newChatLine(String line) {
+		System.out.println(line);
+	}
+
+	/**
+	 * handles AWT events (enter in textfield and closing window)
+	 */
+	public boolean handleEvent(Event e) {if ((e.target == this) && (e.id == Event.WINDOW_DESTROY)) {
+			if (chatClient != null)
+				chatClient.stop();
+			setVisible(false);
+			System.exit(0);
+			return true;
+		}
+		return super.handleEvent(e);
+	}
+}

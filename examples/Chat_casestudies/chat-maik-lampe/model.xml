@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Root">
+				<feature mandatory="true" name="Base"/>
+				<alt abstract="true" mandatory="true" name="GUI">
+					<feature mandatory="true" name="Console"/>
+					<feature mandatory="true" name="Java_GUI"/>
+				</alt>
+				<feature name="Krypto"/>
+				<feature name="Color"/>
+				<feature name="Chathistory"/>
+				<feature name="Userauth"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Color</var>
+					<var>Java_GUI</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Userauth</var>
+					<var>Krypto</var>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Root"/>
+			<feature name="Base"/>
+			<feature name="Console"/>
+			<feature name="Java_GUI"/>
+			<feature name="Color"/>
+			<feature name="Chathistory"/>
+			<feature name="Krypto"/>
+			<feature name="Userauth"/>
+		</featureOrder>
+	</featureModel>

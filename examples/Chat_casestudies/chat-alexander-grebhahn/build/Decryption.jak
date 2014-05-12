@@ -1,0 +1,10 @@
+
+
+SoUrCe RooT Crypt "../src/Crypt/Decryption.jak";
+public abstract class Decryption{
+
+	public abstract String decrypt(String text);
+	
+	public abstract String enctypt(String text);
+	
+}

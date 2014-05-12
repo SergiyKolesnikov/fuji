@@ -1,0 +1,34 @@
+
+
+import java.io.IOException;
+
+public refines class Client {
+
+	private void log(String text){
+		
+		
+	       try {
+			bw.write(text);
+			bw.newLine();
+			bw.flush();
+			System.out.println("LOGGING: writing message '"+text+"' to logfile...");
+		  } catch (IOException e) {
+			//System.err.println("Fehler beim schreiben der Log Datei! Path: "+logfile_path);
+			e.printStackTrace();
+		  }
+	       
+	   	     		
+   }
+   
+   protected void handleIncomingMessage(Object msg) {
+		
+			
+			//write the Message to the log
+			
+			log(((TextMessage) msg).getContent());
+            Super().handleIncomingMessage(msg);
+	
+	}
+
+
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="NotepadLuisGuimbarda">
+				<feature mandatory="true" name="Base"/>
+				<feature name="NewOpenSaveToolbar"/>
+				<feature name="PrintToolbar"/>
+				<feature name="UndoRedoToolbar"/>
+				<feature name="CutCopyPasteToolbar"/>
+				<feature name="FindToolbar"/>
+				<feature name="SelectAll"/>
+				<feature name="FontToolbar"/>
+				<feature name="Wrap"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="NewOpenSaveToolbar"/>
+			<feature name="PrintToolbar"/>
+			<feature name="UndoRedoToolbar"/>
+			<feature name="CutCopyPasteToolbar"/>
+			<feature name="FindToolbar"/>
+			<feature name="SelectAll"/>
+			<feature name="FontToolbar"/>
+			<feature name="Wrap"/>
+		</featureOrder>
+	</featureModel>

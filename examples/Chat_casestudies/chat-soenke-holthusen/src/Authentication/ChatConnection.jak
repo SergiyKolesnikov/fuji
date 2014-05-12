@@ -1,0 +1,15 @@
+layer Authentication;
+
+public refines class ChatConnection {
+	private boolean _authenticated = false;
+	
+	public void authenticate()
+	{
+		_authenticated = true;
+	}
+	
+	public boolean isAuthenticated()
+	{
+		return _authenticated;
+	}
+}

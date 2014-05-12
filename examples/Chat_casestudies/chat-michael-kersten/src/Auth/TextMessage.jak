@@ -1,0 +1,18 @@
+
+
+public refines class TextMessage {
+	protected String password;
+	
+	refines TextMessage(String content){
+		this.content=content;
+		this.password="";
+	}
+	
+	public void setPassword(String password){
+		this.password=password;
+	}
+	
+	public String getPassword(){
+		return this.password;
+	}
+}

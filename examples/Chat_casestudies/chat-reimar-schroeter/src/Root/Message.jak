@@ -1,0 +1,86 @@
+
+
+
+
+
+import java.io.Serializable;
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+public class Message implements Serializable{
+	protected String content = "";
+	protected String userName = "";
+	
+	/**
+	 * Create a new message 
+	 * 
+	 * @param userName who sending the message 
+	 * @param content of the message
+	 */
+	public Message(String userName, String content){
+		setUserName(userName);
+		setContent(content);
+	}
+	
+	/**
+	 * Create a new message 
+	 *  
+	 * @param content of the message
+	 */
+	public Message(String content){
+		setContent(content);
+	}
+	
+	/**
+	 * set the content of the message 
+	 *  
+	 * @param content of the message
+	 */
+	public void setContent(String content){
+		this.content = content;	
+	}
+	
+	
+	/**
+	 * Set the user who sending the message 
+	 *  
+	 * @param userName who sending the message
+	 */
+	protected void setUserName(String userName){
+		this.userName = userName;
+	}
+	
+	/**
+	 * Get the user who sending the message  
+	 *  
+	 * @param content of the message
+	 */
+	public String getUserName(){
+		return userName;
+	}
+	
+	/**
+	 * Get the output line:
+	 * user: message  
+	 *  
+	 * @return user: message 
+	 */ 
+	public String getUserName_And_Content(){
+		if(userName.compareTo("") == 0){
+			return getContent();
+		}else{
+			return userName + ": " + getContent();
+		}
+	}
+	
+	/**
+	 * return the content of message
+	 * 
+	 * @return content of message
+	 */
+	public String getContent(){
+		return content; 
+	}
+}

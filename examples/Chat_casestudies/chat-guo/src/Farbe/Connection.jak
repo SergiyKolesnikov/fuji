@@ -1,0 +1,26 @@
+
+layer Farbe;
+
+import java.awt.Color;
+
+public refines class Connection {
+
+	public TextMessage join(String string){
+	
+		TextMessage msg=Super(String).join(string);
+		msg.farbe=Color.RED;
+		return msg;
+	}
+	
+	public TextMessage left(String string){
+		
+		TextMessage msg=Super(String).left(string);
+		msg.farbe=Color.RED;
+		return msg;
+	}
+	
+	public void infoSend(Connection connection,TextMessage msg){
+		msg.farbe=Color.BLUE;		
+		Super(Connection,TextMessage).infoSend(connection,msg);
+	}
+}

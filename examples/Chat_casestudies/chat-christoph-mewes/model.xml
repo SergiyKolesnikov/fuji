@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and mandatory="true" name="Root">
+				<alt mandatory="true" name="Base">
+					<and mandatory="true" name="GUI">
+						<feature name="Color"/>
+						<feature name="Crypt"/>
+					</and>
+					<feature mandatory="true" name="CMD"/>
+				</alt>
+				<feature name="Auth"/>
+				<feature name="History"/>
+				<feature mandatory="true" name="Common"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Root"/>
+			<feature name="Common"/>
+			<feature name="Base"/>
+			<feature name="GUI"/>
+			<feature name="CMD"/>
+			<feature name="Crypt"/>
+			<feature name="Color"/>
+			<feature name="Auth"/>
+			<feature name="History"/>
+		</featureOrder>
+	</featureModel>

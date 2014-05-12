@@ -1,0 +1,13 @@
+
+layer NewEquation1;
+
+SoUrCe RooT Basic "../../workspace/Chat_Feature/src/Authentification/AuthMessage.jak";
+
+public class AuthMessage extends TextMessage {
+
+	public AuthMessage(String passwort){
+		super(passwort);
+	}
+	
+		
+}

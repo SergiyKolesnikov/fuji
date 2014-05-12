@@ -1,0 +1,34 @@
+layer Color;
+
+public refines class Gui {
+	private java.awt.Color currentColor = java.awt.Color.BLACK;
+	private JButton        button;
+
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == button) {
+			java.awt.Color bgColor = JColorChooser.showDialog(Gui.getInstance(), "Textfarbe wählen", currentColor);
+	
+			if (bgColor != null) {
+				currentColor = bgColor;
+				Gui.getInstance().getInputField().setForeground(currentColor);
+			}
+		}
+		else {
+			Super().actionPerformed(arg0);
+		}
+	}
+	
+	public java.awt.Color getCurrentColor() {
+		return currentColor;
+	}
+
+	protected void initToolbar(JPanel toolbar) {
+		button = new JButton();
+		button.setText("Farbe");
+		button.addActionListener(($pack.Gui) this);
+
+		toolbar.add(button);
+		
+		Super().initToolbar(toolbar);
+	}
+}

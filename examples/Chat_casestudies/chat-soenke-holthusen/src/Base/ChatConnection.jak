@@ -1,0 +1,190 @@
+layer Base;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.LinkedList;
+
+public refines class ChatConnection
+{
+	private Socket _socket = null;
+	private ObjectInputStream _in = null;
+	private ObjectOutputStream _out = null;
+
+	private LinkedList _toSend = new LinkedList();
+
+	private boolean _stop_it = false;
+	
+	protected ChatReceiver _receiver = null;
+	
+//	private boolean _authenticated = false;
+
+	public ChatConnection(Socket socket, ChatReceiver receiver)
+	{
+		_socket = socket;
+		_receiver = receiver;
+		init();
+	}
+
+	protected void init()
+	{
+		try
+		{
+			_out = new ObjectOutputStream(_socket.getOutputStream());
+			_in = new ObjectInputStream(_socket.getInputStream());
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void cleanUp()
+	{
+		try
+		{
+			if (_socket != null)
+			{
+				_socket.close();
+				_socket = null;
+			}
+		}
+		catch (IOException e)
+		{
+			_socket = null;
+		}
+
+		try
+		{
+			if (_in != null)
+			{
+				_in.close();
+				_in = null;
+			}
+		}
+		catch (IOException e)
+		{
+			_in = null;
+		}
+
+		try
+		{
+			if (_out != null)
+			{
+				_out.close();
+				_out = null;
+			}
+		}
+		catch (IOException e)
+		{
+			_in = null;
+		}
+	}
+
+	
+//	public void authenticate()
+//	{
+//		_authenticated = true;
+//	}
+	
+	
+	
+//	public boolean isAuthenticated()
+//	{
+//		return _authenticated;
+//	}
+	
+	
+	protected void react(Message message)
+	{
+		
+//		if (message.getType() == TYPE.MESSAGE)
+//		{
+//			message = decrypt(message);
+//		}
+		
+		message.setOrigin(this.toString());
+		_receiver.receive(message);
+	}
+
+	public void send(Message message)
+	{
+		
+//		if (message.getType() == TYPE.MESSAGE)
+//		{
+//			message = encrypt(message);
+//		}
+		
+		
+		try
+		{
+			_out.writeObject(message);
+			_out.flush();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			_stop_it = true;
+		}
+	}
+
+	
+//	protected Message encrypt(Message message)
+//	{
+//		return Message.createNewTextMessage(message.getNick(), message.getColor(), Reverse.getInstance().encrypt(ROT13.getInstance().encrypt(message.getText())));
+//	}
+	
+	
+	
+//	protected Message decrypt(Message message)
+//	{
+//		return Message.createNewTextMessage(message.getNick(), message.getColor(), ROT13.getInstance().encrypt(Reverse.getInstance().encrypt(message.getText())));
+//	}
+	
+	
+	public void stopIT()
+	{
+		_stop_it = true;
+	}
+
+	public void run()
+	{
+		try
+		{
+			while (!_stop_it)
+			{
+				try
+				{ // Poll every ~10 ms
+					Thread.sleep(10);
+				}
+				catch (InterruptedException e)
+				{
+				}
+	
+				Object o = _in.readObject();
+				if (o instanceof Message)
+				{
+					react((Message) o);
+				}
+			}
+	
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error in loop, cleaning up...");
+			cleanUp();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	
+		cleanUp();
+	}
+
+	public String toString()
+	{
+		return _socket.toString();
+	}
+}

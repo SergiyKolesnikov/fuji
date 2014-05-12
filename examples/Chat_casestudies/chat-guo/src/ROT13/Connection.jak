@@ -1,0 +1,30 @@
+
+layer ROT13;
+
+public refines class Connection {
+
+	public void infoSend(Connection connection,TextMessage msg){
+		msg.rot13();
+		Super(Connection,TextMessage).infoSend(connection,msg);
+	}
+	
+	public void infoin(TextMessage msg){
+		msg.rot13();
+		Super(TextMessage).infoin(msg);
+		
+	}
+	
+	public TextMessage join(String string){
+		
+		TextMessage msg=Super(String).join(string);
+		msg.rot13();
+		return msg;
+	}
+	
+	public TextMessage left(String string){
+		
+		TextMessage msg=Super(String).left(string);
+		msg.rot13();
+		return msg;
+	}
+}

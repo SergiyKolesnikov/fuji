@@ -1,0 +1,36 @@
+layer Authentication;
+import java.io.*;
+import java.awt.Color;
+
+SoUrCe RooT Common "../../../D:/Documents and Settings/slayer/workspace/EPMD_FIDE/src/Common/TextMessage.jak";
+
+abstract class TextMessage$$Common implements Serializable {
+
+	private static final long serialVersionUID = -9161595018411902079L;
+	protected String content;
+
+	public TextMessage$$Common(String content) {
+		super();
+		this.content = content;
+	}
+	public void setContent(String newContent){
+		content = newContent;
+	}
+
+	public String getContent() {
+		return content;
+	}
+}
+
+SoUrCe  Color "../../../D:/Documents and Settings/slayer/workspace/EPMD_FIDE/src/Color/TextMessage.jak";
+
+public class TextMessage extends  TextMessage$$Common  {
+	protected Color textColor = Color.BLACK;
+	
+	public void setColor(Color newColor){
+		textColor = newColor;
+	}
+	public Color getColor() {
+		return textColor;
+	}
+}

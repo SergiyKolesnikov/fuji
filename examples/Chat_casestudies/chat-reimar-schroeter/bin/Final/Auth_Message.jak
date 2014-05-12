@@ -1,0 +1,17 @@
+layer Final;
+
+SoUrCe RooT Authentification "../../../C:/Users/Reimar/Documents/Uni/Master/1 Semester/EPDM/eclipseWorkspace/FeatureIDEChat/src/Authentification/Auth_Message.jak";
+
+public class Auth_Message extends Message{
+	public static String PW_ACCEPT = "accept";
+	public static String PW_INCORRECT = "incorrect";
+
+
+	public Auth_Message(String content){
+		super(content);
+	}	
+	
+	public Auth_Message(String userName, String content){
+		super(userName, content);
+	}
+}

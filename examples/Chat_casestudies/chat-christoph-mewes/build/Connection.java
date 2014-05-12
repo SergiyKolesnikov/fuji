@@ -1,0 +1,98 @@
+
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.SocketException;
+
+
+
+/**
+ * class for an individual connection to a client. allows to send messages to
+ * this client and handles incoming messages.
+ */
+public class Connection extends Thread {
+	protected Socket socket;
+	protected ObjectInputStream inputStream;
+	protected ObjectOutputStream outputStream;
+
+	private Server server;
+	private boolean connectionOpen = true;
+
+	public Connection(Socket s, Server server) {
+		this.socket = s;
+
+		try {
+			inputStream  = new ObjectInputStream((s.getInputStream()));
+			outputStream = new ObjectOutputStream((s.getOutputStream()));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		this.server = server;
+	}
+
+	/**
+	 * waits for incoming messages from the socket
+	 */
+	public void run() {
+		String clientName = socket.getInetAddress().toString();
+
+		try {
+			// server.broadcast(new SystemMessage(clientName + " has joined!"));
+
+			while (connectionOpen) {
+				try {
+					Object msg = inputStream.readObject();
+					if (msg instanceof Message) handleIncoming(((Connection) this), (Message) msg);
+				}
+				catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		catch (Exception ex) {
+			if (!(ex instanceof SocketException) || !ex.getMessage().equals("Connection reset")) {
+				ex.printStackTrace();
+			}
+		}
+		finally {
+			server.removeConnection(((Connection) this));
+			server.broadcast(new SystemMessage(clientName + " has left."));
+
+			try {
+				socket.close();
+			}
+			catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	public void send(Message msg) {
+		try {
+			handleOutgoing(((Connection) this), msg);
+		}
+		catch (IOException ex) {
+			connectionOpen = false;
+		}
+	}
+	
+	protected void handleIncoming(Connection c, Message msg) {
+		if (msg instanceof Message) {
+			server.broadcast(msg);
+		}
+	}
+	
+	protected void handleOutgoing(Connection c, Message msg) throws IOException {
+		if (msg instanceof Message) {
+			synchronized (outputStream) {
+				outputStream.writeObject(msg);
+			}
+
+			outputStream.flush();
+		}
+	}
+}

@@ -1,0 +1,29 @@
+
+
+public class Switcher implements Crypter {
+	public String encrypt(String plaintext) {
+		char[] content = plaintext.toCharArray();
+
+		// ABCDEF -> BADCFE
+		for (int i = 0; i < content.length-1; i += 2) {
+			char t = content[i];
+			content[i] = content[i + 1];
+			content[i + 1] = t;
+		}
+
+		return String.valueOf(content);
+	}
+
+	public String decrypt(String encrypted) {
+		char[] content = encrypted.toCharArray();
+
+		// BADCFE -> ABCDEF
+		for (int i = 0; i < content.length-1; i += 2) {
+			char t = content[i];
+			content[i] = content[i + 1];
+			content[i + 1] = t;
+		}
+
+		return String.valueOf(content);
+	}
+}

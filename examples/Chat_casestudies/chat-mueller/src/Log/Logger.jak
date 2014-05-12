@@ -1,0 +1,64 @@
+
+layer Log;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ * 
+ * @author Nils Mueller
+ * Klasse zum schreiben eines Logs
+ */
+public class Logger {
+
+	private String owner;			// Besitzer
+	private FileWriter fw;
+	private BufferedWriter out;
+	
+	/**
+	 * Konstruktor mit Dateiname
+	 * @param name Dateiname/Besitzer des Logs
+	 */
+	public Logger(String name) {
+		try {
+			fw = new FileWriter(name + ".txt", true);
+			out = new BufferedWriter(fw);
+			owner = name;
+			out.write(owner + "'s Logbuch:");
+			out.newLine();
+			out.append("======");
+			out.newLine();
+			out.flush();
+		} catch (IOException e) {
+			System.out.println("Fehler beim Erstellen");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * schreibt Zeile in Logdatei
+	 * @param line Textzeile
+	 */
+	public void logIt(String line) {
+		try {
+			out.append(line);
+			out.newLine();
+			out.flush();
+		} catch (IOException e) {
+			System.out.println("Fehler beim Schreiben");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * gibt Besitzer des Logs zurueck
+	 * @return Besitzer
+	 */
+	public String getOwner() {
+		if (owner!=null)
+			return owner;
+		else
+			return "";
+	}
+}

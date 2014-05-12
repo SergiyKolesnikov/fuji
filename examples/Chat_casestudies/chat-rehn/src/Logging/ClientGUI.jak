@@ -1,0 +1,20 @@
+layer Color;
+
+public refines class ClientGUI {
+	private Logger log;
+	
+	public void initGUI() throws Exception {
+		log = new Logger("client-" + clientName);
+		Super().initGUI();
+	}
+	
+	public String postMessageReceived(String newMessage) {
+		if (newMessage.length() > 0)
+			try {
+				log.log(newMessage);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		return Super().postMessageReceived(newMessage);
+	}
+}

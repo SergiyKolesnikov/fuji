@@ -1,0 +1,28 @@
+
+
+public refines class Client {
+	public void handleIncoming(Object msg) {
+		if (msg instanceof TextMessage) {
+			TextMessage tmsg = (TextMessage) msg;
+			tmsg.setContent(getAlgo().decrypt(tmsg.getContent()));
+			tmsg.removeAttribute("encrypted");
+		}
+		
+		Super().handleIncoming(msg);
+	}
+	
+	public void send(Message msg) {
+		if (msg instanceof TextMessage) {
+			TextMessage tmsg = (TextMessage) msg;
+			tmsg.setContent(getAlgo().encrypt(tmsg.getContent()));
+			tmsg.setAttribute("encrypted", Boolean.TRUE);
+		}
+		
+		Super().send(msg);
+	}
+	
+	private Crypter getAlgo() {
+		$pack.Gui g = ($pack.Gui) Gui.getInstance();
+		return g.getAlgorithm();
+	}
+}

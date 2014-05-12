@@ -1,0 +1,10 @@
+
+layer Historie;
+
+public refines class Client {
+
+	public void fireAddLine(TextMessage msg){
+		msg.log("e:/Clientlog.dat");	
+		Super(TextMessage).fireAddLine(msg);
+	}
+}

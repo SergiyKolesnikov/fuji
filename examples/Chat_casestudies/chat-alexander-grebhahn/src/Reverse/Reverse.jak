@@ -1,0 +1,29 @@
+
+import java.util.List;
+
+
+/**
+ * Verschlüsselung durch einfaches Umdrehen der Nachrichten
+ * 
+ */
+public class Reverse extends Decryption{
+
+	public String decrypt(String text) {
+		String decrypted = "";
+		for(int i = text.length()-1; i >= 0; i--){
+			char charAtI = text.charAt(i);
+			decrypted += charAtI;
+		}
+		return decrypted;
+	}
+
+	public String enctypt(String text) {
+		String encrypted = "";
+		for(int i = text.length()-1; i >= 0; i--){
+			char charAtI = text.charAt(i);
+			encrypted += charAtI;
+		}
+		return encrypted;
+	}
+		
+}

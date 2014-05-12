@@ -1,0 +1,215 @@
+layer Base;
+
+import java.awt.Color;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.LinkedList;
+
+public refines class Client
+{
+	protected ChatConnection _connection = null;
+	protected LinkedList _received_messages = new LinkedList();
+
+	protected String _nick = "pennywise";
+	
+	protected Color _color = Color.blue;
+
+	protected String _host = null;
+	protected int _port = 0;
+
+	
+//	protected boolean _authentication_request = false;
+//	protected boolean _authentication_response = false;
+//	protected boolean _authentication_sucessful = false;
+	
+
+	protected boolean _stop_it = false;
+
+	
+//	protected ChatLogger _logger = null;
+	
+
+	public Client()
+	{
+		runIT();
+	}
+
+	protected void runIT()
+	{
+		if(setup())
+		{
+			go();
+		}
+	}
+
+	protected void go()
+	{
+	}
+
+	protected boolean setup()
+	{
+		return false;
+	}
+
+	protected boolean connect(String host, int port)
+	{
+		_host = host;
+		_port = port;
+		return connect();
+	}
+
+	protected boolean connect()
+	{
+		try
+		{
+			// log(Level.INFO, "Trying to connect to " + _host + ":" + _port);
+			_connection = new ChatConnection(new Socket(_host, _port), this);
+			_connection.start();
+		}
+		catch (UnknownHostException e)
+		{
+			return false;
+		}
+		catch (IOException e)
+		{
+			return false;
+		}
+
+		start();
+
+		return true;
+	}
+
+	protected void disconnect()
+	{
+		if (isConnected())
+		{
+			_connection.send(Message.createNewEOCMessage());
+			_connection.stopIT();
+		}
+	}
+
+	protected boolean isConnected()
+	{
+		return _connection != null;
+	}
+
+	
+/*	protected boolean sendAuthentication(String password)
+	{
+		Message mess;
+		mess = Message.createNewAuthRequest(password);
+		_connection.send(mess);
+		_authentication_request = true;
+
+		int i = 0;
+		while (!_authentication_response && i < 500)
+		{
+			i += 100;
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+			}
+		}
+
+		boolean toreturn = (_authentication_response == false || _authentication_sucessful == false ? false : true);
+
+		_authentication_request = false;
+		_authentication_response = false;
+		_authentication_sucessful = false;
+		return toreturn;
+	}*/
+	
+	
+	protected void send(String message)
+	{
+		Message mess = Message.createNewTextMessage(_nick, 
+				
+				_color, 
+				
+				message);
+		_connection.send(mess);
+	}
+
+	public void receive(Message message)
+	{
+
+		
+		/*case AUTHENTICATION:
+			if (_authentication_request)
+			{
+				if (message.successfulAuth())
+				{
+					_connection.authenticate();
+					System.out.println("Authentication sucessful...");
+					_authentication_sucessful = true;
+				}
+				else
+				{
+					System.out.println("Couldn't authenticate...");
+					_authentication_sucessful = false;
+				}
+				_authentication_response = true;
+			}
+			break;*/
+		
+
+		if(message.getType() == Message.TYPE_MESSAGE)
+		{
+			// System.out.println(message.getText());
+			_received_messages.add(message);
+		}
+
+		
+		//log(message.toString());
+		
+	}
+
+	public void run()
+	{
+		System.out.println("Starting up...");
+		while (!_stop_it)
+		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e)
+			{
+			}
+
+			int messages = 0;
+
+			// process a maximum of 5 messages per turn
+			while (!_received_messages.isEmpty() && messages < 5)
+			{
+				Message message = (Message) _received_messages.removeFirst();
+				handleMessage(message);
+				messages++;
+			}
+
+			if (!_connection.isAlive() && _received_messages.isEmpty())
+			{
+				break;
+			}
+		}
+		_connection = null;
+		System.out.println("Stopping...");
+	}
+
+	public void handleMessage(Message message)
+	{
+		System.out.println(message.getNick() + ": " + message.getText());
+	}
+
+	
+//public void log(String s)
+//	{
+//		_logger.log(s);
+//	}
+	
+}

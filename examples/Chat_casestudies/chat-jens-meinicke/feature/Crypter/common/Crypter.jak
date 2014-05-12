@@ -1,0 +1,13 @@
+public class Crypter {
+
+	public Crypter() {
+	}
+	
+	public TextMessage encrypt(TextMessage message) {
+		return message;
+	}
+	
+	public TextMessage decrypt(TextMessage message) {
+		return message;
+	}
+}

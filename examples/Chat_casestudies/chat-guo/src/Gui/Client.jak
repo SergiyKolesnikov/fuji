@@ -1,0 +1,11 @@
+
+layer Gui;
+
+public refines class Client {
+	
+	
+	public void userInterfaceinit(){
+		Super().userInterfaceinit();
+		new Gui(this);
+	}
+}

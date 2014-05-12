@@ -1,0 +1,16 @@
+public refines class Gui {
+	public void addColor() {
+		Super().addColor();
+		comboColor = new JComboBox(strColor);
+		comboColor.setSelectedIndex(0);
+		add("East",comboColor);
+		pack();
+		setVisible(true);
+		inputField.requestFocus();
+	}
+	
+	public String getMsg(String txt) {
+		txt = "(" + Super().comboColor.getSelectedItem() + ")" + txt;
+		return txt;
+	}
+}

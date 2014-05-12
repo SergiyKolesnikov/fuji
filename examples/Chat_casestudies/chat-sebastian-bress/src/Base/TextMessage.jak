@@ -1,0 +1,72 @@
+
+
+
+import java.io.Serializable;
+
+/**
+ * serializable message that can be send over the sockets between client and
+ * server. 
+ */
+public class TextMessage implements Serializable {
+
+	private static final long serialVersionUID = 1L; //-9161595018411902079L;
+	
+	private String messagetyp; //message, authenticate, authenticated
+	private String content;
+	private String color;
+    private String password;
+	private String reply_status; //ok,fail
+
+	private String encryption_method; 
+	
+	public TextMessage(String content) {
+		super();
+		this.content = content;
+	}
+	
+	public TextMessage(String messagetyp, String content,String color, String password,String reply_status) {
+		super();
+		
+		this.messagetyp = messagetyp;
+		this.content = encryptText( content );
+		this.color = color;
+		this.password = password;
+		this.reply_status = reply_status;
+		
+	} 
+	
+
+	public String getContent() {
+		return decryptText(content);
+	}
+	
+	public String getMessagetyp() {
+		return messagetyp;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public String getReply_status() {
+		return reply_status;
+	}
+	
+	
+	String encryptText(String text){
+		//TODO
+		
+		return text;
+	}
+	
+	String decryptText(String text){
+		//TODO
+		
+		return text;
+	}
+	
+}

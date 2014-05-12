@@ -1,0 +1,1 @@
+The corresponding feature in GUIDSL model is marked as concrete, but if the feature directory is not present, then the family based typechecking fails with 'The following directoies specified in the features list do not exist...'.  This dummy feature directory prevents the failure. 

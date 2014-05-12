@@ -1,0 +1,12 @@
+
+
+public refines class ClientStart {
+
+	public static void main(String args[]) throws IOException {
+		Super().main(args);	
+		
+		
+		client.myConsole = new Console(client);
+		
+	}
+}

@@ -1,0 +1,136 @@
+
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.UUID;
+
+
+
+abstract class Client$$Base implements Runnable {
+	protected ObjectInputStream inputStream;
+	protected ObjectOutputStream outputStream;
+	protected Thread thread;
+	protected String userID;
+
+	protected static Client instance;
+
+	public static Client getInstance() {
+		return instance;
+	}
+
+	public static void main(String args[]) throws IOException {
+		if (args.length != 2) {
+			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+		}
+
+		try {
+			new Client(args[0], Integer.parseInt(args[1]));
+		}
+		catch (Exception e) {
+			System.err.println(e.getMessage());
+			System.exit(1);
+			return;
+		}
+	}
+
+	public Client$$Base(String host, int port) throws UnknownHostException, IOException {
+		Socket s = new Socket(host, port);
+
+		instance     = (Client) this;
+		outputStream = new ObjectOutputStream((s.getOutputStream()));
+		inputStream  = new ObjectInputStream((s.getInputStream()));
+		thread       = new Thread(this);
+		userID       = UUID.randomUUID().toString().substring(0, 7);
+		
+		init(host, port);
+		thread.start();
+	}
+	
+	public void init(String host, int port) {
+		/* do something */
+	}
+
+	/**
+	 * main method. waits for incoming messages.
+	 */
+	public void run() {
+		try {
+			for (;;) {
+				try {
+					Object msg = inputStream.readObject();
+					handleIncoming(msg);
+				}
+				catch (ClassNotFoundException e) {
+					System.err.println("Received unknown object.");
+				}
+			}
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		finally {
+			thread = null;
+			
+			try {
+				outputStream.close();
+			}
+			catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public void handleIncoming(Object msg) {
+		/* do something! */
+	}
+
+	public void send(Message msg) {
+		// do not send empty messages
+		if (msg.getContent().isEmpty()) return;
+
+		// force ourselves as sender
+		msg.setSender(userID);
+
+		try {
+			outputStream.writeObject(msg);
+			outputStream.flush();
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+			thread.stop();
+		}
+	}
+
+	public void stop() {
+		thread.stop();
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+}
+
+
+
+public class Client extends  Client$$Base  {
+	public void init(String host, int port) {
+		new Gui("Chat " + host + ":" + port, instance);
+		super.init(host, port);
+	}
+	
+	public void handleIncoming(Object msg) {
+		if (msg instanceof Viewable) {
+			Gui.getInstance().render((Viewable) msg);
+		}
+		
+		super.handleIncoming(msg);
+	}
+      // inherited constructors
+
+
+
+	public Client ( String host, int port )  throws UnknownHostException, IOException{ super(host, port); }
+}

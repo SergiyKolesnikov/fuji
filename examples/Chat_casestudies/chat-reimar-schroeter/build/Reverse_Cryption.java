@@ -1,0 +1,48 @@
+
+
+
+
+
+public class Reverse_Cryption extends Cryptography{
+	
+	public Reverse_Cryption(Cryptography rek){
+		this.rek = rek;
+	}
+	
+	public Reverse_Cryption(){}
+
+	/**
+	 * @see Cryptography
+	 */
+	public String decrypt(String msg) {
+		if(rek == null){
+			return encrypt_decrypt_reverse(msg);
+		}
+		return encrypt_decrypt_reverse(rek.decrypt(msg));
+	}
+
+	/**
+	 * @see Cryptography
+	 */
+	public String encrypt(String msg) {
+		if(rek ==  null){
+			return encrypt_decrypt_reverse(msg);
+		}
+		return rek.encrypt(encrypt_decrypt_reverse(msg));
+	}
+	
+	/**
+	 * decrypt/encrypt the given text
+	 * 
+	 * @param text to decrypt/encrypt
+	 * @return transformed text
+	 */
+	private String encrypt_decrypt_reverse(String text){
+		int length = text.length();
+		String returnS = "";
+		for (int i = 0; i < length; i++) {
+			returnS += text.charAt(length -1 -i);
+		}
+		return returnS;
+	}
+}

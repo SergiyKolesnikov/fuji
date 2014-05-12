@@ -1,0 +1,20 @@
+
+import common.Crypter;
+/**
+ * class for an individual connection to a client. allows to send messages to
+ * this client and handles incoming messages.
+ */
+public refines class Connection {
+
+	private Crypter crypter = new Crypter();
+	
+	protected void handleIncomingMessage(String name, Object msg) {
+		if (msg instanceof TextMessage) {
+			Super().handleIncomingMessage(name, crypter.decrypt((TextMessage) msg));
+		}
+	}
+	
+	protected void send(TextMessage msg) {
+		Super().send(crypter.encrypt(msg));
+	}
+}

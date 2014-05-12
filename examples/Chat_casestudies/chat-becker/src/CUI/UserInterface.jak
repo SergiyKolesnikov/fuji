@@ -1,0 +1,9 @@
+
+layer CUI;
+
+public refines class UserInterface {
+
+	public void newChatLine(String line){
+		System.out.println(line+"\n");
+	}
+}

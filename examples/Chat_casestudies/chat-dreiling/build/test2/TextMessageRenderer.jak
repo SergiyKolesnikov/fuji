@@ -1,0 +1,50 @@
+
+layer test2;
+
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import java.awt.Component;
+
+import java.awt.Color;
+
+SoUrCe RooT GUI "../../../E:/Programmierung/Java-Programme/epmd_chat_featide/src/GUI/TextMessageRenderer.jak";
+
+abstract class TextMessageRenderer$$GUI extends JLabel implements ListCellRenderer {
+
+		  public Component getListCellRendererComponent(JList list, Object value, int index,
+		      boolean isSelected, boolean cellHasFocus) {
+		    
+			  if (value instanceof TextMessage) {
+				  setText(((TextMessage)value).getSender() + ">"+((TextMessage)value).getContent());
+			  }
+			  else {
+				  setText(value.toString());  
+			  }
+		 
+		    return this;
+		  }
+	}
+
+SoUrCe  Color "../../../E:/Programmierung/Java-Programme/epmd_chat_featide/src/Color/TextMessageRenderer.jak";
+
+public class TextMessageRenderer extends  TextMessageRenderer$$GUI   {
+
+ 		public Component getListCellRendererComponent(JList list, Object value, int index,
+		      boolean isSelected, boolean cellHasFocus) {
+		    
+			  if (value instanceof TextMessage) {
+				
+				  /*if[COLOR]*/
+				  String col = ((TextMessage)value).getSetting(Utils.COLORKEY);
+				  if (col != null)
+					  setForeground(new Color(Integer.parseInt(col)));
+				  else
+					  setForeground(Color.BLACK);
+				  /*end[COLOR]*/
+			  }
+			//return this;
+		    return Super(JList, Object, int, boolean, boolean ).getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		  }
+
+}

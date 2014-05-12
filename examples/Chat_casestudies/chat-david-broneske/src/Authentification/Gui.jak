@@ -1,0 +1,51 @@
+
+
+
+import java.awt.Label;
+
+public refines class Gui {
+	protected TextField password;
+
+	protected Label passwordLabel;
+	
+	protected Label errorLabel;
+
+	public void init(){
+		Super().init();
+		if(container==null){
+			container= new Container();
+			container.setLayout(new GridLayout(8,1));
+			add("East",container);
+		}
+		//passwort
+		password= new TextField(10);
+	    password.setEchoChar('*');
+	    passwordLabel=new Label();
+	    passwordLabel.setText("Passwort:");
+		errorLabel= new Label();
+	    container.add(passwordLabel);
+		container.add(password);
+
+		//errorLabel
+		container.add(errorLabel);
+			
+	}
+	public void newChatLine(String line) {
+		if(password.getText().equals("password")){
+			errorLabel.setText("");
+			Super(String).newChatLine(line);
+		
+		}else{
+			errorLabel.setText("Falsches Passwort");
+		}
+	}
+	
+	public void manipulate(String s){
+		if(password.getText().equals("password")){
+			errorLabel.setText("");
+			Super(String).manipulate(s);
+		}else{
+			errorLabel.setText("Falsches Passwort");
+		}
+	}
+}

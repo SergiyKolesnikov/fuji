@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Chat">
+				<alt abstract="true" mandatory="true" name="Type">
+					<feature mandatory="true" name="Client"/>
+					<feature mandatory="true" name="Server"/>
+				</alt>
+				<alt abstract="true" name="Crypto">
+					<feature mandatory="true" name="SwitchTwo"/>
+					<feature mandatory="true" name="Reverse"/>
+				</alt>
+				<or abstract="true" name="Output">
+					<feature mandatory="true" name="Console"/>
+					<and abstract="true" mandatory="true" name="Gui">
+						<feature mandatory="true" name="BasicGui"/>
+						<feature name="Color"/>
+					</and>
+				</or>
+				<feature mandatory="true" name="Base"/>
+				<feature name="Auth"/>
+				<feature name="Log"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="true">
+			<feature name="Base"/>
+			<feature name="Client"/>
+			<feature name="Server"/>
+			<feature name="BasicGui"/>
+			<feature name="Color"/>
+			<feature name="Console"/>
+			<feature name="SwitchTwo"/>
+			<feature name="Reverse"/>
+			<feature name="Auth"/>
+			<feature name="Log"/>
+		</featureOrder>
+	</featureModel>

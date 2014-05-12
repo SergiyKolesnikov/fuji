@@ -1,0 +1,17 @@
+
+layer Log;
+
+public refines class Server {
+
+	protected Logger log;							// schreibt Log
+
+	protected void initial() {
+		log = new Logger("Server");
+	}
+	
+	public void broadcast(String text) {
+		log.logIt(text);
+		Super(String).broadcast(text);
+	}
+
+}
