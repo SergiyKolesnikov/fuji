@@ -1,14 +1,34 @@
-introduces F1 {package}some{type}A
-introduces F1 {package}some{type}A{constructor}A()
-introduces F1 {package}some{type}A{field}j{type}int
-introduces F1 {package}some{type}A{field}stringArray{type}java.lang.String[]
-introduces F1 {package}some{type}A{method}methodInF1(java.lang.Long, int){type}void
-introduces F1 {package}some{type}A{method}methodI(){type}some.A
-introduces F1 {package}some{type}A{method}refinedInF2(){type}void
-introduces F1 {package}some{type}I
-introduces F1 {package}some{type}I{method}methodI(){type}some.A
-introduces F1 {static}{package}some{type}I{field}k{type}int
-introduces F2 {package}some{type}A
-introduces F2 {package}some{type}A{constructor}A()
-introduces F2 {package}some{type}A{method}methodInF2(){type}void
-introduces F2 {package}some{type}A{method}refinedInF2(){type}void
+EXT {feature}F1{package}some{type}A {package}java.lang{type}Object
+EXT {feature}F1{package}some{type}A {package}java.util{type}Vector
+IMP {feature}F1{package}some{type}A {package}some{type}I
+IMP {feature}F1{package}some{type}A {package}some{type}I
+ORI {feature}F2{package}some{type}A{method}refinedInF2(){type}void {package}some{type}A{method}original(){type}void
+REF {feature}F1{package}some{type}A{field}stringArray{type}java.lang.String[] {package}java.lang{type}String
+REF {feature}F1{package}some{type}A{field}stringArray{type}java.lang.String[] {package}java.lang{type}String
+REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long, int){type}void {package}java.lang{type}Long
+REF {feature}F1{package}some{type}A{method}methodInF1(java.lang.Long, int){type}void {package}some{type}A{field}j{type}int
+REF {feature}F1{package}some{type}A{method}methodI(){type}some.A {package}some{type}A
+REF {feature}F1{package}some{type}A{method}methodI(){type}some.A {package}some{type}A
+REF {feature}F1{package}some{type}A{method}methodI(){type}some.A {package}some{type}A{constructor}A()
+REF {feature}F1{package}some{type}A {package}some{type}I
+REF {feature}F1{package}some{type}I{method}methodI(){type}some.A {package}some{type}A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}java.lang{type}Long
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}java.lang{type}String
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}@primitive{type}Unknown{constructor}Unknown()
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{constructor}A()
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{constructor}A()
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{constructor}A()
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{field}stringArray{type}java.lang.String[]
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{method}methodInF1(java.lang.Long, int){type}void
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{method}methodI(){type}some.A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{method}methodI(){type}some.A
+REF {feature}F2{package}some{type}A{method}methodInF2(){type}void {package}some{type}A{method}methodI(){type}some.A
+REF {feature}F2{package}some{type}A{method}refinedInF2(){type}void {package}java.lang{type}Boolean
+REF {feature}F2{package}some{type}A{method}refinedInF2(){type}void {package}java.lang{type}Object
+REF {feature}F2{package}some{type}A{method}refinedInF2(){type}void {package}java.lang{type}Object
+REF {feature}F2{package}some{type}A{method}refinedInF2(){type}void {package}@primitive{type}Unknown{constructor}Unknown()
+REF {feature}F2{package}some{type}A {package}java.util{type}Vector
+REF {feature}F2{package}some{type}A {package}some{type}I
