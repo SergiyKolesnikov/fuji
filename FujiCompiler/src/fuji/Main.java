@@ -20,6 +20,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.jastadd.util.RobustMap;
 
+import sun.org.mozilla.javascript.ast.WithStatement;
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 import AST.ASTNode;
@@ -253,7 +254,7 @@ public class Main implements CompositionContext {
                 System.out.println("IntraflowGraph dump (ms): "
                         + ((getCpuTime() - startTimeNano) / 1000000));
             }
-        } else if (cmd.hasOption(CONSTWRITES)) {
+        } else if (cmd.hasOption(CONSTWRITES) || cmd.hasOption(CONSTWRITES_WITH_TRACE)) {
             /* Timer start. */
             if (cmd.hasOption(TIMER)) {
                 startTimeNano = getCpuTime();
@@ -417,6 +418,10 @@ public class Main implements CompositionContext {
                 .withDescription(
                         "Print fields (transitively) written by all constructors (only compilation units compiled from source are analyzed).")
                 .create(CONSTWRITES));
+        ops.addOption(OptionBuilder
+                .withDescription(
+                        "Do the same as " + CONSTWRITES + ", but also print a trace (all method/constructor calls) from a constructor to a field write.")
+                .create(CONSTWRITES_WITH_TRACE));
         ops.addOption(OptionBuilder.create(TEST));
         return ops;
     }
@@ -530,7 +535,7 @@ public class Main implements CompositionContext {
             if (cu.fromSource()) {
             	checkParseErrors(cu);
                 for (ConstructorDecl cd : cu.constructors()) {
-                    System.out.print(cd.printFieldWritesClosure().toString());
+                    System.out.print(cd.printFieldWritesClosure(cmd.hasOption(CONSTWRITES_WITH_TRACE)).toString());
                 }
             }
         }
@@ -835,6 +840,7 @@ public class Main implements CompositionContext {
         /* Intraprocedural Flow Analysis */
         public static final String INTRAFLOW = "intraflow";
         public static final String CONSTWRITES = "constWrites";
+        public static final String CONSTWRITES_WITH_TRACE = "constWritesWithTrace";
         public static final String TEST = "test";
 
     }
