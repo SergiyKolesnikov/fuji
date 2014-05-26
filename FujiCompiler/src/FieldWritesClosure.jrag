@@ -1,0 +1,318 @@
+aspect Output {
+    public StringBuilder ConstructorDecl.printFieldWritesClosure(boolean withTrace) {
+        final String DELIM = "|";
+        final String DELIM_ELEMENT = ".";
+        final String DELIM_FEATURE = ",";
+        
+        StringBuilder output = new StringBuilder();
+        StringBuilder outputSource = new StringBuilder();
+        java.util.List<String> featureModulePathnames = getSPLStructure().getFeatureModulePathnames();
+        
+        /* src feature */
+        String sourceFeatureName = new File(featureModulePathnames.get(featureID())).getName();
+        outputSource.append(sourceFeatureName).append(DELIM);
+        
+        /* src compilation-unit */ 
+        // outputSource.append(hostType().compilationUnit().relativeName()).append(DELIM);
+        
+        /* src ctor-signature */
+        String hostPackage = hostPackage();
+        if (! hostPackage.isEmpty()) {
+            outputSource.append(hostPackage).append(DELIM_ELEMENT);           
+        }
+        outputSource.append(signature()).append(DELIM);
+        for (VarAccess varAccess : fieldWritesClosure()) {
+            output.append(outputSource);
+            
+            /* src-element AST-node-type */
+            BodyDecl encBd = varAccess.enclosingBodyDecl();
+            output.append(encBd.toString()).append(DELIM);
+                
+            /* src element */
+            output.append(IntrosRefsUtil.visibleHostType(encBd).typeName());
+            output.append(DELIM_ELEMENT);
+            if (encBd instanceof ConstructorDecl) {
+                output.append(((ConstructorDecl) encBd)
+                        .signature()).append(DELIM);
+            } else if (encBd instanceof MethodDecl) {
+                output.append(((MethodDecl) encBd).signature()).append(DELIM);
+            } else if (encBd instanceof FieldDeclaration) {
+                output.append(((FieldDeclaration) encBd)
+                        .name()).append(DELIM);
+            } else {
+                // static or dynamic initialitzers, do nothing.
+            }
+            
+            /* target features */
+            /* First, sort the featue names. */
+            SortedSet<String> targetFeatureNames = new TreeSet<String>();
+            FieldDeclaration lastFieldDecl = null;
+            for (Variable varDecl : varAccess.varDeclsFromSource()) {
+                lastFieldDecl = (FieldDeclaration) varDecl;
+                String featureName = new File(featureModulePathnames.get(lastFieldDecl
+                        .featureID())).getName();
+                targetFeatureNames.add(featureName);
+            }
+            String delimFeature = "";
+            for (String featureName : targetFeatureNames) {
+                output.append(delimFeature).append(featureName);
+                delimFeature = DELIM_FEATURE;
+            }
+            output.append(DELIM);
+            
+            /* target field */
+            if (lastFieldDecl != null) {
+                FieldDeclaration fd = (FieldDeclaration) lastFieldDecl;
+                output.append(IntrosRefsUtil.visibleHostType(fd).typeName());
+                output.append(DELIM_ELEMENT).append(fd.name()).append(DELIM);
+            }
+                        
+            /* target-field type */
+            output.append(lastFieldDecl.type().typeName()).append(DELIM);
+            
+            /* target-field value */
+            ASTNode<ASTNode> node = varAccess;
+            while (true) {
+            	if (node instanceof AssignExpr) {
+            		output.append(((AssignExpr) node).getSource().prettyPrint().replace("\n", "").replace("\r", ""));
+            		break;
+            	} else if ((node instanceof PostfixExpr) ||
+            			(node instanceof PreDecExpr) || 
+            			(node instanceof PreIncExpr)) {
+            		output.append(node.prettyPrint().replace("\n", "").replace("\r", ""));
+            		break;
+            	}
+            	node = node.getParent();
+            }
+            output.append("\n");
+            
+            if (withTrace) {
+                
+                /* Add tracing information */
+                StringBuilder traceString = new StringBuilder();
+                for (BodyDecl bd : varAccess.getFieldWritesClosureTrace()) {
+                    traceString.append(" * ");
+                
+                    // TODO remove this code clone (issue #10)
+                    String featureName = new File(featureModulePathnames.get(bd.featureID())).getName();
+                    traceString.append(featureName).append(DELIM);
+                    traceString.append(IntrosRefsUtil.visibleHostType(bd).typeName());
+                    traceString.append(DELIM_ELEMENT);
+                    if (bd instanceof ConstructorDecl) {
+                        traceString.append(((ConstructorDecl) bd).signature());
+                    } else if (bd instanceof MethodDecl) {
+                        traceString.append(((MethodDecl) bd).signature());
+                    } else if (bd instanceof FieldDeclaration) {
+                        traceString.append(((FieldDeclaration) bd).name());
+                    } else {
+                        // static or dynamic initialitzers, do nothing.
+                    }
+                    traceString.append("\n");
+                }
+                output.append(traceString);
+            }
+        }
+        return output;
+    }
+}
+
+aspect Constructors {
+    
+    /**
+     * The attribute collects all constructors of the comilation unit.
+     * (It is used in collection field writes closures for all constructors,
+     * see fieldWritesClosure aspect and Fuji's -constWrites option.)
+     */
+    coll SmallSet<ConstructorDecl> CompilationUnit.constructors() 
+        [SmallSet.<ConstructorDecl>mutable()] with add root CompilationUnit;
+    ConstructorDecl contributes this
+        to CompilationUnit.constructors()
+        for hostType().compilationUnit();
+}
+
+/**
+ * This aspect implements BodyDecl.fieldWritesClosure() attribute.
+ * 
+ * IMPORTANT NOTE 1: This analysis does not consider the implicit original-ConstructorAccess
+ * in the case of a constructor refinement.  Thus, to get a transitive
+ * closure over all field writes that can be trigered by a given consturctor, you
+ * have to join the output of fieldWritesClosure() for this constructor with the
+ * outputs of fieldWritesClouser() for all other constructors that might be
+ * composed before the given constructor.
+ * 
+ * IMPORTANT NOTE 2: This analysis does not consider the feature modell.  This is
+ * an additional source of false positives (besides overapproximation of static
+ * analysis).  Example:
+ * 
+ * // FEATURE_BASE
+ * public class Edge {
+ *   public Edge() {
+ *     edgeConstructor();
+ *   }
+ *
+ *   public void edgeConstructor() {
+ *     myinit();
+ *   }
+ *
+ *   public void myinit() {}
+ * }
+ *
+ * // FEATURE_1
+ * public class Edge {
+ *   private int w = 0;
+ *
+ *   public void edgeConstructor() {}
+ *
+ *   public void myinit() {
+ *     w = 99;
+ *   }
+ * }
+ * 
+ * In this example field FEATURE_1 can neve be written.  But the analysis does
+ * not see that FEATURE_BAS::Edge.edgeConstructor() can never call 
+ * FEATURE_1::Edge.myinit(), because the information about features is not
+ * used in the analysis.  The analysis wrongly considers this call possible and
+ * produces a false positive field write w = 99.
+ */
+aspect FieldWritesClosure {
+    
+    /**
+     * Variable accesses (VarAccess) in this attribute represent all write accesses to fields, that are
+     * present in this body declaration and that can be transitivelly reached from this body declaration
+     * (e.g., over method, constructor, and super-constructor calls).  I.e. the attribute is a transitive
+     * closure over all field writes that can be trigered by executing this body declaration.
+     */
+    syn SmallSet<VarAccess> BodyDecl.fieldWritesClosure() circular [SmallSet.<VarAccess>mutable()];
+    eq BodyDecl.fieldWritesClosure() {
+        SmallSet<VarAccess> result = SmallSet.<VarAccess>mutable();
+        result.add(fieldWrites());
+        for (Access acc : outgoingCalls()) {
+            for (BodyDecl bd : acc.declsFromSource()) {
+                result.add(bd.fieldWritesClosure());
+            }
+        }
+        for (VarAccess var : result) {
+            var.fieldWritesClosureTrace.add(this);
+        }
+        return result;
+    }
+    
+    /**
+     * Tracing info (e.g. all BdoyDecls that were traversed from the 
+     * constructor to the field write).
+     * 
+     * TODO: Add fullFamilyName attr to BodyDecls to calcualte their 
+     * FetureName+FullyQualifiedJavaName (in the best case as an object with
+     * feature, package, name... attributes, that can be serialized by the 
+     * client). Use fullFamilyName in the Output 
+     * aspect (FieldWritesClosure.jrag), in the bodyDeclTrace attribute (aspect
+     * FieldWritesClosure, FieldWritesClosure.jrag), and in the ExtIntrosRefs.jrag.
+     */
+    protected java.util.ArrayList<BodyDecl> VarAccess.fieldWritesClosureTrace = 
+            new java.util.ArrayList<BodyDecl>();
+    public java.util.List<BodyDecl> VarAccess.getFieldWritesClosureTrace() { 
+        return java.util.Collections.unmodifiableList(fieldWritesClosureTrace); 
+    }
+    
+    /**
+     * Collect all write access to fields in this BodyDecl (i.e. constructor, method, initializer, ...).
+     * An access is collected only if at least one declaration for the corresponding field comes from a
+     * source file (i.e. accesses to fileds declared in libraries or Java-runtime liebraries are 
+     * excluded). 
+     */
+    coll SmallSet<VarAccess> BodyDecl.fieldWrites() 
+        [SmallSet.<VarAccess>mutable()] with add root BodyDecl;
+    VarAccess contributes this
+        when isFieldAccess() && (isDest() || (hasNextAccess() && nextAccess().isArrayAccess() && nextAccess().isDest())) && hasDeclFromSource()
+        to BodyDecl.fieldWrites()
+        for enclosingBodyDecl();               
+    syn boolean VarAccess.hasDeclFromSource() {
+        return !varDeclsFromSource().isEmpty();
+    }
+    
+    /**
+     * The attribute contains all declarations for this access that come from a source file 
+     * (i.e. variable declared in libraries or Java-runtime liebraries are excluded).
+     * 
+     * This attribute is different form the declsFromsSource() for Method- and 
+     * ConstructorAccess in that the returned declarations are not necessary 
+     * subtypes of BodyDeclarations (i.e. in the cas of a local variable it can 
+     * be a VaribaleDeclaration).
+     */
+    syn SmallSet<Variable> VarAccess.varDeclsFromSource() {
+        SmallSet<Variable> result = SmallSet.<Variable>mutable();
+        java.util.Iterator<Variable> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            Variable var = declIterator.next();
+            if (var.hostType().compilationUnit().fromSource()) {
+                result.add(var);
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * Collect all calls to constructors, super-constructors and methods in this BodyDecl
+     * (i.e. constructor, method, initializer, ...).
+     * A call is collected only if at least one declaration for the corresponding method or cunstructor 
+     * comes from a source file (i.e. calls to methods/constructors declared in libraries or Java-runtime
+     * liebraries are excluded). 
+     */
+    coll SmallSet<Access> BodyDecl.outgoingCalls()
+        [SmallSet.<Access>mutable()] with add root BodyDecl;
+    ConstructorAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+    SuperConstructorAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+    MethodAccess contributes this
+        when !declsFromSource().isEmpty()
+        to BodyDecl.outgoingCalls()
+        for enclosingBodyDecl();
+                
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. calls to methods/constructors declared in libraries or Java-runtime liebraries are excluded).
+     */
+    syn SmallSet<? extends BodyDecl> Access.declsFromSource() {
+        throw new UnsupportedOperationException("Operation not supported by this ASTNode type.");
+    }
+
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. constructors declared in libraries or Java-runtime liebraries are excluded).
+     * 
+     * SuperConstructorAccess is a subclass of ConstructorAccess, thus SuperConstructorAccess will inherit
+     * the definition of this attribute. 
+     */
+    syn SmallSet<ConstructorDecl> ConstructorAccess.declsFromSource() {
+        SmallSet<ConstructorDecl> result = SmallSet.<ConstructorDecl>mutable();
+        java.util.Iterator<ConstructorDecl> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            ConstructorDecl cd = declIterator.next();
+            if (cd.hostType().compilationUnit().fromSource()) {
+                result.add(cd);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * The attribute contains all declaration for this access that come from a source file 
+     * (i.e. methods declared in libraries or Java-runtime liebraries are excluded).
+     */
+    syn SmallSet<MethodDecl> MethodAccess.declsFromSource() {
+        SmallSet<MethodDecl> result = SmallSet.<MethodDecl>mutable();
+        java.util.Iterator<MethodDecl> declIterator = alternativeDecls().iterator();
+        while (declIterator.hasNext()) {
+            MethodDecl md = declIterator.next();
+            if (md.hostType().compilationUnit().fromSource()) {
+                result.add(md);
+            }
+        }
+        return result;
+    }
+}
