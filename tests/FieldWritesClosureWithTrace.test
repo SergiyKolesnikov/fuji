@@ -1,0 +1,4 @@
+#!/bin/sh
+. ../scripts/global_vars
+cd FieldWritesClosureWithTrace
+java -jar ../../FujiCompiler/build/fuji.jar -compstrategy family -constWritesWithTrace Test.features | sed 's|'`pwd`'||' | sort >tmp.out

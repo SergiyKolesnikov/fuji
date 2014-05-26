@@ -1,0 +1,27 @@
+Test the same as in FieldWritesClosure test, but with tracing enabled.
+
+Test case for the field writes closure analysis used in Fuji's -constWritesWithTrace
+option (that outputs fields (transitively) written by a constructor).
+(FujiCompiler/src/fieldWritesClosure.jrag)
+
+Bei den Zuweisungen geht es uns nur um "writes", daher um schreibenden Zugriff auf Instanzvariablen.
+
+Für unsere Auswertung ist der lesende Zugriff auf Instanzvariablen nicht relevant; in den Kommentaren steht hier nur "egal: ..." um zu zeigen, dass diese Fälle vorkommen können aber eben egal/nicht relevant sind.
+
+Es gibt 4 Fälle die uns interessieren:
+
+1. Fall "direct2: Im Konstruktor (Z.b. "./WeightedDirect/Edge.Edge()") erfolgt direkt der schreibender Zugriff auf eine Instanzvariable
+
+2. Fall "indirect2: Im Konstruktor (Z.b. "./WeightedIndirect/Edge.Edge()") erfolgen die Methodenaufrufe: Edge() -> method access m1() -> method access m2() -> schreibender Zugriff auf eine Instanzvariable
+
+3. Fall "super contructor": Im Konstruktor (Z.b. "./WeightedSuperConstructor/LabeledEdge.java") wird eine Super-Konstruktor aufgerufen, dieser wiederum ruft den Konstruktor "Base.Edge()" auf und in diesem erfolgt dann schreibender Zugriff auf die beiden Instanzvariablen
+
+
+4. Fall "original call": Im Konstruktor (Z.b. "WeightedOriginalCall/Edge.java") wird die gleichnamige Methode "void setHead(Node h)" definiert, und in dieser Methode erfolgt ein "original() call". Dieser call führt zu einem schreibenden Zugriff auf einen Instanzvariable. (Zum Vergleich, was "egal" ist: der Aufruf der Setter-Methode "getNode()", wieder mit "original() call" führt nur zu einem lesendem Zugriff und ist daher nicht relevant bzw. "egal" für unsere Auswertung). 
+
+Nochmal: Diese vier Fälle sind relevant für unsere Auswertung. Um zu unterscheiden, welche Fälle nicht relevant sind habe ich auch jeweils einen lesenden Zugriff eingebaut. Diese lesenden Zugriffe sind mit "// egal, ...." makiert, und sollen von den schreiben Zugriffen unterscheidbar sein.
+
+
+
+
+
