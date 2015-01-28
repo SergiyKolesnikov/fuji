@@ -10,7 +10,7 @@ Fuji is an extensible compiler that supports feature-oriented programming in Jav
 ## Compilation Instructions
 
 ```
-git clone https://SergiyKolesnikov@bitbucket.org/SergiyKolesnikov/fuji.git
+git clone git@bitbucket.org:SergiyKolesnikov/fuji.git
 cd fuji
 git submodule init
 git submodule update
