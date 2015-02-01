@@ -1,4 +1,4 @@
 #!/bin/sh
 . ../scripts/global_vars
 cd Intraflow
-java -jar ../../FujiCompiler/build/fuji.jar -intraflow -compstrategy family Test.features | sort | sed -r 's/^[[:blank:]]+//' >tmp.out
+java -jar ../../FujiCompiler/build/fuji.jar -intraflow -compstrategy family Test.features | sort | sed 's/^[[:blank:]]\+//' >tmp.out
