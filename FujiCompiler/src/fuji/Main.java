@@ -20,7 +20,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.jastadd.util.RobustMap;
 
-import sun.org.mozilla.javascript.ast.WithStatement;
 import de.ovgu.featureide.fm.core.FeatureModel;
 import de.ovgu.featureide.fm.core.io.UnsupportedModelException;
 import AST.ASTNode;
