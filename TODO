@@ -1,18 +1,15 @@
 * ExtIntrosRefs.jrag
-  - produce constructor REFs für super() and this() 
- 
-  - If the target is a constructor in a compilation unit reconstructed from 
-    byte code, then the name of the cunstructor is <init>.  If the compilation
-    unit comes from a source file, then normal constructor name is displayed.  TODO:
-    make it consistent <init> or normal name.
 
-* Report the problem with hostType() method in TypeParameters of GenericTypeDecl
-  (see FujiCompiler/src/TypeAnalysisGenericsPatch.jrag)
+- produce constructor REFs für super() and this() 
+
+- If the target is a constructor in a compilation unit reconstructed from     byte code, then the name of the cunstructor is <init>.  If the compilation unit comes from a source file, then normal constructor name is displayed.  TODO: make it consistent <init> or normal name.
+
+* Report the problem with hostType() method in TypeParameters of GenericTypeDecl  (see FujiCompiler/src/TypeAnalysisGenericsPatch.jrag)
 
 * Output correct error messages on parser errors. See test ReportParseError2 (FAILED)
 
-* Create a test case that demonstrates the JastAddJ bug
-http://bugs.jastadd.org/cgi-bin/bugzilla/show_bug.cgi?id=41
+* Create a test case that demonstrates the JastAddJ bug http://bugs.jastadd.org/cgi-bin/bugzilla/show_bug.cgi?id=41
 
-* FieldMethodCompostion: create a testcase for refinement of methods and 
-fields with changing modifiers.
+* FieldMethodCompostion: create a testcase for refinement of methods and fields with changing modifiers.
+
+* Add fullFamilyName attr to BodyDecls to calcualte their FetureName+FullyQualifiedJavaName (in the best case as an object with feature, package, name... attributes, that can be serialized by the client). Use fullFamilyName in the Output aspect (FieldWritesClosure.jrag), in the bodyDeclTrace attribute (aspect FieldWritesClosure, FieldWritesClosure.jrag), and in the ExtIntrosRefs.jrag.
